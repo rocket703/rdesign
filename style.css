@@ -269,11 +269,11 @@ body {
     padding: 0 0.25rem;
   }
 
-  .intro .section-head h2 {
+  .intro .section-head h1 {
     font-size: 1.8rem;
   }
 
-  .intro .section-head h2::after {
+  .intro .section-head h1::after {
     font-size: 0.9rem;
   }
 
