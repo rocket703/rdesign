@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rdesign – Datenschutz</title>
+<meta name="description" content="Datenschutzerklärung für die Website von Rdesign gemäß DSGVO." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header class="site-header">
+<a href="index.html" class="logo-link" aria-label="Zurück zur Startseite">
+<svg class="logo" width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#34d399;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <text x="50%" y="50%" font-family="'Inter', sans-serif" font-size="24" font-weight="800" fill="url(#logoGradient)" text-anchor="middle" dominant-baseline="middle">RD</text>
+</svg>
+</a>
+<nav class="main-nav" aria-label="Hauptnavigation">
+<div class="burger-menu" id="burger-menu">
+<span></span>
+<span></span>
+<span></span>
+</div>
+<ul class="nav-list" id="nav-list">
+<li><a href="kontakt.html">Kontakt</a></li>
+<li><a href="index.html#projekte">Projekte</a></li>
+<li><a href="impressum.html">Impressum</a></li>
+</ul>
+</nav>
+</header>
+
+<main>
+<section class="section">
+<div class="section-head">
+<h2>Datenschutzerklärung</h2>
+<p>Der Schutz Ihrer persönlichen Daten ist uns ein besonderes Anliegen. Diese Datenschutzerklärung informiert Sie über die Art, den Umfang und den Zweck der Erhebung und Verwendung personenbezogener Daten auf dieser Website.</p>
+</div>
+<div class="content">
+<h3>1. Verantwortlicher</h3>
+<p>Verantwortlicher im Sinne der Datenschutz-Grundverordnung (DSGVO) ist:<br>
+Dustin Rose<br>
+Lindenplan 26, 39120 Magdeburg<br>
+E-Mail: dustin.rose@gmx.de</p>
+
+<h3>2. Erhebung und Speicherung personenbezogener Daten</h3>
+<p>Beim Besuch dieser Website werden keine personenbezogenen Daten automatisch erhoben, es sei denn, Sie nutzen das Kontaktformular. Wenn Sie das Kontaktformular ausfüllen, erheben wir die folgenden Daten:</p>
+<ul>
+<li>Name</li>
+<li>E-Mail-Adresse</li>
+<li>Ihre Nachricht</li>
+</ul>
+<p>Diese Daten werden über den Dienst Formspree (Formspree, Inc., USA) verarbeitet, um Ihre Anfrage zu bearbeiten. Die Daten werden nicht für andere Zwecke verwendet und nach Bearbeitung Ihrer Anfrage gelöscht, sofern keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
+
+<h3>3. Externe Dienste</h3>
+<p><strong>Google Fonts</strong>: Diese Website nutzt Google Fonts, einen Dienst der Google LLC, zur Darstellung von Schriftarten. Beim Laden der Schriftarten wird Ihre IP-Adresse an Google übermittelt. Weitere Informationen finden Sie in der <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Datenschutzerklärung von Google</a>.</p>
+<p><strong>Formspree</strong>: Das Kontaktformular verwendet Formspree zur Verarbeitung Ihrer Eingaben. Formspree speichert Ihre Daten temporär, um sie an uns weiterzuleiten. Weitere Informationen finden Sie in der <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener">Datenschutzerklärung von Formspree</a>.</p>
+
+<h3>4. Ihre Rechte</h3>
+<p>Sie haben gemäß DSGVO folgende Rechte:</p>
+<ul>
+<li>Recht auf Auskunft über Ihre gespeicherten Daten</li>
+<li>Recht auf Berichtigung oder Löschung</li>
+<li>Recht auf Einschränkung der Verarbeitung</li>
+<li>Recht auf Widerspruch gegen die Verarbeitung</li>
+<li>Recht auf Datenübertragbarkeit</li>
+</ul>
+<p>Kontaktieren Sie uns unter deine.email@example.com, um diese Rechte auszuüben.</p>
+
+<h3>5. Datensicherheit</h3>
+<p>Wir verwenden technische und organisatorische Maßnahmen, um Ihre Daten zu schützen, z. B. eine verschlüsselte Übertragung (HTTPS) über GitHub Pages.</p>
+
+<h3>6. Änderungen der Datenschutzerklärung</h3>
+<p>Wir behalten uns vor, diese Datenschutzerklärung anzupassen, um sie an geänderte rechtliche Anforderungen oder Änderungen der Website anzupassen. Die aktuelle Version finden Sie stets hier.</p>
+
+<h3>7. Kontakt</h3>
+<p>Bei Fragen zum Datenschutz kontaktieren Sie uns bitte unter:<br>
+Dustin Rose<br>
+E-Mail: dustin.rose@gmx.de</p>
+</div>
+</section>
+</main>
+
+<footer class="site-footer">
+<p>© <span id="year"></span> - Rdesign. Alle Rechte vorbehalten.</p>
+<a href="datenschutz.html" class="footer-link">Datenschutz</a>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById('burger-menu').addEventListener('click', function() {
+  this.classList.toggle('active');
+  document.getElementById('nav-list').classList.toggle('active');
+});
+</script>
+</body>
+</html>

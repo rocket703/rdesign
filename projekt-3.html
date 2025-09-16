@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rdesign – Ohrelauf</title>
+<meta name="description" content="Details zum Projekt Ohrelauf – eine moderne, SEO-optimierte Website auf GitHub Pages." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header class="site-header">
+<a href="../index.html" class="logo-link" aria-label="Zurück zur Startseite">
+<svg class="logo" width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#34d399;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <text x="50%" y="50%" font-family="'Inter', sans-serif" font-size="24" font-weight="800" fill="url(#logoGradient)" text-anchor="middle" dominant-baseline="middle">RD</text>
+</svg>
+</a>
+<nav class="main-nav" aria-label="Hauptnavigation">
+<div class="burger-menu" id="burger-menu">
+<span></span>
+<span></span>
+<span></span>
+</div>
+<ul class="nav-list" id="nav-list">
+<li><a href="../kontakt.html">Kontakt</a></li>
+<li><a href="../index.html#projekte">Projekte</a></li>
+<li><a href="../impressum.html">Impressum</a></li>
+</ul>
+</nav>
+</header>
+
+<main>
+<section class="section project-detail">
+<div class="section-head">
+<h2>Ohrelauf</h2>
+<p>Eine moderne, SEO-optimierte Website, eigenständig entwickelt und auf GitHub Pages gehostet.</p>
+</div>
+<div class="content">
+<img src="../images/projekt-3.jpg" alt="Vorschau von Ohrelauf" class="project-media">
+<h3>Projektbeschreibung</h3>
+<p>Die Projektseite Ohrelauf wurde mit HTML5, CSS3 und JavaScript entwickelt und ist auf GitHub Pages gehostet. Sie bietet eine hohe Performance, ein responsives Design und ist SEO-optimiert, um maximale Sichtbarkeit zu gewährleisten. Die Seite ist flexibel und für zukünftige Erweiterungen ausgelegt.</p>
+<h3>Technologien</h3>
+<ul>
+<li>HTML5</li>
+<li>CSS3</li>
+<li>JavaScript</li>
+</ul>
+<h3>Ergebnisse</h3>
+<p>Die Website erzielt hervorragende Ladezeiten und ist auf allen Geräten benutzerfreundlich. Sie hat die Online-Präsenz des Projekts gestärkt und bietet eine solide Basis für weitere Entwicklungen.</p>
+</div>
+</section>
+</main>
+
+<footer class="site-footer">
+<p>© <span id="year"></span> - Rdesign. Alle Rechte vorbehalten.</p>
+<a href="../datenschutz.html" class="footer-link">Datenschutz</a>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById('burger-menu').addEventListener('click', function() {
+  this.classList.toggle('active');
+  document.getElementById('nav-list').classList.toggle('active');
+});
+</script>
+</body>
+</html>

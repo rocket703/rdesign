@@ -1,0 +1,556 @@
+/* Reset und Basis-Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+  color: #e5e7eb;
+  background-color: #111827;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Header Styles */
+.site-header {
+  position: sticky;
+  top: 0;
+  background: rgba(31, 41, 55, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  transition: transform 0.3s ease;
+}
+
+.logo-link:hover .logo {
+  transform: scale(1.1);
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+}
+
+.main-nav .nav-list {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.main-nav .nav-list li {
+  margin: 0 1.5rem;
+}
+
+.main-nav .nav-list a {
+  text-decoration: none;
+  color: #e5e7eb;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.main-nav .nav-list a:hover {
+  color: #10b981;
+  transform: translateY(-2px);
+}
+
+/* Burger-Menü für Mobile */
+.burger-menu {
+  display: none;
+  cursor: pointer;
+  width: 30px;
+  height: 20px;
+  position: relative;
+}
+
+.burger-menu span {
+  background: #e5e7eb;
+  height: 3px;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  transition: all 0.3s ease;
+}
+
+.burger-menu span:nth-child(1) {
+  top: 0;
+}
+.burger-menu span:nth-child(2) {
+  top: 8px;
+}
+.burger-menu span:nth-child(3) {
+  top: 16px;
+}
+
+.nav-list.active {
+  display: flex;
+}
+
+/* Responsive Header */
+@media (max-width: 768px) {
+  .main-nav .nav-list {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(31, 41, 55, 0.9);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .main-nav .nav-list.active {
+    display: flex;
+  }
+
+  .main-nav .nav-list li {
+    margin: 0.5rem 0;
+  }
+
+  .burger-menu {
+    display: block;
+    margin-left: auto;
+  }
+
+  .burger-menu.active span:nth-child(1) {
+    transform: rotate(45deg);
+    top: 8px;
+  }
+
+  .burger-menu.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .burger-menu.active span:nth-child(3) {
+    transform: rotate(-45deg);
+    top: 8px;
+  }
+
+  .logo {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Allgemeine Section-Styles */
+.section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+}
+
+/* Intro Section */
+.intro {
+  background: linear-gradient(135deg, #1f2937 0%, #10b981 30%);
+  color: #e5e7eb;
+  text-align: center;
+  padding: 6rem 1.5rem;
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+}
+
+/* Intro Section mit fancy H1 */
+.intro .section-head h2 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin: 2rem 0 1.5rem;
+  position: relative;
+  background: linear-gradient(135deg, #1d5a44, #10b981);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 15px rgba(237, 237, 237, 0.8), 0 0 25px rgba(16, 185, 129, 0.6);
+  clip-path: polygon(5% 0%, 95% 0%, 100% 25%, 95% 100%, 5% 100%, 0% 25%);
+  padding: 1rem 2rem;
+  display: inline-block;
+  line-height: 1.2;
+}
+
+.intro .section-head h2::after {
+  content: "Webentwicklung • Design • Performance";
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #1f2937;
+  background: linear-gradient(90deg, #34d399, #10b981);
+  -webkit-background-clip: text;
+  background-clip: text;
+  margin-top: 1rem;
+  letter-spacing: 2px;
+  text-shadow: 0 0 20px rgba(252, 255, 254, 0.9), 0 0 30px rgba(16, 185, 129, 0.7);
+  text-align: center;
+}
+
+.section-head p {
+  font-size: 1rem;
+  font-weight: 300;
+  max-width: 600px;
+  margin: 1rem auto 0;
+}
+
+/* Styling für die Vorstellung */
+.vorstellung {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #e5e7eb;
+  line-height: 1.6;
+  max-width: 900px;
+  margin: 1rem auto;
+  padding: 0 1rem;
+}
+
+/* Responsive Anpassungen */
+@media (max-width: 768px) {
+  .vorstellung {
+    font-size: 0.95rem;
+    padding: 0 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .vorstellung {
+    font-size: 0.9rem;
+    padding: 0 0.25rem;
+  }
+}
+
+.highlights {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.highlights li {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 400;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.highlights li:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Projekte Section */
+.projects {
+  background: #1f2937;
+  padding: 4rem 1.5rem;
+}
+
+.projects .section-head h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.projects .section-head h2::after {
+  content: "Ausgewählte Arbeiten • Technologie • Innovation";
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: #e5e7eb;
+  background: linear-gradient(90deg, #34d399, #10b981);
+  -webkit-background-clip: text;
+  background-clip: text;
+  margin-top: 0.5rem;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+/* Projekt-Detailseiten */
+.project-detail .content {
+  max-width: 800px;
+  margin: 2rem auto;
+}
+
+.project-detail .project-media {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  display: block;
+}
+
+.project-detail h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #e5e7eb;
+  margin: 1rem 0 0.5rem;
+}
+
+.project-detail p {
+  font-size: 1rem;
+  color: #9ca3af;
+  margin-bottom: 1rem;
+}
+
+/* Kontaktformular */
+.contact-form {
+  max-width: 600px;
+  margin: 2rem auto;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #e5e7eb;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+  background: #374151;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem;
+  color: #e5e7eb;
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(16, 185, 129, 0.5);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.contact-form button {
+  background: #10b981;
+  color: #1f2937;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.contact-form button:hover {
+  background: #34d399;
+}
+
+/* Button für 404-Seite */
+.button {
+  display: inline-block;
+  background: #10b981;
+  color: #1f2937;
+  text-decoration: none;
+  border-radius: 8px;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.button:hover {
+  background: #34d399;
+}
+
+/* Content-Bereich für Impressum/Datenschutz */
+.content {
+  max-width: 800px;
+  margin: 2rem auto;
+}
+
+.content p {
+  font-size: 1rem;
+  color: #9ca3af;
+  margin-bottom: 1rem;
+}
+
+/* Card-Grid für Hauptseite */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.card {
+  display: block;
+  text-decoration: none;
+  background: #374151;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: inherit; /* Verhindert Vererbung unerwünschter Farben */
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.card-media {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 12px 12px 0 0;
+  display: block;
+  position: relative;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-body h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #e5e7eb !important; /* Hellgrau, mit !important für Priorität */
+  margin-bottom: 0.5rem;
+}
+
+.card-body p {
+  font-size: 1rem;
+  color: #9ca3af !important; /* Dunkleres Grau, mit !important für Priorität */
+  margin-bottom: 1rem;
+}
+
+.tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tags span {
+  background: #4b5563;
+  color: #e5e7eb !important; /* Hellgrau, mit !important für Priorität */
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+/* Footer */
+.site-footer {
+  background: #111827;
+  color: #e5e7eb;
+  text-align: center;
+  padding: 2rem 1.5rem;
+}
+
+.site-footer p {
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.footer-link {
+  color: #e5e7eb;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 400;
+  margin-top: 0.5rem;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: #10b981;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .section {
+    padding: 2rem 1rem;
+  }
+
+  .intro {
+    padding: 4rem 1rem;
+  }
+
+  .intro .section-head h2,
+  .projects .section-head h2 {
+    font-size: 2rem;
+  }
+
+  .intro .section-head h2::after,
+  .projects .section-head h2::after {
+    font-size: 1rem;
+  }
+
+  .section-head p {
+    font-size: 1rem;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-media {
+    height: 150px;
+  }
+
+  .project-detail .project-media {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .highlights {
+    grid-template-columns: 1fr;
+  }
+
+  .card-body h3 {
+    font-size: 1.3rem;
+  }
+
+  .card-body p {
+    font-size: 0.9rem;
+  }
+
+  .intro .section-head h2::after,
+  .projects .section-head h2::after {
+    font-size: 0.9rem;
+  }
+
+  .project-detail .project-media {
+    height: 150px;
+  }
+}

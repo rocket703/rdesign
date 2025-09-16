@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rdesign – Webdesign & Entwicklung</title>
+<meta name="description" content="Portfolio – Moderne Webseiten & Web-Apps in Eigenregie. Suche private Projekte zum Wachsen." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header class="site-header">
+<a href="index.html" class="logo-link" aria-label="Zurück zur Startseite">
+<svg class="logo" width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#34d399;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <text x="50%" y="50%" font-family="'Inter', sans-serif" font-size="24" font-weight="800" fill="url(#logoGradient)" text-anchor="middle" dominant-baseline="middle">RD</text>
+</svg>
+</a>
+<nav class="main-nav" aria-label="Hauptnavigation">
+<div class="burger-menu" id="burger-menu">
+<span></span>
+<span></span>
+<span></span>
+</div>
+<ul class="nav-list" id="nav-list">
+<li><a href="kontakt.html">Kontakt</a></li>
+<li><a href="#projekte">Projekte</a></li>
+<li><a href="impressum.html">Impressum</a></li>
+</ul>
+</nav>
+</header>
+
+<main>
+<section id="intro" class="section intro">
+<div class="section-head">
+<h2>RDesign</h2>
+<p class="vorstellung">Ich widme mich leidenschaftlich der Selbstlehre der Webentwicklung und erweitere mein Wissen eigenständig. Meine Portfolio-Website dient aktuell als privates Projekt, mit dem ich Interessenten ansprechen und für spannende Aufträge begeistern möchte.</p>
+</div>
+<ul class="highlights" role="list">
+<li>Schnelle, responsive Seiten</li>
+<li>Accessibility & Best Practices</li>
+<li>Komponenten‑basiertes Denken</li>
+<li>Fokus auf Clean Code & Performance</li>
+</ul>
+</section>
+
+<section id="projekte" class="section projects" aria-labelledby="projects-title">
+<div class="section-head">
+<h2 id="projects-title">Aktuelle Projekte</h2>
+<p>Jede Karte auf meiner Website präsentiert ein Kundenprojekt, bei dem ich individuelle Kundenwünsche präzise nach deren Vorgaben umgesetzt habe. Für mich sind Transparenz und Kommunikation essenziell, um erfolgreiche und maßgeschneiderte Webentwicklungsprojekte zu gewährleisten.</p>
+</div>
+<div class="card-grid">
+<a class="card" href="projekt-1.html">
+<img src="images/projekt-1.jpg" alt="Vorschau von Atelier Haarkunst" class="card-media">
+<div class="card-body">
+<h3>Atelier Haarkunst</h3>
+<p>Dynamische, SEO-starke Single-Page-Website mit HTML5, CSS3 und mobile-first Design, bereit für smarte Terminbuchungs-Features.</p>
+<div class="tags"><span>CMS</span><span>HTML</span><span>CSS</span><span>JS</span></div>
+</div>
+</a>
+<a class="card" href="projekt-2.html">
+<img src="images/projekt-2.jpg" alt="Vorschau von GedankenRein Coaching" class="card-media">
+<div class="card-body">
+<h3>GedankenRein Coaching</h3>
+<p>SEO-optimierte WordPress-Website mit HTML5, CSS3, Bootstrap und jQuery, responsive und erweiterbar für Coaching-Dienste.</p>
+<div class="tags"><span>CMS</span><span>HTML</span><span>CSS</span><span>JS</span></div>
+</div>
+</a>
+<a class="card" href="projekt-3.html">
+<img src="images/projekt-3.jpg" alt="Vorschau von Ohrelauf" class="card-media">
+<div class="card-body">
+<h3>Projektseite Ohrelauf</h3>
+<p>Moderne, SEO-optimierte Website, eigenständig mit HTML5, CSS3 und JavaScript entwickelt, responsive und auf GitHub gehostet für maximale Performance und Flexibilität.</p>
+<div class="tags"><span>HTML</span><span>CSS</span><span>JS</span></div>
+</div>
+</a>
+</div>
+</section>
+</main>
+
+<footer class="site-footer">
+<p>© <span id="year"></span> - Rdesign. Alle Rechte vorbehalten.</p>
+<a href="datenschutz.html" class="footer-link">Datenschutz</a>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById('burger-menu').addEventListener('click', function() {
+  this.classList.toggle('active');
+  document.getElementById('nav-list').classList.toggle('active');
+});
+</script>
+</body>
+</html>

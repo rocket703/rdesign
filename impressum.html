@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rdesign – Impressum</title>
+<meta name="description" content="Impressum gemäß § 5 TMG für die Website von Rdesign." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header class="site-header">
+<a href="index.html" class="logo-link" aria-label="Zurück zur Startseite">
+<svg class="logo" width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#34d399;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <text x="50%" y="50%" font-family="'Inter', sans-serif" font-size="24" font-weight="800" fill="url(#logoGradient)" text-anchor="middle" dominant-baseline="middle">RD</text>
+</svg>
+</a>
+<nav class="main-nav" aria-label="Hauptnavigation">
+<div class="burger-menu" id="burger-menu">
+<span></span>
+<span></span>
+<span></span>
+</div>
+<ul class="nav-list" id="nav-list">
+<li><a href="kontakt.html">Kontakt</a></li>
+<li><a href="index.html#projekte">Projekte</a></li>
+<li><a href="impressum.html">Impressum</a></li>
+</ul>
+</nav>
+</header>
+
+<main>
+<section class="section">
+<div class="section-head">
+<h2>Impressum</h2>
+<p>Angaben gemäß § 5 Telemediengesetz (TMG).</p>
+</div>
+<div class="content">
+<h3>Verantwortlich für den Inhalt</h3>
+<p>Dustin Rose<br>
+Lindenplan 26, 39120 Magdeburg<br>
+E-Mail: dustin.rose@gmx.de<br>
+Telefon: Auf Anfrage</p>
+
+<h3>Haftungsausschluss</h3>
+<p>Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte übernehmen wir jedoch keine Gewähr. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen.</p>
+
+<h3>Haftung für Links</h3>
+<p>Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar.</p>
+
+<h3>Urheberrecht</h3>
+<p>Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.</p>
+</div>
+</section>
+</main>
+
+<footer class="site-footer">
+<p>© <span id="year"></span> - Rdesign. Alle Rechte vorbehalten.</p>
+<a href="datenschutz.html" class="footer-link">Datenschutz</a>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById('burger-menu').addEventListener('click', function() {
+  this.classList.toggle('active');
+  document.getElementById('nav-list').classList.toggle('active');
+});
+</script>
+</body>
+</html>
