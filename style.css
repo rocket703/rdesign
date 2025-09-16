@@ -222,18 +222,48 @@ body {
   padding: 0 1rem;
 }
 
-/* Responsive Anpassungen */
+/* Responsive Anpassungen für Intro Section */
 @media (max-width: 768px) {
+  .intro {
+    padding: 4rem 1rem;
+    clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); /* Weniger Abschnitt für Mobile */
+  }
+
   .vorstellung {
     font-size: 0.95rem;
     padding: 0 0.5rem;
   }
+
+  .intro .section-head h2 {
+    font-size: 2rem;
+  }
+
+  .intro .section-head h2::after {
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 480px) {
+  .intro {
+    padding: 3rem 0.5rem;
+    clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%); /* Noch weniger Abschnitt für kleinere Geräte */
+  }
+
   .vorstellung {
     font-size: 0.9rem;
     padding: 0 0.25rem;
+  }
+
+  .intro .section-head h2 {
+    font-size: 1.8rem;
+  }
+
+  .intro .section-head h2::after {
+    font-size: 0.9rem;
+  }
+
+  .highlights {
+    margin-bottom: 1rem; /* Mehr Platz nach unten */
   }
 }
 
@@ -418,7 +448,7 @@ body {
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  color: inherit; /* Verhindert Vererbung unerwünschter Farben */
+  color: inherit;
 }
 
 .card:hover {
@@ -443,13 +473,13 @@ body {
 .card-body h3 {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #e5e7eb !important; /* Hellgrau, mit !important für Priorität */
+  color: #e5e7eb !important;
   margin-bottom: 0.5rem;
 }
 
 .card-body p {
   font-size: 1rem;
-  color: #9ca3af !important; /* Dunkleres Grau, mit !important für Priorität */
+  color: #9ca3af !important;
   margin-bottom: 1rem;
 }
 
@@ -461,7 +491,7 @@ body {
 
 .tags span {
   background: #4b5563;
-  color: #e5e7eb !important; /* Hellgrau, mit !important für Priorität */
+  color: #e5e7eb !important;
   padding: 0.3rem 0.8rem;
   border-radius: 20px;
   font-size: 0.9rem;
@@ -501,16 +531,14 @@ body {
     padding: 2rem 1rem;
   }
 
-  .intro {
-    padding: 4rem 1rem;
+  .projects {
+    padding: 2rem 1rem;
   }
 
-  .intro .section-head h2,
   .projects .section-head h2 {
     font-size: 2rem;
   }
 
-  .intro .section-head h2::after,
   .projects .section-head h2::after {
     font-size: 1rem;
   }
@@ -545,7 +573,6 @@ body {
     font-size: 0.9rem;
   }
 
-  .intro .section-head h2::after,
   .projects .section-head h2::after {
     font-size: 0.9rem;
   }
