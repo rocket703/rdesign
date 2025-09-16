@@ -161,6 +161,8 @@ body {
 /* ========== Highlights (Hero-Tiles) ========== */
 .highlights {
   list-style: none;
+  padding: 0;             
+  margin: 2rem 0 0; 
   display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
   gap: 1rem; margin-top: 2rem;
   align-items: stretch; /* alle gleich hoch */
