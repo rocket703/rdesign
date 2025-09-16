@@ -165,15 +165,27 @@ body {
 
 /* Intro Section */
 .intro {
-  background: linear-gradient(135deg, #1f2937 0%, #10b981 30%);
+  background: linear-gradient(170deg, #1f2937 0%, #10b981 20%);
   color: #e5e7eb;
   text-align: center;
   padding: 6rem 1.5rem;
-  clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.intro::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  background: linear-gradient(0deg, #1f2937 0%, transparent 10%);
+  pointer-events: none;
 }
 
 /* Intro Section mit fancy H1 */
-.intro .section-head h2 {
+.intro .section-head h1 {
   font-size: 3.5rem;
   font-weight: 800;
   margin: 2rem 0 1.5rem;
@@ -183,32 +195,27 @@ body {
   background-clip: text;
   color: transparent;
   text-shadow: 0 0 15px rgba(237, 237, 237, 0.8), 0 0 25px rgba(16, 185, 129, 0.6);
-  clip-path: polygon(5% 0%, 95% 0%, 100% 25%, 95% 100%, 5% 100%, 0% 25%);
   padding: 1rem 2rem;
   display: inline-block;
   line-height: 1.2;
 }
 
-.intro .section-head h2::after {
+.intro .section-head h1::after {
   content: "Webentwicklung • Design • Performance";
   display: block;
   font-size: 1.5rem;
   font-weight: 400;
-  color: #1f2937;
-  background: linear-gradient(90deg, #34d399, #10b981);
+  color: transparent;
+  background: linear-gradient(to right, #1d5a44 0%, transparent 20%, transparent 80%, #1d5a44 100%), linear-gradient(to left, #1d5a44 0%, transparent 20%, transparent 80%, #1d5a44 100%);
+  background-size: 50% 100%, 50% 100%;
+  background-position: left, right;
+  background-repeat: no-repeat;
   -webkit-background-clip: text;
   background-clip: text;
   margin-top: 1rem;
   letter-spacing: 2px;
   text-shadow: 0 0 20px rgba(252, 255, 254, 0.9), 0 0 30px rgba(16, 185, 129, 0.7);
   text-align: center;
-}
-
-.section-head p {
-  font-size: 1rem;
-  font-weight: 300;
-  max-width: 600px;
-  margin: 1rem auto 0;
 }
 
 /* Styling für die Vorstellung */
@@ -226,7 +233,11 @@ body {
 @media (max-width: 768px) {
   .intro {
     padding: 4rem 1rem;
-    clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); /* Weniger Abschnitt für Mobile */
+    background: linear-gradient(170deg, #1f2937 0%, #10b981 20%);
+  }
+
+  .intro::after {
+    height: 25%;
   }
 
   .vorstellung {
@@ -246,7 +257,11 @@ body {
 @media (max-width: 480px) {
   .intro {
     padding: 3rem 0.5rem;
-    clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%); /* Noch weniger Abschnitt für kleinere Geräte */
+    background: linear-gradient(170deg, #1f2937 0%, #10b981 20%);
+  }
+
+  .intro::after {
+    height: 20%;
   }
 
   .vorstellung {
@@ -263,7 +278,7 @@ body {
   }
 
   .highlights {
-    margin-bottom: 1rem; /* Mehr Platz nach unten */
+    margin-bottom: 1rem;
   }
 }
 
