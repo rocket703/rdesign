@@ -482,3 +482,9 @@ body {
 @media (max-width: 1280px) { .cover-link { max-width: 900px; } }
 @media (max-width: 1024px) { .cover-link { max-width: 820px; } }
 @media (max-width: 820px)  { .cover-link { max-width: 100%; } }
+
+/* Abstand nur im Danke-Hero */
+.project-hero .cta-row {
+  gap: .9rem;
+  flex-wrap: wrap;
+}
