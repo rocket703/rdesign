@@ -1,65 +1,96 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" class="no-js">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Rdesign – Seite nicht gefunden</title>
-<meta name="description" content="Die angeforderte Seite konnte nicht gefunden werden." />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rdesign – Seite nicht gefunden</title>
+  <meta name="description" content="Die angeforderte Seite konnte nicht gefunden werden." />
+  <meta name="robots" content="noindex,follow" />
+  <meta name="theme-color" content="#10b981" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <link rel="icon" href="./favicon.ico" sizes="any">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+
+  <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-<header class="site-header">
-<a href="index.html" class="logo-link" aria-label="Zurück zur Startseite">
-<svg class="logo" width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#34d399;stop-opacity:1" />
-    </linearGradient>
-  </defs>
-  <text x="50%" y="50%" font-family="'Inter', sans-serif" font-size="24" font-weight="800" fill="url(#logoGradient)" text-anchor="middle" dominant-baseline="middle">RD</text>
-</svg>
-</a>
-<nav class="main-nav" aria-label="Hauptnavigation">
-<div class="burger-menu" id="burger-menu">
-<span></span>
-<span></span>
-<span></span>
-</div>
-<ul class="nav-list" id="nav-list">
-<li><a href="kontakt.html">Kontakt</a></li>
-<li><a href="index.html#projekte">Projekte</a></li>
-<li><a href="impressum.html">Impressum</a></li>
-</ul>
-</nav>
-</header>
+  <a class="skip-link" href="#main">Zum Inhalt springen</a>
 
-<main>
-<section class="section">
-<div class="section-head">
-<h2>404 – Seite nicht gefunden</h2>
-<p>Entschuldigung, die angeforderte Seite konnte nicht gefunden werden. Überprüfen Sie die URL oder kehren Sie zur Startseite zurück.</p>
-</div>
-<div class="content">
-<a href="index.html" class="button">Zurück zur Startseite</a>
-</div>
-</section>
-</main>
+  <header class="site-header">
+    <a href="./index.html" class="logo-link" aria-label="Zurück zur Startseite">
+      <svg class="logo" width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="logoTitle">
+        <title id="logoTitle">Rdesign Logo</title>
+        <defs>
+          <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#34d399;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <text x="50%" y="50%" font-family="'Inter', sans-serif" font-size="24" font-weight="800" fill="url(#logoGradient)" text-anchor="middle" dominant-baseline="middle">RD</text>
+      </svg>
+    </a>
 
-<footer class="site-footer">
-<p>© <span id="year"></span> - Rdesign. Alle Rechte vorbehalten.</p>
-<a href="datenschutz.html" class="footer-link">Datenschutz</a>
-</footer>
+    <nav class="main-nav" aria-label="Hauptnavigation">
+      <button class="burger-menu" id="burger-menu" aria-label="Menü öffnen" aria-expanded="false" aria-controls="primary-nav">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </button>
+      <ul class="nav-list" id="primary-nav">
+        <li><a href="./kontakt.html">Kontakt</a></li>
+        <li><a href="./index.html#projekte">Projekte</a></li>
+        <li><a href="./impressum.html">Impressum</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<script>
-document.getElementById('year').textContent = new Date().getFullYear();
-document.getElementById('burger-menu').addEventListener('click', function() {
-  this.classList.toggle('active');
-  document.getElementById('nav-list').classList.toggle('active');
-});
-</script>
+  <main id="main">
+    <section class="project-hero has-polys error-hero">
+      <div class="container">
+        <div class="error-code" aria-hidden="true">404</div>
+        <h1 class="project-title">Seite nicht gefunden</h1>
+        <p class="project-subtitle">
+          Die angeforderte URL existiert nicht (mehr). Prüfe die Adresse oder nutze eine der Optionen.
+        </p>
+
+        <div class="cta-row">
+          <a class="glass-link" href="./index.html">Zur Startseite</a>
+          <a class="glass-link" href="./kontakt.html">Kontaktiere mich</a>
+        </div>
+
+        <p class="note">
+          <strong>Tipp:</strong> Falls du über einen alten Link gekommen bist, hat sich die Struktur geändert.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year">2025</span> - Rdesign. Alle Rechte vorbehalten.</p>
+    <a href="./datenschutz.html" class="footer-link">Datenschutz</a>
+  </footer>
+
+  <script>
+    (function () {
+      var y = document.getElementById('year');
+      if (y) { y.textContent = new Date().getFullYear(); }
+
+      var burger = document.getElementById('burger-menu');
+      var nav = document.getElementById('primary-nav');
+      if (burger && nav) {
+        burger.addEventListener('click', function () {
+          var expanded = this.getAttribute('aria-expanded') === 'true';
+          this.classList.toggle('active');
+          this.setAttribute('aria-expanded', String(!expanded));
+          nav.classList.toggle('active');
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
