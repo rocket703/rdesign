@@ -1,8 +1,8 @@
-/* Reset & Basis */
+/* ====================== Reset & Basis ====================== */
 *,
 *::before,
 *::after { box-sizing: border-box; }
-html, body { height: 100%; }
+html, body { min-height: 100%; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body {
   margin: 0;
@@ -21,12 +21,12 @@ body {
 }
 .skip-link:focus { left: .75rem; top: .75rem; }
 
-/* ========== Header / Navigation ========== */
+/* ================= Header / Navigation ================= */
 .site-header {
   position: sticky; top: 0;
-  background: rgba(17, 24, 39, 0.45); /* Gray-900 @ 65% */
+  background: rgba(17, 24, 39, 0.45);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 2px 8px rgba(0,0,0,.25);
   z-index: 1000;
   padding: 1rem 1.5rem;
@@ -58,47 +58,42 @@ body {
 .burger-menu span:nth-child(1){ top: 0; }
 .burger-menu span:nth-child(2){ top: 8px; }
 .burger-menu span:nth-child(3){ top: 16px; }
-.nav-list.active { display: flex; }
 
-/* ========== Sections ========== */
+/* ================= Sections ================= */
 .section { max-width: 1200px; margin: 0 auto; padding: 4rem 1.5rem; }
 
-/* ========== HERO / Intro ========== */
+/* ================= HERO / Intro ================= */
 .intro {
   position: relative; overflow: hidden;
-  background: radial-gradient(1200px 700px at 10% -10%, rgba(16,185,129,.18), transparent 60%),
-              radial-gradient(1000px 600px at 90% 0%, rgba(59,130,246,.12), transparent 65%),
-              linear-gradient(170deg, #0f172a 0%, #111827 55%, #0b1220 100%); /* Slate-900 → Gray-900 */
+  background:
+    radial-gradient(1200px 700px at 10% -10%, rgba(16,185,129,.18), transparent 60%),
+    radial-gradient(1000px 600px at 90% 0%, rgba(59,130,246,.12), transparent 65%),
+    linear-gradient(170deg, #0f172a 0%, #111827 55%, #0b1220 100%);
   color: #e5e7eb;
   text-align: center;
   padding: 6.5rem 1.5rem 6rem;
 }
 
-/* >>> Tech-Polygone (NEU): liegen unter H1 & Unterzeile */
+/* Tech-Polygone unter H1 */
 .intro .section-head { position: relative; z-index: 2; }
-/* ein großes, sanftes Polygon/Linien-Muster */
 .intro .section-head::before {
   content: "";
   position: absolute;
-  inset: -40px -24px -48px -24px; /* etwas größer als der Head-Bereich */
+  inset: -40px -24px -48px -24px;
   z-index: -1;
-  /* Layer 1: isometrische Linien via repeating-linear-gradient */
   background:
     repeating-linear-gradient( 60deg, rgba(148,163,184,0.06) 0 2px, transparent 2px 28px),
     repeating-linear-gradient(-60deg, rgba(148,163,184,0.05) 0 2px, transparent 2px 28px),
-    /* Layer 2: weiche Farbflecken */
     radial-gradient(600px 280px at 20% 80%, rgba(16,185,129,0.20), transparent 60%),
     radial-gradient(500px 260px at 80% 20%, rgba(59,130,246,0.18), transparent 65%),
-    /* Basis */
     linear-gradient(180deg, transparent, rgba(0,0,0,0.18));
-  /* polygonale Maske mit Clip-Path */
   -webkit-clip-path: polygon(0% 15%, 18% 10%, 35% 16%, 52% 9%, 72% 14%, 100% 8%, 100% 85%, 77% 92%, 56% 86%, 33% 93%, 12% 88%, 0% 95%);
-            clip-path: polygon(0% 15%, 18% 10%, 35% 16%, 52% 9%, 72% 14%, 100% 8%, 100% 85%, 77% 92%, 56% 86%, 33% 93%, 12% 88%, 0% 95%);
+          clip-path: polygon(0% 15%, 18% 10%, 35% 16%, 52% 9%, 72% 14%, 100% 8%, 100% 85%, 77% 92%, 56% 86%, 33% 93%, 12% 88%, 0% 95%);
   filter: blur(1px) saturate(110%);
   opacity: .9;
 }
 
-/* H1: gleiches Design, aber „gläserner“ Hintergrund in einheitlichem Grünton */
+/* Intro H1 + Unterzeile */
 .intro .section-head h1 {
   display: inline-block;
   position: relative;
@@ -114,27 +109,20 @@ body {
   -webkit-background-clip: text;
           background-clip: text;
 }
-
-/* Glas-Layer hinter der H1 – transparenter, stärkerer Blur, gleiche grüne Tönung wie Unterzeile */
 .intro .section-head h1::before {
   content: "";
   position: absolute;
-  inset: -.35rem -.75rem;                       /* etwas größerer Glasrahmen */
-  background:
-    linear-gradient(180deg, rgba(16,185,129,0.10), rgba(16,185,129,0.06)); /* einheitliche Tönung */
+  inset: -.35rem -.75rem;
+  background: linear-gradient(180deg, rgba(16,185,129,0.10), rgba(16,185,129,0.06));
   border: 1px solid rgba(16,185,129,0.35);
-  box-shadow:
-    inset 0 0 1px rgba(255,255,255,0.06),
-    0 14px 36px rgba(0,0,0,0.32);
+  box-shadow: inset 0 0 1px rgba(255,255,255,0.06), 0 14px 36px rgba(0,0,0,0.32);
   backdrop-filter: blur(10px) saturate(115%);
   -webkit-backdrop-filter: blur(10px) saturate(115%);
   border-radius: 14px;
   z-index: -1;
 }
-
-/* Unterzeile: gleicher Glaslook & Farbe wie der H1-Container (einheitlich „grünliches Glas“) */
 .intro .section-head h1::after {
-  content: "Webentwicklung • Design • Performance";
+  content: "Webentwicklung • Design • Appentwicklung";
   display: block;
   margin: .9rem auto 0;
   padding: .5rem .9rem;
@@ -144,51 +132,38 @@ body {
   letter-spacing: .02em;
   color: #eafdf5;
   text-shadow: 0 1px 0 rgba(0,0,0,.35);
-  background:
-    linear-gradient(180deg, rgba(16,185,129,0.10), rgba(16,185,129,0.06));
-  border: 1px solid rgba(16,185,129,0.35);
-  backdrop-filter: blur(8px) saturate(115%);
-  -webkit-backdrop-filter: blur(8px) saturate(115%);
-  border-radius: 12px;
-  box-shadow: 0 12px 28px rgba(0,0,0,.28);
 }
-/* Einleitungs-Text */
+
+/* Einleitungstext */
 .vorstellung {
-  font-size: 1rem; font-weight: 400; color: #cbd5e1; /* Slate-300 */
+  font-size: 1rem; font-weight: 400; color: #cbd5e1;
   line-height: 1.65; max-width: 1100px; margin: 1rem auto 0; padding: 0 1rem;
 }
 
-/* Angepasstes Layout für die Zentrierung der Highlights */
+/* Highlights */
 .highlights-container {
-  max-width: 1000px; /* Gleiche Breite wie .section */
+  max-width: 1000px;
   margin: auto;
-  padding: auto; /* Das Padding hierher verschoben */
+  padding: 0; /* statt 'auto' */
 }
-
 .highlights {
   list-style: none;
-  padding: 0;             
-  margin: 2rem 0 0;    
+  padding: 0;
+  margin: 2rem 0 0;
   display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-  gap: 1rem; margin-top: 2rem;
-  align-items: stretch; /* alle gleich hoch */
+  gap: 1rem;
+  align-items: stretch;
 }
 .highlights li {
-  display: flex;
-  flex-direction: column;         /* NEU: Titel + Subtext untereinander */
-  gap: .25rem;                    /* NEU: kleiner Abstand zwischen Titel & Subtext */
-  align-items: center; justify-content: center;
-  text-align: center;
-  min-height: 76px; /* einheitliche Höhe für 1–2 Zeilen */
-  padding: 0 1rem;
-  line-height: 1.35;
+  display: flex; flex-direction: column; gap: .25rem;
+  align-items: center; justify-content: center; text-align: center;
+  min-height: 76px; padding: 0 1rem; line-height: 1.35;
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 10px;
   font-size: 1.08rem; font-weight: 600;
   transition: transform .25s ease, background .25s ease, border-color .25s ease;
 }
-/* NEU: kleiner, gut lesbarer Erklärungstext aus data-desc */
 .highlights li::after {
   content: attr(data-desc);
   display: block;
@@ -199,14 +174,13 @@ body {
   color: #cbd5e1;
   opacity: .95;
 }
-
 .highlights li:hover {
   transform: translateY(-2px);
   background: rgba(255,255,255,0.08);
   border-color: rgba(16,185,129,0.35);
 }
 
-/* ========== Projekte ========== */
+/* ================= Projekte (Liste) ================= */
 .projects { background: #111827; padding: 4rem 1.5rem; position: relative; z-index: 1; }
 .projects .section-head h2 {
   font-size: clamp(1.8rem, 3.5vw, 2.4rem); font-weight: 800; margin-bottom: 1rem; position: relative;
@@ -218,7 +192,6 @@ body {
   background: linear-gradient(90deg,#34d399,#10b981);
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
-
 .card-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
   gap: 2rem; margin-top: 2rem;
@@ -236,8 +209,7 @@ body {
   box-shadow: 0 18px 40px rgba(0,0,0,.35);
 }
 .card-media {
-  width: 100%; height: 200px; object-fit: cover; object-position: center;
-  display: block;
+  width: 100%; height: 200px; object-fit: cover; object-position: center; display: block;
 }
 .card-body { padding: 1.25rem 1.25rem 1.3rem; }
 .card-body h3 { font-size: 1.35rem; font-weight: 700; color: #f3f4f6; margin: 0 0 .45rem; }
@@ -249,282 +221,19 @@ body {
   border: 1px solid rgba(255,255,255,0.06);
 }
 
-/* ========== Detailseiten / Content / Formulare ========== */
-.project-detail .content { max-width: 800px; margin: 2rem auto; }
-.project-detail .project-media {
-  width: 100%; height: 300px; object-fit: cover; object-position: center;
-  border-radius: 12px; margin-bottom: 2rem; display: block;
-}
-.project-detail h3 { font-size: 1.5rem; font-weight: 700; color: #e5e7eb; margin: 1rem 0 .5rem; }
-.project-detail p { font-size: 1rem; color: #9ca3af; margin-bottom: 1rem; }
+/* ================= Projekt-Detailseiten ================= */
+.container { max-width: 1200px; margin: 0 auto; }
+.container.narrow { max-width: 860px; }
 
-.contact-form { max-width: 600px; margin: 2rem auto; display: grid; gap: 1.2rem; }
-.form-group { display: flex; flex-direction: column; }
-.form-group label { font-size: 1rem; font-weight: 500; color: #e5e7eb; margin-bottom: .45rem; }
-.form-group input, .form-group textarea {
-  background: #0f172a; /* Slate-900 */
-  border: 1px solid rgba(148,163,184,0.25);
-  border-radius: 10px; padding: .85rem .95rem;
-  color: #e5e7eb; font-size: 1rem; font-family: inherit;
-  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
-}
-.form-group input:focus, .form-group textarea:focus {
-  outline: none;
-  border-color: rgba(16,185,129,0.55);
-  box-shadow: 0 0 0 4px rgba(16,185,129,0.18);
-  background: #0b1220;
-}
-.form-group textarea { resize: vertical; min-height: 120px; }
-.contact-form button,
-.button {
-  background: #10b981; color: #0b1220; border: 0;
-  border-radius: 10px; padding: .85rem 1.25rem; font-size: 1rem; font-weight: 700;
-  cursor: pointer; transition: transform .15s ease, background .25s ease, box-shadow .25s ease;
-  text-decoration: none; display: inline-block;
-  box-shadow: 0 10px 20px rgba(16,185,129,0.22);
-}
-.contact-form button:hover, .button:hover {
-  background: #34d399; transform: translateY(-1px);
-}
-.button.secondary { background: #374151; color: #e5e7eb; box-shadow: none; }
-.button.secondary:hover { background: #4b5563; }
-
-.content { max-width: 800px; margin: 2rem auto; padding: 0 1rem; color: #cbd5e1; }
-.content p { font-size: 1rem; color: #9ca3af; margin-bottom: 1rem; }
-
-/* ========== Footer ========== */
-.site-footer { background: #0b1220; color: #e5e7eb; text-align: center; padding: 2rem 1.5rem; }
-.site-footer p { font-size: 1rem; font-weight: 300; }
-.footer-link { color: #e5e7eb; text-decoration: none; font-size: 1rem; font-weight: 400; margin-top: .5rem; display: inline-block; transition: color .2s ease; }
-.footer-link:hover { color: #10b981; }
-
-/* ========== Responsive ========== */
-@media (max-width: 1024px) {
-  .highlights { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 820px) {
-  .section { padding: 3rem 1rem; }
-  .intro { padding: 5rem 1rem 3.25rem; }
-  .highlights { grid-template-columns: 1fr; }
-  .card-grid { grid-template-columns: 1fr; }
-  .card-media { height: 170px; }
-  .project-detail .project-media { height: 220px; }
-
-  .main-nav .nav-list {
-    display: none; flex-direction: column; align-items: center;
-    background: rgba(17,24,39,0.92);
-    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-    position: absolute; top: 100%; left: 0; width: 100%; padding: 1rem;
-  }
-  .main-nav .nav-list.active { display: flex; }
-  .main-nav .nav-list li { margin: .5rem 0; }
-  .burger-menu { display: block; margin-left: auto; }
-  .burger-menu.active span:nth-child(1){ transform: rotate(45deg); top: 8px; }
-  .burger-menu.active span:nth-child(2){ opacity: 0; }
-  .burger-menu.active span:nth-child(3){ transform: rotate(-45deg); top: 8px; }
-}
-@media (max-width: 480px) {
-  .intro { padding: 4.25rem .75rem 2.75rem; }
-  .vorstellung { font-size: .96rem; }
-  .card-body h3 { font-size: 1.2rem; }
-  .card-body p { font-size: .92rem; }
-  .projects .section-head h2::after { font-size: .92rem; }
-  .project-detail .project-media { height: 170px; }
-}
-/* ===== Projektseite: Hero / Titel mittig ===== */
+/* Hero */
 .project-hero {
   text-align: center;
-  padding: 5rem 1.5rem 3rem;
+  padding: 5rem 1.5rem 2.25rem;   /* konsolidiert */
+  margin-bottom: .5rem;
   background:
     radial-gradient(900px 400px at 10% -10%, rgba(16,185,129,.12), transparent 60%),
     radial-gradient(800px 380px at 90% 0%, rgba(59,130,246,.10), transparent 65%);
 }
-
-.container { max-width: 1200px; margin: 0 auto; }
-.container.narrow { max-width: 860px; }
-
-.project-title {
-  font-size: clamp(2.2rem, 5vw, 3.2rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  margin: 0 0 .6rem;
-  line-height: 1.12;
-  background: linear-gradient(180deg, #ecfdf5 0%, #a7f3d0 100%);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-  text-shadow: 0 10px 30px rgba(0,0,0,.35);
-}
-
-.project-subtitle {
-  font-size: clamp(1rem, 2.4vw, 1.15rem);
-  color: #cbd5e1;
-  margin: 0 auto 1.75rem;
-  max-width: 62ch;
-}
-
-/* ===== Tech-Chips als Glas-Karten ===== */
-.tech-grid {
-  list-style: none;
-  margin: 1.25rem auto 1.75rem;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: .75rem;
-  max-width: 760px;
-}
-
-.tech-chip {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: .55rem .9rem;
-  border-radius: 12px;
-  font-size: .95rem;
-  font-weight: 600;
-  color: #e5e7eb;
-  text-align: center;
-  white-space: nowrap;
-}
-
-.tech-chip.glass {
-  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
-  border: 1px solid rgba(255,255,255,0.10);
-  backdrop-filter: blur(10px) saturate(115%);
-  -webkit-backdrop-filter: blur(10px) saturate(115%);
-  box-shadow: inset 0 0 1px rgba(255,255,255,0.06), 0 10px 24px rgba(0,0,0,.25);
-  transition: transform .2s ease, border-color .2s ease, background .2s ease;
-}
-.tech-chip.glass:hover {
-  transform: translateY(-2px);
-  border-color: rgba(16,185,129,0.35);
-  background: linear-gradient(180deg, rgba(16,185,129,0.10), rgba(255,255,255,0.04));
-}
-
-/* ===== Gläserner Link zur Webseite ===== */
-.cta-row { margin: .25rem 0 0; }
-.glass-link {
-  display: inline-block;
-  padding: .75rem 1.1rem;
-  border-radius: 12px;
-  font-weight: 800;
-  text-decoration: none;
-  letter-spacing: .01em;
-  color: #0b1220;
-  background: linear-gradient(180deg, rgba(16,185,129,0.90), rgba(52,211,153,0.95));
-  border: 1px solid rgba(16,185,129,0.55);
-  box-shadow: 0 14px 30px rgba(16,185,129,0.22);
-  transition: transform .15s ease, filter .2s ease, box-shadow .2s ease;
-}
-.glass-link:hover {
-  transform: translateY(-1px);
-  filter: saturate(110%);
-  box-shadow: 0 18px 36px rgba(16,185,129,0.28);
-}
-
-/* ===== Bild / Visual ===== */
-.project-visual { padding: 0 1.5rem 2.25rem; }
-.project-visual .project-media {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 15px;
-}
-/* Subtile Polygon-Hinterlage für Detailseiten */
-.project-hero.has-polys {
-  position: relative;
-  overflow: clip;
-}
-
-.project-hero.has-polys::before {
-  content: "";
-  position: absolute;
-  inset: -32px -24px -40px -24px;
-  z-index: -1;
-  background:
-    /* Linienmuster (schwächer als Startseite) */
-    repeating-linear-gradient( 60deg, rgba(148,163,184,0.05) 0 2px, transparent 2px 28px),
-    repeating-linear-gradient(-60deg, rgba(148,163,184,0.04) 0 2px, transparent 2px 28px),
-    /* weiche Farbflecken (deutlich reduziert) */
-    radial-gradient(520px 240px at 18% 78%, rgba(16,185,129,0.14), transparent 60%),
-    radial-gradient(460px 220px at 82% 18%, rgba(59,130,246,0.12), transparent 65%),
-    linear-gradient(180deg, transparent, rgba(0,0,0,0.12));
-  -webkit-clip-path: polygon(0% 15%, 18% 10%, 35% 16%, 52% 9%, 72% 14%, 100% 8%, 100% 85%, 77% 92%, 56% 86%, 33% 93%, 12% 88%, 0% 95%);
-          clip-path: polygon(0% 15%, 18% 10%, 35% 16%, 52% 9%, 72% 14%, 100% 8%, 100% 85%, 77% 92%, 56% 86%, 33% 93%, 12% 88%, 0% 95%);
-  filter: blur(0.5px) saturate(108%);
-  opacity: .75; /* Startseite ist z.B. ~.9 – hier reduzierter */
-}
-.cover-link { display: block; border-radius: 14px; }
-.cover-link:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 4px rgba(16,185,129,0.35);
-  border-radius: 14px;
-}
-.cover-link:hover .project-media {
-  transform: translateY(-2px);
-}
-.project-media {
-  transition: transform .25s ease, box-shadow .25s ease;
-}
-/* --- Fix: Ausrichtung & Lesbarkeit auf der Projektseite --- */
-.project-hero {
-  text-align: center;
-  padding: 5rem 1.5rem 2.25rem;   /* etwas weniger unten */
-  margin-bottom: .5rem;           /* Abstand zum Bild-Block */
-}
-
-/* Chips können zentriert bleiben – Button braucht aber Abstand */
-.cta-row { 
-  margin: 1.25rem 0 2.25rem;      /* vorher: .25rem 0 0 → zu knapp */
-}
-.glass-link:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 4px rgba(16,185,129,0.35);
-  border-radius: 12px;
-}
-
-/* Bild-Block: eigener vertikaler Rhythmus */
-.project-visual { 
-  padding: 0 1.5rem 2.25rem; 
-  margin-top: 0; 
-}
-.project-visual .project-media {
-  border: 1px solid rgba(255,255,255,0.06);
-  box-shadow: 0 18px 44px rgba(0,0,0,.35);
-  transition: transform .25s ease, box-shadow .25s ease;
-}
-.cover-link:hover .project-media { transform: translateY(-2px); }
-
-/* Detailbereich: linksbündig + gute Zeilenlänge */
-.project-detail { 
-  padding-top: 2rem; 
-  text-align: left;               /* entkoppelt von etwaigen Center-Regeln */
-}
-.project-detail .container,
-.project-detail .container.narrow {
-  max-width: 820px;               /* angenehme Lesebreite */
-}
-.project-detail h2,
-.project-detail h3,
-.project-detail p,
-.project-detail .task-list { 
-  text-align: left;               /* hart linksbündig */
-}
-.project-detail p {
-  max-width: 68ch;                /* bessere Lesbarkeit */
-  margin-bottom: 1rem;
-  color: #cbd5e1;
-}
-.project-detail .task-list { 
-  margin: .5rem 0 1.25rem 1.1rem; 
-  line-height: 1.6; 
-  color: #9ca3af;
-}
-.result-note { 
-  margin-top: 1rem; 
-  font-weight: 600; 
-  color: #e5e7eb;
-}
-
-/* Hero-Polygone dezenter (optional – nur wenn Klasse gesetzt ist) */
 .project-hero.has-polys { position: relative; overflow: clip; }
 .project-hero.has-polys::before {
   content: "";
@@ -539,48 +248,237 @@ body {
           clip-path: polygon(0% 15%, 18% 10%, 35% 16%, 52% 9%, 72% 14%, 100% 8%, 100% 85%, 77% 92%, 56% 86%, 33% 93%, 12% 88%, 0% 95%);
   filter: blur(.5px) saturate(108%); opacity: .72;
 }
+.project-title {
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: 800; letter-spacing: -0.02em;
+  margin: 0 0 .6rem; line-height: 1.12;
+  background: linear-gradient(180deg, #ecfdf5 0%, #a7f3d0 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  text-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+.project-subtitle {
+  font-size: clamp(1rem, 2.4vw, 1.15rem);
+  color: #cbd5e1; margin: 0 auto 1.75rem; max-width: 62ch;
+}
 
-/* Responsive Finetuning */
+/* Tech-Chips */
+.tech-grid {
+  list-style: none; margin: 1.25rem auto 1.75rem; padding: 0;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: .75rem; max-width: 760px;
+}
+.tech-chip {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: .55rem .9rem; border-radius: 12px;
+  font-size: .95rem; font-weight: 600; color: #e5e7eb; text-align: center; white-space: nowrap;
+}
+.tech-chip.glass {
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.10);
+  backdrop-filter: blur(10px) saturate(115%);
+  -webkit-backdrop-filter: blur(10px) saturate(115%);
+  box-shadow: inset 0 0 1px rgba(255,255,255,0.06), 0 10px 24px rgba(0,0,0,.25);
+  transition: transform .2s ease, border-color .2s ease, background .2s ease;
+}
+.tech-chip.glass:hover {
+  transform: translateY(-2px);
+  border-color: rgba(16,185,129,0.35);
+  background: linear-gradient(180deg, rgba(16,185,129,0.10), rgba(255,255,255,0.04));
+}
+
+/* CTA-Link */
+.cta-row {
+  display: flex; justify-content: center; align-items: center;
+  margin: 1.25rem 0 2.25rem;
+}
+.glass-link {
+  display: inline-block;
+  padding: .75rem 1.1rem; border-radius: 12px; font-weight: 800; text-decoration: none; letter-spacing: .01em;
+  color: #0b1220;
+  background: linear-gradient(180deg, rgba(16,185,129,0.90), rgba(52,211,153,0.95));
+  border: 1px solid rgba(16,185,129,0.55);
+  box-shadow: 0 14px 30px rgba(16,185,129,0.22);
+  transition: transform .15s ease, filter .2s ease, box-shadow .2s ease;
+}
+.glass-link:hover {
+  transform: translateY(-1px);
+  filter: saturate(110%);
+  box-shadow: 0 18px 36px rgba(16,185,129,0.28);
+}
+.glass-link:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(16,185,129,0.35);
+  border-radius: 12px;
+}
+
+/* Bild / Visual – konsolidiert */
+.project-visual { padding: 0 1.5rem 2.25rem; margin-top: 0; }
+.project-visual .container {
+  display: flex;
+  justify-content: center;
+}
+
+/* Einheitliche, kleinere Bildgröße für alle Projektseiten */
+.cover-link {
+  display: block;
+  width: 100%;
+  max-width: 780px;            /* Zielgröße Desktop */
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 18px 44px rgba(0,0,0,.35);
+}
+.cover-link:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(16,185,129,0.35);
+  border-radius: 14px;
+}
+.cover-link .project-media {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.cover-link:hover .project-media { transform: translateY(-2px); }
+
+/* Detail-Content */
+.project-detail { padding-top: 2rem; text-align: left; }
+.project-detail .container,
+.project-detail .container.narrow { max-width: 820px; }
+.project-detail h2,
+.project-detail h3,
+.project-detail p,
+.project-detail .task-list { text-align: left; }
+.project-detail p {
+  max-width: 68ch; margin-bottom: 1rem; color: #cbd5e1;
+}
+.project-detail .task-list { margin: .5rem 0 1.25rem 1.1rem; line-height: 1.6; color: #9ca3af; }
+.result-note { margin-top: 1rem; font-weight: 600; color: #e5e7eb; }
+
+/* Optionales Bild innerhalb des Detailtexts (anderer Kontext als Visual oben) */
+.project-detail .project-media {
+  width: 100%; height: 300px;
+  object-fit: cover; object-position: center;
+  border-radius: 12px; margin-bottom: 2rem; display: block;
+}
+
+/* ================= Footer ================= */
+.site-footer { background: #0b1220; color: #e5e7eb; text-align: center; padding: 2rem 1.5rem; }
+.site-footer p { font-size: 1rem; font-weight: 300; }
+.footer-link { color: #e5e7eb; text-decoration: none; font-size: 1rem; font-weight: 400; margin-top: .5rem; display: inline-block; transition: color .2s ease; }
+.footer-link:hover { color: #10b981; }
+
+/* ================= Responsive ================= */
+@media (max-width: 1024px) {
+  .highlights { grid-template-columns: repeat(2, 1fr); }
+}
 @media (max-width: 820px) {
-  .project-hero { padding: 4rem 1rem 2rem; }
-  .cta-row { margin: 1rem 0 1.75rem; }
+  .section { padding: 3rem 1rem; }
+  .intro { padding: 5rem 1rem 3.25rem; }
+  .highlights { grid-template-columns: 1fr; }
+  .card-grid { grid-template-columns: 1fr; }
+  .card-media { height: 170px; }
+
+  /* Mobile Nav */
+  .main-nav .nav-list {
+    display: none; flex-direction: column; align-items: center;
+    background: rgba(17,24,39,0.92);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    position: absolute; top: 100%; left: 0; width: 100%; padding: 1rem;
+  }
+  .main-nav .nav-list.active { display: flex; }
+  .main-nav .nav-list li { margin: .5rem 0; }
+  .burger-menu { display: block; margin-left: auto; }
+  .burger-menu.active span:nth-child(1){ transform: rotate(45deg); top: 8px; }
+  .burger-menu.active span:nth-child(2){ opacity: 0; }
+  .burger-menu.active span:nth-child(3){ transform: rotate(-45deg); top: 8px; }
+
+  /* Detailseiten */
   .project-detail .container,
   .project-detail .container.narrow { max-width: 94%; }
   .project-detail p { max-width: 100%; }
 }
-/* === Fix: CTA-Button mittig (Seite 2 & 3, auch 1 passt) === */
-.cta-row {
-  display: flex;
-  justify-content: center;   /* zentriert den Button */
-  align-items: center;
-  margin: 1.25rem 0 2.25rem; /* genügend Luft zum Bild */
+@media (max-width: 480px) {
+  .intro { padding: 4.25rem .75rem 2.75rem; }
+  .vorstellung { font-size: .96rem; }
+  .card-body h3 { font-size: 1.2rem; }
+  .card-body p { font-size: .92rem; }
+  .projects .section-head h2::after { font-size: .92rem; }
+  .project-detail .project-media { height: 170px; }
 }
-
-/* === Fix: Bild kleiner & zentriert (alle Projektseiten) === */
-.project-visual .container {
-  display: flex;
-  justify-content: center;   /* zentriert das Bild */
-}
-
-.project-visual .project-media {
-  width: 100%;
-  max-width: 980px;          /* begrenzt die Breite auf großen Screens */
-  height: auto;
-  border-radius: 14px;       /* konsistent zum Rest */
+/* === Kontaktformular Fix === */
+.contact-form {
+  max-width: 600px;
+  margin: 3rem auto;
+  display: grid;
+  gap: 1.2rem;
+  padding: 2rem;
+  background: rgba(255,255,255,0.02); /* leichter Glas-Effekt */
   border: 1px solid rgba(255,255,255,0.06);
-  box-shadow: 0 18px 44px rgba(0,0,0,.35);
-  transition: transform .25s ease, box-shadow .25s ease;
+  border-radius: 14px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.35);
 }
 
-/* Feinabstufungen nach Viewport */
-@media (max-width: 1280px) {
-  .project-visual .project-media { max-width: 900px; }
+.form-group {
+  display: flex;
+  flex-direction: column;
 }
-@media (max-width: 1024px) {
-  .project-visual .project-media { max-width: 820px; }
+
+.form-group label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #e5e7eb;
+  margin-bottom: .45rem;
 }
-@media (max-width: 820px) {
-  .project-visual .project-media { max-width: 100%; }
+
+.form-group input,
+.form-group textarea {
+  background: rgba(15,23,42,0.85); /* Slate-900 transparent */
+  border: 1px solid rgba(148,163,184,0.25);
+  border-radius: 10px;
+  padding: .9rem 1rem;
+  color: #e5e7eb;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: rgba(16,185,129,0.55);
+  box-shadow: 0 0 0 4px rgba(16,185,129,0.18);
+  background: #0b1220;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+/* Button auf Formular-Breite anpassen */
+.contact-form button {
+  justify-self: start;
+  padding: .95rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  background: linear-gradient(180deg, #10b981, #34d399);
+  color: #0b1220;
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(16,185,129,0.22);
+  transition: transform .15s ease, background .25s ease, box-shadow .25s ease;
+}
+
+.contact-form button:hover {
+  transform: translateY(-1px);
+  background: linear-gradient(180deg, #34d399, #10b981);
+  box-shadow: 0 14px 28px rgba(16,185,129,0.28);
 }
 
 
+/* Frame responsiv runter skalieren (nur noch auf Frame anwenden) */
+@media (max-width: 1280px) { .cover-link { max-width: 900px; } }
+@media (max-width: 1024px) { .cover-link { max-width: 820px; } }
+@media (max-width: 820px)  { .cover-link { max-width: 100%; } }
