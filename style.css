@@ -600,4 +600,28 @@ body {
   .hello{ margin-top: -6px; padding-top: 2.5rem; padding-bottom: 2.25rem; }
   .hello-lead{ font-size: 1rem; }
 }
+/* ===== Mobile H2 noch kleiner (fließend via clamp) ===== */
+@media (max-width: 480px) {
+  .hello .section-head h2 {
+    /* vorher: clamp(1.35rem, 5vw, 1.6rem) */
+    font-size: clamp(1.2rem, 4.6vw, 1.45rem);
+    line-height: 1.22;
+    letter-spacing: -0.01em;
+  }
+
+  .hello .section-head h2::after {
+    /* Unterzeile dezenter */
+    font-size: clamp(0.85rem, 3.8vw, 0.95rem);
+  }
+
+  .projects .section-head h2 {
+    /* vorher: clamp(1.25rem, 4.8vw, 1.5rem) */
+    font-size: clamp(1.15rem, 4.4vw, 1.35rem);
+    line-height: 1.22;
+  }
+
+  .projects .section-head h2::after {
+    font-size: clamp(0.82rem, 3.6vw, 0.92rem);
+  }
+}
 
