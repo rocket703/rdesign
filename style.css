@@ -651,4 +651,26 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .autoShow { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
 }
+/* Grid-Items sollen gleich hoch strecken */
+.card-grid { align-items: stretch; }
+
+/* Karte als Flex-Container (vertikal) */
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Body füllt den Rest, Inhalt vertikal stapeln */
+.card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;                 /* nimmt den verfügbaren Platz ein */
+}
+
+/* Chips immer nach unten drücken */
+.tags {
+  margin-top: auto;        /* schiebt .tags an das untere Ende der Karte */
+  padding-top: .75rem;     /* etwas Luft über den Chips */
+}
 
