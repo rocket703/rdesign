@@ -624,4 +624,65 @@ body {
     font-size: clamp(0.82rem, 3.6vw, 0.92rem);
   }
 }
+/* === AutoShow: Standard (sichtbar, falls keine Scroll-Animation unterstützt wird) === */
+.autoShow {
+  opacity: 1;
+  transform: none;
+}
 
+/* Bewegungen reduzieren */
+@media (prefers-reduced-motion: reduce) {
+  .autoShow { animation: none !important; }
+}
+
+/* ==== Variante A: Chromium & moderne Browser ==== */
+@supports (animation-timeline: view()) {
+  .autoShow {
+    /* Startzustand nur hier */
+    opacity: 0;
+    transform: translateY(100px);
+
+    animation: text-appear linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+
+  /* optionales Staggern */
+  .card-grid .autoShow:nth-child(2) { animation-delay: .06s; }
+  .card-grid .autoShow:nth-child(3) { animation-delay: .12s; }
+
+  /* verhindert „aufblitzen“ vorm Scrollstart */
+  @starting-style {
+    .autoShow {
+      opacity: 0;
+      transform: translateY(100px);
+    }
+  }
+}
+
+/* ==== Variante B: Safari/WebKit ==== */
+@supports (view-timeline-name: --reveal) {
+  .autoShow {
+    opacity: 0;
+    transform: translateY(100px);
+
+    view-timeline-name: --reveal;
+    view-timeline-axis: block;
+    animation: text-appear linear both;
+    animation-timeline: --reveal;
+    animation-range: entry 0% cover 30%;
+  }
+
+  @starting-style {
+    .autoShow {
+      opacity: 0;
+      transform: translateY(100px);
+    }
+  }
+}
+
+/* Gemeinsame Keyframes */
+@keyframes text-appear {
+  from { opacity: 0; transform: translateY(100px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
