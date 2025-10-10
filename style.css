@@ -121,18 +121,67 @@ body {
   border-radius: 14px;
   z-index: -1;
 }
-.intro .section-head h1::after {
+/* SUBLINE unter dem Logo */
+/* H1 darf die Subline aufnehmen und mittig ausrichten */
+.intro .section-head h1{
+  position: relative;
+  text-align: center;          /* stellt sicher, dass ::after mittig sitzt */
+}
+
+/* Subline: NUR bunte Schrift – smooth linear-gradient ohne Sprung */
+.intro .section-head h1::after{
   content: "Webentwicklung • Design • Appentwicklung";
-  display: block;
-  margin: .9rem auto 0;
-  padding: .5rem .9rem;
-  width: fit-content;
+  display: block;              /* steht unter dem H1 */
+  margin: .9rem auto 0;        /* Abstand nach oben, zentriert */
+  padding: 0;                  /* keine Fläche/Box */
   font-size: clamp(0.95rem, 2.3vw, 1.15rem);
   font-weight: 600;
   letter-spacing: .02em;
-  color: #eafdf5;
-  text-shadow: 0 1px 0 rgba(0,0,0,.35);
+  line-height: 1.2;
+
+  /* animierter, nahtloser Verlauf in der Schrift */
+  background: linear-gradient(
+    90deg,
+    #00c2ff,
+    #33ff8c,
+    #ffc640,
+    #e54cff,
+    #00c2ff  /* erste Farbe am Ende wiederholen -> kein Sprung */
+  );
+  background-size: 300% 100%;
+  background-position: 0% 50%;
+  color: transparent;
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* weiche, kontinuierliche Bewegung */
+  animation: r3-gradient-move 8s ease-in-out infinite;
 }
+
+/* Bewegung: vor/zurück über die gesamte Breite – smooth */
+@keyframes r3-gradient-move{
+  0%   { background-position:   0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position:   0% 50%; }
+}
+
+/* Optional: Dark-Glow ganz subtil (nur auf dunklem BG) */
+/*
+.intro .section-head h1::after{
+  text-shadow: 0 0 6px rgba(137,207,240,.18);
+}
+*/
+
+/* Barrierefreiheit: Animation aus -> statischer Verlauf */
+@media (prefers-reduced-motion: reduce){
+  .intro .section-head h1::after{
+    animation: none;
+    background-position: 50% 50%;
+  }
+}
+
+
 
 /* Einleitungstext */
 .vorstellung {
@@ -557,6 +606,7 @@ body {
 
 /* dezente, „schicke“ Glows innerhalb der Sektion (ohne harte Kanten) */
 .hello::after{
+  color:#fffff;
   content: "";
   position: absolute; inset: 0;
   pointer-events: none; z-index: -1;
@@ -673,4 +723,144 @@ body {
   margin-top: auto;        /* schiebt .tags an das untere Ende der Karte */
   padding-top: .75rem;     /* etwas Luft über den Chips */
 }
+/*XXXXXXXXXXXXXXXXXXXX*/
+/* === Über mich – Layout & Look === */
+.about{
+  --ring1: rgba(137,207,240,.35);   /* feiner Glow */
+  --ring2: rgba(90,200,250,.25);
+  --text: #eaf2ff;
+  --muted:#b7c2d0;
 
+  padding: clamp(28px, 6vw, 56px) 16px;
+}
+
+.about__inner{
+  max-width: 1150px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(180px, 320px) 1fr;
+  gap: clamp(20px, 4vw, 56px);
+  align-items: center;
+}
+
+/* Rundes Bild mit sanftem Ring/Glow */
+.about__media{
+  display:grid;
+  place-items:center;
+}
+.about__media img{
+  width: min(32vw, 320px);
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 2px rgba(0,0,0,.35) inset,
+    0 6px 22px rgba(0,0,0,.35),
+    0 0 0 10px var(--ring1),
+    0 0 40px 12px var(--ring2);
+}
+
+/* Textblock */
+.about__content{
+  color: var(--text);
+  max-width: 68ch;
+}
+.about__content h2{
+  margin: 0 0 .35em;
+  font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+  font-weight: 800;
+}
+.about__lead{
+  margin: 0 0 .75rem;
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  font-weight: 600;
+}
+.about__content p{
+  margin: 0 0 .8rem;
+  color: var(--text);
+  opacity: .95;
+  line-height: 1.65;
+}
+
+/* === Responsive: Bild oben, Text darunter === */
+@media (max-width: 860px){
+  .about__inner{
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .about__content{
+    margin-inline: auto;
+  }
+  .about__media img{
+    width: clamp(180px, 45vw, 260px);
+  }
+}
+/* Wrapper egal – das IMG macht den Kreis */
+.about__media img{
+  display:block;
+  width: clamp(180px, 45vw, 260px); /* mobil -> desktop */
+  aspect-ratio: 1 / 1;             /* immer quadratisch */
+  border-radius: 50%;
+  object-fit: cover;                /* zentriert/füllt ohne Verzerrung */
+  object-position: center;
+  height: auto;                     /* von aspect-ratio abgeleitet */
+}
+/* ===== Theme ===== */
+:root{
+  --bg-card: rgba(20,26,33,.6);
+  --bd: #243140;
+  --txt: #eaf2ff;
+  --muted:#b7c2d0;
+  --accent:#89cff0;          /* r3-blau */
+  --r:16px;
+}
+
+.features{
+  display:grid; gap:16px;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  max-width: 1200px; margin: 24px auto; padding: 0 16px;
+}
+@media (max-width: 1100px){ .features{ grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 640px){  .features{ grid-template-columns: 1fr; } }
+
+.f-card{
+  background: var(--bg-card);
+  border: 1px solid var(--bd);
+  border-radius: var(--r);
+  padding: 18px;
+  color: var(--txt);
+  box-shadow: 0 6px 18px rgba(0,0,0,.15);
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+
+/* ruhiger Hover: leichte Anhebung + zarter blauer Rand */
+.f-card:hover{
+  transform: translateY(-2px);
+  border-color: color-mix(in oklab, var(--accent) 50%, var(--bd));
+  box-shadow: 0 10px 22px rgba(0,0,0,.22);
+}
+
+.f-ico{
+  width:42px; height:42px; border-radius:50%;
+  display:grid; place-items:center;
+  font-size:20px;
+  color: var(--accent);
+  background: rgba(137,207,240,.08);
+  border:1px solid rgba(137,207,240,.25);
+  margin-bottom: .75rem;
+}
+
+.f-card h3{
+  margin:0 0 .35rem;
+  font-size: clamp(1.02rem, 1.8vw, 1.2rem);
+  line-height:1.25; font-weight:700;
+}
+.f-card p{
+  margin:0; color: var(--muted); line-height:1.55;
+}
+
+/* reduzierte Bewegung – ohnehin sehr dezent */
+@media (prefers-reduced-motion: reduce){
+  .f-card{ transition:none; }
+  .f-card:hover{ transform:none; }
+}
