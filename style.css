@@ -951,3 +951,68 @@ body {
   background-clip: text;
   color: transparent;
 }
+/*NEUE ÜBERSCHRIFT*/
+  .r3-logo {
+    font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    margin: 0;
+  }
+
+  .r3-word {
+    position: relative;
+    font-weight: 800;
+    font-size: clamp(28px, 12vw, 72px);
+    display: inline-flex;
+    align-items: baseline;
+  }
+  @media (max-width: 480px) {
+  .r3-word {
+    font-size: clamp(32px, 12vw, 80px);
+  }
+}
+
+  .r3-r {
+    position: relative;
+    font-weight: 800;
+    color: #fff;
+  }
+
+  /* Badge-3 */
+  .r3-badge {
+    position: absolute;
+    background: linear-gradient(135deg, #009f73 0%, #0080b5 50%, #005b99 100%);
+    left: 0.40em;   /* näher an die obere linke Ecke */
+    top: 0.0em;    /* höher setzen */
+    width: 0.9em;
+    height: 0.9em;
+    display: grid;
+    place-items: center;
+    font-size: 0.55em;
+    font-weight: 800;
+    color: #fff;
+    border-radius: 6px;
+    transform: rotate(18deg);
+    line-height: 1;
+    box-shadow: 0 6px 12px rgba(0,0,0,.4);
+
+
+  }
+
+  .r3-rest {
+    margin-left: .08em;
+    font-weight: 800;
+    background: linear-gradient(180deg,#eee 0%,#aaa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .r3-sub {
+    display: block;
+    margin-top: .4rem;
+    font-weight: 600;
+    font-size: clamp(14px, 1.6vw, 28px);
+    background: linear-gradient(90deg, #c86dd7, #8aa2ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
