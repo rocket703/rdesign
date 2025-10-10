@@ -864,3 +864,90 @@ body {
   .f-card{ transition:none; }
   .f-card:hover{ transform:none; }
 }
+/* ===== Flip Text Component ===== */
+/* ---- kompakt & konfliktarm ---- */
+.r3flip{
+  --font: 40px;     /* Schriftgröße */
+  --h: 48px;        /* Höhe einer Zeile */
+  --text: #b3b7bd;  /* grau (fixe Zeilen) */
+  --accent: #d03542;/* rot (wechselnde Zeile) */
+
+  font: 700 var(--font)/1.1 "Roboto", system-ui, Arial, sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--text);
+}
+
+.r3flip__fixed{ display:block; }
+
+.r3flip__vp{
+  display:block;
+  height: var(--h);
+  overflow: hidden;
+  margin: 10px 0 14px;
+}
+
+.r3flip__track{
+  display: inline-flex;
+  flex-direction: column; /* untereinander */
+  align-items: center;
+  will-change: transform;
+  animation: r3flip-hold 6s linear infinite; /* nahtlos + Stopps */
+}
+
+.r3flip__item{
+  display:block;
+  height: var(--h);
+  line-height: var(--h);
+  font-size: var(--font);
+  padding: 0 8px;
+  color: var(--accent);     /* nur Text farbig */
+  background: transparent;
+}
+
+/* Halt pro Wort (20% stehen, 10% wechseln) */
+@keyframes r3flip-hold{
+  0%   { transform: translateY(0); }
+  20%  { transform: translateY(0); }
+
+  30%  { transform: translateY(calc(-1 * var(--h))); }
+  50%  { transform: translateY(calc(-1 * var(--h))); }
+
+  60%  { transform: translateY(calc(-2 * var(--h))); }
+  80%  { transform: translateY(calc(-2 * var(--h))); }
+
+  90%  { transform: translateY(calc(-3 * var(--h))); } /* Duplikat */
+  100% { transform: translateY(calc(-3 * var(--h))); } /* nahtloser Reset */
+}
+
+/* optional kleiner für schmale Screens */
+@media (max-width: 520px){
+  .r3flip{ --font: 32px; --h: 40px; }
+}
+/* Richtung invertieren: von oben nach unten einblenden */
+.r3flip__vp { transform: scaleY(-1); }      /* Viewport auf den Kopf stellen */
+.r3flip__item { transform: scaleY(-1); }    /* Text wieder „zurückdrehen“ */
+/* Oben & unten weiß lassen (falls noch nicht gesetzt) */
+.r3flip__fixed { color: #fff; }
+
+/* Gradient-Text nur für die rotierenden Wörter */
+.item_green {
+  background: linear-gradient(90deg, #7FFF00, #00E676);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.item_blue {
+  background: linear-gradient(90deg, #4ec7f3, #1e90ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.item_violett {
+  background: linear-gradient(90deg, #8e44ad, #9b59b6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
