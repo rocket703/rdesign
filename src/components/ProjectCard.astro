@@ -1,0 +1,14 @@
+---
+// src/components/ProjectCard.astro
+const { title, description, image, tags, slug } = Astro.props;
+---
+<a class="card autoShow" href={`/projekte/${slug}`}>
+  <img src={image} alt={`Vorschau von ${title}`} class="card-media" loading="lazy" />
+  <div class="card-body">
+    <h3>{title}</h3>
+    <p>{description}</p>
+    <div class="tags">
+      {tags.map((tag) => <span>{tag}</span>)}
+    </div>
+  </div>
+</a>
