@@ -22,18 +22,38 @@ function optimize(project) {
   description="r³webdesign entwickelt performante Webseiten, klares Design und smarte Apps."
 >
  <section id="intro" class="section intro">
-  <div class="grid-overlay"></div>
-  
-  <div class="wave-container">
-    <div class="wave"></div>
-    <div class="wave"></div>
-    <div class="wave"></div>
+  <div class="hero-stack">
+    <div class="hero-card card-1"></div>
+    <div class="hero-card card-2"></div>
+    <div class="hero-card card-3"></div>
+    <div class="hero-card card-4"></div>
   </div>
 
-  <div class="data-point p1">LOC: 52.17°N / 11.62°E</div>
-  <div class="data-point p2">SYS_STATUS: OPTIMIZED</div>
-
   <div class="section-head">
+    
+   <div class="r3-pure-cat">
+  <div class="cat-tail"></div>
+  
+  <div class="cat-body">
+    <div class="cat-paw paw-back"></div>
+    <div class="cat-pattern"></div>
+  </div>
+  
+  <div class="cat-head">
+    <div class="cat-ear ear-left"></div>
+    <div class="cat-ear ear-right"></div>
+    <div class="cat-face">
+      <div class="cat-eye eye-left"></div>
+      <div class="cat-eye eye-right"></div>
+      <div class="cat-nose"></div>
+    </div>
+  </div>
+  
+  <div class="cat-paw paw-front">
+    <div class="cat-toes"></div>
+  </div>
+</div>
+
     <h1 class="r3-logo">
       <span class="r3-word">
         <span class="r3-r">r</span>
@@ -43,55 +63,6 @@ function optimize(project) {
     </h1>
   </div>
 </section>
-
-<style>
-  /* GRID OVERLAY */
-  .grid-overlay {
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px);
-    background-size: 40px 40px; /* Punktabstand */
-    z-index: 1;
-    pointer-events: none;
-    mask-image: radial-gradient(circle at center, black, transparent 80%);
-  }
-
-  /* FLOATING DATA POINTS */
-  .data-point {
-    position: absolute;
-    font-family: 'Fira Code', monospace;
-    font-size: 0.7rem;
-    color: rgba(16, 185, 129, 0.4);
-    letter-spacing: 2px;
-    z-index: 2;
-    pointer-events: none;
-    animation: floatData 20s infinite linear;
-  }
-  
-  .p1 { top: 20%; left: 10%; }
-  .p2 { bottom: 20%; right: 10%; animation-delay: -10s; }
-
-  @keyframes floatData {
-    0% { transform: translateY(0) translateX(0); opacity: 0; }
-    10% { opacity: 0.5; }
-    90% { opacity: 0.5; }
-    100% { transform: translateY(-100px) translateX(20px); opacity: 0; }
-  }
-
-  /* WAVE OPTIMIERUNG (Glassmorphism Look) */
-  .wave {
-    background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.08), transparent);
-    backdrop-filter: blur(8px); /* Das macht den Norris-Look aus! */
-    -webkit-backdrop-filter: blur(8px);
-  }
-
-  /* MOUSE PARALLAX (Optional über JS, hier via CSS Transition angedeutet) */
-  #intro:hover .wave-container {
-    transform: scale(1.02);
-    transition: transform 0.5s ease-out;
-  }
-</style>
-
 
  <section id="about" class="about">
     <div class="container about-container">
@@ -630,69 +601,308 @@ function optimize(project) {
       height: 320px;
     }
   }
-  
-  #intro {
+   /* =========================================
+     HERO SEKTION 
+     ========================================= */
+
+    #intro {
   position: relative;
+  background-color: #05080a; /* Extrem dunkles Fundament */
   min-height: 100vh;
-  width: 100%;
-  overflow: hidden;
-  /* Dein animierter Gradient als Basis */
-  background: linear-gradient(315deg, #0b1120 3%, #0f172a 38%, #10b98122 68%, #0b1120 98%);
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
-.wave-container {
+/* --- 1. GRUND-SETUP (Gilt für alle Bildschirme) --- */
+.hero-stack {
   position: absolute;
   inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 0;
-  pointer-events: none;
 }
 
-.wave {
-  background: rgb(16 185 129 / 5%); /* Dein r3-Grün ganz dezent */
-  border-radius: 40% 40% 0 0;
+.hero-card {
   position: absolute;
-  width: 300%; /* Breiter für flüssigere Bewegung */
-  height: 100%; /* Volle Höhe */
-  top: 10%; /* Leicht versetzt nach unten für Tiefe */
-  left: -100%;
-  animation: wave 25s linear infinite;
-  transform: translate3d(0, 0, 0);
+  border-radius: 30px;
+  box-shadow: -10px 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-.wave:nth-of-type(2) {
-  top: 15%;
-  opacity: 0.3;
-  animation: wave 35s linear reverse infinite;
-  background: rgb(96 165 250 / 5%); /* Subtiles Blau */
+/* --- 2. DESKTOP LOOK (Breite Bildschirme) --- */
+@media (min-width: 769px) {
+  .hero-card {
+    width: 60vw;
+    height: 80vh;
+  }
+  .card-1 { 
+    background: linear-gradient(135deg, #064e3b 0%, #05080a 100%); 
+    transform: translate(-25%, -10%) rotate(-15deg); 
+    z-index: 1; 
+  }
+  .card-2 { 
+    background: linear-gradient(135deg, #065f46 0%, #05080a 100%); 
+    transform: translate(-12%, -5%) rotate(-10deg); 
+    z-index: 2; 
+  }
+  .card-3 { 
+    background: linear-gradient(135deg, #0f766e 0%, #05080a 100%); 
+    transform: translate(0%, 0%) rotate(-5deg); 
+    z-index: 3; 
+    opacity: 0.9; 
+  }
+  .card-4 { 
+    background: linear-gradient(135deg, #10b981 0%, #05080a 100%); 
+    transform: translate(12%, 5%) rotate(0deg); 
+    z-index: 4; 
+    opacity: 0.4; 
+  }
 }
 
-.wave:nth-of-type(3) {
-  top: 20%;
-  opacity: 0.2;
-  animation: wave 45s -5s linear infinite;
-  background: rgb(16 185 129 / 8%);
+/* --- 3. MOBIL LOOK (Smartphones wie das S24) --- */
+@media (max-width: 768px) {
+  .hero-card {
+    width: 75vw;
+    height: 45vh; 
+    max-height: 380px; /* Verhindert extreme Streckung */
+    border-radius: 24px;
+  }
+  .card-1 { 
+    background: linear-gradient(135deg, #064e3b 0%, #05080a 100%);
+    transform: translate(-12%, -10%) rotate(-14deg); 
+    z-index: 1; 
+  }
+  .card-2 { 
+    background: linear-gradient(135deg, #065f46 0%, #05080a 100%);
+    transform: translate(-4%, -5%) rotate(-7deg); 
+    z-index: 2; 
+  }
+  .card-3 { 
+    background: linear-gradient(135deg, #0f766e 0%, #05080a 100%);
+    transform: translate(4%, 0%) rotate(0deg); 
+    z-index: 3; 
+    opacity: 0.9;
+  }
+  .card-4 { 
+    background: linear-gradient(135deg, #10b981 0%, #05080a 100%);
+    transform: translate(12%, 5%) rotate(7deg); 
+    z-index: 4; 
+    opacity: 0.3; 
+  }
+
+  /* Etwas Luft für das Logo auf kleinen Screens */
+  .r3-logo {
+    transform: scale(0.85); 
+  }
 }
 
-@keyframes gradient {
-  0% { background-position: 0% 0%; }
-  50% { background-position: 100% 100%; }
-  100% { background-position: 0% 0%; }
+/*==========================================
+   KATZE
+   =========================================*/
+
+ /* --- PURE CSS R3 KATZE - Optimierte Version --- */
+.r3-pure-cat {
+  --fur: #b86a22;
+  --fur-dark: #8a450f;
+  --stripes: #5c2804;
+  --nose: #e69973;
+  --line: #2e1401;
+  
+  font-size: 13px; 
+  position: absolute;
+  width: 20em;
+  height: 10em;
+  
+  /* DIE RETTUNG: Wir verankern sie fest am oberen Rand! 
+     -10em wäre exakt auf der Kante, -8.5em lässt sie perfekt überhängen. */
+  top: -8.5em; 
+  
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  pointer-events: none;
+  filter: drop-shadow(0 0.6em 0.6em rgba(0,0,0,0.4));
 }
 
-@keyframes wave {
-  0% { transform: translateX(0) rotate(0deg); }
-  50% { transform: translateX(25%) rotate(2deg); }
-  100% { transform: translateX(0) rotate(0deg); }
+.r3-pure-cat *, .r3-pure-cat *::before, .r3-pure-cat *::after {
+  position: absolute;
+  box-sizing: border-box;
 }
 
-/* Dein Logo-Content über die Wellen zwingen */
-.section-head {
-  position: relative;
-  z-index: 10;
+/* --- ANIMATIONEN --- */
+@keyframes cat-breathe {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(1.03); }
+}
+@keyframes cat-tail-wag {
+  0% { transform: rotate(5deg); }
+  100% { transform: rotate(-15deg); }
+}
+
+/* --- DER KÖRPER --- */
+.cat-body {
+  width: 14.5em; /* Etwas breiter */
+  height: 6.5em;
+  background: var(--fur);
+  border: 0.3em solid var(--line);
+  border-radius: 50% 60% 40% 40% / 60% 70% 30% 30%;
+  bottom: 0;
+  left: 2.5em;
+  transform-origin: bottom center;
+  animation: cat-breathe 4s ease-in-out infinite; /* Langsamere Atmung */
+  box-shadow: inset -0.5em -1em 0 var(--fur-dark);
+  overflow: hidden;
+  z-index: 2; /* Körper über der hinteren Pfote */
+}
+
+.cat-pattern {
+  width: 100%;
+  height: 100%;
+  background: 
+    repeating-linear-gradient(
+      70deg,
+      transparent,
+      transparent 1.5em,
+      var(--stripes) 1.5em,
+      var(--stripes) 2.2em
+    );
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+}
+
+/* --- DER KOPF --- */
+.cat-head {
+  width: 7.5em;
+  height: 6em;
+  bottom: 0.2em;
+  right: 0em;
+  transform-origin: bottom center;
+  animation: cat-breathe 4s ease-in-out infinite 0.3s;
+  z-index: 4; /* Kopf über dem Körper und der vorderen Pfote */
+}
+
+.cat-face {
+  width: 100%;
+  height: 100%;
+  background: var(--fur);
+  border: 0.3em solid var(--line);
+  border-radius: 60% 60% 45% 45% / 70% 70% 50% 50%;
+  box-shadow: inset -0.3em -0.8em 0 var(--fur-dark);
+  z-index: 2;
+}
+
+.cat-eye {
+  width: 1.8em;
+  height: 0.3em;
+  border-bottom: 0.3em solid var(--line);
+  border-radius: 50%;
+  top: 3em;
+}
+.eye-left { left: 1.2em; transform: rotate(8deg); }
+.eye-right { right: 1.2em; transform: rotate(-8deg); }
+
+.cat-nose {
+  width: 0.8em;
+  height: 0.5em;
+  background: var(--nose);
+  border-radius: 50% 50% 100% 100%;
+  top: 4em;
+  left: 48%; /* Leicht nach links verschoben */
+  transform: translateX(-50%);
+}
+
+/* --- DIE OHREN --- */
+.cat-ear {
+  width: 2.5em;
+  height: 3.5em;
+  background: var(--fur-dark);
+  border: 0.3em solid var(--line);
+  border-radius: 10% 90% 0% 100% / 10% 90% 0% 100%;
+  top: -1.5em;
+  z-index: 1;
+}
+.ear-left {
+  left: 0.5em;
+  transform: rotate(-25deg);
+}
+.ear-right {
+  right: 0.5em;
+  background: var(--fur);
+  transform: scaleX(-1) rotate(-25deg);
+  box-shadow: inset 0.4em 0 0 var(--nose);
+}
+
+/* --- DIE PFOTEN --- */
+.cat-paw {
+  border: 0.3em solid var(--line);
+}
+
+/* Hintere Pfote (wie gewünscht beibehalten) */
+.paw-back {
+  width: 5.5em;
+  height: 2.5em;
+  background: var(--fur-dark);
+  border-radius: 50% 20% 30% 50% / 50% 50% 40% 40%;
+  bottom: -0.5em;
+  left: 2em;
+  z-index: 1; /* Unter dem Körper */
+}
+
+/* Vordere Pfote (neu positioniert hinter dem Kopf) */
+.paw-front {
+  width: 2.5em;
+  height: 3.5em; /* Etwas kürzer */
+  border-top: none;
+  border-radius: 0 0 1.5em 1.5em;
+  background: var(--fur);
+  bottom: -1em;
+  right: 1em; /* Weiter nach rechts geschoben */
+  z-index: 3; /* Hinter dem Kopf, aber vor dem Körper */
+  transform: rotate(-15deg); /* Eingedreht */
+  box-shadow: inset -0.3em -0.3em 0 var(--fur-dark);
+}
+
+.cat-toes {
+  width: 100%;
+  height: 1em;
+  bottom: 0;
+  border-right: 0.2em solid var(--line);
+  left: 33%;
+}
+.cat-toes::before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  border-right: 0.2em solid var(--line);
+  left: 33%;
+}
+
+/* --- DER SCHWANZ (Schmaler) --- */
+.cat-tail {
+  width: 7em;
+  height: 1.8em; /* Schmaler */
+  background: var(--fur-dark);
+  border: 0.3em solid var(--line);
+  border-radius: 2em;
+  bottom: 1em;
+  left: -1.5em;
+  transform-origin: calc(100% - 1em) center;
+  animation: cat-tail-wag 4s ease-in-out infinite alternate;
+  box-shadow: inset 0.5em 0.5em 0 var(--stripes);
+  z-index: 1;
+}
+
+/* --- MOBILE ANPASSUNG --- */
+@media (max-width: 768px) {
+  .r3-pure-cat {
+    /* [PLATZHALTER_FUER_MOBIL_POSITION] 
+       Auf dem Desktop hatten wir -8.5em. 
+       -8.0em schiebt sie ein kleines Stück nach unten. */
+    top: -7.5em; 
+    font-size: 11px; 
+  }
 }
 </style>
