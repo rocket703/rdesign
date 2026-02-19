@@ -765,9 +765,10 @@ function optimize(project) {
   0%, 100% { transform: scaleY(1); }
   50% { transform: scaleY(1.03); }
 }
-@keyframes cat-tail-wag {
-  0% { transform: rotate(5deg); }
-  100% { transform: rotate(-15deg); }
+/* NEUE ANIMATION FÜR DEN KRINGELSCHWANZ */
+@keyframes cat-tail-bob {
+  0% { transform: rotate(0deg) translateY(0); }
+  100% { transform: rotate(-10deg) translateY(-0.3em); } /* Wippt leicht hoch und dreht sich */
 }
 
 /* --- DER KÖRPER --- */
@@ -868,15 +869,52 @@ function optimize(project) {
   border: 0.3em solid var(--line);
 }
 
-/* Hintere Pfote (wie gewünscht beibehalten) */
+/* --- DIE ENDGEGNER HINTERPFOTE --- */
 .paw-back {
+  /* 1. Der fleischige, angewinkelte Oberschenkel */
   width: 5.5em;
-  height: 2.5em;
+  height: 3.5em;
   background: var(--fur-dark);
-  border-radius: 50% 20% 30% 50% / 50% 50% 40% 40%;
-  bottom: -0.5em;
-  left: 2%;
-  z-index: 1; /* Unter dem Körper */
+  border: 0.3em solid var(--line);
+  /* Ein absolut asymmetrischer Multi-Radius für die perfekte Keulen-Form */
+  border-radius: 70% 30% 40% 50% / 60% 40% 50% 30%;
+  bottom: -0.3em;
+  left: 1.5em;
+  z-index: 1; /* Verschwindet nahtlos unter dem Bauch */
+  transform: rotate(-5deg);
+  /* 3D-Shading für ordentlich Volumen */
+  box-shadow: inset 1em -0.5em 0 rgba(0,0,0,0.15);
+}
+
+/* 2. Der Fuß (Fußwurzel & aufliegender Ballen) */
+.paw-back::before {
+  content: '';
+  position: absolute;
+  width: 2.8em;
+  height: 1.8em;
+  background: var(--fur-dark);
+  border: 0.3em solid var(--line);
+  /* Unten flach auf dem Glas, vorne weich abgerundet */
+  border-radius: 1em 2.5em 1.5em 1em;
+  bottom: -0.8em;
+  right: -0.5em;
+  transform: rotate(5deg);
+  box-shadow: inset -0.3em -0.4em 0 rgba(0,0,0,0.2);
+}
+
+/* 3. Die perfekten Zehen (Minimalistisch & clean) */
+.paw-back::after {
+  content: '';
+  position: absolute;
+  width: 0.2em;
+  height: 0.8em;
+  background: var(--line);
+  border-radius: 1em;
+  bottom: -0.6em;
+  right: 0.5em;
+  transform: rotate(-15deg);
+  /* Pure Magie: Wir klonen den ersten Zehen-Strich einfach per box-shadow! */
+  box-shadow: -0.8em 0.2em 0 var(--line);
 }
 
 /* Vordere Pfote (neu positioniert hinter dem Kopf) */
@@ -910,20 +948,36 @@ function optimize(project) {
 }
 
 /* --- DER SCHWANZ (Schmaler) --- */
+/* --- DER NEUE KRINGELSCHWANZ --- */
 .cat-tail {
-  width: 7em;
-  height: 1.8em; /* Schmaler */
-  background: var(--fur-dark);
-  border: 0.3em solid var(--line);
-  border-radius: 2em;
-  bottom: 1em;
-  left: -1.5em;
-  transform-origin: calc(100% - 1em) center;
-  animation: cat-tail-wag 4s ease-in-out infinite alternate;
-  box-shadow: inset 0.5em 0.5em 0 var(--stripes);
-  z-index: 1;
+  width: 4.5em;  /* Quadratische Basis für den Kreisbogen */
+  height: 4.5em;
+  
+  /* Positionierung hinten am Körper */
+  bottom: 2.5em;
+  left: 0.5em;
+  
+  /* Die Magie: Wir zeichnen nur 3 Seiten eines Rahmens */
+  border: 0.35em solid var(--line);
+  border-bottom: none; /* Unten offen lassen */
+  
+  /* Die Kringel-Form: Oben rund, unten links rund, unten rechts eckig */
+  border-radius: 50% 50% 0% 50%;
+  
+  /* Farbe und Füllung */
+  background: var(--fur-dark); /* Füllt das Innere des Bogens */
+  
+  /* Ein simpler Streifen-Effekt innen */
+  box-shadow: inset 0.5em 1em 0 var(--stripes);
+  
+  /* Drehpunkt für die Animation unten rechts, wo er am Körper ansetzt */
+  transform-origin: 80% 90%;
+  
+  /* Die neue, sanftere Animation */
+  animation: cat-tail-bob 4s ease-in-out infinite alternate;
+  
+  z-index: 1; /* Hinter dem Körper */
 }
-
 /* --- MOBILE ANPASSUNG --- */
 @media (max-width: 768px) {
   .r3-pure-cat {
