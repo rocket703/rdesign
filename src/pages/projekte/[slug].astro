@@ -15,7 +15,7 @@ const { Content } = await project.render();
 
 // Zuweisung der Variablen aus deinem Markdown
 const projectLink = project.data.customerUrl;
-const projectStatus = project.data.status; // Zieht jetzt "online", "im aufbau", etc.
+const projectStatus = project.data.status;
 
 // Zwischen den --- ganz oben
 const title = project.data.title;
@@ -52,7 +52,7 @@ const hasSpace = title.trim().includes(' ');
       </header>
 
       <section class="image-showcase">
-        <a href={projectLink} target="_blank" rel="noopener noreferrer" class="img-anchor">
+        <a href={projectLink} target="_blank" rel="noopener" class="img-anchor">
           <div class="aspect-box">
             <img src={project.data.image} alt={project.data.title} />
           </div>
@@ -72,7 +72,7 @@ const hasSpace = title.trim().includes(' ');
               <span class="status-text">Status: {projectStatus}</span>
             </div>
             <p>Interesse an einer ähnlichen Performance?</p>
-            <a href={projectLink} target="_blank" rel="noopener noreferrer" class="btn-direct">
+            <a href={projectLink} target="_blank" rel="noopener" class="btn-direct">
               Webseite besuchen
             </a>
           </div>

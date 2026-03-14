@@ -162,17 +162,26 @@ function optimize(project) {
   console.log("Container:", container);
 
   if (container) {
-  lottie.loadAnimation({
-  container: container,
-  renderer: "canvas",          // ← das hier ändern!
-  loop: true,
-  autoplay: true,
-  path: "/animations/cat.json",
-  rendererSettings: {
-    clearCanvas: true,
-    // preserveAspectRatio brauchst du bei canvas meist nicht
-  }
-});
+    // 1. Die Animation in einer Konstante speichern
+    const anim = lottie.loadAnimation({
+      container: container,
+      renderer: "canvas",
+      loop: true,
+      autoplay: false, // 2. Autoplay zwingend auf false setzen!
+      path: "/animations/cat.json",
+      rendererSettings: {
+        clearCanvas: true,
+      }
+    });
+
+    // 3. Warten, bis die Animationsdaten vollständig geladen sind
+    anim.addEventListener('DOMLoaded', () => {
+      // 4. Die exakte Hälfte der Gesamt-Frames berechnen
+      const halbeFrames = anim.totalFrames / 2;
+      
+      // 5. Nur das Segment von Frame 0 bis zur Hälfte abspielen (true erzwingt den Start)
+      anim.playSegments([0, halbeFrames], true);
+    });
 
     console.log("Lottie initialized");
   } else {
@@ -740,18 +749,23 @@ function optimize(project) {
    KATZE
    =========================================*/
 
- .r3-pure-cat {
+ /* Standard / Desktop (dein bisheriger Code zusammengefasst) */
+.r3-pure-cat {
   position: absolute;
-  top: -180px;
+  top: -145px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;
   pointer-events: none;
+  width: 100%;
+  height: 100%;
 }
-.r3-pure-cat {
-  width: 400px;          /* oder auto / 100% */
-  height: 400px;
-  overflow: visible;     /* ← wichtig zum Debuggen */
-  border: 1px solid red; /* zum Sehen der tatsächlichen Grenze */
+
+/* Mobile Anpassung (für Bildschirme bis 768px Breite) */
+@media (max-width: 768px) {
+  .r3-pure-cat {
+    top: -108px;
+    
+  }
 }
 </style>
