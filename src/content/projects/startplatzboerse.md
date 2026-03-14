@@ -1,12 +1,12 @@
 ---
 title: "Startplatzboerse.com"
 subtitle: "Fullstack-Plattform für den Zweitmarkt von Startplätzen – Aktuell im Aufbau (Beta-Phase)."
-customerUrl: "https://startplatzboerse.vercel.app/"
+customerUrl: "https://startplatzboerse.com/"
 image: "/images/startplatzboerse.webp"
 techStack: ["Astro", "Supabase", "PostgreSQL", "Resend", "Vercel", "Tailwind CSS"]
 seoTitle: "Startplatzbörse – Fullstack Web-App im Aufbau | r³webdesign"
 seoDesc: "Case Study: Entwicklung einer Handelsplattform für Startplätze. Aktuell in der aktiven Entwicklungsphase (Beta)."
-status: "Im Aufbau"
+status: "Online"
 tasks:
   - "Entwicklung einer hochperformanten Fullstack-Applikation auf Basis von Astro."
   - "Infrastruktur-Setup mit Vercel für Server-Side Rendering (SSR) und Edge-Performance."

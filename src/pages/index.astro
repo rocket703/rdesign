@@ -31,28 +31,10 @@ function optimize(project) {
 
   <div class="section-head">
     
-   <div class="r3-pure-cat">
-  <div class="cat-tail"></div>
-  
-  <div class="cat-body">
-    <div class="cat-paw paw-back"></div>
-    <div class="cat-pattern"></div>
-  </div>
-  
-  <div class="cat-head">
-    <div class="cat-ear ear-left"></div>
-    <div class="cat-ear ear-right"></div>
-    <div class="cat-face">
-      <div class="cat-eye eye-left"></div>
-      <div class="cat-eye eye-right"></div>
-      <div class="cat-nose"></div>
+    <!-- LOTTIE CAT -->
+    <div class="r3-pure-cat">
+      <div id="cat"></div>
     </div>
-  </div>
-  
-  <div class="cat-paw paw-front">
-    <div class="cat-toes"></div>
-  </div>
-</div>
 
     <h1 class="r3-logo">
       <span class="r3-word">
@@ -170,6 +152,33 @@ function optimize(project) {
     </div>
   </section>
 </BaseLayout>
+
+<script type="module">
+  import lottie from "https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/+esm";
+
+  console.log("Script loaded");
+
+  const container = document.getElementById("cat");
+  console.log("Container:", container);
+
+  if (container) {
+  lottie.loadAnimation({
+  container: container,
+  renderer: "canvas",          // ← das hier ändern!
+  loop: true,
+  autoplay: true,
+  path: "/animations/cat.json",
+  rendererSettings: {
+    clearCanvas: true,
+    // preserveAspectRatio brauchst du bei canvas meist nicht
+  }
+});
+
+    console.log("Lottie initialized");
+  } else {
+    console.log("Container NOT found");
+  }
+</script>
 
 <style>
   /* =========================================
@@ -731,261 +740,18 @@ function optimize(project) {
    KATZE
    =========================================*/
 
- /* --- PURE CSS R3 KATZE - Optimierte Version --- */
-.r3-pure-cat {
-  --fur: #b86a22;
-  --fur-dark: #8a450f;
-  --stripes: #5c2804;
-  --nose: #e69973;
-  --line: #2e1401;
-  
-  font-size: 13px; 
+ .r3-pure-cat {
   position: absolute;
-  width: 20em;
-  height: 10em;
-  
-  /* DIE RETTUNG: Wir verankern sie fest am oberen Rand! 
-     -10em wäre exakt auf der Kante, -8.5em lässt sie perfekt überhängen. */
-  top: -8.5em; 
-  
+  top: -180px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 20;
+  z-index: 100;
   pointer-events: none;
-  filter: drop-shadow(0 0.6em 0.6em rgba(0,0,0,0.4));
 }
-
-.r3-pure-cat *, .r3-pure-cat *::before, .r3-pure-cat *::after {
-  position: absolute;
-  box-sizing: border-box;
-}
-
-/* --- ANIMATIONEN --- */
-@keyframes cat-breathe {
-  0%, 100% { transform: scaleY(1); }
-  50% { transform: scaleY(1.03); }
-}
-/* NEUE ANIMATION FÜR DEN KRINGELSCHWANZ */
-@keyframes cat-tail-bob {
-  0% { transform: rotate(0deg) translateY(0); }
-  100% { transform: rotate(-10deg) translateY(-0.3em); } /* Wippt leicht hoch und dreht sich */
-}
-
-/* --- DER KÖRPER --- */
-.cat-body {
-  width: 14.5em; /* Etwas breiter */
-  height: 6.5em;
-  background: var(--fur);
-  border: 0.3em solid var(--line);
-  border-radius: 50% 60% 40% 40% / 60% 70% 30% 30%;
-  bottom: 0;
-  left: 2.5em;
-  transform-origin: bottom center;
-  animation: cat-breathe 4s ease-in-out infinite; /* Langsamere Atmung */
-  box-shadow: inset -0.5em -1em 0 var(--fur-dark);
-  overflow: hidden;
-  z-index: 2; /* Körper über der hinteren Pfote */
-}
-
-.cat-pattern {
-  width: 100%;
-  height: 100%;
-  background: 
-    repeating-linear-gradient(
-      70deg,
-      transparent,
-      transparent 1.5em,
-      var(--stripes) 1.5em,
-      var(--stripes) 2.2em
-    );
-  opacity: 0.35;
-  mix-blend-mode: multiply;
-}
-
-/* --- DER KOPF --- */
-.cat-head {
-  width: 7.5em;
-  height: 6em;
-  bottom: 0.2em;
-  right: 0em;
-  transform-origin: bottom center;
-  animation: cat-breathe 4s ease-in-out infinite 0.3s;
-  z-index: 4; /* Kopf über dem Körper und der vorderen Pfote */
-}
-
-.cat-face {
-  width: 100%;
-  height: 100%;
-  background: var(--fur);
-  border: 0.3em solid var(--line);
-  border-radius: 60% 60% 45% 45% / 70% 70% 50% 50%;
-  box-shadow: inset -0.3em -0.8em 0 var(--fur-dark);
-  z-index: 2;
-}
-
-.cat-eye {
-  width: 1.8em;
-  height: 0.3em;
-  border-bottom: 0.3em solid var(--line);
-  border-radius: 50%;
-  top: 3em;
-}
-.eye-left { left: 1.2em; transform: rotate(8deg); }
-.eye-right { right: 1.2em; transform: rotate(-8deg); }
-
-.cat-nose {
-  width: 0.8em;
-  height: 0.5em;
-  background: var(--nose);
-  border-radius: 50% 50% 100% 100%;
-  top: 4em;
-  left: 48%; /* Leicht nach links verschoben */
-  transform: translateX(-50%);
-}
-
-/* --- DIE OHREN --- */
-.cat-ear {
-  width: 2.5em;
-  height: 3.5em;
-  background: var(--fur-dark);
-  border: 0.3em solid var(--line);
-  border-radius: 10% 90% 0% 100% / 10% 90% 0% 100%;
-  top: -1.5em;
-  z-index: 1;
-}
-.ear-left {
-  left: 0.5em;
-  transform: rotate(-25deg);
-}
-.ear-right {
-  right: 0.5em;
-  background: var(--fur);
-  transform: scaleX(-1) rotate(-25deg);
-  box-shadow: inset 0.4em 0 0 var(--nose);
-}
-
-/* --- DIE PFOTEN --- */
-.cat-paw {
-  border: 0.3em solid var(--line);
-}
-
-/* --- DIE ENDGEGNER HINTERPFOTE --- */
-.paw-back {
-  /* 1. Der fleischige, angewinkelte Oberschenkel */
-  width: 5.5em;
-  height: 3.5em;
-  background: var(--fur-dark);
-  border: 0.3em solid var(--line);
-  /* Ein absolut asymmetrischer Multi-Radius für die perfekte Keulen-Form */
-  border-radius: 70% 30% 40% 50% / 60% 40% 50% 30%;
-  bottom: -0.3em;
-  left: 1.5em;
-  z-index: 1; /* Verschwindet nahtlos unter dem Bauch */
-  transform: rotate(-5deg);
-  /* 3D-Shading für ordentlich Volumen */
-  box-shadow: inset 1em -0.5em 0 rgba(0,0,0,0.15);
-}
-
-/* 2. Der Fuß (Fußwurzel & aufliegender Ballen) */
-.paw-back::before {
-  content: '';
-  position: absolute;
-  width: 2.8em;
-  height: 1.8em;
-  background: var(--fur-dark);
-  border: 0.3em solid var(--line);
-  /* Unten flach auf dem Glas, vorne weich abgerundet */
-  border-radius: 1em 2.5em 1.5em 1em;
-  bottom: -0.8em;
-  right: -0.5em;
-  transform: rotate(5deg);
-  box-shadow: inset -0.3em -0.4em 0 rgba(0,0,0,0.2);
-}
-
-/* 3. Die perfekten Zehen (Minimalistisch & clean) */
-.paw-back::after {
-  content: '';
-  position: absolute;
-  width: 0.2em;
-  height: 0.8em;
-  background: var(--line);
-  border-radius: 1em;
-  bottom: -0.6em;
-  right: 0.5em;
-  transform: rotate(-15deg);
-  /* Pure Magie: Wir klonen den ersten Zehen-Strich einfach per box-shadow! */
-  box-shadow: -0.8em 0.2em 0 var(--line);
-}
-
-/* Vordere Pfote (neu positioniert hinter dem Kopf) */
-.paw-front {
-  width: 2.5em;
-  height: 3.5em; /* Etwas kürzer */
-  border-top: none;
-  border-radius: 0 0 1.5em 1.5em;
-  background: var(--fur);
-  bottom: -1em;
-  right: 1em; /* Weiter nach rechts geschoben */
-  z-index: 3; /* Hinter dem Kopf, aber vor dem Körper */
-  transform: rotate(-15deg); /* Eingedreht */
-  box-shadow: inset -0.3em -0.3em 0 var(--fur-dark);
-}
-
-.cat-toes {
-  width: 100%;
-  height: 1em;
-  bottom: 0;
-  border-right: 0.2em solid var(--line);
-  left: 33%;
-}
-.cat-toes::before {
-  content: '';
-  width: 100%;
-  height: 100%;
-  bottom: 0;
-  border-right: 0.2em solid var(--line);
-  left: 33%;
-}
-
-/* --- DER SCHWANZ (Schmaler) --- */
-/* --- DER NEUE KRINGELSCHWANZ --- */
-.cat-tail {
-  width: 4.5em;  /* Quadratische Basis für den Kreisbogen */
-  height: 4.5em;
-  
-  /* Positionierung hinten am Körper */
-  bottom: 2.5em;
-  left: 0.5em;
-  
-  /* Die Magie: Wir zeichnen nur 3 Seiten eines Rahmens */
-  border: 0.35em solid var(--line);
-  border-bottom: none; /* Unten offen lassen */
-  
-  /* Die Kringel-Form: Oben rund, unten links rund, unten rechts eckig */
-  border-radius: 50% 50% 0% 50%;
-  
-  /* Farbe und Füllung */
-  background: var(--fur-dark); /* Füllt das Innere des Bogens */
-  
-  /* Ein simpler Streifen-Effekt innen */
-  box-shadow: inset 0.5em 1em 0 var(--stripes);
-  
-  /* Drehpunkt für die Animation unten rechts, wo er am Körper ansetzt */
-  transform-origin: 80% 90%;
-  
-  /* Die neue, sanftere Animation */
-  animation: cat-tail-bob 4s ease-in-out infinite alternate;
-  
-  z-index: 1; /* Hinter dem Körper */
-}
-/* --- MOBILE ANPASSUNG --- */
-@media (max-width: 768px) {
-  .r3-pure-cat {
-    /* [PLATZHALTER_FUER_MOBIL_POSITION] 
-       Auf dem Desktop hatten wir -8.5em. 
-       -8.0em schiebt sie ein kleines Stück nach unten. */
-    top: -7.5em; 
-    font-size: 11px; 
-  }
+.r3-pure-cat {
+  width: 400px;          /* oder auto / 100% */
+  height: 400px;
+  overflow: visible;     /* ← wichtig zum Debuggen */
+  border: 1px solid red; /* zum Sehen der tatsächlichen Grenze */
 }
 </style>
