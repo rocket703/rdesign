@@ -1,8 +1,3 @@
-/* ==========================================
-   SUBTILE BLÄSCHEN - JAVASCRIPT
-   Füge dieses Script am Ende deiner HTML-Datei ein
-   (vor dem schließenden </body> Tag)
-   ========================================== */
 
 // Bläschen-Container erstellen und zum Body hinzufügen
 const bubblesContainer = document.createElement('div');

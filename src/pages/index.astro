@@ -142,12 +142,12 @@ function optimize(project) {
     <div class="card-grid">
       {allProjects.map((project) => (
         <ProjectCard 
-          title={project.data.title}
-          description={project.data.subtitle}
-          image={project.data.image}
-          tags={project.data.techStack}
-          slug={project.slug}
-        />
+  title={project.data.title}
+  description={project.data.subtitle}
+  image={project.data.image}
+  tags={project.data.techStack}
+  id={project.id.replace('.md', '')}
+/>
       ))}
     </div>
   </section>
@@ -766,6 +766,46 @@ function optimize(project) {
   .r3-pure-cat {
     top: -108px;
     
+  }
+}
+/* =========================================
+   SUBTLE BUBBLES
+   ========================================= */
+
+.subtle-bubbles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.subtle-bubble {
+  position: absolute;
+  bottom: -10px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  animation: bubbleRise linear infinite;
+}
+
+@keyframes bubbleRise {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(var(--drift));
+    opacity: 0;
   }
 }
 </style>

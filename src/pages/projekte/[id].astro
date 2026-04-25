@@ -1,27 +1,20 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
   return projects.map(project => ({
-    params: { slug: project.slug },
+    params: { id: project.id.replace('.md', '') },
     props: { project },
   }));
 }
 
 const { project } = Astro.props;
-const { Content } = await project.render();
-
-// Zuweisung der Variablen aus deinem Markdown
+const { Content } = await render(project);
 const projectLink = project.data.customerUrl;
 const projectStatus = project.data.status;
-
-// Zwischen den --- ganz oben
 const title = project.data.title;
-
-// Logik: Hat der Titel ein Leerzeichen? 
-// (Wichtig: Wir trimmen, falls aus Versehen Leerzeichen am Ende stehen)
 const hasSpace = title.trim().includes(' ');
 ---
 

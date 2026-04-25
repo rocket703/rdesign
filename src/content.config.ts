@@ -1,19 +1,18 @@
 import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
 
 const projects = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
   schema: z.object({
     title: z.string(),
     subtitle: z.string(),
     image: z.string(),
     techStack: z.array(z.string()).default([]),
-    // Fallback auf "#" wenn customerUrl fehlt
-    customerUrl: z.string().catch("#"), 
-    // Fallback auf "online" wenn status fehlt
-    status: z.string().catch("online"), 
-    // SEO Felder optional machen, damit alte Dateien nicht crashen
+    customerUrl: z.string().catch("#"),
+    status: z.string().catch("online"),
     seoTitle: z.string().optional(),
     seoDesc: z.string().optional(),
+    tasks: z.array(z.string()).optional(),
   }),
 });
 
