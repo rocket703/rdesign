@@ -304,7 +304,93 @@ export async function GET({ cookies, redirect }) {
       ))}
     </div>
   </section>
+
+  <section id="faq" class="section faq">
+    <div class="container">
+      <div class="section-head autoShow">
+        <span class="eyebrow">FAQ</span>
+        <h2 class="section-title">Häufige Fragen zu <br/> Webdesign in Magdeburg</h2>
+        <div class="title-divider"></div>
+      </div>
+
+      <div class="faq-grid">
+        <details class="faq-item autoShow">
+          <summary>Was kostet eine professionelle Webseite in Magdeburg?</summary>
+          <p>
+            Aktuell suche ich spannende private Projekte, um mein Portfolio gezielt zu erweitern.
+            Wenn dein Vorhaben inhaltlich passt, finden wir eine faire, transparente Lösung, die
+            zu Umfang und Ziel passt.
+          </p>
+        </details>
+
+        <details class="faq-item autoShow">
+          <summary>Wie lange dauert die Umsetzung einer neuen Homepage?</summary>
+          <p>
+            Kleine bis mittlere Projekte dauern oft 2 bis 6 Wochen. Bei komplexeren Anforderungen
+            planen wir in klaren Etappen, damit du früh Ergebnisse siehst und Feedback geben kannst.
+          </p>
+        </details>
+
+        <details class="faq-item autoShow">
+          <summary>Machst du nur Design oder auch Entwicklung und SEO?</summary>
+          <p>
+            Beides. Von UX/UI-Design über Entwicklung bis technisches SEO, Performance und
+            Deployment. Ziel ist eine Seite, die nicht nur gut aussieht, sondern auch gefunden wird.
+          </p>
+        </details>
+
+        <details class="faq-item autoShow">
+          <summary>Kann ich meine Webseite später selbst pflegen?</summary>
+          <p>
+            Ja. Auf Wunsch bekommst du ein Setup, mit dem Inhalte einfach aktualisiert werden können.
+            Außerdem gibt es eine kurze Einweisung oder laufende Betreuung, wenn du es abgeben willst.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
+
+<script type="application/ld+json" is:inline>
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Was kostet eine professionelle Webseite in Magdeburg?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Aktuell suche ich spannende private Projekte, um mein Portfolio gezielt zu erweitern. Wenn dein Vorhaben inhaltlich passt, finden wir eine faire, transparente Lösung, die zu Umfang und Ziel passt."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Wie lange dauert die Umsetzung einer neuen Homepage?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Kleine bis mittlere Projekte dauern oft 2 bis 6 Wochen. Bei komplexeren Anforderungen planen wir in klaren Etappen, damit du früh Ergebnisse siehst und Feedback geben kannst."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Machst du nur Design oder auch Entwicklung und SEO?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Beides. Von UX/UI-Design über Entwicklung bis technisches SEO, Performance und Deployment. Ziel ist eine Seite, die nicht nur gut aussieht, sondern auch gefunden wird."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Kann ich meine Webseite später selbst pflegen?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Ja. Auf Wunsch bekommst du ein Setup, mit dem Inhalte einfach aktualisiert werden können. Außerdem gibt es eine kurze Einweisung oder laufende Betreuung, wenn du es abgeben willst."
+        }
+      }
+    ]
+  }
+</script>
 
 <script define:vars={{ codeMobile, codeDesktop }}>
   (function () {
@@ -1307,6 +1393,106 @@ export async function GET({ cookies, redirect }) {
     .card-grid {
       grid-template-columns: repeat(3, 1fr); /* Desktop: 3 Spalten */
     }
+  }
+
+  /* =========================================
+     FAQ SEKTION
+     ========================================= */
+
+  .faq {
+    background-color: #0b1120;
+    padding: 3.5rem 0 8rem;
+  }
+
+  .faq .section-head {
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    max-width: 980px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 900px) {
+    .faq-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+  }
+
+  .faq-item {
+    position: relative;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 42%, transparent 100%),
+      rgba(11, 17, 32, 0.9);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 10px 24px rgba(0, 0, 0, 0.22);
+    overflow: hidden;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+  }
+
+  .faq-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #10b981 0%, #38bdf8 55%, transparent 100%);
+    opacity: 0.65;
+    pointer-events: none;
+  }
+
+  .faq-item:hover {
+    transform: translateY(-2px);
+    border-color: rgba(16, 185, 129, 0.22);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 16px 30px rgba(0, 0, 0, 0.28);
+  }
+
+  .faq-item summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 1.1rem 2.9rem 1rem 1.1rem;
+    font-weight: 700;
+    color: #f3f4f6;
+    line-height: 1.35;
+    position: relative;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item summary::after {
+    content: '+';
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #10b981;
+    font-size: 1.2rem;
+    font-weight: 700;
+    transition: transform 0.2s ease;
+  }
+
+  .faq-item[open] summary::after {
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  .faq-item p {
+    margin: 0;
+    padding: 0 1.1rem 1.1rem;
+    color: #94a3b8;
+    line-height: 1.65;
+    font-size: 0.98rem;
   }
 
   /* =========================================
