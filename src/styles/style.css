@@ -661,7 +661,7 @@ textarea:focus-visible {
 }
 
 .card-media {
-  width: 100%; height: 200px; object-fit: cover; object-position: center; display: block;
+  width: 100%; height: 200px; object-fit: cover; object-position: top center; display: block;
   transition: transform 0.45s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
@@ -1255,88 +1255,6 @@ textarea:focus-visible {
 .tags {
   margin-top: auto;        /* schiebt .tags an das untere Ende der Karte */
   padding-top: .75rem;     /* etwas Luft über den Chips */
-}
-/*XXXXXXXXXXXXXXXXXXXX*/
-/* === Über mich – Layout & Look === */
-.about{
-  --ring1: rgba(137,207,240,.35);   /* feiner Glow */
-  --ring2: rgba(90,200,250,.25);
-  --text: #eaf2ff;
-  --muted:#b7c2d0;
-
-  padding: clamp(28px, 6vw, 56px) 16px;
-}
-
-.about__inner{
-  max-width: 1150px;
-  margin-inline: auto;
-  display: grid;
-  grid-template-columns: minmax(180px, 320px) 1fr;
-  gap: clamp(20px, 4vw, 56px);
-  align-items: center;
-}
-
-/* Rundes Bild mit sanftem Ring/Glow */
-.about__media{
-  display:grid;
-  place-items:center;
-}
-.about__media img{
-  width: min(32vw, 320px);
-  aspect-ratio: 1/1;
-  object-fit: cover;
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 2px rgba(0,0,0,.35) inset,
-    0 6px 22px rgba(0,0,0,.35),
-    0 0 0 10px var(--ring1),
-    0 0 40px 12px var(--ring2);
-}
-
-/* Textblock */
-.about__content{
-  color: var(--text);
-  max-width: 68ch;
-}
-.about__content h2{
-  margin: 0 0 .35em;
-  font-size: clamp(1.25rem, 2.2vw, 1.6rem);
-  font-weight: 800;
-}
-.about__lead{
-  margin: 0 0 .75rem;
-  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
-  font-weight: 600;
-}
-.about__content p{
-  margin: 0 0 .8rem;
-  color: var(--text);
-  opacity: .95;
-  line-height: 1.65;
-}
-
-/* === Responsive: Bild oben, Text darunter === */
-@media (max-width: 860px){
-  .about__inner{
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-  .about__content{
-    margin-inline: auto;
-  }
-  .about__media img{
-    width: clamp(180px, 45vw, 260px);
-  }
-}
-/* Wrapper egal – das IMG macht den Kreis */
-.about__media img{
-  display:block;
-  width: clamp(180px, 45vw, 260px); /* mobil -> desktop */
-  aspect-ratio: 1 / 1;             /* immer quadratisch */
-  border-radius: 50%;
-  object-fit: cover;                /* zentriert/füllt ohne Verzerrung */
-  object-position: center;
-  height: auto;                     /* von aspect-ratio abgeleitet */
 }
 /* ===== Theme ===== */
 :root{

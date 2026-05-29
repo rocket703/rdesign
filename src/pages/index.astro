@@ -90,26 +90,42 @@ export async function GET({ cookies, redirect }) {
 
 <hr class="section-divider" aria-hidden="true" />
 
- <section id="about" class="about">
-    <div class="container about-container">
+ <section id="about" class="section about">
+    <div class="container">
       <div class="about__inner">
         <figure class="about__media">
-          <div class="image-glow"></div>
-          <img src="/images/IMG_1907.webp" alt="Dustin Rose" width="320" height="320" loading="lazy" />
-        </figure>
-        
-        <div class="about__content autoShow">
-          <span class="eyebrow eyebrow--race" data-num="01">Über mich</span>
-          <p class="about__lead">
-            Hi, ich bin <span class="text-gradient">Dustin</span>.
-          </p>
-          <h2 class="about__subline">Webentwickler &amp; UI/UX Designer.</h2>
-          
-          <div class="about__text">
-            <p>Ich baue keine 08/15-Webseiten. Ich entwickle digitale Erlebnisse, die schnell, barrierefrei und ästhetisch präzise sind.</p>
-            <p>Ob Landingpage, Portfolio oder komplexe Web-App: Ich übersetze deine Vision in sauberen Code, der Unternehmen sichtbar macht.</p>
+          <div class="about__avatar-shell autoShow">
+            <div class="about__frame" aria-hidden="true"></div>
+            <div class="about__avatar">
+              <img src="/images/IMG_1907.webp" alt="Dustin Rose – Webentwickler in Magdeburg" width="320" height="320" loading="lazy" decoding="async" />
+            </div>
           </div>
-        </div>
+          <p class="about__badge"><span class="about__prompt">&gt;_</span> profile.ready</p>
+        </figure>
+
+        <article class="about__panel autoShow">
+          <span class="eyebrow eyebrow--race" data-num="01">Über mich</span>
+          <p class="about__path"><span class="about__prompt">&gt;_</span> whoami</p>
+          <h2 class="about__title">
+            Hi, ich bin <span class="about__name">Dustin</span>.
+          </h2>
+          <p class="about__role">Webentwickler &amp; UI/UX Designer · Magdeburg</p>
+          <div class="about__text">
+            <p>
+              Kein Baukasten, kein Blindflug. Ich verbinde Design, sauberen Code und Performance —
+              damit deine Seite nicht nur gut aussieht, sondern auch gefunden wird.
+            </p>
+            <p>
+              Von der ersten Skizze bis zum Deploy: ein Ansprechpartner, klare Sprache und Ergebnisse,
+              die du messen kannst — PageSpeed, SEO und UX inklusive.
+            </p>
+          </div>
+          <ul class="about__chips" aria-label="Schwerpunkte">
+            <li>Performance</li>
+            <li>Barrierefrei</li>
+            <li>Design + Code</li>
+          </ul>
+        </article>
       </div>
     </div>
   </section>
@@ -1508,142 +1524,240 @@ export async function GET({ cookies, redirect }) {
   }
 
   /* =========================================
-     ABOUT SEKTION 
+     ABOUT SEKTION
      ========================================= */
 
   .about {
     background-color: #0b1120;
-    padding: 10rem 0;
+    padding: clamp(5rem, 10vw, 8rem) 0;
     position: relative;
     overflow: hidden;
   }
 
-  /* Subtiler Hintergrund-Schein hinter der Sektion */
-  .about::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 300px;
-    height: 300px;
-    background: rgba(16, 185, 129, 0.05); /* Sehr dezentes Grün */
-    filter: blur(100px);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 0;
-  }
-
-  .about-container {
+  .about .container {
     position: relative;
     z-index: 1;
   }
 
   .about__inner {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 5vw, 3rem);
     align-items: center;
-    gap: 4rem;
+    max-width: 1100px;
+    margin-inline: auto;
   }
 
-  /* --- DAS BILD --- */
   .about__media {
     position: relative;
-    width: 280px;
-    height: 280px;
-    margin: 0;
+    width: min(280px, 72vw);
+    margin: 0 auto;
     flex-shrink: 0;
   }
 
-  .about__media img {
+  .about__avatar-shell {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+  }
+
+  .about__avatar {
+    position: relative;
+    z-index: 1;
     width: 100%;
     height: 100%;
-    object-fit: cover;
     border-radius: 50%;
-    border: 1px solid #0b1120; 
-    position: relative;
-    z-index: 2;
-    /* Ein sanfter Schatten für Tiefe */
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+      0 20px 48px rgba(0, 0, 0, 0.45),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.06);
   }
 
-  /* Der Glow-Ring hinter dem Bild */
-  .image-glow {
+  .about__frame {
     position: absolute;
-    inset: -10px; /* 10px größer als das Bild */
+    inset: -3px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #10b981, #059669);
-    filter: blur(20px);
-    opacity: 0.4;
-    z-index: 1;
-    animation: pulseGlow 4s ease-in-out infinite;
+    background: linear-gradient(165deg, rgba(210, 255, 0, 0.35) 0%, #10b981 35%, #38bdf8 70%, transparent 100%);
+    opacity: 0.55;
+    z-index: 0;
+    pointer-events: none;
   }
 
-  @keyframes pulseGlow {
-    0%, 100% { transform: scale(1); opacity: 0.4; }
-    50% { transform: scale(1.05); opacity: 0.6; }
+  .about__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    object-position: center;
   }
 
-  /* --- DER TEXT --- */
-  .about__content {
-    text-align: center;
-    max-width: 600px;
+  /* Blur-Animation nicht auf rundes Bild (Mobile-Bug) */
+  .about__avatar-shell.autoShow {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.85s cubic-bezier(0.22, 0.61, 0.36, 1),
+      transform 0.85s cubic-bezier(0.22, 0.61, 0.36, 1);
   }
 
-  .about__lead {
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 800;
-    line-height: 1.1;
-    color: #fff;
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.02em;
+  .about__avatar-shell.autoShow.is-visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 
-  /* Gradient Text Effekt für "Dustin Rose" */
-  .text-gradient {
-    background: linear-gradient(90deg, #fff 0%, #cbd5e1 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    /* Optional: Ein Hauch Grün im Verlauf */
-    background: linear-gradient(to right, #ffffff, #10b981); 
-    -webkit-background-clip: text;
+  .about__avatar-shell.autoShow > * {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
   }
 
-  .about__subline {
-    font-size: 1.25rem;
-    color: #10b981;
+  .about__badge {
+    position: absolute;
+    left: 50%;
+    bottom: -0.35rem;
+    z-index: 2;
+    transform: translateX(-50%);
+    margin: 0;
+    padding: 0.35rem 0.75rem;
+    font-family: ui-monospace, 'Cascadia Code', monospace;
+    font-size: 0.68rem;
     font-weight: 600;
-    margin-bottom: 2rem;
-    font-family: monospace; /* Tech-Vibe */
+    letter-spacing: 0.04em;
+    text-transform: lowercase;
+    color: #cbd5e1;
+    white-space: nowrap;
+    background: rgba(11, 17, 32, 0.92);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    border-radius: 999px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  .about__prompt {
+    color: #10b981;
+    font-weight: 700;
+  }
+
+  .about__panel {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(1.35rem, 3vw, 1.85rem);
+    border-radius: 14px;
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 42%, transparent 100%),
+      rgba(15, 23, 42, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.07),
+      0 12px 32px rgba(0, 0, 0, 0.28);
+  }
+
+  .about__panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-lime) 0%, #10b981 35%, #38bdf8 70%, transparent 100%);
+    opacity: 0.75;
+    pointer-events: none;
+  }
+
+  .about__panel .eyebrow {
+    margin-bottom: 0.85rem;
+  }
+
+  .about__path {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin: 0 0 1rem;
+    font-family: ui-monospace, 'Cascadia Code', monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: lowercase;
+    color: #64748b;
+  }
+
+  .about__title {
+    margin: 0 0 0.45rem;
+    font-size: clamp(1.85rem, 4.5vw, 2.75rem);
+    font-weight: 900;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    color: #fff;
+  }
+
+  .about__name {
+    color: #fff;
+  }
+
+  .about__role {
+    margin: 0 0 1.35rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    font-family: ui-monospace, 'Cascadia Code', monospace;
+    font-size: clamp(0.82rem, 2vw, 0.95rem);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: #10b981;
   }
 
   .about__text p {
+    margin: 0 0 1rem;
     color: #94a3b8;
-    line-height: 1.8;
-    font-size: 1.1rem;
-    margin-bottom: 1.5rem;
+    line-height: 1.75;
+    font-size: clamp(0.98rem, 2vw, 1.08rem);
   }
 
   .about__text p:last-child {
     margin-bottom: 0;
   }
 
-  /* --- DESKTOP LAYOUT --- */
+  .about__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.35rem 0 0;
+    padding: 1rem 0 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    list-style: none;
+  }
+
+  .about__chips li {
+    font-family: ui-monospace, monospace;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #cbd5e1;
+    padding: 0.32rem 0.65rem;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
   @media (min-width: 900px) {
     .about__inner {
-      flex-direction: row; /* Nebeneinander */
-      justify-content: center;
-      align-items: center; /* Vertikal zentriert */
-      text-align: left; /* Text linksbündig */
-      gap: 6rem; /* Viel Platz dazwischen */
-    }
-
-    .about__content {
-      text-align: left;
+      grid-template-columns: minmax(240px, 300px) 1fr;
+      gap: clamp(2.5rem, 5vw, 4.5rem);
     }
 
     .about__media {
-      width: 320px;
-      height: 320px;
+      width: 100%;
+      max-width: 300px;
+      margin: 0;
+      justify-self: center;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .about__frame {
+      opacity: 0.45;
     }
   }
    /* =========================================

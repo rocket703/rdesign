@@ -57,54 +57,76 @@ const pageDescription = project.data.subtitle;
 >
   <article class="project-detail-view">
     <div class="main-container">
-      
-      <nav class="nav-top">
-        <a href="/#projekte" class="back-link-custom">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-            <path d="M19 12H5M12 19l-7-7 7-7"/>
-          </svg>
-          <span>Übersicht</span>
+
+      <nav class="project-nav" aria-label="Projektnavigation">
+        <a href="/#projekte" class="project-back">
+          <span class="project-back__prompt" aria-hidden="true">&gt;_</span>
+          <span>zurück.projekte</span>
         </a>
       </nav>
 
-      <header class="hero-header">
-  <h1 class={`headline-xl ${!hasSpace ? 'is-single-word' : ''}`}>
-    {project.data.title}
-  </h1>
-  <p class="sub-headline">{project.data.subtitle}</p>
-        
-        <div class="tech-stack-flex">
-          {project.data.techStack && project.data.techStack.map((tag) => (
-            <span class="tech-badge-modern">{tag}</span>
-          ))}
-        </div>
+      <header class="project-hero">
+        <p class="project-path project-hero__path">
+          <span class="project-prompt">&gt;_</span>
+          <span>proj.{projectSlug}</span>
+        </p>
+        <h1 class={`section-title project-hero__title ${!hasSpace ? 'is-single-word' : ''}`}>
+          {project.data.title}
+        </h1>
+        <div class="title-divider"></div>
+        <p class="section-lead project-hero__lead">{project.data.subtitle}</p>
+
+        {project.data.techStack?.length ? (
+          <ul class="project-tags" aria-label="Technologien">
+            {project.data.techStack.map((tag) => (
+              <li>{tag}</li>
+            ))}
+          </ul>
+        ) : null}
       </header>
 
-      <section class="image-showcase">
-        <a href={projectLink} target="_blank" rel="noopener" class="img-anchor">
-          <div class="aspect-box">
-            <img src={project.data.image} alt={project.data.title} />
+      <section class="project-showcase" aria-label="Projektvorschau">
+        <a href={projectLink} target="_blank" rel="noopener noreferrer" class="project-showcase__link">
+          <div class="project-showcase__frame">
+            <img src={project.data.image} alt={`Vorschau: ${project.data.title}`} loading="lazy" decoding="async" />
           </div>
+          <span class="project-showcase__hint">
+            <span class="project-showcase__hint-prompt" aria-hidden="true">&gt;</span>
+            Live-Seite öffnen
+          </span>
         </a>
       </section>
 
-      <div class="content-layout">
-        <main class="text-content prose">
-          <h2 class="label-small">Projekt-Analyse</h2>
-          <Content />
-        </main>
-        
-        <aside class="sidebar-info">
-          <div class="status-card-modern">
-            <div class="status-wrap">
-              <span class="status-pulse"></span>
-              <span class="status-text">Status: {projectStatus}</span>
-            </div>
-            <p>Interesse an einer ähnlichen Performance?</p>
-            <a href={projectLink} target="_blank" rel="noopener" class="btn-direct">
-              Webseite besuchen
-            </a>
+      <div class="project-layout">
+        <article class="project-panel project-panel--main">
+          <p class="project-panel__path">
+            <span class="project-prompt">&gt;_</span>
+            <span>analysis.md</span>
+          </p>
+          <h2 class="project-panel__title">Projekt-Analyse</h2>
+          <div class="project-prose">
+            <Content />
           </div>
+        </article>
+
+        <aside class="project-panel project-panel--sidebar">
+          <p class="project-panel__path">
+            <span class="project-prompt">&gt;_</span>
+            <span>status.check</span>
+          </p>
+          <div class="project-status">
+            <span class="project-status__dot" aria-hidden="true"></span>
+            <span class="project-status__label">Status: {projectStatus}</span>
+          </div>
+          <p class="project-panel__note">Interesse an einer ähnlichen Performance?</p>
+          <a href={projectLink} target="_blank" rel="noopener noreferrer" class="project-cta">
+            <span class="project-cta__prompt" aria-hidden="true">&gt;</span>
+            Webseite besuchen
+          </a>
+          <a href="/kontakt/" class="project-cta project-cta--ghost">
+            <span class="project-cta__prompt" aria-hidden="true">&gt;</span>
+            Projekt anfragen
+          </a>
         </aside>
       </div>
 
@@ -113,19 +135,11 @@ const pageDescription = project.data.subtitle;
 </BaseLayout>
 
 <style>
-  :root {
-    --r3-green: #10b981;
-    --navy-dark: #0b1120;
-    --slate-400: #94a3b8;
-    --glass-bg: rgba(255, 255, 255, 0.03);
-  }
-
   .project-detail-view {
-    background-color: var(--navy-dark);
-    color: #ffffff;
+    background-color: #0b1120;
+    color: #fff;
     min-height: 100vh;
-    padding: 2rem 0 10rem;
-    font-family: 'Inter', sans-serif;
+    padding: clamp(1.5rem, 4vw, 2.5rem) 0 clamp(5rem, 10vw, 8rem);
   }
 
   .main-container {
@@ -134,161 +148,366 @@ const pageDescription = project.data.subtitle;
     padding: 0 1.5rem;
   }
 
-  /* Back Link - No Decoration */
-  .back-link-custom {
+  .project-nav {
+    margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .project-back {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
-    color: var(--r3-green);
-    text-decoration: none !important;
-    font-weight: 800;
-    text-transform: uppercase;
-    font-size: 0.85rem;
-    letter-spacing: 1px;
+    gap: 0.45rem;
+    font-family: ui-monospace, 'Cascadia Code', monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: lowercase;
+    text-decoration: none;
+    color: #94a3b8;
+    transition: color 0.2s ease;
   }
 
- .hero-header { 
-    text-align: center; 
-    margin: 3rem 0 4rem; 
-    padding: 0 1rem;
-    width: 100%;
+  .project-back__prompt {
+    color: #10b981;
+    font-weight: 700;
   }
 
-  /* LOGIK FÜR EINZELNE LANGE WÖRTER */
-  .headline-xl.is-single-word {
-    white-space: nowrap; /* Zwingt alles in eine Zeile */
-    /* Wir gehen auf 7.5vw runter, damit auch 20+ Zeichen Platz haben */
-    font-size: clamp(1rem, 7.5vw, 5.5rem); 
-    display: block;
-    width: 100%;
-    overflow: hidden; /* Sicherheitshalber */
+  .project-back:hover {
+    color: #ecfdf5;
   }
 
-  @media (max-width: 400px) {
-    .headline-xl.is-single-word {
-      /* Reißleine für winzige Handys */
-      font-size: clamp(0.9rem, 7vw, 1.4rem);
-    }
+  .project-hero {
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto clamp(3rem, 6vw, 4.5rem);
+    padding: 0 0.25rem;
+  }
+
+  .project-hero__path {
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .project-hero__title {
+    margin-bottom: 0;
+  }
+
+  .project-hero__title.is-single-word {
+    white-space: nowrap;
+    font-size: clamp(1.1rem, 7.5vw, 5.5rem);
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   @media (min-width: 1024px) {
-    .headline-xl {
-      font-size: 5.5rem;
-      letter-spacing: -4px;
-      line-height: 0.9;
-    }
-    /* Auf Desktop darf auch ein einzelnes Wort wieder groß sein */
-    .headline-xl.is-single-word {
-      font-size: 5.5rem;
-    }
-  }
-  
-  /* Korrektur für extrem schmale Handys */
-  @media (max-width: 400px) {
-    .headline-xl.is-single-word {
-      font-size: clamp(1rem, 7.5vw, 1.5rem);
+    .project-hero__title.is-single-word {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      white-space: normal;
+      overflow: visible;
+      text-overflow: unset;
     }
   }
 
-  /* Tech-Stack Badges */
-  .tech-stack-flex {
+  .project-hero__lead {
+    margin-top: 0;
+  }
+
+  .project-tags {
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
-    gap: 0.8rem;
-    max-width: 850px;
-    margin: 0 auto;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: clamp(1.75rem, 4vw, 2.25rem) 0 0;
+    padding: 0;
+    list-style: none;
   }
 
-  .tech-badge-modern {
-    background: var(--glass-bg);
-    border: 1px solid rgba(16, 185, 129, 0.3);
-    color: var(--r3-green);
-    padding: 0.5rem 1.25rem;
-    border-radius: 6px;
-    font-size: 0.75rem;
-    font-weight: 700;
+  .project-tags li {
+    font-family: ui-monospace, 'Cascadia Code', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    color: #cbd5e1;
+    padding: 0.32rem 0.65rem;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
-  /* Image Aspect Ratio & Lift */
-  .image-showcase { margin-bottom: 8rem; }
-  .aspect-box {
+  .project-showcase {
+    margin-bottom: clamp(3rem, 7vw, 5rem);
+  }
+
+  .project-showcase__link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .project-showcase__frame {
+    position: relative;
+    overflow: hidden;
     width: 100%;
     aspect-ratio: 16 / 9;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 40px 80px -20px rgba(0,0,0,0.7);
-    transition: transform 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(11, 17, 32, 0.9);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 18px 40px rgba(0, 0, 0, 0.35);
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.35s ease;
   }
-  .aspect-box img { width: 100%; height: 100%; object-fit: cover; }
-  .img-anchor:hover .aspect-box { transform: translateY(-10px); }
 
-  /* Layout Grid */
-  .content-layout {
+  .project-showcase__frame::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-lime) 0%, #10b981 35%, #38bdf8 70%, transparent 100%);
+    opacity: 0.75;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .project-showcase__frame img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform 0.45s cubic-bezier(0.2, 1, 0.3, 1);
+  }
+
+  .project-showcase__link:hover .project-showcase__frame {
+    transform: translateY(-6px);
+    border-color: rgba(16, 185, 129, 0.25);
+  }
+
+  .project-showcase__link:hover .project-showcase__frame img {
+    transform: scale(1.03);
+  }
+
+  .project-showcase__hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.85rem;
+    font-family: ui-monospace, monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: lowercase;
+    color: #64748b;
+    transition: color 0.2s ease;
+  }
+
+  .project-showcase__hint-prompt {
+    color: #10b981;
+  }
+
+  .project-showcase__link:hover .project-showcase__hint {
+    color: #94a3b8;
+  }
+
+  .project-layout {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 5rem;
+    gap: clamp(1.5rem, 4vw, 2rem);
+    align-items: start;
   }
 
   @media (min-width: 900px) {
-    .content-layout { grid-template-columns: 2fr 1fr; }
+    .project-layout {
+      grid-template-columns: minmax(0, 1.65fr) minmax(260px, 0.85fr);
+      gap: clamp(1.5rem, 3vw, 2rem);
+    }
   }
 
-  .label-small {
-    color: var(--r3-green);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    font-weight: 900;
-    margin-bottom: 2rem;
+  .project-panel {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(1.35rem, 3vw, 1.85rem);
+    border-radius: 14px;
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 42%, transparent 100%),
+      rgba(15, 23, 42, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.07),
+      0 12px 32px rgba(0, 0, 0, 0.28);
   }
 
-  .prose { font-size: 1.2rem; line-height: 1.8; color: var(--slate-400); }
-  .prose :global(p) { margin-bottom: 2rem; }
+  .project-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-lime) 0%, #10b981 35%, #38bdf8 70%, transparent 100%);
+    opacity: 0.75;
+    pointer-events: none;
+  }
 
-  /* Sidebar Card */
-  .status-card-modern {
-    position: sticky;
-    top: 4rem;
-    background: var(--glass-bg);
-    border: 1px solid rgba(255,255,255,0.05);
-    padding: 3rem;
-    border-radius: 16px;
+  .project-panel__path {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin: 0 0 1rem;
+    font-family: ui-monospace, 'Cascadia Code', monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: lowercase;
+    color: #64748b;
+  }
+
+  .project-panel__title {
+    margin: 0 0 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: clamp(1.35rem, 3vw, 1.65rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #f3f4f6;
+  }
+
+  .project-prose {
+    color: #94a3b8;
+    font-size: clamp(1rem, 2vw, 1.08rem);
+    line-height: 1.75;
+  }
+
+  .project-prose :global(p) {
+    margin: 0 0 1.25rem;
+  }
+
+  .project-prose :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .project-prose :global(strong) {
+    color: #e2e8f0;
+    font-weight: 700;
+  }
+
+  .project-prose :global(ul) {
+    margin: 0 0 1.25rem;
+    padding-left: 1.2rem;
+    color: #94a3b8;
+  }
+
+  .project-prose :global(li) {
+    margin-bottom: 0.45rem;
+  }
+
+  .project-panel--sidebar {
     text-align: center;
   }
 
-  .status-wrap {
+  @media (min-width: 900px) {
+    .project-panel--sidebar {
+      position: sticky;
+      top: calc(var(--site-header-height) + 1rem);
+    }
+  }
+
+  .project-status {
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
-    background: rgba(0,0,0,0.3);
-    padding: 0.5rem 1.2rem;
-    border-radius: 50px;
-    margin-bottom: 2rem;
+    gap: 0.55rem;
+    margin: 0 0 1.25rem;
+    padding: 0.45rem 0.95rem;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
-  .status-pulse {
+  .project-status__dot {
     width: 8px;
     height: 8px;
-    background: var(--r3-green);
     border-radius: 50%;
-    box-shadow: 0 0 12px var(--r3-green);
+    background: #34d399;
+    box-shadow: 0 0 10px rgba(52, 211, 153, 0.65);
+    flex-shrink: 0;
   }
 
-  .status-text { font-size: 0.85rem; font-weight: 800; text-transform: capitalize; }
+  .project-status__label {
+    font-family: ui-monospace, monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: capitalize;
+    color: #cbd5e1;
+  }
 
-  .btn-direct {
-    display: block;
-    background: var(--r3-green);
-    color: #fff;
-    padding: 1.2rem;
-    border-radius: 8px;
-    text-decoration: none !important;
+  .project-panel__note {
+    margin: 0 0 1.25rem;
+    color: #94a3b8;
+    line-height: 1.6;
+    font-size: 0.98rem;
+  }
+
+  .project-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.95rem 1.25rem;
+    border-radius: 12px;
+    font-size: 0.92rem;
     font-weight: 800;
-    transition: all 0.3s ease;
-    margin-top: 2rem;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    color: #ecfdf5;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.45);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      0 8px 28px rgba(16, 185, 129, 0.15);
+    transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
   }
-  .btn-direct:hover { background: #059669; transform: scale(1.02); }
+
+  .project-cta + .project-cta {
+    margin-top: 0.75rem;
+  }
+
+  .project-cta__prompt {
+    font-family: ui-monospace, monospace;
+    color: #10b981;
+    font-weight: 700;
+  }
+
+  .project-cta:hover {
+    transform: translateY(-2px);
+    background: rgba(16, 185, 129, 0.2);
+    border-color: #34d399;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.15),
+      0 14px 36px rgba(16, 185, 129, 0.28);
+  }
+
+  .project-cta--ghost {
+    color: #cbd5e1;
+    background: rgba(0, 0, 0, 0.25);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  .project-cta--ghost:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(16, 185, 129, 0.3);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 10px 24px rgba(0, 0, 0, 0.25);
+  }
+
+  @media (max-width: 480px) {
+    .project-hero__title.is-single-word {
+      font-size: clamp(0.95rem, 7vw, 1.35rem);
+    }
+  }
 </style>
