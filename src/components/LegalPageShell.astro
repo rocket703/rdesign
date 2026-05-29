@@ -1,0 +1,39 @@
+---
+import '../styles/legal.css';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead: string;
+  wide?: boolean;
+}
+
+const { eyebrow, title, lead, wide = false } = Astro.props;
+---
+
+<div class:list={['legal-page', wide && 'legal-page--wide']}>
+  <section class="legal-hero">
+    <div class="legal-hero__ambient" aria-hidden="true">
+      <div class="legal-hero__grid"></div>
+    </div>
+    <div class="section-head autoShow">
+      <span class="eyebrow">{eyebrow}</span>
+      <h1 class="section-title">{title}</h1>
+      <div class="title-divider"></div>
+      <p class="section-lead">{lead}</p>
+    </div>
+  </section>
+
+  <section class="legal-body">
+    <div class="legal-page__container">
+      <slot />
+
+      <nav class="legal-page__nav autoShow" aria-label="Weitere rechtliche Seiten">
+        <a href="/">Startseite</a>
+        <a href="/kontakt/">Kontakt</a>
+        <a href="/impressum/">Impressum</a>
+        <a href="/datenschutz/">Datenschutz</a>
+      </nav>
+    </div>
+  </section>
+</div>

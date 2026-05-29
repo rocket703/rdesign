@@ -1,5 +1,12 @@
 ---
-// src/components/Header.astro
+const navLinks = [
+  { href: '/#leistungen', label: 'Leistungen' },
+  { href: '/#projekte', label: 'Projekte' },
+  { href: '/#about', label: 'Über mich' },
+  { href: '/#faq', label: 'FAQ' },
+];
+
+const navCta = { href: '/kontakt/', label: 'Kontakt' };
 ---
 <header class="site-header">
   <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
@@ -27,11 +34,25 @@
         <span class="burger-menu__line burger-menu__line--bot"></span>
       </span>
     </button>
-    <ul class="nav-list" id="nav-list">
-      <li><a href="/kontakt/">Kontakt</a></li>
-      <li><a href="/#projekte">Projekte</a></li>
-      <li><a href="/impressum/">Impressum</a></li>
-    </ul>
+    <div class="nav-bar">
+      <ul class="nav-list" id="nav-list">
+        {navLinks.map((item) => (
+          <li>
+            <a href={item.href} class="nav-link">{item.label}</a>
+          </li>
+        ))}
+        <li class="nav-list__cta-mobile">
+          <a href={navCta.href} class="nav-link nav-link--cta">
+            <span class="nav-link__prompt" aria-hidden="true">&gt;</span>
+            {navCta.label}
+          </a>
+        </li>
+      </ul>
+      <a href={navCta.href} class="nav-cta-desktop nav-link--cta">
+        <span class="nav-link__prompt" aria-hidden="true">&gt;</span>
+        {navCta.label}
+      </a>
+    </div>
   </nav>
 </header>
 

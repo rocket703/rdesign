@@ -1,6 +1,6 @@
 ---
-// src/pages/datenschutz.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
+import LegalPageShell from '../components/LegalPageShell.astro';
 import { schemaGraph, webPageSchema } from '../lib/seo';
 
 const pageTitle = 'Datenschutz – r³webdesign';
@@ -19,271 +19,140 @@ const pageDescription = 'Datenschutzerklärung von r³webdesign gemäß DSGVO.';
     }),
   ])}
 >
-  <section class="legal-hero">
-    <div class="container">
-      <div class="section-head autoShow">
-        <span class="eyebrow">DSGVO & Sicherheit</span>
-        <h1 class="section-title">Datenschutz</h1>
-        <div class="title-divider"></div>
-        <p class="section-lead">
-          Der Schutz Ihrer persönlichen Daten ist uns ein besonderes Anliegen. Hier erfahren Sie transparent, welche Daten wir erheben und wie wir sie schützen.
+  <LegalPageShell
+    eyebrow="DSGVO & Sicherheit"
+    title="Datenschutz"
+    lead="Transparent, welche Daten wir erheben — und wie wir sie schützen."
+  >
+    <article class="legal-block legal-block--contact autoShow">
+      <p class="legal-block__path">
+        <span class="legal-block__prompt">&gt;_</span> legal.controller
+      </p>
+      <h2 class="legal-block__title">1. Verantwortlicher</h2>
+      <div class="legal-block__body legal-contact">
+        <p>Verantwortlich im Sinne der Datenschutz-Grundverordnung (DSGVO):</p>
+        <p>
+          <strong>Dustin Rose</strong><br />
+          Lindenplan 26<br />
+          39120 Magdeburg
+        </p>
+        <p>
+          <span class="label">E-Mail</span><br />
+          <a href="mailto:dustin.rose@gmx.de" class="legal-link">dustin.rose@gmx.de</a>
         </p>
       </div>
-    </div>
-  </section>
+    </article>
 
-  <section class="legal-content">
-    <div class="container">
-      
-      <div class="legal-card autoShow">
-        <h3>1. Verantwortlicher</h3>
-        <p class="contact-details">
-          Verantwortlich im Sinne der Datenschutz-Grundverordnung (DSGVO):<br><br>
-          <strong>Dustin Rose</strong><br>
-          Lindenplan 26<br>
-          39120 Magdeburg<br>
-          <br>
-          <span class="label">E-Mail:</span> <a href="mailto:dustin.rose@gmx.de" class="text-link">dustin.rose@gmx.de</a>
+    <article class="legal-block autoShow">
+      <p class="legal-block__path">
+        <span class="legal-block__prompt">&gt;_</span> legal.hosting
+      </p>
+      <h2 class="legal-block__title">2. Hosting &amp; Server-Logfiles</h2>
+      <div class="legal-block__body">
+        <p>
+          Diese Website wird bei <strong>GitHub Pages</strong> (GitHub, Inc.) gehostet.
+          Beim Aufruf der Seiten werden durch den Hosting-Anbieter automatisch technische Daten in Server-Logfiles verarbeitet, z.&nbsp;B. IP-Adresse, Datum und Uhrzeit des Abrufs, aufgerufene URL, Browsertyp und Betriebssystem.
+          Die Verarbeitung erfolgt zur technischen Bereitstellung und Sicherheit der Website (Art. 6 Abs. 1 lit. f DSGVO).
+          Weitere Informationen: <a href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener" class="legal-link">Datenschutz bei GitHub</a>.
         </p>
       </div>
+    </article>
 
-      <div class="text-block autoShow">
-        
-        <div class="legal-group">
-          <h3>2. Hosting &amp; Server-Logfiles</h3>
-          <p>
-            Diese Website wird bei <strong>GitHub Pages</strong> (GitHub, Inc.) gehostet.
-            Beim Aufruf der Seiten werden durch den Hosting-Anbieter automatisch technische Daten in Server-Logfiles verarbeitet, z.&nbsp;B. IP-Adresse, Datum und Uhrzeit des Abrufs, aufgerufene URL, Browsertyp und Betriebssystem.
-            Die Verarbeitung erfolgt zur technischen Bereitstellung und Sicherheit der Website (Art. 6 Abs. 1 lit. f DSGVO).
-            Weitere Informationen: <a href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener" class="text-link">Datenschutz bei GitHub</a>.
-          </p>
-        </div>
-
-        <div class="legal-group">
-          <h3>3. Schriftarten (lokal eingebunden)</h3>
-          <p>
-            Schriftarten werden <strong>lokal von unserem Webserver</strong> ausgeliefert (Self-Hosting).
-            Beim Seitenaufruf werden dafür <strong>keine Verbindungen zu Google Fonts</strong> oder vergleichbaren externen Schrift-CDNs hergestellt.
-          </p>
-        </div>
-
-        <div class="legal-group">
-          <h3>4. Cookies &amp; vergleichbare Technologien</h3>
-          <p>
-            Diese Website setzt <strong>keine Tracking-Cookies</strong> und verwendet keine Analyse-Tools (z.&nbsp;B. Google Analytics, Meta Pixel, Matomo mit Cookies).
-            Es werden keine Marketing- oder Profiling-Technologien eingesetzt.
-            Daher ist <strong>kein Cookie-Einwilligungs-Banner</strong> erforderlich, solange diese technische Ausgestaltung unverändert bleibt.
-          </p>
-          <p>
-            Sollten Sie uns per Kontaktformular schreiben, werden Daten erst mit Ihrer aktiven Absendung übermittelt — nicht bereits beim bloßen Besuch der Seite.
-          </p>
-        </div>
-
-        <div class="legal-group">
-          <h3>5. Kontaktformular &amp; Web3Forms</h3>
-          <p>
-            Wenn Sie das Kontaktformular nutzen, verarbeiten wir die von Ihnen eingegebenen Angaben:
-          </p>
-          <ul class="legal-list">
-            <li>Name (zur Ansprache)</li>
-            <li>E-Mail-Adresse (zur Beantwortung)</li>
-            <li>Inhalt Ihrer Nachricht</li>
-          </ul>
-          <p>
-            Zur technischen Übermittlung nutzen wir den Dienst <strong>Web3Forms</strong> (Web3Forms, Übermittlung an <code>api.web3forms.com</code>).
-            Die Daten werden von Web3Forms zur Zustellung per E-Mail an uns weitergeleitet.
-            Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Anbahnung/Erfüllung einer Anfrage) sowie Art. 6 Abs. 1 lit. f DSGVO (missbräuchliche Nutzung vermeiden).
-            Weitere Informationen: <a href="https://web3forms.com/privacy" target="_blank" rel="noopener" class="text-link">Datenschutz bei Web3Forms</a>.
-            Die Daten werden nur zur Bearbeitung Ihrer Anfrage verwendet und gelöscht, sobald sie nicht mehr benötigt werden, sofern keine gesetzlichen Aufbewahrungspflichten entgegenstehen.
-          </p>
-        </div>
-
-        <div class="legal-group">
-          <h3>6. Ihre Rechte</h3>
-          <p>Sie haben gemäß DSGVO jederzeit das Recht auf:</p>
-          <ul class="legal-list">
-            <li>Auskunft über Ihre bei uns gespeicherten Daten</li>
-            <li>Berichtigung unrichtiger Daten</li>
-            <li>Löschung Ihrer Daten ("Recht auf Vergessenwerden")</li>
-            <li>Einschränkung der Verarbeitung</li>
-            <li>Widerspruch gegen die Verarbeitung</li>
-            <li>Datenübertragbarkeit</li>
-          </ul>
-          <p>Bitte kontaktieren Sie uns unter <a href="mailto:dustin.rose@gmx.de" class="text-link">dustin.rose@gmx.de</a>, um diese Rechte wahrzunehmen.</p>
-        </div>
-
-        <div class="legal-group">
-          <h3>7. Datensicherheit</h3>
-          <p>
-            Wir verwenden innerhalb des Website-Besuchs das verbreitete SSL-Verfahren (Secure Socket Layer) in Verbindung mit der jeweils höchsten Verschlüsselungsstufe, die von Ihrem Browser unterstützt wird. Sie erkennen eine verschlüsselte Verbindung an dem Schloss-Symbol in der Adresszeile Ihres Browsers.
-          </p>
-        </div>
-
-        <div class="legal-group">
-          <h3>8. Änderungen</h3>
-          <p>
-            Wir behalten uns vor, diese Datenschutzerklärung gelegentlich anzupassen, damit sie stets den aktuellen rechtlichen Anforderungen entspricht oder um Änderungen unserer Leistungen in der Datenschutzerklärung umzusetzen.
-          </p>
-        </div>
-
+    <article class="legal-block autoShow">
+      <p class="legal-block__path">
+        <span class="legal-block__prompt">&gt;_</span> legal.fonts
+      </p>
+      <h2 class="legal-block__title">3. Schriftarten (lokal eingebunden)</h2>
+      <div class="legal-block__body">
+        <p>
+          Schriftarten werden <strong>lokal von unserem Webserver</strong> ausgeliefert (Self-Hosting).
+          Beim Seitenaufruf werden dafür <strong>keine Verbindungen zu Google Fonts</strong> oder vergleichbaren externen Schrift-CDNs hergestellt.
+        </p>
       </div>
-    </div>
-  </section>
+    </article>
+
+    <article class="legal-block autoShow">
+      <p class="legal-block__path">
+        <span class="legal-block__prompt">&gt;_</span> legal.cookies
+      </p>
+      <h2 class="legal-block__title">4. Cookies &amp; vergleichbare Technologien</h2>
+      <div class="legal-block__body">
+        <p>
+          Diese Website setzt <strong>keine Tracking-Cookies</strong> und verwendet keine Analyse-Tools (z.&nbsp;B. Google Analytics, Meta Pixel, Matomo mit Cookies).
+          Es werden keine Marketing- oder Profiling-Technologien eingesetzt.
+          Daher ist <strong>kein Cookie-Einwilligungs-Banner</strong> erforderlich, solange diese technische Ausgestaltung unverändert bleibt.
+        </p>
+        <p>
+          Sollten Sie uns per Kontaktformular schreiben, werden Daten erst mit Ihrer aktiven Absendung übermittelt — nicht bereits beim bloßen Besuch der Seite.
+        </p>
+      </div>
+    </article>
+
+    <article class="legal-block autoShow">
+      <p class="legal-block__path">
+        <span class="legal-block__prompt">&gt;_</span> legal.contact_form
+      </p>
+      <h2 class="legal-block__title">5. Kontaktformular &amp; Web3Forms</h2>
+      <div class="legal-block__body">
+        <p>Wenn Sie das Kontaktformular nutzen, verarbeiten wir die von Ihnen eingegebenen Angaben:</p>
+        <ul class="legal-list">
+          <li>Name (zur Ansprache)</li>
+          <li>E-Mail-Adresse (zur Beantwortung)</li>
+          <li>Inhalt Ihrer Nachricht</li>
+        </ul>
+        <p>
+          Zur technischen Übermittlung nutzen wir den Dienst <strong>Web3Forms</strong> (Übermittlung an <code>api.web3forms.com</code>).
+          Die Daten werden von Web3Forms zur Zustellung per E-Mail an uns weitergeleitet.
+          Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Anbahnung/Erfüllung einer Anfrage) sowie Art. 6 Abs. 1 lit. f DSGVO (missbräuchliche Nutzung vermeiden).
+          Weitere Informationen: <a href="https://web3forms.com/privacy" target="_blank" rel="noopener" class="legal-link">Datenschutz bei Web3Forms</a>.
+          Die Daten werden nur zur Bearbeitung Ihrer Anfrage verwendet und gelöscht, sobald sie nicht mehr benötigt werden, sofern keine gesetzlichen Aufbewahrungspflichten entgegenstehen.
+        </p>
+      </div>
+    </article>
+
+    <article class="legal-block autoShow">
+      <p class="legal-block__path">
+        <span class="legal-block__prompt">&gt;_</span> legal.rights
+      </p>
+      <h2 class="legal-block__title">6. Ihre Rechte</h2>
+      <div class="legal-block__body">
+        <p>Sie haben gemäß DSGVO jederzeit das Recht auf:</p>
+        <ul class="legal-list">
+          <li>Auskunft über Ihre bei uns gespeicherten Daten</li>
+          <li>Berichtigung unrichtiger Daten</li>
+          <li>Löschung Ihrer Daten („Recht auf Vergessenwerden“)</li>
+          <li>Einschränkung der Verarbeitung</li>
+          <li>Widerspruch gegen die Verarbeitung</li>
+          <li>Datenübertragbarkeit</li>
+        </ul>
+        <p>
+          Bitte kontaktieren Sie uns unter <a href="mailto:dustin.rose@gmx.de" class="legal-link">dustin.rose@gmx.de</a>, um diese Rechte wahrzunehmen.
+        </p>
+      </div>
+    </article>
+
+    <article class="legal-block autoShow">
+      <p class="legal-block__path">
+        <span class="legal-block__prompt">&gt;_</span> legal.security
+      </p>
+      <h2 class="legal-block__title">7. Datensicherheit</h2>
+      <div class="legal-block__body">
+        <p>
+          Wir verwenden innerhalb des Website-Besuchs das verbreitete SSL-Verfahren (Secure Socket Layer) in Verbindung mit der jeweils höchsten Verschlüsselungsstufe, die von Ihrem Browser unterstützt wird. Sie erkennen eine verschlüsselte Verbindung an dem Schloss-Symbol in der Adresszeile Ihres Browsers.
+        </p>
+      </div>
+    </article>
+
+    <article class="legal-block autoShow">
+      <p class="legal-block__path">
+        <span class="legal-block__prompt">&gt;_</span> legal.updates
+      </p>
+      <h2 class="legal-block__title">8. Änderungen</h2>
+      <div class="legal-block__body">
+        <p>
+          Wir behalten uns vor, diese Datenschutzerklärung gelegentlich anzupassen, damit sie stets den aktuellen rechtlichen Anforderungen entspricht oder um Änderungen unserer Leistungen in der Datenschutzerklärung umzusetzen.
+        </p>
+      </div>
+    </article>
+  </LegalPageShell>
 </BaseLayout>
-
-<style>
-  /* =========================================
-     1. HERO SEKTION
-     ========================================= */
-  .legal-hero {
-    background: radial-gradient(circle at top, #1e293b 0%, #030712 100%);
-    padding: 10rem 0 4rem 0;
-    text-align: center;
-  }
-
-  .container {
-    max-width: 800px; /* Lesefreundliche Breite */
-    margin: 0 auto;
-    padding: 0 1.5rem;
-  }
-
-  .section-head { margin-bottom: 3rem; }
-  
-  .eyebrow { 
-    color: #10b981; 
-    text-transform: uppercase; 
-    letter-spacing: 0.25em; 
-    font-weight: 800; 
-    font-size: 0.85rem; 
-    display: block; 
-    margin-bottom: 1rem; 
-  }
-
-  .section-title { 
-    font-size: clamp(2.5rem, 6vw, 4rem); 
-    color: #fff; 
-    font-weight: 900; 
-    line-height: 1.1; 
-    margin-bottom: 1.5rem; 
-  }
-
-  .title-divider { 
-    width: 60px; 
-    height: 4px; 
-    background: #10b981; 
-    margin: 2rem auto; 
-    border-radius: 2px; 
-  }
-
-  .section-lead { 
-    color: #94a3b8; 
-    font-size: 1.2rem; 
-    line-height: 1.6; 
-  }
-
-  /* =========================================
-     2. CONTENT STYLING
-     ========================================= */
-  .legal-content {
-    background-color: #0b1120;;
-    padding-bottom: 8rem;
-    color: #cbd5e1;
-  }
-
-  /* Style für die "Verantwortlicher" Karte */
-  .legal-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    padding: 2.5rem;
-    margin-bottom: 4rem;
-    text-align: center;
-    backdrop-filter: blur(10px);
-    transition: transform 0.3s ease;
-  }
-
-  .legal-card:hover {
-    border-color: #10b981;
-    background: rgba(255, 255, 255, 0.04);
-  }
-
-  .legal-card h3 {
-    color: #fff;
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-  }
-
-  .contact-details {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: #e2e8f0;
-  }
-
-  .label { color: #94a3b8; }
-
-  /* Links im Text */
-  .text-link {
-    color: #10b981;
-    text-decoration: none;
-    transition: color 0.2s ease;
-    border-bottom: 1px solid rgba(16, 185, 129, 0.3);
-  }
-
-  .text-link:hover {
-    color: #34d399;
-    border-bottom-color: #34d399;
-  }
-
-  /* Text-Gruppen */
-  .text-block { text-align: left; }
-  .legal-group { margin-bottom: 3rem; }
-
-  .legal-group h3 {
-    color: #fff;
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    padding-left: 1rem;
-    border-left: 3px solid #10b981;
-  }
-
-  .legal-group p {
-    line-height: 1.8;
-    color: #94a3b8;
-    font-size: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  /* Listen Styling (Premium Dots) */
-  .legal-list {
-    list-style: none;
-    padding: 0;
-    margin: 1rem 0;
-  }
-
-  .legal-list li {
-    position: relative;
-    padding-left: 1.5rem;
-    margin-bottom: 0.75rem;
-    color: #cbd5e1;
-    line-height: 1.6;
-  }
-
-  .legal-list li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.6rem;
-    width: 6px;
-    height: 6px;
-    background-color: #10b981;
-    border-radius: 50%;
-  }
-
-  /* Responsive */
-  @media (max-width: 600px) {
-    .legal-hero { padding-top: 8rem; }
-    .legal-card { padding: 1.5rem; }
-  }
-</style>

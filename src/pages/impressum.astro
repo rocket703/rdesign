@@ -1,6 +1,6 @@
 ---
-// src/pages/impressum.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
+import LegalPageShell from '../components/LegalPageShell.astro';
 import { schemaGraph, webPageSchema } from '../lib/seo';
 
 const pageTitle = 'Impressum – r³webdesign';
@@ -19,194 +19,67 @@ const pageDescription = 'Impressum und rechtliche Angaben von r³webdesign gemä
     }),
   ])}
 >
-  <section class="legal-hero">
-    <div class="container">
-      <div class="section-head autoShow">
-        <span class="eyebrow">Rechtliches</span>
-        <h1 class="section-title">Impressum</h1>
-        <div class="title-divider"></div>
-        <p class="section-lead">
-          Angaben gemäß § 5 Digitale‑Dienste‑Gesetz (DDG)
+  <LegalPageShell
+    eyebrow="Rechtliches"
+    title="Impressum"
+    lead="Angaben gemäß § 5 Digitale-Dienste-Gesetz (DDG)"
+  >
+    <article class="legal-block legal-block--contact autoShow">
+      <p class="legal-block__path">
+        <span class="legal-block__prompt">&gt;_</span> legal.contact
+      </p>
+      <h2 class="legal-block__title">Verantwortlich für den Inhalt</h2>
+      <div class="legal-block__body legal-contact">
+        <p>
+          <strong>Dustin Rose</strong><br />
+          Lindenplan 26<br />
+          39120 Magdeburg
+        </p>
+        <p>
+          <span class="label">E-Mail</span><br />
+          <a href="mailto:dustin.rose@gmx.de" class="legal-link">dustin.rose@gmx.de</a>
+        </p>
+        <p>
+          <span class="label">Telefon</span><br />
+          Auf Anfrage
         </p>
       </div>
-    </div>
-  </section>
+    </article>
 
-  <section class="legal-content">
-    <div class="container">
-      
-      <div class="legal-card autoShow">
-        <h3>Verantwortlich für den Inhalt</h3>
-        <p class="contact-details">
-          <strong>Dustin Rose</strong><br>
-          Lindenplan 26<br>
-          39120 Magdeburg<br>
-          <br>
-          <span class="label">E-Mail:</span> <a href="mailto:dustin.rose@gmx.de" class="text-link">dustin.rose@gmx.de</a><br>
-          <span class="label">Telefon:</span> Auf Anfrage
+    <article class="legal-block autoShow">
+      <p class="legal-block__path">
+        <span class="legal-block__prompt">&gt;_</span> legal.disclaimer
+      </p>
+      <h2 class="legal-block__title">Haftungsausschluss</h2>
+      <div class="legal-block__body">
+        <p>
+          Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte übernehmen wir jedoch keine Gewähr. Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
         </p>
       </div>
+    </article>
 
-      <div class="text-block autoShow">
-        <div class="legal-group">
-          <h3>Haftungsausschluss</h3>
-          <p>
-            Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte übernehmen wir jedoch keine Gewähr. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
-          </p>
-        </div>
-
-        <div class="legal-group">
-          <h3>Haftung für Links</h3>
-          <p>
-            Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.
-          </p>
-        </div>
-
-        <div class="legal-group">
-          <h3>Urheberrecht</h3>
-          <p>
-            Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet.
-          </p>
-        </div>
+    <article class="legal-block autoShow">
+      <p class="legal-block__path">
+        <span class="legal-block__prompt">&gt;_</span> legal.links
+      </p>
+      <h2 class="legal-block__title">Haftung für Links</h2>
+      <div class="legal-block__body">
+        <p>
+          Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.
+        </p>
       </div>
+    </article>
 
-    </div>
-  </section>
+    <article class="legal-block autoShow">
+      <p class="legal-block__path">
+        <span class="legal-block__prompt">&gt;_</span> legal.copyright
+      </p>
+      <h2 class="legal-block__title">Urheberrecht</h2>
+      <div class="legal-block__body">
+        <p>
+          Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet.
+        </p>
+      </div>
+    </article>
+  </LegalPageShell>
 </BaseLayout>
-
-<style>
-  /* =========================================
-     1. HERO SEKTION (Wiederverwendeter Stil)
-     ========================================= */
-  .legal-hero {
-    background: radial-gradient(circle at top, #1e293b 0%, #030712 100%);
-    padding: 10rem 0 4rem 0;
-    text-align: center;
-  }
-
-  .container {
-    max-width: 800px; /* Schmalerer Container für bessere Lesbarkeit von Text */
-    margin: 0 auto;
-    padding: 0 1.5rem;
-  }
-
-  .section-head { margin-bottom: 3rem; }
-  
-  .eyebrow { 
-    color: #10b981; 
-    text-transform: uppercase; 
-    letter-spacing: 0.25em; 
-    font-weight: 800; 
-    font-size: 0.85rem; 
-    display: block; 
-    margin-bottom: 1rem; 
-  }
-
-  .section-title { 
-    font-size: clamp(2.5rem, 6vw, 4rem); 
-    color: #fff; 
-    font-weight: 900; 
-    line-height: 1.1; 
-    margin-bottom: 1.5rem; 
-  }
-
-  .title-divider { 
-    width: 60px; 
-    height: 4px; 
-    background: #10b981; 
-    margin: 2rem auto; 
-    border-radius: 2px; 
-  }
-
-  .section-lead { 
-    color: #94a3b8; 
-    font-size: 1.2rem; 
-    line-height: 1.6; 
-  }
-
-  /* =========================================
-     2. CONTENT STYLING
-     ========================================= */
-  .legal-content {
-    background-color: #0b1120;;
-    padding-bottom: 8rem;
-    color: #cbd5e1;
-  }
-
-  /* Die "Karte" für die Adresse */
-  .legal-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    padding: 2.5rem;
-    margin-bottom: 4rem;
-    text-align: center;
-    backdrop-filter: blur(10px);
-    transition: transform 0.3s ease;
-  }
-
-  .legal-card:hover {
-    border-color: #10b981;
-    background: rgba(255, 255, 255, 0.04);
-  }
-
-  .legal-card h3 {
-    color: #fff;
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-  }
-
-  .contact-details {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: #e2e8f0;
-  }
-
-  .label {
-    color: #94a3b8;
-    font-weight: 400;
-  }
-
-  .text-link {
-    color: #10b981;
-    text-decoration: none;
-    transition: color 0.2s ease;
-  }
-
-  .text-link:hover {
-    color: #34d399;
-    text-decoration: underline;
-  }
-
-  /* Juristische Texte */
-  .text-block {
-    text-align: left;
-  }
-
-  .legal-group {
-    margin-bottom: 3rem;
-  }
-
-  .legal-group h3 {
-    color: #fff;
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    padding-left: 1rem;
-    border-left: 3px solid #10b981; /* Grüner Akzent-Strich */
-  }
-
-  .legal-group p {
-    line-height: 1.8;
-    color: #94a3b8;
-    font-size: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  /* Responsive Anpassungen */
-  @media (max-width: 600px) {
-    .legal-hero { padding-top: 8rem; }
-    .legal-card { padding: 1.5rem; }
-  }
-</style>
