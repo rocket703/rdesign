@@ -268,14 +268,26 @@
   }
 }
 
+.legal-block--form .legal-block__path {
+  justify-content: flex-start;
+}
+
 .legal-block--form .legal-block__title {
   margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.1rem;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .contact-form .form-group {
@@ -341,14 +353,14 @@
 .contact-form .form-textarea {
   width: 100%;
   box-sizing: border-box;
-  background: rgba(3, 7, 18, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 10px;
   padding: 1rem;
   color: #f8fafc;
   font-family: inherit;
   font-size: 1rem;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
 }
 
 .contact-form .form-input:focus,
@@ -372,7 +384,7 @@
 .contact-form .form-group.error .form-textarea,
 .contact-form .form-group.error .form-checkbox {
   border-color: #ef4444;
-  background: rgba(239, 68, 68, 0.06);
+  background: rgba(239, 68, 68, 0.08);
 }
 
 .contact-form .form-group.error .error-msg {
