@@ -1,0 +1,301 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="footer-body">
+    <div class="footer-grid">
+      <div class="item-left">
+        <div class="status-badge" role="status" aria-label="System online">
+          <span class="pulse-dot" aria-hidden="true"></span>
+          SYSTEM ONLINE
+        </div>
+      </div>
+      <div class="item-center">
+        <a href="/" class="f-logo">r³webdesign</a>
+        <div class="f-slogan">
+          <span class="cmd">&gt;</span> Code. Design. Performance<span class="cursor">_</span>
+        </div>
+      </div>
+      <div class="item-right">
+        <nav class="f-nav" aria-label="Rechtliches">
+          <a href="/impressum">IMPRESSUM</a>
+          <a href="/datenschutz">DATENSCHUTZ</a>
+        </nav>
+        <p class="f-copy">© {currentYear}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-visual-bottom" aria-hidden="true">
+    <div class="huge-outline-text">
+      r<span class="wm-sup">3</span>webdesign
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    /* Peek = 50 % Schrifthöhe + Reserve für hochgestellte ³ */
+    --footer-watermark-size: clamp(3.25rem, 18vw, 14rem);
+    --footer-watermark-lh: 0.85;
+    --footer-superscript-pad: calc(var(--footer-watermark-size) * 0.11);
+    --footer-text-top: var(--footer-superscript-pad);
+    --footer-peek-h: calc(
+      var(--footer-watermark-size) * var(--footer-watermark-lh) * 0.5 + var(--footer-superscript-pad)
+    );
+    background-color: #0b1120;
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .footer-body {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: clamp(3rem, 7vw, 5rem) clamp(1rem, 4vw, 2rem) clamp(2rem, 4vw, 3rem);
+    box-sizing: border-box;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: clamp(1.25rem, 3vw, 2rem);
+  }
+
+  .item-left {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .item-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    text-align: center;
+    min-width: 0;
+  }
+
+  .item-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 0.5rem;
+    text-align: right;
+  }
+
+  .f-logo {
+    font-size: clamp(1.75rem, 4.5vw, 3rem);
+    font-weight: 900;
+    line-height: 1.05;
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: -0.05em;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+  }
+
+  .f-logo:hover {
+    color: #10b981;
+    text-shadow: 0 0 30px rgba(16, 185, 129, 0.3);
+  }
+
+  .f-slogan {
+    font-family: ui-monospace, 'Cascadia Code', monospace;
+    color: #10b981;
+    font-size: clamp(0.72rem, 2.2vw, 0.9rem);
+    line-height: 1.45;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  .cmd {
+    opacity: 0.6;
+    margin-right: 0.35rem;
+  }
+
+  .cursor {
+    animation: blink 1s step-end infinite;
+    font-weight: bold;
+  }
+
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: ui-monospace, monospace;
+    font-size: 0.72rem;
+    color: #64748b;
+    border: 1px solid #334155;
+    padding: 6px 14px;
+    border-radius: 50px;
+    white-space: nowrap;
+    transition: border-color 0.3s ease, background 0.3s ease;
+  }
+
+  .status-badge:hover {
+    border-color: #10b981;
+    background: rgba(16, 185, 129, 0.05);
+  }
+
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    flex-shrink: 0;
+    background: #10b981;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #10b981;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .f-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+    justify-content: flex-end;
+  }
+
+  .f-nav a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: clamp(0.68rem, 1.8vw, 0.8rem);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+  }
+
+  .f-nav a:hover {
+    color: #10b981;
+    text-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+  }
+
+  .f-copy {
+    color: #334155;
+    font-size: 0.7rem;
+    font-family: ui-monospace, monospace;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  /* Wasserzeichen – exakt obere Hälfte der Schrift sichtbar */
+  .footer-visual-bottom {
+    flex-shrink: 0;
+    width: 100%;
+    height: var(--footer-peek-h);
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    line-height: 0;
+    background: #0b1120;
+  }
+
+  .huge-outline-text {
+    position: absolute;
+    left: 50%;
+    top: var(--footer-text-top);
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: var(--footer-watermark-size);
+    font-weight: 900;
+    line-height: var(--footer-watermark-lh);
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(16, 185, 129, 0.14);
+    white-space: nowrap;
+    text-transform: lowercase;
+    pointer-events: none;
+    user-select: none;
+    --footer-offset: 0px;
+    transform: translateX(calc(-50% + var(--footer-offset)));
+    will-change: transform;
+  }
+
+  .wm-sup {
+    font-size: 0.52em;
+    vertical-align: super;
+    line-height: 0;
+    -webkit-text-stroke: inherit;
+  }
+
+  @media (max-width: 1023px) {
+    .site-footer {
+      --footer-watermark-size: clamp(3.25rem, 20vw, 6rem);
+      --footer-superscript-pad: calc(var(--footer-watermark-size) * 0.06);
+      --footer-text-top: calc(var(--footer-watermark-size) * 0.02);
+    }
+
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .item-left,
+    .item-right {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .f-nav {
+      justify-content: center;
+    }
+
+    .f-slogan {
+      white-space: normal;
+      max-width: 22rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .site-footer {
+      --footer-watermark-size: 3.25rem;
+      --footer-superscript-pad: calc(var(--footer-watermark-size) * 0.05);
+      --footer-text-top: calc(var(--footer-watermark-size) * 0.015);
+    }
+
+    .footer-body {
+      padding-bottom: 1.5rem;
+    }
+
+    .footer-grid {
+      gap: 1.5rem;
+    }
+
+    .huge-outline-text {
+      -webkit-text-stroke-width: 1px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .huge-outline-text {
+      transform: translateX(-50%);
+      transition: none;
+    }
+
+    .pulse-dot,
+    .cursor {
+      animation: none;
+    }
+  }
+</style>

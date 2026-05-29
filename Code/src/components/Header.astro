@@ -1,0 +1,172 @@
+---
+// src/components/Header.astro
+---
+<header class="site-header">
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+  <a href="/" class="logo-link" aria-label="Zurück zur Startseite">
+    <span class="logo-mark">
+      <span class="logo-mark__sheen" aria-hidden="true"></span>
+      <span class="logo-mark__glyph">
+        <span class="logo-mark__r">r</span>
+        <span class="logo-mark__three">3</span>
+      </span>
+    </span>
+  </a>
+  <nav class="main-nav" aria-label="Hauptnavigation">
+    <button
+      type="button"
+      class="burger-menu"
+      id="burger-menu"
+      aria-expanded="false"
+      aria-controls="nav-list"
+      aria-label="Menü öffnen"
+    >
+      <span class="burger-menu__inner" aria-hidden="true">
+        <span class="burger-menu__line burger-menu__line--top"></span>
+        <span class="burger-menu__line burger-menu__line--mid"></span>
+        <span class="burger-menu__line burger-menu__line--bot"></span>
+      </span>
+    </button>
+    <ul class="nav-list" id="nav-list">
+      <li><a href="/kontakt/">Kontakt</a></li>
+      <li><a href="/#projekte">Projekte</a></li>
+      <li><a href="/impressum/">Impressum</a></li>
+    </ul>
+  </nav>
+</header>
+
+<script is:inline>
+  (function () {
+    const burger = document.getElementById('burger-menu');
+    const navList = document.getElementById('nav-list');
+    if (!burger || !navList) return;
+
+    const setMenuOpen = (open) => {
+      burger.classList.toggle('active', open);
+      navList.classList.toggle('active', open);
+      document.body.classList.toggle('nav-open', open);
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      burger.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+    };
+
+    burger.addEventListener('click', function () {
+      setMenuOpen(!this.classList.contains('active'));
+    });
+
+    navList.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => setMenuOpen(false));
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && burger.classList.contains('active')) {
+        setMenuOpen(false);
+        burger.focus();
+      }
+    });
+
+    window.matchMedia('(min-width: 821px)').addEventListener('change', (e) => {
+      if (e.matches) setMenuOpen(false);
+    });
+  })();
+</script>
+
+<style>
+  .logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .logo-mark {
+    position: relative;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background:
+      linear-gradient(155deg, rgba(255, 255, 255, 0.1) 0%, transparent 38%),
+      linear-gradient(180deg, #1c2433 0%, #111827 52%, #0c1220 100%);
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.35),
+      0 1px 2px rgba(0, 0, 0, 0.35),
+      0 6px 18px rgba(0, 0, 0, 0.28);
+    transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.28s ease;
+  }
+
+  .logo-mark__sheen {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      125deg,
+      rgba(255, 255, 255, 0.16) 0%,
+      rgba(255, 255, 255, 0.04) 28%,
+      transparent 52%
+    );
+    pointer-events: none;
+  }
+
+  .logo-mark__glyph {
+    position: relative;
+    display: inline-flex;
+    align-items: baseline;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    color: #f8fafc;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+  }
+
+  .logo-mark__r {
+    font-weight: 700;
+  }
+
+  .logo-mark__three {
+    position: absolute;
+    left: calc(100% - 0.08em);
+    top: -0.62em;
+    min-width: 0.95em;
+    height: 0.95em;
+    padding: 0 0.12em;
+    display: grid;
+    place-items: center;
+    font-size: 0.52em;
+    font-weight: 800;
+    letter-spacing: 0;
+    color: #fff;
+    border-radius: 4px;
+    background: linear-gradient(145deg, #34d399 0%, #10b981 55%, #059669 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.28),
+      0 2px 5px rgba(16, 185, 129, 0.35);
+  }
+
+  .logo-link:hover .logo-mark {
+    transform: translateY(-1px) scale(1.03);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.35),
+      0 2px 4px rgba(0, 0, 0, 0.32),
+      0 10px 22px rgba(0, 0, 0, 0.32),
+      0 0 0 1px rgba(16, 185, 129, 0.12);
+  }
+
+  .logo-link:active .logo-mark {
+    transform: translateY(0) scale(0.98);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo-mark,
+    .logo-link:hover .logo-mark,
+    .logo-link:active .logo-mark {
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

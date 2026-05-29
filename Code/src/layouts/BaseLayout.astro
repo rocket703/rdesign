@@ -1,0 +1,109 @@
+---
+// src/layouts/BaseLayout.astro
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/subtle-bubbles.css';
+import '../styles/style.css';
+
+const { title, description } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#10b981" />
+
+  <link rel="canonical" href="https://r3webdesign.de/" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet" />
+
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+</head>
+<body>
+  <script is:inline>document.documentElement.classList.add('js-enabled');</script>
+  <a href="#main-content" class="skip-link">Zum Inhalt springen</a>
+
+  <Header />
+
+  <main id="main-content">
+    <slot />
+  </main>
+  
+  <Footer />
+
+  <script is:inline src="/subtle-bubbles.js"></script>
+  <script is:inline src="/site-effects.js"></script>
+  <script is:inline>
+    // === AutoShow: Original Logik ===
+    (function () {
+      const els = document.querySelectorAll('.autoShow');
+      const reduced =
+        window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduced || !('IntersectionObserver' in window) || els.length === 0) {
+        els.forEach(el => el.classList.add('is-visible'));
+        return;
+      }
+      const thresholds = [];
+      for (let i = 0; i <= 1; i += 0.05) thresholds.push(+i.toFixed(2));
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          const r = e.intersectionRatio;
+          if (r >= 0.20) { e.target.classList.add('is-visible'); return; }
+          if (r <= 0.08) { e.target.classList.remove('is-visible'); }
+        });
+      }, { root: null, rootMargin: '0px 0px 25% 0px', threshold: thresholds });
+      els.forEach(el => io.observe(el));
+    })();
+  </script>
+
+  <style is:global>
+    
+  :root {
+    --bg-dark: #030712;
+    --bg-surface: #0b1120;
+    --r3-green: #10b981;
+    --text-muted: #94a3b8;
+    --site-header-height: 4.75rem;
+  }
+
+  html {
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+
+  html, body {
+    background-color: var(--bg-dark);
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+  }
+
+  body {
+    background: #0b1120;
+  }
+
+  main {
+    padding-top: var(--site-header-height);
+  }
+
+  #intro,
+  #about,
+  #leistungen,
+  #projekte {
+    scroll-margin-top: var(--site-header-height);
+  }
+  </style>
+
+</body>
+</html>
