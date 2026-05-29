@@ -8,6 +8,13 @@ import { homePageSchema, SITE } from '../lib/seo';
 
 const allProjects = await getCollection('projects');
 
+const projectListItems = allProjects.map((project) => ({
+  title: project.data.title,
+  slug: project.id.replace('.md', ''),
+  description: project.data.subtitle,
+  image: project.data.image,
+}));
+
 const codeMobile = `async function ship(site) {
   await site.optimizeAssets();
   await site.prerender();
@@ -55,7 +62,7 @@ export async function GET({ cookies, redirect }) {
 <BaseLayout
   title={SITE.defaultTitle}
   description={SITE.defaultDescription}
-  jsonLd={homePageSchema(faqItems, Astro.site)}
+  jsonLd={homePageSchema(faqItems, projectListItems, Astro.site)}
 >
  <section id="intro" class="section intro">
   <div class="hero-ambient" aria-hidden="true">

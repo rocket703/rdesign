@@ -26,6 +26,8 @@ const {
 const site = Astro.site ?? new URL(SITE.url);
 const canonicalURL = new URL(Astro.url.pathname, site);
 const ogImageURL = new URL(image, site);
+const ogImageWidth = image === SITE.defaultOgImage ? 1200 : undefined;
+const ogImageHeight = image === SITE.defaultOgImage ? 630 : undefined;
 const robots = noindex ? 'noindex, nofollow' : 'index,follow,max-image-preview:large';
 const jsonLdString = jsonLd ? JSON.stringify(jsonLd) : null;
 ---
@@ -53,6 +55,12 @@ const jsonLdString = jsonLd ? JSON.stringify(jsonLd) : null;
   <meta property="og:url" content={canonicalURL} />
   <meta property="og:image" content={ogImageURL} />
   <meta property="og:image:alt" content={`${SITE.name} – Webdesign Magdeburg`} />
+  {ogImageWidth && ogImageHeight && (
+    <>
+      <meta property="og:image:width" content={String(ogImageWidth)} />
+      <meta property="og:image:height" content={String(ogImageHeight)} />
+    </>
+  )}
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />

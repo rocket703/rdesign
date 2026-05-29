@@ -1,5 +1,12 @@
 import type { FaqItem } from '../data/faq';
 
+export type ProjectListItem = {
+  title: string;
+  slug: string;
+  description: string;
+  image: string;
+};
+
 export const SITE = {
   name: 'r³webdesign',
   legalName: 'Dustin Rose',
@@ -10,10 +17,15 @@ export const SITE = {
   city: 'Magdeburg',
   region: 'Sachsen-Anhalt',
   country: 'DE',
-  defaultOgImage: '/icon-512.png',
+  streetAddress: 'Lindenplan 26',
+  postalCode: '39120',
+  defaultOgImage: '/og-default.webp',
   defaultTitle: 'Webdesign Magdeburg | Homepage & Webentwicklung – r³webdesign',
   defaultDescription:
     'Webdesign und Webentwicklung in Magdeburg: schnelle Homepages, moderne Web-Apps und SEO-starke Umsetzung mit Astro, TypeScript und klarer UX.',
+  profiles: {
+    github: 'https://github.com/rocket703',
+  },
 } as const;
 
 export function absoluteUrl(path: string, site: URL | string = SITE.url): string {
@@ -51,8 +63,11 @@ export function personSchema(site: URL | string = SITE.url) {
     url: absoluteUrl('/', site),
     email: SITE.email,
     jobTitle: 'Webentwickler & UI/UX Designer',
+    worksFor: { '@id': `${absoluteUrl('/', site)}#service` },
     address: {
       '@type': 'PostalAddress',
+      streetAddress: SITE.streetAddress,
+      postalCode: SITE.postalCode,
       addressLocality: SITE.city,
       addressRegion: SITE.region,
       addressCountry: SITE.country,
@@ -62,14 +77,16 @@ export function personSchema(site: URL | string = SITE.url) {
       name: SITE.city,
     },
     knowsAbout: [
-      'Webdesign',
+      'Webdesign Magdeburg',
       'Webentwicklung',
       'Homepage Erstellung',
       'UI/UX Design',
-      'SEO',
+      'Technisches SEO',
       'Astro',
       'TypeScript',
+      'Supabase',
     ],
+    sameAs: [SITE.profiles.github],
   };
 }
 
@@ -80,22 +97,34 @@ export function professionalServiceSchema(site: URL | string = SITE.url) {
     name: `${SITE.name} – Webdesign Magdeburg`,
     url: absoluteUrl('/', site),
     email: SITE.email,
-    areaServed: SITE.city,
+    areaServed: [
+      { '@type': 'City', name: SITE.city },
+      { '@type': 'AdministrativeArea', name: SITE.region },
+    ],
     address: {
       '@type': 'PostalAddress',
+      streetAddress: SITE.streetAddress,
+      postalCode: SITE.postalCode,
       addressLocality: SITE.city,
       addressRegion: SITE.region,
       addressCountry: SITE.country,
     },
     provider: { '@id': `${absoluteUrl('/', site)}#person` },
-    serviceType: ['Webdesign', 'Webentwicklung', 'Homepage Erstellung', 'SEO'],
+    serviceType: [
+      'Webdesign',
+      'Webentwicklung',
+      'Homepage Erstellung',
+      'Landingpage',
+      'Web-App Entwicklung',
+      'Technisches SEO',
+    ],
   };
 }
 
-export function faqPageSchema(items: FaqItem[]) {
+export function faqPageSchema(items: FaqItem[], site: URL | string = SITE.url) {
   return {
     '@type': 'FAQPage',
-    '@id': `${SITE.url}/#faq`,
+    '@id': `${absoluteUrl('/', site)}#faq`,
     mainEntity: items.map((item) => ({
       '@type': 'Question',
       name: item.question,
@@ -104,6 +133,44 @@ export function faqPageSchema(items: FaqItem[]) {
         text: item.answer,
       },
     })),
+  };
+}
+
+export function projectListSchema(projects: ProjectListItem[], site: URL | string = SITE.url) {
+  return {
+    '@type': 'ItemList',
+    '@id': `${absoluteUrl('/', site)}#projekte`,
+    name: 'Referenzprojekte von r³webdesign',
+    description: 'Ausgewählte Webdesign- und Webentwicklungsprojekte aus Magdeburg und Umgebung.',
+    itemListElement: projects.map((project, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: project.title,
+      url: absoluteUrl(`/projekte/${project.slug}`, site),
+      item: {
+        '@type': 'CreativeWork',
+        name: project.title,
+        description: project.description,
+        url: absoluteUrl(`/projekte/${project.slug}`, site),
+        image: absoluteUrl(project.image, site),
+        creator: { '@id': `${absoluteUrl('/', site)}#person` },
+      },
+    })),
+  };
+}
+
+export function contactPageSchema(site: URL | string = SITE.url) {
+  return {
+    '@type': 'ContactPage',
+    '@id': `${absoluteUrl('/kontakt/', site)}#contact`,
+    name: 'Kontakt – Webdesign Magdeburg | r³webdesign',
+    url: absoluteUrl('/kontakt/', site),
+    description:
+      'Projektanfrage für Webdesign, Homepage oder Web-App in Magdeburg. Direkter Kontakt zu Dustin Rose (r³webdesign).',
+    inLanguage: SITE.language,
+    isPartOf: { '@id': `${absoluteUrl('/', site)}#website` },
+    about: { '@id': `${absoluteUrl('/', site)}#person` },
+    mainEntity: { '@id': `${absoluteUrl('/', site)}#service` },
   };
 }
 
@@ -121,6 +188,7 @@ export function webPageSchema({
   const url = canonicalUrl(pathname, site);
   return {
     '@type': 'WebPage',
+    '@id': `${url}#webpage`,
     name,
     description,
     url,
@@ -149,26 +217,39 @@ export function creativeWorkSchema({
   description,
   image,
   pathname,
+  liveUrl,
+  keywords = [],
   site = SITE.url,
 }: {
   title: string;
   description: string;
   image: string;
   pathname: string;
+  liveUrl?: string;
+  keywords?: string[];
   site?: URL | string;
 }) {
   return {
     '@type': 'CreativeWork',
+    '@id': `${canonicalUrl(pathname, site)}#project`,
     name: title,
     description,
     url: canonicalUrl(pathname, site),
     image: absoluteUrl(image, site),
     creator: { '@id': `${absoluteUrl('/', site)}#person` },
     inLanguage: SITE.language,
+    ...(liveUrl && liveUrl !== '#'
+      ? { sameAs: liveUrl }
+      : {}),
+    ...(keywords.length ? { keywords: keywords.join(', ') } : {}),
   };
 }
 
-export function homePageSchema(items: FaqItem[], site: URL | string = SITE.url) {
+export function homePageSchema(
+  items: FaqItem[],
+  projects: ProjectListItem[],
+  site: URL | string = SITE.url,
+) {
   return schemaGraph([
     webSiteSchema(site),
     personSchema(site),
@@ -179,6 +260,7 @@ export function homePageSchema(items: FaqItem[], site: URL | string = SITE.url) 
       pathname: '/',
       site,
     }),
-    faqPageSchema(items),
+    faqPageSchema(items, site),
+    projectListSchema(projects, site),
   ]);
 }

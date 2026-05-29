@@ -4,7 +4,7 @@ subtitle: "SEO‑optimierte WordPress‑Website mit responsivem Design, klarer S
 customerUrl: "https://www.gedankenrein.de"
 image: "/images/projekt-2.webp"
 techStack: ["WordPress", "HTML5", "CSS3", "Bootstrap", "jQuery", "SEO"]
-seoTitle: "Rdesign – GedankenRein Coaching"
+seoTitle: "GedankenRein Coaching – Website | r³webdesign"
 seoDesc: "Projekt: GedankenRein Coaching – SEO-starke WordPress‑Website mit responsivem Design, hoher Performance und sauberer Informationsarchitektur."
 status: "online"
 tasks:

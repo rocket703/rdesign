@@ -1,0 +1,29 @@
+# r³webdesign
+
+> Webentwickler Dustin Rose aus Magdeburg (Sachsen-Anhalt). Unter r³webdesign entstehen schnelle Homepages, Web-Apps und native Apps — Schwerpunkt Performance, klares Design und sauberer Code.
+
+## Kontakt
+
+- Website: https://r3webdesign.de
+- E-Mail: dustin.rose@gmx.de
+- Standort: Lindenplan 26, 39120 Magdeburg, Deutschland
+- GitHub: https://github.com/rocket703
+
+## Leistungen
+
+- Webseiten & Landingpages (Astro, SEO, Barrierefreiheit)
+- Web-Apps & Dashboards (Supabase, SSR, Auth)
+- Native Apps (Expo, iOS, Android)
+- Betreuung, Performance, Weiterentwicklung
+
+## Referenzprojekte
+
+- Startplatzboerse.com — Fullstack-Plattform (Astro, Supabase, Vercel)
+- Wolmirstedter Ohrelauf — Event-Website, statisch, GitHub Pages
+- Radsportclub Magdeburg — Vereinswebsite mit Kontaktformular
+- 3viertel12 — Band-Website mit Astro
+- Weitere Case Studies: https://r3webdesign.de/#projekte
+
+## Technologie
+
+Astro, TypeScript, Supabase, Vercel, GitHub Pages, Expo — je nach Projektanforderung.

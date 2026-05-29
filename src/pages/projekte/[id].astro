@@ -24,8 +24,15 @@ const title = project.data.title;
 const hasSpace = title.trim().includes(' ');
 const projectSlug = project.id.replace('.md', '');
 const projectPath = `/projekte/${projectSlug}`;
-const pageTitle = `${project.data.title} | r³webdesign`;
-const pageDescription = project.data.subtitle;
+const pageTitle = project.data.seoTitle ?? `${project.data.title} | r³webdesign`;
+const pageDescription = project.data.seoDesc ?? project.data.subtitle;
+const liveHost = (() => {
+  try {
+    return new URL(projectLink).hostname.replace(/^www\./, '');
+  } catch {
+    return null;
+  }
+})();
 ---
 
 <BaseLayout
@@ -48,9 +55,11 @@ const pageDescription = project.data.subtitle;
     ),
     creativeWorkSchema({
       title: project.data.title,
-      description: project.data.subtitle,
+      description: pageDescription,
       image: project.data.image,
       pathname: projectPath,
+      liveUrl: projectLink,
+      keywords: project.data.techStack,
       site: Astro.site,
     }),
   ])}
@@ -112,13 +121,31 @@ const pageDescription = project.data.subtitle;
         <aside class="project-panel project-panel--sidebar">
           <p class="project-panel__path">
             <span class="project-prompt">&gt;_</span>
-            <span>status.check</span>
+            <span>meta.json</span>
           </p>
-          <div class="project-status">
-            <span class="project-status__dot" aria-hidden="true"></span>
-            <span class="project-status__label">Status: {projectStatus}</span>
-          </div>
-          <p class="project-panel__note">Interesse an einer ähnlichen Performance?</p>
+          <dl class="project-facts">
+            <div class="project-facts__row">
+              <dt>Status</dt>
+              <dd>{projectStatus}</dd>
+            </div>
+            {project.data.techStack?.length ? (
+              <div class="project-facts__row">
+                <dt>Stack</dt>
+                <dd>{project.data.techStack.slice(0, 4).join(' · ')}{project.data.techStack.length > 4 ? ' …' : ''}</dd>
+              </div>
+            ) : null}
+            {liveHost ? (
+              <div class="project-facts__row">
+                <dt>Live</dt>
+                <dd><a href={projectLink} target="_blank" rel="noopener noreferrer">{liveHost}</a></dd>
+              </div>
+            ) : null}
+            <div class="project-facts__row">
+              <dt>Ort</dt>
+              <dd>Magdeburg · remote</dd>
+            </div>
+          </dl>
+          <p class="project-panel__note">Interesse an einer ähnlichen Umsetzung?</p>
           <a href={projectLink} target="_blank" rel="noopener noreferrer" class="project-cta">
             <span class="project-cta__prompt" aria-hidden="true">&gt;</span>
             Webseite besuchen
@@ -407,6 +434,10 @@ const pageDescription = project.data.subtitle;
     text-align: center;
   }
 
+  .project-panel--sidebar .project-facts {
+    text-align: left;
+  }
+
   @media (min-width: 900px) {
     .project-panel--sidebar {
       position: sticky;
@@ -414,33 +445,55 @@ const pageDescription = project.data.subtitle;
     }
   }
 
-  .project-status {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55rem;
-    margin: 0 0 1.25rem;
-    padding: 0.45rem 0.95rem;
-    border-radius: 999px;
-    background: rgba(0, 0, 0, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+  .project-facts {
+    margin: 0 0 1.35rem;
+    padding: 0 0 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: left;
   }
 
-  .project-status__dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #34d399;
-    box-shadow: 0 0 10px rgba(52, 211, 153, 0.65);
-    flex-shrink: 0;
+  .project-facts__row {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr;
+    gap: 0.65rem;
+    align-items: baseline;
+    margin-bottom: 0.65rem;
   }
 
-  .project-status__label {
+  .project-facts__row:last-child {
+    margin-bottom: 0;
+  }
+
+  .project-facts dt {
+    margin: 0;
     font-family: ui-monospace, monospace;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    text-transform: capitalize;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #64748b;
+  }
+
+  .project-facts dd {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.45;
     color: #cbd5e1;
+  }
+
+  .project-facts__row:first-child dd {
+    text-transform: capitalize;
+  }
+
+  .project-facts dd a {
+    color: #10b981;
+    text-decoration: none;
+    text-transform: lowercase;
+    word-break: break-all;
+  }
+
+  .project-facts dd a:hover {
+    text-decoration: underline;
   }
 
   .project-panel__note {

@@ -24,4 +24,19 @@ export const faqItems: FaqItem[] = [
     answer:
       'Ja. Auf Wunsch bekommst du ein Setup, mit dem Inhalte einfach aktualisiert werden können. Außerdem gibt es eine kurze Einweisung oder laufende Betreuung, wenn du es abgeben willst.',
   },
+  {
+    question: 'Arbeitest du nur in Magdeburg oder auch remote?',
+    answer:
+      'Beides. Viele Projekte laufen komplett remote — Briefing per Video, Umsetzung digital. Für Kunden in Magdeburg und Umgebung treffe ich mich gern persönlich zum Kick-off.',
+  },
+  {
+    question: 'Was unterscheidet deine Seiten von Baukasten-Anbietern?',
+    answer:
+      'Kein Theme von der Stange: individuelles Layout, Code den du besitzt, und Performance die du messen kannst. Keine monatliche Baukasten-Miete für das, was du eigentlich einmal sauber gebaut haben willst.',
+  },
+  {
+    question: 'Welchen Tech-Stack setzt du ein — und warum?',
+    answer:
+      'Meist Astro fürs Frontend — schnell, wenig JavaScript, gut für SEO. Braucht das Projekt Login, Datenbank oder Echtzeit? Dann kommen Supabase, SSR oder APIs dazu. Immer passend zum Vorhaben, nicht passend zum Hype.',
+  },
 ];
