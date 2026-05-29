@@ -23,60 +23,61 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="contact-form-section">
     <div class="container contact-container">
       <div class="form-wrapper">
-        <form action="https://api.web3forms.com/submit" method="POST" class="contact-form" novalidate>
+        <div id="form-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+        <form action="https://api.web3forms.com/submit" method="POST" class="contact-form" novalidate aria-describedby="form-status">
           <input type="hidden" name="access_key" value="d544bd39-97c0-4398-b1b7-3bc12ac7c465">
           <input type="hidden" name="redirect" value="false">
           <input type="hidden" name="from_name" value="Kontaktanfrage r³webdesign">
           <input type="hidden" name="subject" value="Neue Anfrage über Webseite">
           <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
 
-          <div class="form-group">
-            <label for="name">Name</label>
+          <div class="form-group float-field">
             <input 
               type="text" 
               id="name" 
               name="name" 
               required 
-              placeholder="Ihr Name" 
+              placeholder=" "
               autocomplete="name"
               class="form-input"
             >
-            <span class="error-msg">Bitte geben Sie Ihren Namen ein.</span>
+            <label for="name">Name</label>
+            <span class="error-msg" id="name-error">Bitte geben Sie Ihren Namen ein.</span>
           </div>
 
-          <div class="form-group">
-            <label for="email">E-Mail</label>
+          <div class="form-group float-field">
             <input 
               type="email" 
               id="email" 
               name="email" 
               required 
-              placeholder="ihre@email.de" 
+              placeholder=" "
               autocomplete="email" 
               class="form-input"
             >
-            <span class="error-msg">Bitte geben Sie eine gültige E-Mail ein.</span>
+            <label for="email">E-Mail</label>
+            <span class="error-msg" id="email-error">Bitte geben Sie eine gültige E-Mail ein.</span>
           </div>
 
-          <div class="form-group">
-            <label for="message">Nachricht</label>
+          <div class="form-group float-field float-field--textarea">
             <textarea 
               id="message" 
               name="message" 
               required 
-              placeholder="Erzählen Sie mir von Ihrem Projekt..." 
+              placeholder=" "
               rows="6"
               class="form-textarea"
             ></textarea>
-            <span class="error-msg">Bitte schreiben Sie eine Nachricht.</span>
+            <label for="message">Nachricht</label>
+            <span class="error-msg" id="message-error">Bitte schreiben Sie eine Nachricht.</span>
           </div>
 
           <div class="form-group checkbox-group">
             <label class="checkbox-label">
-              <input type="checkbox" name="privacy" required class="form-checkbox">
+              <input type="checkbox" id="privacy" name="privacy" required class="form-checkbox" aria-describedby="privacy-error">
               <span>Ich stimme der Speicherung meiner Daten zur Kontaktaufnahme zu.</span>
             </label>
-            <span class="error-msg">Bitte stimmen Sie der Datenschutzerklärung zu.</span>
+            <span class="error-msg" id="privacy-error">Bitte stimmen Sie der Datenschutzerklärung zu.</span>
           </div>
 
           <button type="submit" class="submit-button">
@@ -103,14 +104,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </section>
 
-  <div id="success-popup" class="popup-overlay">
+  <div
+    id="success-popup"
+    class="popup-overlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="success-popup-title"
+    aria-hidden="true"
+  >
     <div class="popup-card">
-      <div class="popup-icon-wrapper">
-        <svg class="check-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <div class="popup-icon-wrapper" aria-hidden="true">
+        <svg class="check-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
           <path d="M20 6L9 17L4 12" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-      <h2>Nachricht gesendet!</h2>
+      <h2 id="success-popup-title">Nachricht gesendet!</h2>
       <p>Vielen Dank für Ihre Anfrage. Ich habe Ihre E-Mail erhalten und melde mich in Kürze bei Ihnen.</p>
       <button id="close-popup" class="popup-close-btn">Zurück zur Seite</button>
     </div>
@@ -124,26 +132,63 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   const closeBtn = document.getElementById('close-popup');
   const submitBtn = document.querySelector('.submit-button');
   const btnText = document.querySelector('.btn-text');
+  const popupIcon = document.querySelector('.popup-icon-wrapper');
+  const formStatus = document.getElementById('form-status');
   const inputs = document.querySelectorAll('.form-input, .form-textarea, .form-checkbox');
+  let popupReturnFocus = null;
 
-  // Input Validation Helper
-  const validateField = (input) => {
+  const fieldErrorId = {
+    name: 'name-error',
+    email: 'email-error',
+    message: 'message-error',
+    privacy: 'privacy-error',
+  };
+
+  const setFormStatus = (message) => {
+    if (formStatus) formStatus.textContent = message;
+  };
+
+  const spawnRipple = (e) => {
+    if (!submitBtn || submitBtn.disabled) return;
+    const rect = submitBtn.getBoundingClientRect();
+    const ripple = document.createElement('span');
+    ripple.className = 'btn-ripple';
+    const size = Math.max(rect.width, rect.height);
+    ripple.style.width = ripple.style.height = size + 'px';
+    ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+    ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+    submitBtn.appendChild(ripple);
+    ripple.addEventListener('animationend', () => ripple.remove());
+  };
+
+  submitBtn?.addEventListener('pointerdown', spawnRipple);
+
+  const clearFieldError = (input) => {
     const group = input.closest('.form-group');
-    if (!input.checkValidity()) {
-      group.classList.add('error');
-      return false;
-    } else {
-      group.classList.remove('error');
-      return true;
+    group?.classList.remove('error');
+    input.removeAttribute('aria-invalid');
+    const errorId = fieldErrorId[input.name] || fieldErrorId[input.id];
+    if (errorId && input.getAttribute('aria-describedby') === errorId) {
+      input.removeAttribute('aria-describedby');
     }
   };
 
-  // Live-Validation: Fehler entfernen, sobald der Nutzer tippt
-  inputs.forEach(input => {
-    input.addEventListener('input', () => {
-      const group = input.closest('.form-group');
-      group.classList.remove('error');
-    });
+  const validateField = (input) => {
+    const group = input.closest('.form-group');
+    const errorId = fieldErrorId[input.name] || fieldErrorId[input.id];
+    if (!input.checkValidity()) {
+      group?.classList.add('error');
+      input.setAttribute('aria-invalid', 'true');
+      if (errorId) input.setAttribute('aria-describedby', errorId);
+      return false;
+    }
+    clearFieldError(input);
+    return true;
+  };
+
+  inputs.forEach((input) => {
+    input.addEventListener('input', () => clearFieldError(input));
+    input.addEventListener('change', () => clearFieldError(input));
   });
 
   if (form) {
@@ -160,11 +205,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       });
 
       if (!isValid) {
-        // Wackle mit dem Formular wenn Fehler da sind
         form.classList.add('shake');
         setTimeout(() => form.classList.remove('shake'), 500);
+        setFormStatus('Bitte prüfen Sie die markierten Felder.');
+        const firstInvalid = form.querySelector('[aria-invalid="true"]');
+        firstInvalid?.focus();
         return;
       }
+
+      setFormStatus('');
 
       // Start Loading State
       submitBtn.classList.add('loading');
@@ -181,13 +230,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         if (response.ok) {
           form.reset();
-          popup.classList.add('is-visible');
+          inputs.forEach((input) => clearFieldError(input));
+          openPopup();
+          popupIcon?.classList.remove('success-pulse');
+          void popupIcon?.offsetWidth;
+          popupIcon?.classList.add('success-pulse');
+          setFormStatus('Nachricht erfolgreich gesendet.');
         } else {
-          alert('Ups, da lief etwas schief. Bitte versuchen Sie es später erneut.');
+          setFormStatus('Ups, da lief etwas schief. Bitte versuchen Sie es später erneut.');
         }
       } catch (error) {
         console.error(error);
-        alert('Netzwerkfehler. Bitte prüfen Sie Ihre Verbindung.');
+        setFormStatus('Netzwerkfehler. Bitte prüfen Sie Ihre Verbindung.');
       } finally {
         // Reset Button State
         submitBtn.classList.remove('loading');
@@ -197,13 +251,50 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     });
   }
 
-  // Popup Schließen Logik
-  const closePopup = () => popup.classList.remove('is-visible');
+  const openPopup = () => {
+    if (!popup) return;
+    popupReturnFocus = document.activeElement;
+    popup.classList.add('is-visible');
+    popup.setAttribute('aria-hidden', 'false');
+    if ('inert' in popup) popup.inert = false;
+    closeBtn?.focus();
+  };
+
+  const closePopup = () => {
+    if (!popup) return;
+    popup.classList.remove('is-visible');
+    popup.setAttribute('aria-hidden', 'true');
+    if ('inert' in popup) popup.inert = true;
+    if (popupReturnFocus && typeof popupReturnFocus.focus === 'function') {
+      popupReturnFocus.focus();
+    }
+    popupReturnFocus = null;
+  };
+
+  if (popup && 'inert' in popup) popup.inert = true;
 
   if (closeBtn) closeBtn.addEventListener('click', closePopup);
-  if (popup) popup.addEventListener('click', (e) => {
-    if (e.target === popup) closePopup();
-  });
+  if (popup) {
+    popup.addEventListener('click', (e) => {
+      if (e.target === popup) closePopup();
+    });
+    popup.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab' || !popup.classList.contains('is-visible')) return;
+      const focusable = popup.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    });
+  }
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && popup?.classList.contains('is-visible')) closePopup();
   });
@@ -269,11 +360,57 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     position: relative;
   }
 
-  .form-group label {
-    color: #fff;
-    font-weight: 600;
-    font-size: 0.95rem;
-    margin-left: 0.25rem;
+  /* Floating Labels */
+  .float-field {
+    position: relative;
+    gap: 0;
+  }
+
+  .float-field label {
+    position: absolute;
+    left: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+    font-size: 1rem;
+    font-weight: 500;
+    pointer-events: none;
+    transition: top 0.22s ease, transform 0.22s ease, font-size 0.22s ease, color 0.22s ease;
+  }
+
+  .float-field--textarea label {
+    top: 1.25rem;
+    transform: none;
+  }
+
+  .float-field .form-input,
+  .float-field .form-textarea {
+    padding-top: 1.45rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .float-field .form-input:focus + label,
+  .float-field .form-input:not(:placeholder-shown) + label,
+  .float-field .form-textarea:focus + label,
+  .float-field .form-textarea:not(:placeholder-shown) + label {
+    top: 0.55rem;
+    transform: none;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #10b981;
+  }
+
+  .float-field--textarea .form-textarea:focus + label,
+  .float-field--textarea .form-textarea:not(:placeholder-shown) + label {
+    top: 0.45rem;
+  }
+
+  .checkbox-group label {
+    position: static;
+    transform: none;
+    pointer-events: auto;
   }
 
   .form-input, .form-textarea {
@@ -343,7 +480,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     cursor: pointer;
   }
 
-  /* Submit Button mit Loading State */
+  /* Submit Button mit Loading State + Ripple */
   .submit-button {
     background: #10b981;
     color: #000;
@@ -359,6 +496,24 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
+    transform: scale(0);
+    animation: btnRipple 0.65s ease-out forwards;
+    pointer-events: none;
+  }
+
+  @keyframes btnRipple {
+    to {
+      transform: scale(2.8);
+      opacity: 0;
+    }
   }
 
   .submit-button:hover:not(:disabled) {
@@ -447,6 +602,24 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     align-items: center;
     justify-content: center;
     margin: 0 auto 1.5rem auto;
+  }
+
+  .popup-icon-wrapper.success-pulse {
+    animation: successRing 0.75s ease-out;
+  }
+
+  @keyframes successRing {
+    0% {
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.55);
+      transform: scale(1);
+    }
+    40% {
+      transform: scale(1.06);
+    }
+    100% {
+      box-shadow: 0 0 0 22px rgba(16, 185, 129, 0);
+      transform: scale(1);
+    }
   }
 
   .check-icon { width: 40px; height: 40px; }

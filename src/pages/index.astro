@@ -6,15 +6,48 @@ import { getCollection } from 'astro:content';
 
 const allProjects = await getCollection('projects');
 
-const codeExample = `
-function optimize(project) {
-  project.assets.forEach(asset => {
-    asset.compress();
-    asset.lazyLoad();
+const codeMobile = `async function ship(site) {
+  await site.optimizeAssets();
+  await site.prerender();
+  return site.deploy({ edge: true });
+}`;
+
+const codeDesktop = `/**
+ * Hybrid-Setup: schnelle Landingpages + SSR-API
+ */
+import { defineConfig } from 'astro/config';
+import vercel from '@astrojs/vercel/serverless';
+
+export default defineConfig({
+  output: 'hybrid',
+  adapter: vercel(),
+  image: {
+    service: { entrypoint: './image-service.ts' },
+  },
+  vite: {
+    build: {
+      cssMinify: 'lightningcss',
+    },
+  },
+});
+
+export async function GET({ cookies, redirect }) {
+  const session = cookies.get('session')?.value;
+  if (!session) return redirect('/login');
+
+  const projects = await db
+    .from('projects')
+    .select('id, title, status')
+    .order('updated_at', { ascending: false });
+
+  return new Response(JSON.stringify(projects.data), {
+    status: 200,
+    headers: {
+      'Content-Type': 'application/json',
+      'Cache-Control': 'private, no-store',
+    },
   });
-  return "100% Performance";
-}
-`;
+}`;
 ---
 
 <BaseLayout 
@@ -22,17 +55,20 @@ function optimize(project) {
   description="r³webdesign entwickelt performante Webseiten, klares Design und smarte Apps."
 >
  <section id="intro" class="section intro">
-  <div class="hero-stack">
-    <div class="hero-card card-1"></div>
-    <div class="hero-card card-2"></div>
-    <div class="hero-card card-3"></div>
-    <div class="hero-card card-4"></div>
+  <div class="hero-ambient" aria-hidden="true">
+    <div class="hero-grid"></div>
+    <div class="hero-spotlight"></div>
+    <div class="hero-orb hero-orb--1"></div>
+    <div class="hero-orb hero-orb--2"></div>
+    <div class="hero-orb hero-orb--3"></div>
+    <div class="hero-ring hero-ring--1"></div>
+    <div class="hero-ring hero-ring--2"></div>
   </div>
 
   <div class="section-head">
     
     <!-- LOTTIE CAT -->
-    <div class="r3-pure-cat">
+    <div class="r3-pure-cat" aria-hidden="true">
       <div id="cat"></div>
     </div>
 
@@ -46,6 +82,8 @@ function optimize(project) {
   </div>
 </section>
 
+<hr class="section-divider" aria-hidden="true" />
+
  <section id="about" class="about">
     <div class="container about-container">
       <div class="about__inner">
@@ -54,12 +92,12 @@ function optimize(project) {
           <img src="/images/IMG_1907.webp" alt="Dustin Rose" width="320" height="320" loading="lazy" />
         </figure>
         
-        <div class="about__content">
+        <div class="about__content autoShow">
           <span class="eyebrow">Über mich</span>
           <p class="about__lead">
             Hi, ich bin <span class="text-gradient">Dustin</span>.
           </p>
-          <h3 class="about__subline">Webentwickler & UI/UX Designer.</h3>
+          <h2 class="about__subline">Webentwickler &amp; UI/UX Designer.</h2>
           
           <div class="about__text">
             <p>Ich baue keine 08/15-Webseiten. Ich entwickle digitale Erlebnisse, die schnell, barrierefrei und ästhetisch präzise sind.</p>
@@ -70,44 +108,157 @@ function optimize(project) {
     </div>
   </section>
 
+  <hr class="section-divider" aria-hidden="true" />
+
+  <section id="leistungen" class="section services">
+    <div class="container">
+      <div class="section-head autoShow">
+        <span class="eyebrow">Leistungen</span>
+        <h2 class="section-title">Was ich für dich <br /> umsetze</h2>
+        <div class="title-divider"></div>
+        <p class="section-lead">
+          Kein Template-Baukasten. Vier Wege, wie ich digitale Produkte baue —
+          mit eigener Design-DNA, sauberem Code und Tempo, das man spürt.
+        </p>
+      </div>
+
+      <ul class="services-grid">
+        <li class="service-card service-card--01 autoShow">
+          <span class="service-card__num" aria-hidden="true">01</span>
+          <header class="service-card__head">
+            <p class="service-card__path"><span class="service-card__prompt">&gt;_</span> publish.static</p>
+          </header>
+          <div class="service-card__body">
+            <h3>Webseiten &amp; Landingpages</h3>
+            <p class="service-card__text">
+              Vom ersten Pixel bis PageSpeed grün. Typografie, die hängen bleibt —
+              nicht noch eine austauschbare One-Pager-Schablone.
+            </p>
+          </div>
+          <ul class="service-card__chips" aria-label="Schwerpunkte">
+            <li>Astro</li><li>SEO</li><li>Barrierefrei</li>
+          </ul>
+        </li>
+
+        <li class="service-card service-card--02 autoShow">
+          <span class="service-card__num" aria-hidden="true">02</span>
+          <header class="service-card__head">
+            <p class="service-card__path"><span class="service-card__prompt">&gt;_</span> platform.core</p>
+          </header>
+          <div class="service-card__body">
+            <h3>Web-Apps &amp; Dashboards</h3>
+            <p class="service-card__text">
+              Login, Datenbank, Admin — Systeme, die mit deinem Alltag mitwachsen.
+              Architektur, die du später nicht bereust.
+            </p>
+          </div>
+          <ul class="service-card__chips" aria-label="Schwerpunkte">
+            <li>Supabase</li><li>SSR</li><li>Auth</li>
+          </ul>
+        </li>
+
+        <li class="service-card service-card--03 autoShow">
+          <span class="service-card__num" aria-hidden="true">03</span>
+          <header class="service-card__head">
+            <p class="service-card__path"><span class="service-card__prompt">&gt;_</span> mobile.app</p>
+          </header>
+          <div class="service-card__body">
+            <h3>Native Apps</h3>
+            <p class="service-card__text">
+              Eine Codebasis, zwei Stores. Dein Produkt in der Hosentasche —
+              gebaut mit dem Stack, den ich selbst täglich einsetze.
+            </p>
+          </div>
+          <ul class="service-card__chips" aria-label="Schwerpunkte">
+            <li>Expo</li><li>iOS</li><li>Android</li>
+          </ul>
+        </li>
+
+        <li class="service-card service-card--04 autoShow">
+          <span class="service-card__num" aria-hidden="true">04</span>
+          <header class="service-card__head">
+            <p class="service-card__path"><span class="service-card__prompt">&gt;_</span> maintain.loop</p>
+          </header>
+          <div class="service-card__body">
+            <h3>Betreuung &amp; Weiterentwicklung</h3>
+            <p class="service-card__text">
+              Launch ist kein Ende. Updates, Performance, neue Features —
+              ich bleibe Ansprechpartner, nicht nur der einmalige Deploy.
+            </p>
+          </div>
+          <ul class="service-card__chips" aria-label="Schwerpunkte">
+            <li>Updates</li><li>Monitoring</li><li>Support</li>
+          </ul>
+        </li>
+      </ul>
+
+      <p class="services-cta autoShow">
+        <a href="/kontakt/" class="services-cta__btn">
+          <span class="services-cta__prompt" aria-hidden="true">&gt;</span>
+          Projekt anfragen
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <hr class="section-divider" aria-hidden="true" />
+
   <section class="section dev-showcase">
     <div class="container">
       <div class="section-head autoShow">
-        <span class="eyebrow">Technical Stack</span>
+        <span class="eyebrow">Tech Stack</span>
         <h2 class="section-title">Engineering trifft <br/> modernes Design</h2>
         <div class="title-divider"></div>
         <p class="section-lead">
-          Ich entwickle nicht nur Webseiten, ich baue digitale Hochleistungs-Systeme. 
-          Von der Architektur bis zur Animation: Jede Zeile Code ist auf Skalierbarkeit und Speed getrimmt.
+          Astro für blitzschnelle Frontends, TypeScript für saubere Logik, Supabase oder eigene APIs
+          für alles, was dynamisch sein muss — ein Stack, der Ladezeit und Wartbarkeit zusammenbringt.
         </p>
       </div>
       
       <div class="skill-grid">
         <div class="skill-card primary">
-          <div class="card-tag">Performance</div>
-          <h3>Blitzschnell & Optimiert</h3>
+          <p class="skill-card__path"><span class="skill-card__prompt">&gt;_</span> perf.core</p>
+          <h3>Kompromisslos schnell</h3>
           <p>
-            Maximale Ladezeiten für beste User Experience. Dein Erfolg beginnt mit Geschwindigkeit.
+            WebP/AVIF, kritisches CSS, Lazy Loading und saubere Caches — Core Web Vitals
+            im grünen Bereich, nicht nur im Pitch-Deck.
           </p>
+          <ul class="skill-card__stats" aria-label="Schwerpunkte Performance">
+            <li>LCP &lt; 2,5s</li>
+            <li>CLS &lt; 0,1</li>
+            <li>Edge-ready</li>
+          </ul>
         </div>
 
         <div class="skill-card secondary">
-          <div class="card-tag">Clean Code</div>
-          <h3>Modular & Sicher</h3>
+          <p class="skill-card__path"><span class="skill-card__prompt">&gt;_</span> arch.clean</p>
+          <h3>Saubere Architektur</h3>
           <p>
-            Strukturierter Code für einfache Wartbarkeit. Dein Projekt wächst problemlos mit dir.
+            Komponenten, klare Ordnerstruktur, dokumentierte Schnittstellen — damit du später
+            Features nachziehen kannst, ohne alles neu zu bauen.
           </p>
+          <ul class="skill-card__stats" aria-label="Schwerpunkte Architektur">
+            <li>TypeScript</li>
+            <li>SSR/SSG</li>
+            <li>CI-ready</li>
+          </ul>
         </div>
 
         <div class="skill-card dynamic-cube">
-          <div class="cube-wrapper">
-            <div class="cube">
-              <div class="face front">Astro</div>
-              <div class="face back">HTML</div>
-              <div class="face right">CSS</div>
-              <div class="face left">JS</div>
-              <div class="face top">SEO</div>
-              <div class="face bottom">DB</div>
+          <p class="skill-card__path"><span class="skill-card__prompt">&gt;_</span> stack.rotate</p>
+          <div class="cube-scene" aria-hidden="true">
+            <div class="cube-scene__aura"></div>
+            <div class="cube-scene__orbit"></div>
+            <div class="cube-scene__orbit cube-scene__orbit--inner"></div>
+            <div class="cube-wrapper">
+              <div class="cube">
+                <div class="face face--front"><span>Astro</span></div>
+                <div class="face face--back"><span>TS</span></div>
+                <div class="face face--right"><span>CSS</span></div>
+                <div class="face face--left"><span>JS</span></div>
+                <div class="face face--top"><span>SSR</span></div>
+                <div class="face face--bottom"><span>API</span></div>
+              </div>
             </div>
           </div>
         </div>
@@ -119,15 +270,17 @@ function optimize(project) {
               <span class="dot yellow"></span>
               <span class="dot green"></span>
             </div>
-            <span class="filename">optimizer.js</span>
+            <span class="filename">astro.config.ts</span>
           </div>
-          <div class="code-area">
-            <pre><code class="language-javascript">{codeExample}</code></pre>
+          <div class="code-area" id="dev-code-area">
+            <pre><code id="dev-showcase-code" class="language-ts">{codeMobile}</code><span class="code-cursor" id="dev-code-cursor" aria-hidden="true"></span></pre>
           </div>
         </div>
       </div>
     </div>
   </section>
+
+  <hr class="section-divider" aria-hidden="true" />
 
   <section id="projekte" class="section projects">
     <div class="section-head autoShow">
@@ -153,39 +306,123 @@ function optimize(project) {
   </section>
 </BaseLayout>
 
+<script define:vars={{ codeMobile, codeDesktop }}>
+  (function () {
+    const codeEl = document.getElementById('dev-showcase-code');
+    const cursorEl = document.getElementById('dev-code-cursor');
+    const codeArea = document.getElementById('dev-code-area');
+    if (!codeEl || !codeArea) return;
+
+    const desktopMq = window.matchMedia('(min-width: 1024px)');
+    const reducedMq = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    const highlight = (src) => {
+      const esc = (s) =>
+        s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      let html = esc(src);
+      html = html.replace(/(\/\*\*[\s\S]*?\*\/|\/\/[^\n]*)/g, '<span class="tok-cm">$1</span>');
+      html = html.replace(/('(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*")/g, '<span class="tok-str">$1</span>');
+      html = html.replace(
+        /\b(import|export|default|async|function|return|const|await|from|new|if)\b/g,
+        '<span class="tok-kw">$1</span>'
+      );
+      html = html.replace(/\b([A-Z][a-zA-Z]+)\b/g, '<span class="tok-type">$1</span>');
+      html = html.replace(/\b(GET|POST|Response|JSON)\b/g, '<span class="tok-fn">$1</span>');
+      return html;
+    };
+
+    const finish = (text, withHighlight = true) => {
+      if (withHighlight) {
+        codeEl.innerHTML = highlight(text);
+      } else {
+        codeEl.textContent = text;
+      }
+      if (cursorEl) cursorEl.remove();
+      codeArea.classList.add('is-typing-done');
+    };
+
+    let typingTimer = null;
+    let charIndex = 0;
+    let sourceText = codeMobile;
+
+    const typeNext = () => {
+      if (charIndex <= sourceText.length) {
+        codeEl.textContent = sourceText.slice(0, charIndex);
+        charIndex += 1;
+        typingTimer = window.setTimeout(typeNext, 14);
+      } else {
+        finish(sourceText);
+      }
+    };
+
+    const startTyping = () => {
+      if (typingTimer) window.clearTimeout(typingTimer);
+      charIndex = 0;
+      sourceText = codeDesktop;
+      codeArea.classList.remove('is-typing-done');
+      if (cursorEl && !cursorEl.parentElement) {
+        codeEl.insertAdjacentElement('afterend', cursorEl);
+      }
+      codeEl.textContent = '';
+      typeNext();
+    };
+
+    const applyMode = () => {
+      if (typingTimer) window.clearTimeout(typingTimer);
+      if (!desktopMq.matches) {
+        finish(codeMobile, true);
+        return;
+      }
+      if (reducedMq.matches) {
+        finish(codeDesktop, true);
+        return;
+      }
+      startTyping();
+    };
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              applyMode();
+              io.disconnect();
+            }
+          });
+        },
+        { threshold: 0.25 }
+      );
+      io.observe(codeArea);
+    } else {
+      applyMode();
+    }
+
+    desktopMq.addEventListener('change', applyMode);
+    reducedMq.addEventListener('change', applyMode);
+  })();
+</script>
+
 <script type="module">
   import lottie from "https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/+esm";
 
-  console.log("Script loaded");
-
   const container = document.getElementById("cat");
-  console.log("Container:", container);
 
   if (container) {
-    // 1. Die Animation in einer Konstante speichern
     const anim = lottie.loadAnimation({
       container: container,
       renderer: "canvas",
       loop: true,
-      autoplay: false, // 2. Autoplay zwingend auf false setzen!
+      autoplay: false,
       path: "/animations/cat.json",
       rendererSettings: {
         clearCanvas: true,
       }
     });
 
-    // 3. Warten, bis die Animationsdaten vollständig geladen sind
     anim.addEventListener('DOMLoaded', () => {
-      // 4. Die exakte Hälfte der Gesamt-Frames berechnen
       const halbeFrames = anim.totalFrames / 2;
-      
-      // 5. Nur das Segment von Frame 0 bis zur Hälfte abspielen (true erzwingt den Start)
       anim.playSegments([0, halbeFrames], true);
     });
-
-    console.log("Lottie initialized");
-  } else {
-    console.log("Container NOT found");
   }
 </script>
 
@@ -200,52 +437,327 @@ function optimize(project) {
     padding: 0 1.5rem; /* Mobil-Rand garantiert */
   }
 
-  /* Einheitliche Header für ALLE Sektionen */
+  /* Einheitliche Header für ALLE Sektionen — Basis in style.css (.section-head, .section-title) */
   .section-head {
-    text-align: center;
-    max-width: 900px;
-    margin: 0 auto 5rem auto;
+    margin-bottom: 5rem;
   }
 
-  .eyebrow {
-    color: #10b981;
-    text-transform: uppercase;
-    letter-spacing: 0.25em;
-    font-weight: 800;
-    font-size: 0.85rem;
-    display: block;
-    margin-bottom: 1.2rem;
-  }
+  /* =========================================
+     LEISTUNGEN
+     ========================================= */
 
-  /* Einheitliche Überschriftengröße */
-  .section-title {
-    font-size: clamp(2.5rem, 6vw, 4rem);
-    line-height: 1.1;
-    font-weight: 900;
-    letter-spacing: -0.03em;
-    margin-bottom: 1.5rem;
+  .services {
+    background-color: #0b1120;
+    padding: clamp(5rem, 10vw, 8rem) 0;
     color: #fff;
   }
 
-  .title-divider {
-    width: 80px;
-    height: 4px;
-    background: linear-gradient(90deg, #10b981, #059669);
-    margin: 2rem auto;
-    border-radius: 4px;
+  .services .section-head {
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
   }
 
-  .section-lead {
-    font-size: clamp(1.1rem, 2vw, 1.25rem);
+  .services-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin-inline: auto;
+    align-items: stretch;
+  }
+
+  .service-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 18.5rem;
+    align-items: stretch;
+    text-align: left;
+    padding: clamp(1.25rem, 3vw, 1.6rem);
+    padding-top: clamp(1.5rem, 3.5vw, 1.85rem);
+    border-radius: 14px;
+    overflow: hidden;
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 42%, transparent 100%),
+      rgba(15, 23, 42, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.07),
+      0 12px 32px rgba(0, 0, 0, 0.28);
+    transition:
+      transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+      border-color 0.4s ease,
+      box-shadow 0.4s ease;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      165deg,
+      rgba(16, 185, 129, 0.22) 0%,
+      transparent 38%,
+      transparent 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.5;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    z-index: 1;
+  }
+
+  /* Bunte Top-Kante: Grün → ausblendend nach rechts (wie Tech-Stack-Karten) */
+  .service-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    border-radius: 14px 14px 0 0;
+    background: linear-gradient(90deg, #10b981 0%, #38bdf8 55%, transparent 100%);
+    opacity: 0.65;
+    pointer-events: none;
+    z-index: 3;
+    box-shadow: 0 0 18px rgba(16, 185, 129, 0.28);
+    transition: opacity 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .service-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(16, 185, 129, 0.22);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 20px 48px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(16, 185, 129, 0.08);
+  }
+
+  .service-card:hover::before {
+    opacity: 0.72;
+  }
+
+  .service-card:hover::after {
+    opacity: 0.85;
+    box-shadow: 0 0 22px rgba(16, 185, 129, 0.38);
+  }
+
+  .service-card__num {
+    position: absolute;
+    top: 0.35rem;
+    right: 0.5rem;
+    z-index: 2;
+    font-size: clamp(3.5rem, 10vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.06em;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(16, 185, 129, 0.12);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .service-card__head,
+  .service-card__body,
+  .service-card__chips {
+    position: relative;
+    z-index: 2;
+  }
+
+  .service-card__head {
+    width: 100%;
+    flex-shrink: 0;
+    margin-bottom: 0.85rem;
+    padding-bottom: 0.65rem;
+  }
+
+  .service-card__head::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: calc(0.5rem + clamp(3.2rem, 9vw, 4.2rem) + 0.65rem);
+    height: 1px;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .service-card__path {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin: 0;
+    min-height: 1.15rem;
+    font-family: ui-monospace, 'Cascadia Code', monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: #64748b;
+    text-transform: lowercase;
+  }
+
+  .service-card__prompt {
+    color: #10b981;
+    font-weight: 700;
+  }
+
+  .service-card__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 0;
+  }
+
+  .service-card h3 {
+    position: relative;
+    z-index: 1;
+    margin: 0 0 0.6rem;
+    padding-right: 2rem;
+    min-height: 2.75em;
+    font-size: clamp(1.05rem, 2.2vw, 1.28rem);
+    font-weight: 800;
+    line-height: 1.25;
+    color: #f8fafc;
+    letter-spacing: -0.03em;
+  }
+
+  .service-card__text {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    margin: 0;
+    font-size: clamp(0.88rem, 1.7vw, 0.96rem);
+    line-height: 1.62;
     color: #94a3b8;
-    line-height: 1.7;
-    max-width: 750px;
-    margin: 0 auto;
   }
 
-  @media (max-width: 600px) {
-    .section-title br { display: none; }
+  .service-card__chips {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.35rem;
+    width: 100%;
+    min-height: 1.85rem;
+    margin: 0.85rem 0 0;
+    padding-top: 0.75rem;
+    padding-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    list-style: none;
   }
+
+  .service-card__chips li {
+    flex: 1 1 0;
+    min-width: 0;
+    font-family: ui-monospace, monospace;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-align: center;
+    color: #cbd5e1;
+    padding: 0.32rem 0.25rem;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .services-cta {
+    margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
+    text-align: center;
+  }
+
+  .services-cta__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    color: #ecfdf5;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.45);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      0 8px 28px rgba(16, 185, 129, 0.15);
+    transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .services-cta__prompt {
+    font-family: ui-monospace, monospace;
+    color: #10b981;
+    font-weight: 700;
+  }
+
+  .services-cta__btn:hover {
+    transform: translateY(-2px);
+    background: rgba(16, 185, 129, 0.2);
+    border-color: #34d399;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.15),
+      0 14px 36px rgba(16, 185, 129, 0.28);
+  }
+
+  .services-cta__btn:active {
+    transform: translateY(0);
+  }
+
+  @media (min-width: 600px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.35rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .services-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.15rem;
+    }
+
+    .service-card {
+      min-height: 19.5rem;
+    }
+  }
+
+  @media (max-width: 599px) {
+    .service-card {
+      min-height: 0;
+    }
+
+    .service-card h3 {
+      min-height: 0;
+    }
+
+    .service-card__chips {
+      flex-wrap: wrap;
+    }
+
+    .service-card__chips li {
+      flex: 0 1 auto;
+      min-width: auto;
+    }
+  }
+
+  .services-grid .autoShow:nth-child(1) { transition-delay: 0.05s; }
+  .services-grid .autoShow:nth-child(2) { transition-delay: 0.12s; }
+  .services-grid .autoShow:nth-child(3) { transition-delay: 0.19s; }
+  .services-grid .autoShow:nth-child(4) { transition-delay: 0.26s; }
 
   /* =========================================
      2. DEV SHOWCASE SEKTION (Tech Stack)
@@ -320,14 +832,66 @@ function optimize(project) {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
   }
 
-  .card-tag {
+  .skill-card.primary,
+  .skill-card.secondary {
+    align-items: flex-start;
+    justify-content: flex-start;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skill-card.primary::before,
+  .skill-card.secondary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #10b981 0%, #38bdf8 55%, transparent 100%);
+    opacity: 0.65;
+    pointer-events: none;
+  }
+
+  .skill-card__path {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin: 0 0 0.85rem;
+    font-family: ui-monospace, 'Cascadia Code', monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: #64748b;
+    text-transform: lowercase;
+  }
+
+  .skill-card__prompt {
     color: #10b981;
-    font-weight: 800;
+    font-weight: 700;
+  }
+
+  .skill-card__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    list-style: none;
+    margin: 1.15rem 0 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  .skill-card__stats li {
+    font-family: ui-monospace, monospace;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 2px;
-    margin-bottom: 1rem;
-    display: inline-block;
+    color: #cbd5e1;
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .skill-card h3 {
@@ -384,15 +948,51 @@ function optimize(project) {
 
   .code-area {
     padding: 2rem;
-    font-family: 'Fira Code', monospace;
+    font-family: 'Fira Code', ui-monospace, monospace;
     font-size: 0.9rem;
     line-height: 1.6;
     overflow-x: auto;
     flex-grow: 1;
+    background: linear-gradient(180deg, rgba(16, 185, 129, 0.04) 0%, transparent 35%);
   }
 
-  .code-area code { 
-    color: #addb67; 
+  .code-area pre {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+  }
+
+  .code-area code {
+    color: #d6deeb;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .code-area :global(.tok-cm) { color: #5c7e9e; font-style: italic; }
+  .code-area :global(.tok-str) { color: #ecc48d; }
+  .code-area :global(.tok-kw) { color: #c792ea; }
+  .code-area :global(.tok-type) { color: #82aaff; }
+  .code-area :global(.tok-fn) { color: #7fdbca; }
+
+  .code-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.15em;
+    background: #10b981;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.65);
+    margin-left: 2px;
+    flex-shrink: 0;
+    animation: codeCursorBlink 1s step-end infinite;
+  }
+
+  .code-area.is-typing-done .code-cursor {
+    display: none;
+  }
+
+  @keyframes codeCursorBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
   }
 
   /* --- MOBILE ANPASSUNG FÜR DAS CODE-FENSTER --- */
@@ -424,59 +1024,259 @@ function optimize(project) {
   }
 }
 
-  /* --- CUBE FIX --- */
-.dynamic-cube {
-  min-height: 300px;
-  align-items: center;
-  perspective: 1000px;
-  overflow: visible;
-}
+  /* --- TECH STACK WÜRFEL --- */
+  .dynamic-cube {
+    --cube-size: 5.5rem;
+    --cube-half: calc(var(--cube-size) / 2);
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 1.25rem;
+    perspective: 1100px;
+    overflow: hidden;
+    cursor: default;
+    position: relative;
+    isolation: isolate;
+  }
 
-.cube-wrapper {
-  width: 80px;
-  height: 80px;
-  transform-style: preserve-3d;
-  /* Optimierte Rotation für flüssigeren Ablauf */
-  animation: rotateCube 20s infinite linear;
-}
+  .dynamic-cube::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    border-radius: 15px 15px 0 0;
+    background: linear-gradient(90deg, #10b981 0%, #38bdf8 55%, transparent 100%);
+    opacity: 0.65;
+    pointer-events: none;
+    z-index: 3;
+  }
 
-.cube { 
-  position: relative; 
-  width: 100%; 
-  height: 100%; 
-  transform-style: preserve-3d; 
-}
+  .dynamic-cube .skill-card__path {
+    margin-bottom: 0;
+    position: relative;
+    z-index: 2;
+  }
 
-.face {
-  position: absolute; 
-  width: 80px; 
-  height: 80px;
-  /* Etwas mehr Deckkraft (0.15) für bessere Lesbarkeit */
-  background: rgba(16, 185, 129, 0.15); 
-  border: 1px solid #10b981;
-  display: flex; 
-  align-items: center; 
-  justify-content: center;
-  font-weight: 800; 
-  font-size: 0.8rem; 
-  color: #fff;
-  box-shadow: 0 0 25px rgba(16, 185, 129, 0.2);
-  
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
+  .cube-scene {
+    position: relative;
+    flex: 1;
+    display: grid;
+    place-items: center;
+    min-height: 11rem;
+    margin-top: 0.25rem;
+  }
 
-.front  { transform: translateZ(40px); }
-.back   { transform: rotateY(180deg) translateZ(40px); } 
-.right  { transform: rotateY(90deg) translateZ(40px); }
-.left   { transform: rotateY(-90deg) translateZ(40px); }
-.top    { transform: rotateX(90deg) translateZ(40px); }
-.bottom { transform: rotateX(-90deg) translateZ(40px); }
+  .cube-scene__aura {
+    position: absolute;
+    width: 11rem;
+    height: 11rem;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(16, 185, 129, 0.22) 0%,
+      rgba(56, 189, 248, 0.08) 42%,
+      transparent 72%
+    );
+    filter: blur(10px);
+    animation: cubeAuraPulse 5s ease-in-out infinite;
+    pointer-events: none;
+  }
 
-@keyframes rotateCube {
-  0% { transform: rotateX(0deg) rotateY(0deg); }
-  100% { transform: rotateX(360deg) rotateY(360deg); }
-}
+  .cube-scene__orbit {
+    position: absolute;
+    width: 9.5rem;
+    height: 9.5rem;
+    border-radius: 50%;
+    border: 1px dashed rgba(16, 185, 129, 0.28);
+    animation: cubeOrbitSpin 22s linear infinite;
+    pointer-events: none;
+  }
+
+  .cube-scene__orbit::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #34d399;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.75);
+    transform: translate(-50%, -50%);
+  }
+
+  .cube-scene__orbit--inner {
+    width: 7.25rem;
+    height: 7.25rem;
+    border-style: solid;
+    border-color: rgba(56, 189, 248, 0.14);
+    animation-direction: reverse;
+    animation-duration: 14s;
+    opacity: 0.85;
+  }
+
+  .cube-scene__orbit--inner::after {
+    top: auto;
+    bottom: 0;
+    background: #38bdf8;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.65);
+    width: 5px;
+    height: 5px;
+    transform: translate(-50%, 50%);
+  }
+
+  .cube-wrapper {
+    width: var(--cube-size);
+    height: var(--cube-size);
+    transform-style: preserve-3d;
+    animation: cubeTumbleY 7s linear infinite;
+    will-change: transform;
+  }
+
+  .cube {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    animation: cubeTumbleX 5s linear infinite;
+    will-change: transform;
+  }
+
+  .face {
+    position: absolute;
+    width: var(--cube-size);
+    height: var(--cube-size);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 0;
+    border: 1px solid rgba(16, 185, 129, 0.5);
+    background: rgba(8, 15, 28, 0.92);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  }
+
+  .face span {
+    font-family: ui-monospace, 'Cascadia Code', monospace;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #f8fafc;
+    text-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
+    padding: 0 0.15rem;
+  }
+
+  .face--front {
+    background: linear-gradient(145deg, rgba(16, 185, 129, 0.35), rgba(16, 185, 129, 0.08));
+    border-color: rgba(52, 211, 153, 0.55);
+    transform: translateZ(var(--cube-half));
+  }
+
+  .face--back {
+    background: linear-gradient(145deg, rgba(139, 92, 246, 0.32), rgba(139, 92, 246, 0.06));
+    border-color: rgba(167, 139, 250, 0.45);
+    transform: rotateY(180deg) translateZ(var(--cube-half));
+  }
+
+  .face--back span { text-shadow: 0 0 16px rgba(167, 139, 250, 0.45); }
+
+  .face--right {
+    background: linear-gradient(145deg, rgba(56, 189, 248, 0.28), rgba(56, 189, 248, 0.06));
+    border-color: rgba(56, 189, 248, 0.45);
+    transform: rotateY(90deg) translateZ(var(--cube-half));
+  }
+
+  .face--right span { text-shadow: 0 0 16px rgba(56, 189, 248, 0.45); }
+
+  .face--left {
+    background: linear-gradient(145deg, rgba(251, 191, 36, 0.22), rgba(251, 191, 36, 0.05));
+    border-color: rgba(251, 191, 36, 0.4);
+    transform: rotateY(-90deg) translateZ(var(--cube-half));
+  }
+
+  .face--left span { text-shadow: 0 0 14px rgba(251, 191, 36, 0.35); }
+
+  .face--top {
+    background: linear-gradient(145deg, rgba(52, 211, 153, 0.25), rgba(16, 185, 129, 0.06));
+    border-color: rgba(52, 211, 153, 0.4);
+    transform: rotateX(90deg) translateZ(var(--cube-half));
+  }
+
+  .face--bottom {
+    background: linear-gradient(145deg, rgba(99, 102, 241, 0.28), rgba(99, 102, 241, 0.06));
+    border-color: rgba(129, 140, 248, 0.45);
+    transform: rotateX(-90deg) translateZ(var(--cube-half));
+  }
+
+  .face--bottom span { text-shadow: 0 0 14px rgba(129, 140, 248, 0.4); }
+
+  @keyframes cubeTumbleY {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
+  }
+
+  @keyframes cubeTumbleX {
+    from { transform: rotateX(0deg); }
+    to { transform: rotateX(360deg); }
+  }
+
+  @keyframes cubeOrbitSpin {
+    0% { transform: rotateZ(0deg); }
+    100% { transform: rotateZ(360deg); }
+  }
+
+  @keyframes cubeAuraPulse {
+    0%, 100% { opacity: 0.75; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+  }
+
+  @media (max-width: 768px) {
+    .dynamic-cube {
+      --cube-size: 4.75rem;
+    }
+
+    .cube-scene {
+      min-height: 9.5rem;
+    }
+
+    .cube-scene__aura {
+      width: 9rem;
+      height: 9rem;
+    }
+
+    .cube-scene__orbit {
+      width: 8rem;
+      height: 8rem;
+    }
+
+    .cube-scene__orbit--inner {
+      width: 6.25rem;
+      height: 6.25rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cube-wrapper,
+    .cube,
+    .cube-scene__orbit,
+    .cube-scene__aura {
+      animation: none !important;
+    }
+
+    .cube-wrapper {
+      transform: rotateY(24deg);
+    }
+
+    .cube {
+      transform: rotateX(-16deg);
+    }
+  }
 
   /* =========================================
      3. PROJEKTE SEKTION
@@ -652,97 +1452,188 @@ function optimize(project) {
      HERO SEKTION 
      ========================================= */
 
-    #intro {
+#intro {
   position: relative;
-  background-color: #05080a; /* Extrem dunkles Fundament */
+  min-height: 100svh;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  padding: clamp(5rem, 12vh, 7rem) 1.25rem clamp(4rem, 10vh, 6rem);
+  background: #030712;
 }
 
-/* --- 1. GRUND-SETUP (Gilt für alle Bildschirme) --- */
-.hero-stack {
+@media (min-width: 769px) {
+  #intro {
+    background: #0b1120;
+  }
+}
+
+/* --- Ambient Hintergrund --- */
+.hero-ambient {
   position: absolute;
   inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 90% 55% at 50% 115%, rgba(16, 185, 129, 0.14), transparent 68%),
+    radial-gradient(ellipse 45% 35% at 12% 18%, rgba(56, 189, 248, 0.09), transparent 55%),
+    radial-gradient(ellipse 40% 30% at 88% 22%, rgba(167, 139, 250, 0.08), transparent 52%),
+    #030712;
 }
 
-.hero-card {
-  position: absolute;
-  border-radius: 30px;
-  box-shadow: -10px 10px 30px rgba(0, 0, 0, 0.5);
-}
-
-/* --- 2. DESKTOP LOOK (Breite Bildschirme) --- */
 @media (min-width: 769px) {
-  .hero-card {
-    width: 60vw;
-    height: 80vh;
+  .hero-ambient {
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 115%, rgba(16, 185, 129, 0.14), transparent 68%),
+      radial-gradient(ellipse 38% 32% at 22% 18%, rgba(56, 189, 248, 0.09), transparent 55%),
+      radial-gradient(ellipse 38% 32% at 78% 22%, rgba(167, 139, 250, 0.08), transparent 52%),
+      #0b1120;
   }
-  .card-1 { 
-    background: linear-gradient(135deg, #064e3b 0%, #05080a 100%); 
-    transform: translate(-25%, -10%) rotate(-15deg); 
-    z-index: 1; 
-  }
-  .card-2 { 
-    background: linear-gradient(135deg, #065f46 0%, #05080a 100%); 
-    transform: translate(-12%, -5%) rotate(-10deg); 
-    z-index: 2; 
-  }
-  .card-3 { 
-    background: linear-gradient(135deg, #0f766e 0%, #05080a 100%); 
-    transform: translate(0%, 0%) rotate(-5deg); 
-    z-index: 3; 
-    opacity: 0.9; 
-  }
-  .card-4 { 
-    background: linear-gradient(135deg, #10b981 0%, #05080a 100%); 
-    transform: translate(12%, 5%) rotate(0deg); 
-    z-index: 4; 
-    opacity: 0.4; 
+
+  .hero-ambient::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      #0b1120 0%,
+      rgba(11, 17, 32, 0.85) 6%,
+      transparent 22%,
+      transparent 78%,
+      rgba(11, 17, 32, 0.85) 94%,
+      #0b1120 100%
+    );
+    pointer-events: none;
   }
 }
 
-/* --- 3. MOBIL LOOK (Smartphones wie das S24) --- */
-@media (max-width: 768px) {
-  .hero-card {
-    width: 75vw;
-    height: 45vh; 
-    max-height: 380px; /* Verhindert extreme Streckung */
-    border-radius: 24px;
-  }
-  .card-1 { 
-    background: linear-gradient(135deg, #064e3b 0%, #05080a 100%);
-    transform: translate(-12%, -10%) rotate(-14deg); 
-    z-index: 1; 
-  }
-  .card-2 { 
-    background: linear-gradient(135deg, #065f46 0%, #05080a 100%);
-    transform: translate(-4%, -5%) rotate(-7deg); 
-    z-index: 2; 
-  }
-  .card-3 { 
-    background: linear-gradient(135deg, #0f766e 0%, #05080a 100%);
-    transform: translate(4%, 0%) rotate(0deg); 
-    z-index: 3; 
-    opacity: 0.9;
-  }
-  .card-4 { 
-    background: linear-gradient(135deg, #10b981 0%, #05080a 100%);
-    transform: translate(12%, 5%) rotate(7deg); 
-    z-index: 4; 
-    opacity: 0.3; 
+.hero-grid {
+  position: absolute;
+  inset: -1px;
+  background-image:
+    linear-gradient(rgba(16, 185, 129, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 185, 129, 0.045) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 75% 62% at 50% 46%, #000 15%, transparent 72%);
+  -webkit-mask-image: radial-gradient(ellipse 75% 62% at 50% 46%, #000 15%, transparent 72%);
+}
+
+@media (min-width: 769px) {
+  .hero-grid {
+    mask-image:
+      linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%),
+      radial-gradient(ellipse 62% 58% at 50% 46%, #000 18%, transparent 74%);
+    -webkit-mask-image:
+      linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%),
+      radial-gradient(ellipse 62% 58% at 50% 46%, #000 18%, transparent 74%);
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
   }
 
-  /* Etwas Luft für das Logo auf kleinen Screens */
-  .r3-logo {
-    transform: scale(0.85); 
+  .hero-orb--1 {
+    left: 14%;
   }
+
+  .hero-orb--2 {
+    right: 12%;
+  }
+
+  .hero-orb--3 {
+    right: 22%;
+  }
+}
+
+.hero-spotlight {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -46%);
+  width: min(92vw, 680px);
+  height: min(52vh, 400px);
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(16, 185, 129, 0.1) 0%, transparent 68%);
+}
+
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(72px);
+  will-change: transform;
+  animation: heroOrbDrift 22s ease-in-out infinite;
+}
+
+.hero-orb--1 {
+  width: min(48vw, 440px);
+  height: min(48vw, 440px);
+  background: rgba(16, 185, 129, 0.32);
+  top: 8%;
+  left: 6%;
+}
+
+.hero-orb--2 {
+  width: min(38vw, 340px);
+  height: min(38vw, 340px);
+  background: rgba(14, 165, 233, 0.22);
+  bottom: 12%;
+  right: 4%;
+  animation-delay: -7s;
+}
+
+.hero-orb--3 {
+  width: min(30vw, 280px);
+  height: min(30vw, 280px);
+  background: rgba(139, 92, 246, 0.18);
+  top: 38%;
+  right: 18%;
+  animation-delay: -14s;
+}
+
+.hero-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+  border: 1px solid rgba(16, 185, 129, 0.12);
+  transform: translate(-50%, -48%);
+  animation: heroRingPulse 9s ease-in-out infinite;
+}
+
+.hero-ring--1 {
+  width: min(78vw, 560px);
+  height: min(78vw, 560px);
+  opacity: 0.55;
+}
+
+.hero-ring--2 {
+  width: min(95vw, 720px);
+  height: min(95vw, 720px);
+  opacity: 0.28;
+  animation-delay: -4.5s;
+}
+
+@keyframes heroOrbDrift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(3.5%, -4%) scale(1.06); }
+  66% { transform: translate(-4%, 3%) scale(0.94); }
+}
+
+@keyframes heroRingPulse {
+  0%, 100% {
+    transform: translate(-50%, -48%) scale(1);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translate(-50%, -48%) scale(1.04);
+    opacity: 0.65;
+  }
+}
+
+#intro .section-head {
+  position: relative;
+  z-index: 2;
 }
 
 /*==========================================
@@ -763,9 +1654,62 @@ function optimize(project) {
 
 /* Mobile Anpassung (für Bildschirme bis 768px Breite) */
 @media (max-width: 768px) {
+  #intro {
+    padding-top: clamp(4.5rem, 14vh, 6rem);
+  }
+
+  .hero-grid {
+    background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse 88% 70% at 50% 44%, #000 10%, transparent 78%);
+    -webkit-mask-image: radial-gradient(ellipse 88% 70% at 50% 44%, #000 10%, transparent 78%);
+  }
+
+  .hero-orb {
+    filter: blur(56px);
+    opacity: 0.75;
+  }
+
+  .hero-orb--1 {
+    width: 70vw;
+    height: 70vw;
+    top: 4%;
+    left: -8%;
+  }
+
+  .hero-orb--2 {
+    width: 55vw;
+    height: 55vw;
+    bottom: 8%;
+    right: -10%;
+  }
+
+  .hero-orb--3 {
+    display: none;
+  }
+
+  .hero-ring--2 {
+    display: none;
+  }
+
+  .hero-ring--1 {
+    width: min(92vw, 420px);
+    height: min(92vw, 420px);
+  }
+
   .r3-pure-cat {
     top: -108px;
-    
+  }
+
+  .r3-logo {
+    transform: scale(0.88);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-orb,
+  .hero-ring,
+  .code-cursor {
+    animation: none;
   }
 }
 /* =========================================
@@ -808,4 +1752,5 @@ function optimize(project) {
     opacity: 0;
   }
 }
+
 </style>
