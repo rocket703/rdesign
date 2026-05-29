@@ -16,6 +16,19 @@
     updateProgress();
   }
 
+  // FAQ: nur eine Karte gleichzeitig offen
+  const faqItems = document.querySelectorAll('.faq-item');
+  if (faqItems.length) {
+    faqItems.forEach((item) => {
+      item.addEventListener('toggle', () => {
+        if (!item.open) return;
+        faqItems.forEach((other) => {
+          if (other !== item) other.open = false;
+        });
+      });
+    });
+  }
+
   if (reduced) return;
 
   // 11 — Footer outline text parallax (nur Desktop, dezent)

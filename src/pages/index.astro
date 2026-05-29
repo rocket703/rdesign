@@ -99,7 +99,7 @@ export async function GET({ cookies, redirect }) {
         </figure>
         
         <div class="about__content autoShow">
-          <span class="eyebrow">Über mich</span>
+          <span class="eyebrow eyebrow--race" data-num="01">Über mich</span>
           <p class="about__lead">
             Hi, ich bin <span class="text-gradient">Dustin</span>.
           </p>
@@ -119,7 +119,7 @@ export async function GET({ cookies, redirect }) {
   <section id="leistungen" class="section services">
     <div class="container">
       <div class="section-head autoShow">
-        <span class="eyebrow">Leistungen</span>
+        <span class="eyebrow eyebrow--race" data-num="02">Leistungen</span>
         <h2 class="section-title">Was ich für dich <br /> umsetze</h2>
         <div class="title-divider"></div>
         <p class="section-lead">
@@ -207,12 +207,10 @@ export async function GET({ cookies, redirect }) {
     </div>
   </section>
 
-  <hr class="section-divider" aria-hidden="true" />
-
   <section class="section dev-showcase">
     <div class="container">
       <div class="section-head autoShow">
-        <span class="eyebrow">Tech Stack</span>
+        <span class="eyebrow eyebrow--race" data-num="03">Tech Stack</span>
         <h2 class="section-title">Engineering trifft <br/> modernes Design</h2>
         <div class="title-divider"></div>
         <p class="section-lead">
@@ -290,7 +288,7 @@ export async function GET({ cookies, redirect }) {
 
   <section id="projekte" class="section projects">
     <div class="section-head autoShow">
-      <span class="eyebrow">Ausgewählte Referenzen</span>
+      <span class="eyebrow eyebrow--race" data-num="04">Projekte</span>
       <h2 class="section-title">Digitale Wertschöpfung <br/> aus Sachsen-Anhalt</h2>
       <div class="title-divider"></div>
       <p class="section-lead">
@@ -314,7 +312,7 @@ export async function GET({ cookies, redirect }) {
   <section id="faq" class="section faq">
     <div class="container">
       <div class="section-head autoShow">
-        <span class="eyebrow">FAQ</span>
+        <span class="eyebrow eyebrow--race" data-num="05">FAQ</span>
         <h2 class="section-title">Häufige Fragen zu <br/> Webdesign in Magdeburg</h2>
         <div class="title-divider"></div>
       </div>
@@ -548,7 +546,6 @@ export async function GET({ cookies, redirect }) {
     content: '';
     position: absolute;
     inset: 0;
-    border-radius: inherit;
     padding: 1px;
     background: linear-gradient(
       165deg,
@@ -574,7 +571,6 @@ export async function GET({ cookies, redirect }) {
     left: 0;
     right: 0;
     height: 2px;
-    border-radius: 14px 14px 0 0;
     background: linear-gradient(90deg, #10b981 0%, #38bdf8 55%, transparent 100%);
     opacity: 0.65;
     pointer-events: none;
@@ -816,7 +812,7 @@ export async function GET({ cookies, redirect }) {
 
   .dev-showcase {
     background: #0b1120;
-    padding: 8rem 0;
+    padding: clamp(5rem, 10vw, 8rem) 0;
     color: #fff;
   }
 
@@ -1048,7 +1044,7 @@ export async function GET({ cookies, redirect }) {
 
   @media (max-width: 768px) {
     .dev-showcase {
-      padding: 4.5rem 0;
+      padding: clamp(4rem, 12vw, 5rem) 0;
     }
 
     .skill-grid {
@@ -1380,6 +1376,7 @@ export async function GET({ cookies, redirect }) {
   .projects {
     background-color: #0b1120;
     padding: 8rem 0;
+    overflow: hidden;
   }
 
   .card-grid {
@@ -1423,6 +1420,7 @@ export async function GET({ cookies, redirect }) {
     gap: 1rem;
     max-width: 980px;
     margin: 0 auto;
+    align-items: start;
   }
 
   @media (min-width: 900px) {
@@ -1435,6 +1433,7 @@ export async function GET({ cookies, redirect }) {
   .faq-item {
     position: relative;
     border-radius: 14px;
+    overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.08);
     background:
       linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 42%, transparent 100%),
@@ -1469,6 +1468,10 @@ export async function GET({ cookies, redirect }) {
   .faq-item summary {
     list-style: none;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    min-height: calc(2.1rem + 2.7em);
     padding: 1.1rem 2.9rem 1rem 1.1rem;
     font-weight: 700;
     color: #f3f4f6;

@@ -63,9 +63,9 @@
 .legal-block {
   position: relative;
   overflow: hidden;
+  border-radius: 14px;
   padding: clamp(1.25rem, 3vw, 1.65rem);
   padding-top: clamp(1.45rem, 3.5vw, 1.85rem);
-  border-radius: 14px;
   background:
     linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 42%, transparent 100%),
     rgba(15, 23, 42, 0.65);
@@ -492,10 +492,10 @@
 .contact-popup__card {
   position: relative;
   overflow: hidden;
+  border-radius: 14px;
   width: 100%;
   max-width: 420px;
   padding: 2.5rem 2rem;
-  border-radius: 14px;
   text-align: center;
   background:
     linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 42%, transparent 100%),

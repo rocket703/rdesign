@@ -1,3 +1,8 @@
+/* ====================== Design tokens ====================== */
+:root {
+  --accent-lime: #d2ff00;
+}
+
 /* ====================== Reset & Basis ====================== */
 *,
 *::before,
@@ -75,8 +80,8 @@ textarea:focus-visible {
   left: 0;
   height: 2px;
   width: 0%;
-  background: linear-gradient(90deg, #059669, #10b981, #34d399);
-  box-shadow: 0 0 12px rgba(16, 185, 129, 0.45);
+  background: linear-gradient(90deg, #059669, #10b981, var(--accent-lime), #34d399);
+  box-shadow: 0 0 12px rgba(210, 255, 0, 0.25), 0 0 10px rgba(16, 185, 129, 0.35);
   transition: width 0.12s linear;
   z-index: 1001;
   pointer-events: none;
@@ -307,6 +312,18 @@ textarea:focus-visible {
   margin-bottom: 1.2rem;
 }
 
+.eyebrow--race {
+  color: #cbd5e1;
+  letter-spacing: 0.16em;
+  font-size: 0.8rem;
+}
+
+.eyebrow--race::before {
+  content: attr(data-num) ' · ';
+  color: var(--accent-lime);
+  letter-spacing: 0.12em;
+}
+
 .title-divider {
   width: 80px;
   height: 4px;
@@ -333,6 +350,21 @@ textarea:focus-visible {
   overflow: hidden;
   color: #e5e7eb;
   text-align: center;
+}
+
+.intro::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    135deg,
+    transparent 0,
+    transparent 34px,
+    rgba(210, 255, 0, 0.028) 34px,
+    rgba(210, 255, 0, 0.028) 36px
+  );
 }
 
 /* Tech-Polygone unter H1 */
@@ -519,7 +551,34 @@ textarea:focus-visible {
 }
 
 /* ================= Projekte (Liste) ================= */
-.projects { background: #111827; padding: 4rem 1.5rem; position: relative; z-index: 1; }
+.projects {
+  background: #111827;
+  padding: 4rem 1.5rem;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.projects::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    135deg,
+    transparent 0,
+    transparent 40px,
+    rgba(210, 255, 0, 0.032) 40px,
+    rgba(210, 255, 0, 0.032) 42px
+  );
+}
+
+.projects > .section-head,
+.projects > .card-grid {
+  position: relative;
+  z-index: 1;
+}
 .card-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
   gap: 2rem; margin-top: 2rem;

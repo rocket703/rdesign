@@ -36,13 +36,14 @@ const currentYear = new Date().getFullYear();
 
 <style>
   .site-footer {
-    /* Peek = 50 % Schrifthöhe + Reserve für hochgestellte ³ */
+    /* Sichtbar: 50 % Schrifthöhe; leicht nach oben versetzt */
     --footer-watermark-size: clamp(3.25rem, 18vw, 14rem);
     --footer-watermark-lh: 0.85;
+    --footer-peek-visible: 0.5;
     --footer-superscript-pad: calc(var(--footer-watermark-size) * 0.11);
-    --footer-text-top: var(--footer-superscript-pad);
+    --footer-text-top: calc(var(--footer-superscript-pad) - var(--footer-watermark-size) * 0.055);
     --footer-peek-h: calc(
-      var(--footer-watermark-size) * var(--footer-watermark-lh) * 0.5 + var(--footer-superscript-pad)
+      var(--footer-watermark-size) * var(--footer-watermark-lh) * var(--footer-peek-visible) + var(--footer-superscript-pad)
     );
     background-color: #0b1120;
     width: 100%;
@@ -197,7 +198,7 @@ const currentYear = new Date().getFullYear();
     line-height: 1.4;
   }
 
-  /* Wasserzeichen – exakt obere Hälfte der Schrift sichtbar */
+  /* Wasserzeichen – obere Hälfte der Schrift sichtbar */
   .footer-visual-bottom {
     flex-shrink: 0;
     width: 100%;
@@ -241,7 +242,7 @@ const currentYear = new Date().getFullYear();
     .site-footer {
       --footer-watermark-size: clamp(3.25rem, 20vw, 6rem);
       --footer-superscript-pad: calc(var(--footer-watermark-size) * 0.06);
-      --footer-text-top: calc(var(--footer-watermark-size) * 0.02);
+      --footer-text-top: calc(var(--footer-watermark-size) * -0.045);
     }
 
     .footer-grid {
@@ -271,7 +272,7 @@ const currentYear = new Date().getFullYear();
     .site-footer {
       --footer-watermark-size: 3.25rem;
       --footer-superscript-pad: calc(var(--footer-watermark-size) * 0.05);
-      --footer-text-top: calc(var(--footer-watermark-size) * 0.015);
+      --footer-text-top: calc(var(--footer-watermark-size) * -0.055);
     }
 
     .footer-body {
