@@ -3,6 +3,7 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE } from '../lib/seo';
+import '@fontsource-variable/inter/wght.css';
 import '../styles/subtle-bubbles.css';
 import '../styles/style.css';
 
@@ -58,10 +59,6 @@ const jsonLdString = jsonLd ? JSON.stringify(jsonLd) : null;
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImageURL} />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet" />
-
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="shortcut icon" href="/favicon.ico" />
   <link rel="icon" href="/icon.svg" type="image/svg+xml" />
@@ -85,8 +82,8 @@ const jsonLdString = jsonLd ? JSON.stringify(jsonLd) : null;
 
   <Footer />
 
-  <script is:inline src="/subtle-bubbles.js"></script>
-  <script is:inline src="/site-effects.js"></script>
+  <script defer src="/subtle-bubbles.js"></script>
+  <script defer src="/site-effects.js"></script>
   <script is:inline>
     // === AutoShow: Original Logik ===
     (function () {
@@ -148,6 +145,15 @@ const jsonLdString = jsonLd ? JSON.stringify(jsonLd) : null;
   #projekte,
   #faq {
     scroll-margin-top: var(--site-header-height);
+  }
+
+  #about,
+  #leistungen,
+  .dev-showcase,
+  #projekte,
+  #faq {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 720px;
   }
   </style>
 
