@@ -22,7 +22,7 @@
 - Wolmirstedter Ohrelauf — Event-Website, statisch, GitHub Pages
 - Radsportclub Magdeburg — Vereinswebsite mit Kontaktformular
 - 3viertel12 — Band-Website mit Astro
-- Weitere Case Studies: https://r3webdesign.de/#projekte
+- Portfolio & Case Studies: https://r3webdesign.de/projekte/
 
 ## Technologie
 

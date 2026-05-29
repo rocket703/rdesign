@@ -136,10 +136,17 @@ export function faqPageSchema(items: FaqItem[], site: URL | string = SITE.url) {
   };
 }
 
+export const PORTFOLIO = {
+  title: 'Referenzprojekte – Webdesign Magdeburg | r³webdesign',
+  description:
+    'Ausgewählte Webdesign- und Webentwicklungsprojekte von r³webdesign: Homepages, Web-Apps und native Apps aus Magdeburg und Umgebung.',
+  pathname: '/projekte/',
+} as const;
+
 export function projectListSchema(projects: ProjectListItem[], site: URL | string = SITE.url) {
   return {
     '@type': 'ItemList',
-    '@id': `${absoluteUrl('/', site)}#projekte`,
+    '@id': `${absoluteUrl('/projekte/', site)}#list`,
     name: 'Referenzprojekte von r³webdesign',
     description: 'Ausgewählte Webdesign- und Webentwicklungsprojekte aus Magdeburg und Umgebung.',
     itemListElement: projects.map((project, index) => ({
@@ -245,11 +252,7 @@ export function creativeWorkSchema({
   };
 }
 
-export function homePageSchema(
-  items: FaqItem[],
-  projects: ProjectListItem[],
-  site: URL | string = SITE.url,
-) {
+export function homePageSchema(items: FaqItem[], site: URL | string = SITE.url) {
   return schemaGraph([
     webSiteSchema(site),
     personSchema(site),
@@ -261,6 +264,25 @@ export function homePageSchema(
       site,
     }),
     faqPageSchema(items, site),
+  ]);
+}
+
+export function portfolioPageSchema(projects: ProjectListItem[], site: URL | string = SITE.url) {
+  return schemaGraph([
+    webPageSchema({
+      name: PORTFOLIO.title,
+      description: PORTFOLIO.description,
+      pathname: PORTFOLIO.pathname,
+      site,
+    }),
+    breadcrumbSchema(
+      [
+        { name: 'Start', path: '/' },
+        { name: 'Projekte', path: '/projekte/' },
+      ],
+      site,
+    ),
     projectListSchema(projects, site),
+    personSchema(site),
   ]);
 }

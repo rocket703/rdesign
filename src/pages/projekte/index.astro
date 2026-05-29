@@ -1,0 +1,187 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+import {
+  PORTFOLIO,
+  portfolioPageSchema,
+  type ProjectListItem,
+} from '../../lib/seo';
+
+const allProjects = await getCollection('projects');
+
+const sortedProjects = [...allProjects].sort((a, b) => {
+  const onlineFirst = (status: string) => (status === 'online' ? 0 : 1);
+  const byStatus = onlineFirst(a.data.status) - onlineFirst(b.data.status);
+  if (byStatus !== 0) return byStatus;
+  return a.data.title.localeCompare(b.data.title, 'de');
+});
+
+const projectListItems: ProjectListItem[] = sortedProjects.map((project) => ({
+  title: project.data.title,
+  slug: project.id.replace('.md', ''),
+  description: project.data.subtitle,
+  image: project.data.image,
+}));
+---
+
+<BaseLayout
+  title={PORTFOLIO.title}
+  description={PORTFOLIO.description}
+  jsonLd={portfolioPageSchema(projectListItems, Astro.site)}
+>
+  <article class="portfolio-view">
+    <div class="main-container">
+      <nav class="portfolio-nav" aria-label="Seitennavigation">
+        <a href="/" class="portfolio-back">
+          <span class="portfolio-back__prompt" aria-hidden="true">&gt;_</span>
+          <span>zurück.start</span>
+        </a>
+      </nav>
+
+      <header class="portfolio-hero">
+        <p class="project-path portfolio-hero__path">
+          <span class="project-prompt">&gt;_</span>
+          <span>portfolio/</span>
+        </p>
+        <span class="eyebrow eyebrow--race" data-num="04">Projekte</span>
+        <h1 class="section-title">Referenzprojekte</h1>
+        <div class="title-divider"></div>
+        <p class="section-lead portfolio-hero__lead">
+          Webseiten, Apps und Plattformen aus Magdeburg und Umgebung — von statischen
+          Landingpages bis Fullstack mit Login und Dashboard.
+        </p>
+      </header>
+
+      <div class="card-grid portfolio-grid">
+        {sortedProjects.map((project) => (
+          <ProjectCard
+            title={project.data.title}
+            description={project.data.subtitle}
+            image={project.data.image}
+            tags={project.data.techStack}
+            id={project.id.replace('.md', '')}
+          />
+        ))}
+      </div>
+
+      <footer class="portfolio-foot autoShow">
+        <p class="portfolio-foot__note">Ähnliches Vorhaben?</p>
+        <a href="/kontakt/" class="portfolio-cta">
+          <span class="portfolio-cta__prompt" aria-hidden="true">&gt;</span>
+          Projekt anfragen
+        </a>
+      </footer>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .portfolio-view {
+    background-color: #0b1120;
+    color: #fff;
+    min-height: 100vh;
+    padding: clamp(1.5rem, 4vw, 2.5rem) 0 clamp(5rem, 10vw, 8rem);
+  }
+
+  .main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .portfolio-nav {
+    margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .portfolio-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: ui-monospace, 'Cascadia Code', monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: lowercase;
+    text-decoration: none;
+    color: #94a3b8;
+    transition: color 0.2s ease;
+  }
+
+  .portfolio-back__prompt {
+    color: #10b981;
+    font-weight: 700;
+  }
+
+  .portfolio-back:hover {
+    color: #ecfdf5;
+  }
+
+  .portfolio-hero {
+    text-align: center;
+    max-width: 780px;
+    margin: 0 auto clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .portfolio-hero__path {
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .portfolio-hero__lead {
+    margin-top: 0;
+  }
+
+  .portfolio-grid {
+    margin-top: 0;
+  }
+
+  .portfolio-foot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: clamp(3rem, 7vw, 4.5rem);
+    padding-top: clamp(2rem, 5vw, 3rem);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: center;
+  }
+
+  .portfolio-foot__note {
+    margin: 0;
+    font-family: ui-monospace, monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: lowercase;
+    color: #64748b;
+  }
+
+  .portfolio-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.35rem;
+    border-radius: 10px;
+    font-family: ui-monospace, monospace;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: lowercase;
+    text-decoration: none;
+    color: #ecfdf5;
+    background: linear-gradient(145deg, rgba(16, 185, 129, 0.22) 0%, rgba(16, 185, 129, 0.08) 100%);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .portfolio-cta__prompt {
+    color: #34d399;
+  }
+
+  .portfolio-cta:hover {
+    transform: translateY(-2px);
+    border-color: rgba(52, 211, 153, 0.55);
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.15);
+  }
+</style>

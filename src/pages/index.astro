@@ -8,12 +8,10 @@ import { homePageSchema, SITE } from '../lib/seo';
 
 const allProjects = await getCollection('projects');
 
-const projectListItems = allProjects.map((project) => ({
-  title: project.data.title,
-  slug: project.id.replace('.md', ''),
-  description: project.data.subtitle,
-  image: project.data.image,
-}));
+const featuredSlugs = ['startplatzboerse', 'ohrelauf', 'radsportclub-magdeburg'];
+const featuredProjects = featuredSlugs
+  .map((slug) => allProjects.find((project) => project.id.replace('.md', '') === slug))
+  .filter((project): project is (typeof allProjects)[number] => Boolean(project));
 
 const codeMobile = `async function ship(site) {
   await site.optimizeAssets();
@@ -62,7 +60,7 @@ export async function GET({ cookies, redirect }) {
 <BaseLayout
   title={SITE.defaultTitle}
   description={SITE.defaultDescription}
-  jsonLd={homePageSchema(faqItems, projectListItems, Astro.site)}
+  jsonLd={homePageSchema(faqItems, Astro.site)}
 >
  <section id="intro" class="section intro">
   <div class="hero-ambient" aria-hidden="true">
@@ -315,21 +313,26 @@ export async function GET({ cookies, redirect }) {
       <h2 class="section-title">Digitale Wertschöpfung <br/> aus Sachsen-Anhalt</h2>
       <div class="title-divider"></div>
       <p class="section-lead">
-        Maßgeschneiderte Web-Lösungen, die Performance mit Ästhetik vereinen. 
-        Kein Standard, sondern digitales Handwerk für messbaren Erfolg.
+        Drei ausgewählte Referenzen — von der Vereinswebsite bis zur Fullstack-Plattform.
       </p>
     </div>
     <div class="card-grid">
-      {allProjects.map((project) => (
-        <ProjectCard 
-  title={project.data.title}
-  description={project.data.subtitle}
-  image={project.data.image}
-  tags={project.data.techStack}
-  id={project.id.replace('.md', '')}
-/>
+      {featuredProjects.map((project) => (
+        <ProjectCard
+          title={project.data.title}
+          description={project.data.subtitle}
+          image={project.data.image}
+          tags={project.data.techStack}
+          id={project.id.replace('.md', '')}
+        />
       ))}
     </div>
+    <p class="projects-more autoShow">
+      <a href="/projekte/" class="projects-more__link">
+        <span class="projects-more__prompt" aria-hidden="true">&gt;</span>
+        Alle Projekte ansehen
+      </a>
+    </p>
   </section>
 
   <section id="faq" class="section faq">
@@ -1422,6 +1425,35 @@ export async function GET({ cookies, redirect }) {
     .card-grid {
       grid-template-columns: repeat(3, 1fr); /* Desktop: 3 Spalten */
     }
+  }
+
+  .projects-more {
+    margin: clamp(2.5rem, 5vw, 3.5rem) auto 0;
+    padding: 0 1.5rem;
+    text-align: center;
+  }
+
+  .projects-more__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: ui-monospace, 'Cascadia Code', monospace;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: lowercase;
+    text-decoration: none;
+    color: #94a3b8;
+    transition: color 0.2s ease;
+  }
+
+  .projects-more__prompt {
+    color: #10b981;
+    font-weight: 700;
+  }
+
+  .projects-more__link:hover {
+    color: #ecfdf5;
   }
 
   /* =========================================

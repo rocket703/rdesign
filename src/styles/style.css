@@ -711,14 +711,9 @@ textarea:focus-visible {
 .container { max-width: 1200px; margin: 0 auto; }
 .container.narrow { max-width: 860px; }
 
-/* Hero */
+/* Hero — flach wie portfolio-hero auf /projekte/ */
 .project-hero {
   text-align: center;
-  padding: 5rem 1.5rem 2.25rem;   /* konsolidiert */
-  margin-bottom: .5rem;
-  background:
-    radial-gradient(900px 400px at 10% -10%, rgba(16,185,129,.12), transparent 60%),
-    radial-gradient(800px 380px at 90% 0%, rgba(59,130,246,.10), transparent 65%);
 }
 .project-hero.has-polys { position: relative; overflow: clip; }
 .project-hero.has-polys::before {
