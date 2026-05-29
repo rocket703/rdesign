@@ -1,11 +1,23 @@
 ---
 // src/pages/impressum.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { schemaGraph, webPageSchema } from '../lib/seo';
+
+const pageTitle = 'Impressum – r³webdesign';
+const pageDescription = 'Impressum und rechtliche Angaben von r³webdesign gemäß § 5 DDG.';
 ---
 
-<BaseLayout 
-  title="Impressum – r³webdesign"
-  description="Impressum und rechtliche Angaben von r³webdesign gemäß § 5 DDG."
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  jsonLd={schemaGraph([
+    webPageSchema({
+      name: pageTitle,
+      description: pageDescription,
+      pathname: Astro.url.pathname,
+      site: Astro.site,
+    }),
+  ])}
 >
   <section class="legal-hero">
     <div class="container">

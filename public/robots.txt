@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://r3webdesign.de/sitemap-index.xml
+Sitemap: https://r3webdesign.de/sitemap.xml

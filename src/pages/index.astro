@@ -3,6 +3,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import { getCollection } from 'astro:content';
+import { faqItems } from '../data/faq';
+import { homePageSchema, SITE } from '../lib/seo';
 
 const allProjects = await getCollection('projects');
 
@@ -50,9 +52,10 @@ export async function GET({ cookies, redirect }) {
 }`;
 ---
 
-<BaseLayout 
-  title="r³webdesign – Webentwicklung, Design & Appentwicklung"
-  description="r³webdesign entwickelt performante Webseiten, klares Design und smarte Apps."
+<BaseLayout
+  title={SITE.defaultTitle}
+  description={SITE.defaultDescription}
+  jsonLd={homePageSchema(faqItems, Astro.site)}
 >
  <section id="intro" class="section intro">
   <div class="hero-ambient" aria-hidden="true">
@@ -65,9 +68,7 @@ export async function GET({ cookies, redirect }) {
     <div class="hero-ring hero-ring--2"></div>
   </div>
 
-  <div class="section-head">
-    
-    <!-- LOTTIE CAT -->
+  <div class="section-head hero-brand">
     <div class="r3-pure-cat" aria-hidden="true">
       <div id="cat"></div>
     </div>
@@ -314,83 +315,16 @@ export async function GET({ cookies, redirect }) {
       </div>
 
       <div class="faq-grid">
-        <details class="faq-item autoShow">
-          <summary>Was kostet eine professionelle Webseite in Magdeburg?</summary>
-          <p>
-            Aktuell suche ich spannende private Projekte, um mein Portfolio gezielt zu erweitern.
-            Wenn dein Vorhaben inhaltlich passt, finden wir eine faire, transparente Lösung, die
-            zu Umfang und Ziel passt.
-          </p>
-        </details>
-
-        <details class="faq-item autoShow">
-          <summary>Wie lange dauert die Umsetzung einer neuen Homepage?</summary>
-          <p>
-            Kleine bis mittlere Projekte dauern oft 2 bis 6 Wochen. Bei komplexeren Anforderungen
-            planen wir in klaren Etappen, damit du früh Ergebnisse siehst und Feedback geben kannst.
-          </p>
-        </details>
-
-        <details class="faq-item autoShow">
-          <summary>Machst du nur Design oder auch Entwicklung und SEO?</summary>
-          <p>
-            Beides. Von UX/UI-Design über Entwicklung bis technisches SEO, Performance und
-            Deployment. Ziel ist eine Seite, die nicht nur gut aussieht, sondern auch gefunden wird.
-          </p>
-        </details>
-
-        <details class="faq-item autoShow">
-          <summary>Kann ich meine Webseite später selbst pflegen?</summary>
-          <p>
-            Ja. Auf Wunsch bekommst du ein Setup, mit dem Inhalte einfach aktualisiert werden können.
-            Außerdem gibt es eine kurze Einweisung oder laufende Betreuung, wenn du es abgeben willst.
-          </p>
-        </details>
+        {faqItems.map((item) => (
+          <details class="faq-item autoShow">
+            <summary>{item.question}</summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
       </div>
     </div>
   </section>
 </BaseLayout>
-
-<script type="application/ld+json" is:inline>
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Was kostet eine professionelle Webseite in Magdeburg?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Aktuell suche ich spannende private Projekte, um mein Portfolio gezielt zu erweitern. Wenn dein Vorhaben inhaltlich passt, finden wir eine faire, transparente Lösung, die zu Umfang und Ziel passt."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Wie lange dauert die Umsetzung einer neuen Homepage?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Kleine bis mittlere Projekte dauern oft 2 bis 6 Wochen. Bei komplexeren Anforderungen planen wir in klaren Etappen, damit du früh Ergebnisse siehst und Feedback geben kannst."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Machst du nur Design oder auch Entwicklung und SEO?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Beides. Von UX/UI-Design über Entwicklung bis technisches SEO, Performance und Deployment. Ziel ist eine Seite, die nicht nur gut aussieht, sondern auch gefunden wird."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Kann ich meine Webseite später selbst pflegen?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Ja. Auf Wunsch bekommst du ein Setup, mit dem Inhalte einfach aktualisiert werden können. Außerdem gibt es eine kurze Einweisung oder laufende Betreuung, wenn du es abgeben willst."
-        }
-      }
-    ]
-  }
-</script>
 
 <script define:vars={{ codeMobile, codeDesktop }}>
   (function () {
@@ -1079,6 +1013,50 @@ export async function GET({ cookies, redirect }) {
   @keyframes codeCursorBlink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
+  }
+
+  @media (max-width: 768px) {
+    .dev-showcase {
+      padding: 4.5rem 0;
+    }
+
+    .skill-grid {
+      gap: 1.25rem;
+      padding: 0 1rem;
+    }
+
+    .skill-card {
+      padding: 1.35rem 1.25rem;
+    }
+
+    .skill-card h3 {
+      font-size: 1.35rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .skill-card p {
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    .skill-card__path {
+      margin-bottom: 0.55rem;
+      font-size: 0.68rem;
+    }
+
+    .skill-card__stats {
+      margin-top: 0.85rem;
+    }
+
+    .dynamic-cube {
+      min-height: 0;
+      padding: 1.35rem 1.25rem;
+      gap: 0.75rem;
+    }
+
+    .cube-scene {
+      min-height: 8.5rem;
+    }
   }
 
   /* --- MOBILE ANPASSUNG FÜR DAS CODE-FENSTER --- */
@@ -1826,19 +1804,38 @@ export async function GET({ cookies, redirect }) {
    KATZE
    =========================================*/
 
- /* Standard / Desktop (dein bisheriger Code zusammengefasst) */
-.r3-pure-cat {
-  position: absolute;
-  top: -145px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 100;
-  pointer-events: none;
-  width: 100%;
-  height: 100%;
+.hero-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Mobile Anpassung (für Bildschirme bis 768px Breite) */
+.r3-pure-cat {
+  position: relative;
+  z-index: 3;
+  pointer-events: none;
+  width: min(240px, 56vw);
+  margin: 0 auto -1.75rem;
+  line-height: 0;
+}
+
+#cat {
+  width: 100%;
+}
+
+#cat canvas {
+  display: block;
+  width: 100% !important;
+  height: auto !important;
+}
+
+@media (min-width: 769px) {
+  .r3-pure-cat {
+    width: min(260px, 34vw);
+    margin-bottom: -2.5rem;
+  }
+}
+
 @media (max-width: 768px) {
   #intro {
     padding-top: clamp(4.5rem, 14vh, 6rem);
@@ -1883,11 +1880,14 @@ export async function GET({ cookies, redirect }) {
   }
 
   .r3-pure-cat {
-    top: -108px;
+    width: min(200px, 50vw);
+    margin-bottom: -2.25rem;
   }
 
-  .r3-logo {
+  .hero-brand .r3-logo {
     transform: scale(0.88);
+    position: relative;
+    z-index: 2;
   }
 }
 

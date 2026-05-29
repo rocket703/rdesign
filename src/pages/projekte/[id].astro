@@ -1,6 +1,12 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
+import {
+  breadcrumbSchema,
+  creativeWorkSchema,
+  schemaGraph,
+  webPageSchema,
+} from '../../lib/seo';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -16,9 +22,39 @@ const projectLink = project.data.customerUrl;
 const projectStatus = project.data.status;
 const title = project.data.title;
 const hasSpace = title.trim().includes(' ');
+const projectSlug = project.id.replace('.md', '');
+const projectPath = `/projekte/${projectSlug}`;
+const pageTitle = `${project.data.title} | r³webdesign`;
+const pageDescription = project.data.subtitle;
 ---
 
-<BaseLayout title={`${project.data.title} | r³webdesign`} description={project.data.subtitle}>
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  image={project.data.image}
+  jsonLd={schemaGraph([
+    webPageSchema({
+      name: pageTitle,
+      description: pageDescription,
+      pathname: projectPath,
+      site: Astro.site,
+    }),
+    breadcrumbSchema(
+      [
+        { name: 'Start', path: '/' },
+        { name: project.data.title, path: projectPath },
+      ],
+      Astro.site,
+    ),
+    creativeWorkSchema({
+      title: project.data.title,
+      description: project.data.subtitle,
+      image: project.data.image,
+      pathname: projectPath,
+      site: Astro.site,
+    }),
+  ])}
+>
   <article class="project-detail-view">
     <div class="main-container">
       

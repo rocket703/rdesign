@@ -1,11 +1,24 @@
 ---
 // src/pages/kontakt.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { schemaGraph, webPageSchema } from '../lib/seo';
+
+const pageTitle = 'Kontakt – Webdesign Magdeburg | r³webdesign';
+const pageDescription =
+  'Projektanfrage für Webdesign, Homepage oder Web-App in Magdeburg. Schreib mir dein Vorhaben – ich melde mich zeitnah zurück.';
 ---
 
-<BaseLayout 
-  title="Kontakt – r³webdesign"
-  description="Lassen Sie uns gemeinsam Ihr nächstes Web-Projekt realisieren."
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  jsonLd={schemaGraph([
+    webPageSchema({
+      name: pageTitle,
+      description: pageDescription,
+      pathname: Astro.url.pathname,
+      site: Astro.site,
+    }),
+  ])}
 >
   <section class="section contact-hero">
     <div class="container">

@@ -1,11 +1,23 @@
 ---
 // src/pages/datenschutz.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { schemaGraph, webPageSchema } from '../lib/seo';
+
+const pageTitle = 'Datenschutz – r³webdesign';
+const pageDescription = 'Datenschutzerklärung von r³webdesign gemäß DSGVO.';
 ---
 
-<BaseLayout 
-  title="Datenschutz – r³webdesign"
-  description="Datenschutzerklärung von r³webdesign gemäß DSGVO."
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  jsonLd={schemaGraph([
+    webPageSchema({
+      name: pageTitle,
+      description: pageDescription,
+      pathname: Astro.url.pathname,
+      site: Astro.site,
+    }),
+  ])}
 >
   <section class="legal-hero">
     <div class="container">
