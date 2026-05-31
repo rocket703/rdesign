@@ -1,14 +1,18 @@
 ---
 const currentYear = new Date().getFullYear();
+const statusTime = new Date().toLocaleTimeString('de-DE', {
+  hour: '2-digit',
+  minute: '2-digit',
+});
 ---
 
 <footer class="site-footer">
   <div class="footer-body">
     <div class="footer-grid">
       <div class="item-left">
-        <div class="status-badge" role="status" aria-label="System online">
+        <div class="status-badge" role="status" aria-label={`System online, ${statusTime} Uhr`}>
           <span class="pulse-dot" aria-hidden="true"></span>
-          SYSTEM ONLINE
+          SYSTEM ONLINE · {statusTime}
         </div>
       </div>
       <div class="item-center">
@@ -269,6 +273,11 @@ const currentYear = new Date().getFullYear();
   }
 
   @media (max-width: 480px) {
+    .status-badge {
+      font-size: 0.65rem;
+      padding: 6px 10px;
+    }
+
     .site-footer {
       --footer-watermark-size: 3.25rem;
       --footer-superscript-pad: calc(var(--footer-watermark-size) * 0.05);

@@ -54,6 +54,16 @@ textarea:focus-visible {
   outline-offset: 2px;
 }
 
+::selection {
+  background: rgba(16, 185, 129, 0.35);
+  color: #ecfdf5;
+}
+
+::-moz-selection {
+  background: rgba(16, 185, 129, 0.35);
+  color: #ecfdf5;
+}
+
 /* ================= Header / Navigation ================= */
 .site-header {
   position: fixed;

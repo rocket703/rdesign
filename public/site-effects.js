@@ -29,6 +29,13 @@
     });
   }
 
+  // Tab-Titel wenn man wegnavigiert
+  const awayTitle = 'Holst du Kaffee?';
+  const defaultTitle = document.title;
+  document.addEventListener('visibilitychange', () => {
+    document.title = document.hidden ? awayTitle : defaultTitle;
+  });
+
   if (reduced) return;
 
   // 11 — Footer outline text parallax (nur Desktop, dezent)
