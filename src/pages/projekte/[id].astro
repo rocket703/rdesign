@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection, render } from 'astro:content';
+import { render } from 'astro:content';
+import { getPublishedProjects, projectSlug } from '../../lib/projects';
 import {
   breadcrumbSchema,
   creativeWorkSchema,
@@ -9,9 +10,9 @@ import {
 } from '../../lib/seo';
 
 export async function getStaticPaths() {
-  const projects = await getCollection('projects');
-  return projects.map(project => ({
-    params: { id: project.id.replace('.md', '') },
+  const projects = await getPublishedProjects();
+  return projects.map((project) => ({
+    params: { id: projectSlug(project) },
     props: { project },
   }));
 }
@@ -22,8 +23,8 @@ const projectLink = project.data.customerUrl;
 const projectStatus = project.data.status;
 const title = project.data.title;
 const hasSpace = title.trim().includes(' ');
-const projectSlug = project.id.replace('.md', '');
-const projectPath = `/projekte/${projectSlug}`;
+const slug = projectSlug(project);
+const projectPath = `/projekte/${slug}`;
 const pageTitle = project.data.seoTitle ?? `${project.data.title} | r³webdesign`;
 const pageDescription = project.data.seoDesc ?? project.data.subtitle;
 const liveHost = (() => {
@@ -78,7 +79,7 @@ const liveHost = (() => {
       <header class="project-hero">
         <p class="project-path project-hero__path">
           <span class="project-prompt">&gt;_</span>
-          <span>proj.{projectSlug}</span>
+          <span>proj.{slug}</span>
         </p>
         <h1 class={`section-title project-hero__title ${!hasSpace ? 'is-single-word' : ''}`}>
           {project.data.title}

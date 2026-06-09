@@ -2,16 +2,16 @@
 // src/pages/index.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import { getCollection } from 'astro:content';
+import { getPublishedProjects, projectSlug } from '../lib/projects';
 import { faqItems } from '../data/faq';
 import { homePageSchema, SITE } from '../lib/seo';
 
-const allProjects = await getCollection('projects');
+const publishedProjects = await getPublishedProjects();
 
 const featuredSlugs = ['startplatzboerse', 'ohrelauf', 'radsportclub-magdeburg'];
 const featuredProjects = featuredSlugs
-  .map((slug) => allProjects.find((project) => project.id.replace('.md', '') === slug))
-  .filter((project): project is (typeof allProjects)[number] => Boolean(project));
+  .map((slug) => publishedProjects.find((project) => projectSlug(project) === slug))
+  .filter((project): project is (typeof publishedProjects)[number] => Boolean(project));
 
 const codeMobile = `async function ship(site) {
   await site.optimizeAssets();
@@ -323,7 +323,7 @@ export async function GET({ cookies, redirect }) {
           description={project.data.subtitle}
           image={project.data.image}
           tags={project.data.techStack}
-          id={project.id.replace('.md', '')}
+          id={projectSlug(project)}
         />
       ))}
     </div>

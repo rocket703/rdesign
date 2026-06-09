@@ -1,16 +1,16 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
-import { getCollection } from 'astro:content';
+import { getPublishedProjects, projectSlug } from '../../lib/projects';
 import {
   PORTFOLIO,
   portfolioPageSchema,
   type ProjectListItem,
 } from '../../lib/seo';
 
-const allProjects = await getCollection('projects');
+const publishedProjects = await getPublishedProjects();
 
-const sortedProjects = [...allProjects].sort((a, b) => {
+const sortedProjects = [...publishedProjects].sort((a, b) => {
   const onlineFirst = (status: string) => (status === 'online' ? 0 : 1);
   const byStatus = onlineFirst(a.data.status) - onlineFirst(b.data.status);
   if (byStatus !== 0) return byStatus;
@@ -19,7 +19,7 @@ const sortedProjects = [...allProjects].sort((a, b) => {
 
 const projectListItems: ProjectListItem[] = sortedProjects.map((project) => ({
   title: project.data.title,
-  slug: project.id.replace('.md', ''),
+  slug: projectSlug(project),
   description: project.data.subtitle,
   image: project.data.image,
 }));
@@ -60,7 +60,7 @@ const projectListItems: ProjectListItem[] = sortedProjects.map((project) => ({
             description={project.data.subtitle}
             image={project.data.image}
             tags={project.data.techStack}
-            id={project.id.replace('.md', '')}
+            id={projectSlug(project)}
           />
         ))}
       </div>

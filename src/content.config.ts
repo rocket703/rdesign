@@ -10,6 +10,7 @@ const projects = defineCollection({
     techStack: z.array(z.string()).default([]),
     customerUrl: z.string().catch("#"),
     status: z.string().catch("online"),
+    archived: z.boolean().catch(false),
     seoTitle: z.string().optional(),
     seoDesc: z.string().optional(),
     tasks: z.array(z.string()).optional(),

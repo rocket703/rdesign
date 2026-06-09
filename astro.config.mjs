@@ -3,6 +3,10 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   // OHNE DIESE ZEILE KEINE SITEMAP:
-  site: 'https://r3webdesign.de', 
+  site: 'https://r3webdesign.de',
   integrations: [sitemap()],
+  redirects: {
+    '/projekte/gedankenrein-coaching': '/projekte/',
+    '/projekte/gedankenrein-coaching/': '/projekte/',
+  },
 });
