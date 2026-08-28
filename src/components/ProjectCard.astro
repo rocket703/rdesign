@@ -1,8 +1,21 @@
 ---
 // src/components/ProjectCard.astro
-const { title, description, image, tags, id } = Astro.props;
+import type { ProjectBiome } from '../data/portfolio-biomes';
+
+interface Props {
+  title: string;
+  description: string;
+  image: string;
+  tags: string[];
+  id: string;
+  variant?: ProjectBiome | 'default';
+}
+
+const { title, description, image, tags, id, variant = 'default' } = Astro.props;
+const cardClass = variant === 'default' ? 'card--project' : `card--project card--project-${variant}`;
 ---
-<a class="card autoShow card--project" href={`/projekte/${id}`}>
+
+<a class:list={['card', 'autoShow', cardClass]} href={`/projekte/${id}`}>
   <div class="card-media-wrap">
     <img src={image} alt={`Vorschau von ${title}`} class="card-media" loading="lazy" />
   </div>
@@ -15,3 +28,111 @@ const { title, description, image, tags, id } = Astro.props;
     </div>
   </div>
 </a>
+
+<style>
+  /* Candy — round, poppy, bouncy */
+  .card--project-candy {
+    border-radius: 28px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background:
+      linear-gradient(160deg, rgba(255, 255, 255, 0.12) 0%, transparent 50%),
+      rgba(22, 10, 38, 0.85);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 20px 50px rgba(0, 0, 0, 0.35);
+    transition:
+      transform 0.4s cubic-bezier(0.34, 1.45, 0.64, 1),
+      box-shadow 0.4s ease;
+  }
+
+  .card--project-candy .card-media-wrap {
+    border-radius: 22px 22px 0 0;
+    overflow: hidden;
+  }
+
+  .card--project-candy::after {
+    height: 3px;
+    background: linear-gradient(90deg, #ff4ecd, #ffd166, #5de4ff);
+    opacity: 1;
+    border-radius: 28px 28px 0 0;
+  }
+
+  .card--project-candy:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      0 28px 60px rgba(255, 78, 205, 0.2);
+  }
+
+  .card--project-candy .project-prompt {
+    color: #ffd166;
+  }
+
+  .card--project-candy h3 {
+    color: #fff;
+  }
+
+  .card--project-candy .card-body > p {
+    color: rgba(255, 245, 255, 0.72);
+  }
+
+  .card--project-candy .tags span {
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  /* Clean — minimal, precise */
+  .card--project-clean {
+    border-radius: 12px;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    background: var(--p-clean-surface, #fff);
+    box-shadow:
+      0 1px 2px rgba(15, 23, 42, 0.04),
+      0 16px 40px rgba(15, 23, 42, 0.06);
+    color: #0f172a;
+  }
+
+  .card--project-clean::after {
+    background: linear-gradient(90deg, #10b981, #cbd5e1);
+    opacity: 0.45;
+  }
+
+  .card--project-clean::before {
+    opacity: 0.2;
+  }
+
+  .card--project-clean:hover {
+    transform: translateY(-5px);
+    border-color: rgba(16, 185, 129, 0.2);
+    box-shadow:
+      0 4px 8px rgba(15, 23, 42, 0.04),
+      0 24px 48px rgba(15, 23, 42, 0.08);
+  }
+
+  .card--project-clean h3 {
+    color: #0f172a;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .card--project-clean .card-body > p {
+    color: #64748b;
+    font-size: 0.92rem;
+  }
+
+  .card--project-clean .tags span {
+    border-radius: 4px;
+    background: #f1f5f9;
+    border-color: #e2e8f0;
+    color: #475569;
+    font-size: 0.65rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card--project-candy:hover {
+      transform: translateY(-6px);
+      scale: 1;
+    }
+  }
+</style>

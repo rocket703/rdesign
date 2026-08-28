@@ -1,0 +1,26 @@
+---
+import {
+  TECH_SEAM_VIEWBOX,
+  techSeamFillPolygon,
+  techSeamLinePath,
+  techSpeedLines,
+} from '../lib/tech-seam-paths';
+
+const fill = techSeamFillPolygon();
+const back = techSeamLinePath(10);
+const mid = techSeamLinePath(0);
+const front = techSeamLinePath(-5);
+const speeds = techSpeedLines();
+---
+
+<div class="tech-seam" aria-hidden="true">
+  <svg class="tech-seam__svg" viewBox={TECH_SEAM_VIEWBOX} preserveAspectRatio="none">
+    <polygon class="tech-seam__fill" points={fill} fill="#0a101c" />
+    {speeds.map((d) => (
+      <path class="tech-seam__speed" d={d} fill="none" stroke="rgba(210, 255, 0, 0.07)" stroke-width="1" vector-effect="non-scaling-stroke" />
+    ))}
+    <path class="tech-seam__stroke tech-seam__stroke--back" d={back} fill="none" stroke="rgba(15, 23, 42, 0.85)" stroke-width="10" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+    <path class="tech-seam__stroke tech-seam__stroke--mid" d={mid} fill="none" stroke="#d2ff00" stroke-width="3.5" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+    <path class="tech-seam__stroke tech-seam__stroke--front" d={front} fill="none" stroke="rgba(255, 255, 255, 0.45)" stroke-width="1.5" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+  </svg>
+</div>

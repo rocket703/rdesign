@@ -1,0 +1,119 @@
+---
+import {
+  type CutVariant,
+  cutFillPath,
+  cutFillPoints,
+  cutStrokePath,
+  cutUsesCurve,
+  CUT_VIEWBOX,
+} from '../lib/zone-cut-paths';
+
+interface Props {
+  variant: CutVariant;
+  fill: string;
+  accent: string;
+  front?: string;
+}
+
+const { variant, fill, accent, front = '#f8fafc' } = Astro.props;
+
+const fillPath = cutFillPath(variant);
+const fillPoints = cutFillPoints(variant);
+const isCurve = cutUsesCurve(variant);
+const isCradle = variant === 'cradle';
+const isDrop = variant === 'drop';
+const mainLine = cutStrokePath(variant, 0);
+const highlightLine = cutStrokePath(variant, isCurve ? -2 : -5);
+---
+
+<div class={`zone-cut zone-cut--${variant}`} aria-hidden="true">
+  <svg class="zone-cut__svg" viewBox={CUT_VIEWBOX} preserveAspectRatio="none">
+    {
+      isCradle && (
+        <defs>
+          <linearGradient id="zone-cut-earth-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#232a1f" />
+            <stop offset="100%" stop-color="#151d14" />
+          </linearGradient>
+          <clipPath id="zone-cut-earth-clip">
+            <path d={fillPath ?? ''} />
+          </clipPath>
+        </defs>
+      )
+    }
+    {
+      fillPath ? (
+        <path
+          class="zone-cut__fill"
+          d={fillPath}
+          fill={
+            isCradle
+              ? 'url(#zone-cut-earth-grad)'
+              : fill
+          }
+        />
+      ) : fillPoints ? (
+        <polygon class="zone-cut__fill" points={fillPoints} fill={fill} />
+      ) : null
+    }
+    {
+      isCradle && (
+        <g
+          class="zone-cut__contours"
+          clip-path="url(#zone-cut-earth-clip)"
+          fill="none"
+          stroke="#82905d"
+          stroke-width="1.25"
+          opacity="0.18"
+          vector-effect="non-scaling-stroke"
+        >
+          <path d="M-40 158 C 110 68, 220 258, 390 145 S 700 38, 870 148 S 1160 250, 1490 102" />
+          <path d="M-20 186 C 120 104, 248 272, 412 170 S 706 70, 884 172 S 1190 278, 1480 130" />
+          <path d="M80 118 C 218 24, 330 204, 488 112 S 770 8, 952 118 S 1230 214, 1430 70" />
+        </g>
+      )
+    }
+    {
+      !isCurve && (
+        <path
+          class="zone-cut__accent"
+          d={mainLine}
+          fill="none"
+          stroke={accent}
+          stroke-width="3.5"
+          stroke-linecap="square"
+          stroke-linejoin="miter"
+          vector-effect="non-scaling-stroke"
+        />
+      )
+    }
+    {
+      !isCurve && (
+        <path
+          class="zone-cut__highlight"
+          d={highlightLine}
+          fill="none"
+          stroke={front}
+          stroke-width="1.5"
+          stroke-linecap="square"
+          stroke-linejoin="miter"
+          vector-effect="non-scaling-stroke"
+        />
+      )
+    }
+    {
+      isDrop && (
+        <path
+          class="zone-cut__drop-line"
+          d={mainLine}
+          fill="none"
+          stroke={accent}
+          stroke-width="1.5"
+          stroke-opacity="0.7"
+          stroke-linecap="round"
+          vector-effect="non-scaling-stroke"
+        />
+      )
+    }
+  </svg>
+</div>

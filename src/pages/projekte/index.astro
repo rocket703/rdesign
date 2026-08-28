@@ -11,7 +11,7 @@ import {
 const publishedProjects = await getPublishedProjects();
 
 const sortedProjects = [...publishedProjects].sort((a, b) => {
-  const onlineFirst = (status: string) => (status === 'online' ? 0 : 1);
+  const onlineFirst = (status: string) => (status.toLowerCase() === 'online' ? 0 : 1);
   const byStatus = onlineFirst(a.data.status) - onlineFirst(b.data.status);
   if (byStatus !== 0) return byStatus;
   return a.data.title.localeCompare(b.data.title, 'de');

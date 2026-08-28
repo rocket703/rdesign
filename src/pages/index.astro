@@ -4,7 +4,29 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import { getPublishedProjects, projectSlug } from '../lib/projects';
 import { faqItems } from '../data/faq';
+import ZoneCut from '../components/ZoneCut.astro';
+import ZoneHeader from '../components/ZoneHeader.astro';
+import TechSeam from '../components/TechSeam.astro';
+import StyleShowcase from '../components/StyleShowcase.astro';
+import CandyTapeDivider from '../components/CandyTapeDivider.astro';
+import { BIOME_META, EARTH_META } from '../data/portfolio-biomes';
+import '../styles/home-world.css';
+
 import { homePageSchema, SITE } from '../lib/seo';
+
+
+const candyMarqueeWords = [
+  'Laut',
+  'Bunt',
+  'Menschlich',
+  'Pop statt PowerPoint',
+  'Events',
+  'Bands',
+  'Marken',
+  'Magdeburg',
+  'Creative Energy',
+  'Kein Bullshit',
+] as const;
 
 const publishedProjects = await getPublishedProjects();
 
@@ -61,83 +83,51 @@ export async function GET({ cookies, redirect }) {
   title={SITE.defaultTitle}
   description={SITE.defaultDescription}
   jsonLd={homePageSchema(faqItems, Astro.site)}
+  smoothScroll
 >
- <section id="intro" class="section intro">
-  <div class="hero-ambient" aria-hidden="true">
-    <div class="hero-grid"></div>
-    <div class="hero-spotlight"></div>
-    <div class="hero-orb hero-orb--1"></div>
-    <div class="hero-orb hero-orb--2"></div>
-    <div class="hero-orb hero-orb--3"></div>
-    <div class="hero-ring hero-ring--1"></div>
-    <div class="hero-ring hero-ring--2"></div>
-  </div>
-
-  <div class="section-head hero-brand">
-    <h1 class="r3-logo">
-      <span class="hero-terminal is-booting" data-phase="deployed" aria-hidden="true">
-        <span class="hero-terminal__prompt">&gt;_</span>
-        <span class="hero-terminal__cmd">r³</span>
-        <span class="hero-terminal__cursor"></span>
-        <span class="hero-terminal__status">
-          <span class="hero-terminal__dot"></span>
-          <span class="hero-terminal__label" data-hero-status>deployed</span>
-        </span>
-      </span>
-      <span class="r3-word">
-        <span class="r3-r">r</span>
-        <span class="r3-badge">3</span>
-        <span class="r3-rest">webdesign</span>
-      </span>
-    </h1>
-  </div>
-</section>
-
-<hr class="section-divider" aria-hidden="true" />
-
- <section id="about" class="section about">
-    <div class="container">
-      <div class="about__inner">
-        <figure class="about__media">
-          <div class="about__avatar-shell autoShow">
-            <div class="about__frame" aria-hidden="true"></div>
-            <div class="about__avatar">
-              <img src="/images/IMG_1907.webp" alt="Dustin Rose – Webentwickler in Magdeburg" width="320" height="320" loading="lazy" decoding="async" />
-            </div>
-          </div>
-          <p class="about__badge"><span class="about__prompt">&gt;_</span> profile.ready</p>
-        </figure>
-
-        <article class="about__panel autoShow">
-          <span class="eyebrow eyebrow--race" data-num="01">Über mich</span>
-          <p class="about__path"><span class="about__prompt">&gt;_</span> whoami</p>
-          <h2 class="about__title">
-            Hi, ich bin <span class="about__name">Dustin</span>.
-          </h2>
-          <p class="about__role">Webentwickler &amp; UI/UX Designer · Magdeburg</p>
-          <div class="about__text">
-            <p>
-              Kein Baukasten, kein Blindflug. Ich verbinde Design, sauberen Code und Performance —
-              damit deine Seite nicht nur gut aussieht, sondern auch gefunden wird.
-            </p>
-            <p>
-              Von der ersten Skizze bis zum Deploy: ein Ansprechpartner, klare Sprache und Ergebnisse,
-              die du messen kannst — PageSpeed, SEO und UX inklusive.
-            </p>
-          </div>
-          <ul class="about__chips" aria-label="Schwerpunkte">
-            <li>Performance</li>
-            <li>Barrierefrei</li>
-            <li>Design + Code</li>
-          </ul>
-        </article>
+<article class="p-world home-world">
+  <!-- ═══ 01 TECHNICAL ═══ -->
+  <div class="p-zone p-zone--tech">
+    <header class="p-tech-hero" id="intro">
+      <div class="hero-ambient" aria-hidden="true">
+        <div class="hero-grid"></div>
+        <div class="hero-spotlight"></div>
+        <div class="hero-orb hero-orb--1"></div>
+        <div class="hero-orb hero-orb--2"></div>
+        <div class="hero-orb hero-orb--3"></div>
+        <div class="hero-ring hero-ring--1"></div>
+        <div class="hero-ring hero-ring--2"></div>
       </div>
-    </div>
-  </section>
 
-  <hr class="section-divider" aria-hidden="true" />
+      <div class="p-tech-hero__inner">
+        <div class="p-tech-hero__brand intro">
+          <div class="section-head hero-brand">
+            <h1 class="r3-logo">
+              <span class="hero-terminal is-booting" data-phase="deployed" aria-hidden="true">
+                <span class="hero-terminal__prompt">&gt;_</span>
+                <span class="hero-terminal__cmd">r³</span>
+                <span class="hero-terminal__cursor"></span>
+                <span class="hero-terminal__status">
+                  <span class="hero-terminal__dot"></span>
+                  <span class="hero-terminal__label" data-hero-status>deployed</span>
+                </span>
+              </span>
+              <span class="r3-word">
+                <span class="r3-r">r</span>
+                <span class="r3-badge">3</span>
+                <span class="r3-rest">webdesign</span>
+              </span>
+            </h1>
+          </div>
+        </div>
 
-  <section id="leistungen" class="section services">
+        <StyleShowcase />
+      </div>
+    </header>
+
+    <TechSeam />
+
+    <section id="leistungen" class="section services services--tech">
     <div class="container">
       <div class="section-head autoShow">
         <span class="eyebrow eyebrow--race" data-num="02">Leistungen</span>
@@ -304,21 +294,104 @@ export async function GET({ cookies, redirect }) {
       </div>
     </div>
   </section>
+  </div>
 
-  <hr class="section-divider" aria-hidden="true" />
+  <CandyTapeDivider />
 
-  <section id="projekte" class="section projects">
-    <div class="section-head autoShow">
-      <span class="eyebrow eyebrow--race" data-num="04">Projekte</span>
-      <h2 class="section-title">Digitale Wertschöpfung <br/> aus Sachsen-Anhalt</h2>
-      <div class="title-divider"></div>
-      <p class="section-lead">
-        Drei ausgewählte Referenzen — von der Vereinswebsite bis zur Fullstack-Plattform.
-      </p>
+  <!-- ═══ 02 CANDY ═══ -->
+  <div class="p-zone p-zone--candy" id="about">
+    <div class="p-zone__inner p-zone__inner--header">
+      <ZoneHeader
+        variant="candy"
+        num={BIOME_META.candy.num}
+        label={BIOME_META.candy.label}
+        title={BIOME_META.candy.title}
+        description={BIOME_META.candy.description}
+      />
     </div>
-    <div class="card-grid">
+
+    <div class="candy-marquee" aria-hidden="true">
+      <div class="candy-marquee__track">
+        {[...candyMarqueeWords, ...candyMarqueeWords].map((word) => (
+          <span class="candy-marquee__word">{word}</span>
+        ))}
+      </div>
+    </div>
+
+    <section class="candy-about" aria-labelledby="candy-about-title">
+      <div class="container">
+        <div class="candy-about__inner">
+          <figure class="candy-about__portrait autoShow">
+            <div class="candy-about__avatar">
+              <div class="candy-about__frame" aria-hidden="true"></div>
+              <div class="candy-about__photo">
+                <img
+                  src="/images/IMG_1907.webp"
+                  alt="Dustin Rose – Webentwickler in Magdeburg"
+                  width="320"
+                  height="320"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="candy-about__duotone" aria-hidden="true"></span>
+                <span class="candy-about__shine" aria-hidden="true"></span>
+              </div>
+            </div>
+            <figcaption class="candy-about__caption">Dustin · Magdeburg</figcaption>
+          </figure>
+
+          <article class="candy-about__card autoShow">
+            <p class="candy-about__tag">Über mich</p>
+            <h3 class="candy-about__title" id="candy-about-title">
+              Hi, ich bin <span class="candy-about__name">Dustin</span>.
+            </h3>
+            <p class="candy-about__role">Webentwickler &amp; UI/UX Designer</p>
+            <div class="candy-about__text">
+              <p>
+                Kein Baukasten, kein Blindflug. Ich verbinde Design, sauberen Code und Performance —
+                damit deine Seite nicht nur gut aussieht, sondern auch gefunden wird.
+              </p>
+              <p>
+                Von der ersten Skizze bis zum Deploy: ein Ansprechpartner, klare Sprache und Ergebnisse,
+                die du messen kannst.
+              </p>
+            </div>
+            <ul class="candy-about__bubbles" aria-label="Schwerpunkte">
+              <li>Performance</li>
+              <li>Barrierefrei</li>
+              <li>Design + Code</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <ZoneCut variant="drop" fill="#0d0616" accent="#10b981" front="#f8fafc" />
+
+  <!-- ═══ 03 CLEAN ═══ -->
+  <div class="p-zone p-zone--clean">
+    <div class="p-zone__inner p-zone__inner--header">
+      <ZoneHeader
+        variant="clean"
+        num={BIOME_META.clean.num}
+        label={BIOME_META.clean.label}
+        title={BIOME_META.clean.title}
+        description={BIOME_META.clean.description}
+      />
+    </div>
+
+    <section id="projekte" class="section projects projects--clean">
+      <div class="clean-block-head autoShow">
+        <h3 class="clean-block-head__title">Ausgewählte Referenzen</h3>
+        <p class="clean-block-head__lead">
+          Drei Projekte — von der Vereinswebsite bis zur Fullstack-Plattform.
+        </p>
+      </div>
+      <div class="card-grid card-grid--clean">
       {featuredProjects.map((project) => (
         <ProjectCard
+          variant="clean"
           title={project.data.title}
           description={project.data.subtitle}
           image={project.data.image}
@@ -327,23 +400,21 @@ export async function GET({ cookies, redirect }) {
         />
       ))}
     </div>
-    <p class="projects-more autoShow">
+    <p class="projects-more projects-more--clean autoShow">
       <a href="/projekte/" class="projects-more__link">
-        <span class="projects-more__prompt" aria-hidden="true">&gt;</span>
-        Alle Projekte ansehen
+        Alle Projekte ansehen →
       </a>
     </p>
   </section>
 
-  <section id="faq" class="section faq">
+  <section id="faq" class="section faq faq--clean">
     <div class="container">
-      <div class="section-head autoShow">
-        <span class="eyebrow eyebrow--race" data-num="05">FAQ</span>
-        <h2 class="section-title">Häufige Fragen zu <br/> Webdesign in Magdeburg</h2>
-        <div class="title-divider"></div>
+      <div class="clean-block-head autoShow">
+        <h3 class="clean-block-head__title">Häufige Fragen</h3>
+        <p class="clean-block-head__lead">Webdesign in Magdeburg — kurz und ehrlich beantwortet.</p>
       </div>
 
-      <div class="faq-grid">
+      <div class="faq-grid faq-grid--clean">
         {faqItems.map((item) => (
           <details class="faq-item autoShow">
             <summary>{item.question}</summary>
@@ -353,6 +424,33 @@ export async function GET({ cookies, redirect }) {
       </div>
     </div>
   </section>
+
+    <ZoneCut variant="cradle" fill="#141c12" accent="#6b5344" front="#e8e0d4" />
+  </div>
+
+  <!-- ═══ 04 GROUNDED ═══ -->
+  <section class="p-zone p-zone--earth" id="abschluss" aria-labelledby="earth-title">
+    <div class="p-zone__inner">
+      <div>
+        <ZoneHeader
+          variant="earth"
+          num={EARTH_META.num}
+          label={EARTH_META.label}
+          title={EARTH_META.title}
+          description={EARTH_META.description}
+          titleId="earth-title"
+        />
+        <div class="p-earth-panel autoShow">
+          <p>Webdesign Magdeburg · remote möglich · kein Baukasten, kein Bullshit.</p>
+        </div>
+      </div>
+      <div class="p-earth-actions autoShow">
+        <a href="/kontakt/" class="p-earth-btn">Projekt anfragen</a>
+        <a href="/projekte/" class="p-earth-btn p-earth-btn--ghost">Alle Referenzen</a>
+      </div>
+    </div>
+  </section>
+</article>
 </BaseLayout>
 
 <script define:vars={{ codeMobile, codeDesktop }}>
@@ -1460,12 +1558,12 @@ export async function GET({ cookies, redirect }) {
      FAQ SEKTION
      ========================================= */
 
-  .faq {
+  .faq:not(.faq--clean) {
     background-color: #0b1120;
     padding: 3.5rem 0 8rem;
   }
 
-  .faq .section-head {
+  .faq:not(.faq--clean) .section-head {
     margin-bottom: clamp(2rem, 4vw, 3rem);
   }
 
@@ -1489,6 +1587,10 @@ export async function GET({ cookies, redirect }) {
     position: relative;
     border-radius: 14px;
     overflow: hidden;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+  }
+
+  .faq:not(.faq--clean) .faq-item {
     border: 1px solid rgba(255, 255, 255, 0.08);
     background:
       linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 42%, transparent 100%),
@@ -1496,11 +1598,9 @@ export async function GET({ cookies, redirect }) {
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.06),
       0 10px 24px rgba(0, 0, 0, 0.22);
-    overflow: hidden;
-    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
   }
 
-  .faq-item::before {
+  .faq:not(.faq--clean) .faq-item::before {
     content: '';
     position: absolute;
     top: 0;
@@ -1512,7 +1612,7 @@ export async function GET({ cookies, redirect }) {
     pointer-events: none;
   }
 
-  .faq-item:hover {
+  .faq:not(.faq--clean) .faq-item:hover {
     transform: translateY(-2px);
     border-color: rgba(16, 185, 129, 0.22);
     box-shadow:
@@ -1520,7 +1620,7 @@ export async function GET({ cookies, redirect }) {
       0 16px 30px rgba(0, 0, 0, 0.28);
   }
 
-  .faq-item summary {
+  .faq:not(.faq--clean) .faq-item summary {
     list-style: none;
     cursor: pointer;
     display: flex;
@@ -1532,6 +1632,27 @@ export async function GET({ cookies, redirect }) {
     color: #f3f4f6;
     line-height: 1.35;
     position: relative;
+  }
+
+  .faq-item summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    min-height: calc(2.1rem + 2.7em);
+    padding: 1.1rem 2.9rem 1rem 1.1rem;
+    font-weight: 700;
+    line-height: 1.35;
+    position: relative;
+  }
+
+  .faq--clean .faq-item summary {
+    color: #0f172a;
+  }
+
+  .faq--clean .faq-item p {
+    color: #475569;
   }
 
   .faq-item summary::-webkit-details-marker {
@@ -1554,10 +1675,17 @@ export async function GET({ cookies, redirect }) {
     transform: translateY(-50%) rotate(45deg);
   }
 
-  .faq-item p {
+  .faq:not(.faq--clean) .faq-item p {
     margin: 0;
     padding: 0 1.1rem 1.1rem;
     color: #94a3b8;
+    line-height: 1.65;
+    font-size: 0.98rem;
+  }
+
+  .faq-item p {
+    margin: 0;
+    padding: 0 1.1rem 1.1rem;
     line-height: 1.65;
     font-size: 0.98rem;
   }
@@ -1987,20 +2115,7 @@ export async function GET({ cookies, redirect }) {
   z-index: 2;
 }
 
-/* Hero: eine Zeile Terminal, ohne Box — sitzt auf der Glaskarte */
-.hero-brand {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.hero-brand .r3-logo {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  width: fit-content;
-  max-width: calc(100vw - 2.5rem);
-}
+/* Hero brand: intro logo styles from style.css — no local overrides */
 
 .hero-terminal {
   display: flex;
@@ -2138,7 +2253,8 @@ export async function GET({ cookies, redirect }) {
 
 @media (max-width: 768px) {
   #intro {
-    padding-top: clamp(4.5rem, 14vh, 6rem);
+    min-height: auto;
+    padding: clamp(1.5rem, 6vw, 2.5rem) 0 clamp(2.5rem, 8vw, 3.5rem);
   }
 
   .hero-grid {

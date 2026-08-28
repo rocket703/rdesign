@@ -1,0 +1,49 @@
+---
+interface Props {
+  variant: 'tech' | 'candy' | 'clean' | 'earth';
+  num: string;
+  label: string;
+  title: string;
+  description: string;
+  path?: string;
+  titleId?: string;
+}
+
+const { variant, num, label, title, description, path, titleId } = Astro.props;
+---
+
+<header class:list={['zone-h', `zone-h--${variant}`, 'autoShow']}>
+  <span class="zone-h__watermark" aria-hidden="true">{num}</span>
+
+  {variant === 'tech' && (
+    <>
+      <div class="zone-h__meta">
+        <span class="zone-h__num">{num}</span>
+        <span class="zone-h__label">{label}</span>
+      </div>
+      {path && (
+        <p class="zone-h__path">
+          <span class="zone-h__prompt">&gt;_</span>
+          {path}
+        </p>
+      )}
+    </>
+  )}
+
+  {variant === 'candy' && (
+    <span class="zone-h__pill">{num} · {label}</span>
+  )}
+
+  {variant === 'clean' && (
+    <span class="zone-h__kicker">{num} — {label}</span>
+  )}
+
+  {variant === 'earth' && (
+    <span class="zone-h__stamp">{num} / {label}</span>
+  )}
+
+  <h2 class="zone-h__title" id={titleId}>
+    <span class="zone-h__title-text">{title}</span>
+  </h2>
+  <p class="zone-h__desc">{description}</p>
+</header>

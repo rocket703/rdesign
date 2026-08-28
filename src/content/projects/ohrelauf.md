@@ -7,6 +7,7 @@ techStack: ["HTML5", "CSS3", "JavaScript", "GitHub Pages", "Static Site"]
 seoTitle: "Wolmirstedter Ohrelauf 2026 – Spendenlauf für Blaue Nasen e.V."
 seoDesc: "Case Study: Moderne, schnelle Webseite für den Spendenlauf »Ohrelauf 2026« in Wolmirstedt."
 status: "online"
+biome: "candy"
 tasks:
   - "Migration von Google Sites zu statischer HTML‑Seite mit vollständiger Performance‑Optimierung."
   - "Mobile‑First‑Design mit responsiven Layouts für alle Geräte."

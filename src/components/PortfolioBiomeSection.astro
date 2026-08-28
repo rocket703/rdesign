@@ -1,0 +1,52 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import type { ProjectEntry } from '../lib/projects';
+import { projectSlug } from '../lib/projects';
+import type { ProjectBiome } from '../data/portfolio-biomes';
+
+interface Props {
+  biome: ProjectBiome;
+  label: string;
+  path: string;
+  title: string;
+  description: string;
+  num: string;
+  projects: ProjectEntry[];
+}
+
+const { biome, label, path, title, description, num, projects } = Astro.props;
+---
+
+<section class={`p-zone p-zone--${biome}`} id={`biome-${biome}`} aria-labelledby={`biome-${biome}-title`}>
+  <div class="p-zone__inner">
+    <header class="p-zone__head autoShow">
+      <div class="p-zone__meta">
+        <span class="p-zone__num">{num}</span>
+        <span class="p-zone__label">{label}</span>
+      </div>
+      <p class="p-zone__path">
+        <span class="p-zone__prompt">&gt;_</span>
+        {path}
+      </p>
+      <h2 class="p-zone__title" id={`biome-${biome}-title`}>{title}</h2>
+      <p class="p-zone__desc">{description}</p>
+    </header>
+
+    {projects.length ? (
+      <div class={`p-grid p-grid--${biome}`}>
+        {projects.map((project) => (
+          <ProjectCard
+            variant={biome}
+            title={project.data.title}
+            description={project.data.subtitle}
+            image={project.data.image}
+            tags={project.data.techStack}
+            id={projectSlug(project)}
+          />
+        ))}
+      </div>
+    ) : (
+      <p class="p-zone__empty">Keine Projekte in dieser Zone.</p>
+    )}
+  </div>
+</section>

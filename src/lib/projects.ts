@@ -14,3 +14,11 @@ export async function getPublishedProjects(): Promise<ProjectEntry[]> {
 export function projectSlug(project: ProjectEntry): string {
   return project.id.replace(/\.mdx?$/, '');
 }
+
+export function groupProjectsByBiome(projects: ProjectEntry[]) {
+  return {
+    technical: projects.filter((p) => p.data.biome === 'technical'),
+    candy: projects.filter((p) => p.data.biome === 'candy'),
+    clean: projects.filter((p) => p.data.biome === 'clean'),
+  } as const;
+}

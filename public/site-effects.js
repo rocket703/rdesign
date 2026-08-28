@@ -7,12 +7,14 @@
   const progressBar = document.getElementById('scroll-progress');
   if (progressBar) {
     const updateProgress = () => {
+      const scrollY = window.__lenis ? window.__lenis.scroll : window.scrollY;
       const docHeight =
         document.documentElement.scrollHeight - window.innerHeight;
-      const pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+      const pct = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
       progressBar.style.width = pct + '%';
     };
     window.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('app-scroll', updateProgress);
     updateProgress();
   }
 
@@ -49,6 +51,7 @@
         footerText.style.removeProperty('--footer-offset');
         return;
       }
+      const scrollY = window.__lenis ? window.__lenis.scroll : window.scrollY;
       const rect = footerVisual.getBoundingClientRect();
       const viewH = window.innerHeight;
       if (rect.top < viewH && rect.bottom > 0) {
@@ -58,6 +61,7 @@
       }
     };
     window.addEventListener('scroll', updateFooterParallax, { passive: true });
+    window.addEventListener('app-scroll', updateFooterParallax);
     parallaxMq.addEventListener('change', updateFooterParallax);
     updateFooterParallax();
   }

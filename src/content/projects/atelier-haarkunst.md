@@ -6,6 +6,7 @@ image: "/images/projekt-1.webp"
 techStack: ["HTML5", "CSS3", "JavaScript", "CMS‑Integration", "SEO"]
 seoTitle: "Atelier Haarkunst – Moderne Friseur-Website | r³webdesign"
 seoDesc: "Case Study: Moderne, schnelle Webseite für den Friseursalon »Atelier Haarkunst«."
+biome: "clean"
 tasks:
   - "Konzeption & UI/UX‑Design mit Fokus auf klare Nutzerflüsse."
   - "Entwicklung mit HTML5, CSS3 und JavaScript."

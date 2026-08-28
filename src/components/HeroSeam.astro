@@ -1,0 +1,13 @@
+---
+import DrawnStrokes from './DrawnStrokes.astro';
+import { heroSeamBaseEdge, sketchFromHeroEdge, strokeLayersFromColors } from '../lib/drawn-stroke';
+import { HERO_SEAM_VIEWBOX } from '../lib/hero-seam-paths';
+
+const base = heroSeamBaseEdge();
+const edge = sketchFromHeroEdge(base);
+const layers = strokeLayersFromColors('rgba(15, 23, 42, 0.55)', '#d2ff00', 'rgba(255, 255, 255, 0.85)');
+---
+
+<svg class="p-tech-hero__seam" viewBox={HERO_SEAM_VIEWBOX} preserveAspectRatio="none" aria-hidden="true">
+  <DrawnStrokes points={edge} layers={layers} />
+</svg>

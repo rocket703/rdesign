@@ -1,0 +1,93 @@
+---
+import { SHOWCASE_COPY, STYLE_PRESETS } from '../data/style-showcase';
+import '../styles/style-showcase.css';
+
+const defaultIndex = STYLE_PRESETS.findIndex((p) => p.id === 'modern');
+const defaultStyle = STYLE_PRESETS[defaultIndex >= 0 ? defaultIndex : 0];
+---
+
+<div
+  class="style-showcase"
+  data-style-showcase
+  data-active-style={defaultStyle.id}
+  data-style-index={defaultIndex >= 0 ? defaultIndex : 0}
+>
+  <div class="style-showcase__frame">
+    <button
+      type="button"
+      class="style-showcase__nav"
+      data-style-prev
+      aria-label="Vorheriger Stil"
+    >
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M12.5 4.5L7 10l5.5 5.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+    </button>
+
+    <article class="style-card" id="style-showcase-panel" aria-live="polite">
+      <p class="style-card__eyebrow">{SHOWCASE_COPY.eyebrow}</p>
+      <h2 class="style-card__title" data-style-title>{defaultStyle.label}</h2>
+      <p class="style-card__text">{SHOWCASE_COPY.text}</p>
+      <div class="style-preview" aria-hidden="true">
+        <div class="style-preview__chrome">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="style-preview__stage">
+          <div class="style-preview__card">
+            <div class="style-preview__avatar"></div>
+            <div class="style-preview__copy">
+              <span class="style-preview__line"></span>
+              <span class="style-preview__line style-preview__line--short"></span>
+            </div>
+            <span class="style-preview__pill">{SHOWCASE_COPY.preview.pill}</span>
+          </div>
+          <span class="style-preview__tag style-preview__tag--radius">{SHOWCASE_COPY.preview.tags[0]}</span>
+          <span class="style-preview__tag style-preview__tag--shadow">{SHOWCASE_COPY.preview.tags[1]}</span>
+          <span class="style-preview__tag style-preview__tag--border">{SHOWCASE_COPY.preview.tags[2]}</span>
+        </div>
+      </div>
+      <a href="/kontakt/" class="style-card__cta">{SHOWCASE_COPY.cta}</a>
+    </article>
+
+    <button
+      type="button"
+      class="style-showcase__nav"
+      data-style-next
+      aria-label="Nächster Stil"
+    >
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M7.5 4.5L13 10l-5.5 5.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+    </button>
+  </div>
+
+  <p class="style-showcase__status" data-style-status aria-live="polite">
+    {defaultStyle.description}
+  </p>
+</div>
+
+<script define:vars={{ presets: STYLE_PRESETS }}>
+  const root = document.querySelector('[data-style-showcase]');
+  if (root && presets.length) {
+    const title = root.querySelector('[data-style-title]');
+    const status = root.querySelector('[data-style-status]');
+    const prevBtn = root.querySelector('[data-style-prev]');
+    const nextBtn = root.querySelector('[data-style-next]');
+
+    let index = Number(root.dataset.styleIndex) || 0;
+
+    function setStyle(nextIndex) {
+      index = (nextIndex + presets.length) % presets.length;
+      const preset = presets[index];
+      root.setAttribute('data-active-style', preset.id);
+      root.dataset.styleIndex = String(index);
+      if (title) title.textContent = preset.label;
+      if (status) status.textContent = preset.description;
+    }
+
+    prevBtn?.addEventListener('click', () => setStyle(index - 1));
+    nextBtn?.addEventListener('click', () => setStyle(index + 1));
+  }
+</script>

@@ -11,6 +11,7 @@ const projects = defineCollection({
     customerUrl: z.string().catch("#"),
     status: z.string().catch("online"),
     archived: z.boolean().catch(false),
+    biome: z.enum(['technical', 'candy', 'clean']).catch('technical'),
     seoTitle: z.string().optional(),
     seoDesc: z.string().optional(),
     tasks: z.array(z.string()).optional(),

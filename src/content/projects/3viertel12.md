@@ -7,6 +7,7 @@ techStack: ["Astro", "HTML5", "CSS3", "JavaScript", "GitHub Pages"]
 seoTitle: "3viertel12 Rockband – Offizielle Website | r³webdesign"
 seoDesc: "Case Study: Entwicklung einer modernen Band-Website für 3viertel12. Schnelle Performance und Rock'n'Roll-Design via Astro."
 status: "im aufbau"
+biome: "candy"
 tasks:
   - "Konzeption eines rohen, authentischen Designs passend zum Rock-Genre."
   - "Entwicklung einer performanten statischen Seite mit Astro."

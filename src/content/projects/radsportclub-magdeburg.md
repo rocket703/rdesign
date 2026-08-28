@@ -7,6 +7,7 @@ techStack: ["HTML5", "CSS3", "JavaScript", "GitHub Pages", "Web3Forms", "Mailtor
 seoTitle: "Radsportclub Magdeburg – Moderne Vereinswebseite | r³webdesign"
 seoDesc: "Case Study: Moderne, schnelle Vereinswebseite für den Radsportclub Magdeburg mit Kontaktformular und E‑Mail‑Marketing."
 status: "online"
+biome: "technical"
 tasks:
   - "Konzeption & UI/UX‑Design mit Fokus auf klare Vereinspräsentation."
   - "Entwicklung mit HTML5, CSS3 und JavaScript – ohne CMS‑Abhängigkeiten."
