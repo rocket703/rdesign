@@ -25,7 +25,7 @@ Das Projekt wurde von einer klassischen Struktur auf **Astro** umgestellt, um di
 ## 📁 Projektstruktur
 * `src/pages/`: Datei-basiertes Routing für alle Unterseiten.
 * `src/layouts/`: Zentrales `BaseLayout.astro` für konsistentes Branding.
-* `src/styles/`: Modulare Stylesheets (z.B. `subtle-bubbles.css`) und globale Variablen.
+* `src/styles/`: Modulare Stylesheets und globale Variablen.
 * `public/`: Statische Assets wie `robots.txt`, Favicons und Projektbilder.
 
 🌐 Live Demo

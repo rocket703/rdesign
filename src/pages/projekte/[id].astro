@@ -22,6 +22,9 @@ const { Content } = await render(project);
 const projectLink = project.data.customerUrl;
 const projectStatus = project.data.status;
 const title = project.data.title;
+const responsiveImageBase = project.data.image.endsWith('.webp')
+  ? project.data.image.replace('/images/', '/images/responsive/').replace(/\.webp$/, '')
+  : null;
 const hasSpace = title.trim().includes(' ');
 const slug = projectSlug(project);
 const projectPath = `/projekte/${slug}`;
@@ -99,7 +102,19 @@ const liveHost = (() => {
       <section class="project-showcase" aria-label="Projektvorschau">
         <a href={projectLink} target="_blank" rel="noopener noreferrer" class="project-showcase__link">
           <div class="project-showcase__frame">
-            <img src={project.data.image} alt={`Vorschau: ${project.data.title}`} loading="lazy" decoding="async" />
+            <img
+              src={responsiveImageBase ? `${responsiveImageBase}-800.webp` : project.data.image}
+              srcset={responsiveImageBase
+                ? `${responsiveImageBase}-480.webp 480w, ${responsiveImageBase}-800.webp 800w`
+                : undefined}
+              sizes="(max-width: 900px) calc(100vw - 2rem), 1080px"
+              width="800"
+              height="450"
+              alt={`Vorschau: ${project.data.title}`}
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />
           </div>
           <span class="project-showcase__hint">
             <span class="project-showcase__hint-prompt" aria-hidden="true">&gt;</span>

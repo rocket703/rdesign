@@ -71,9 +71,7 @@ textarea:focus-visible {
   left: 0;
   right: 0;
   width: 100%;
-  background: rgba(11, 17, 32, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(11, 17, 32, 0.98);
   box-shadow: 0 2px 8px rgba(0,0,0,.25);
   z-index: 1000;
   padding: 0.75rem clamp(0.75rem, 2vw, 1.35rem);
@@ -89,10 +87,12 @@ textarea:focus-visible {
   bottom: 0;
   left: 0;
   height: 2px;
-  width: 0%;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
   background: linear-gradient(90deg, #059669, #10b981, var(--accent-lime), #34d399);
   box-shadow: 0 0 12px rgba(210, 255, 0, 0.25), 0 0 10px rgba(16, 185, 129, 0.35);
-  transition: width 0.12s linear;
+  will-change: transform;
   z-index: 1001;
   pointer-events: none;
 }
@@ -328,12 +328,6 @@ textarea:focus-visible {
   font-size: 0.8rem;
 }
 
-.eyebrow--race::before {
-  content: attr(data-num) ' · ';
-  color: var(--accent-lime);
-  letter-spacing: 0.12em;
-}
-
 .title-divider {
   width: 80px;
   height: 4px;
@@ -419,8 +413,6 @@ textarea:focus-visible {
   background: linear-gradient(180deg, rgba(16,185,129,0.10), rgba(16,185,129,0.06));
   border: 1px solid rgba(16,185,129,0.35);
   box-shadow: inset 0 0 1px rgba(255,255,255,0.06), 0 14px 36px rgba(0,0,0,0.32);
-  backdrop-filter: blur(10px) saturate(115%);
-  -webkit-backdrop-filter: blur(10px) saturate(115%);
   border-radius: 14px;
   z-index: -1;
 }
@@ -486,30 +478,7 @@ textarea:focus-visible {
           background-clip: text;
   -webkit-text-fill-color: transparent;
 
-  /* weiche, kontinuierliche Bewegung */
-  animation: r3-gradient-move 8s ease-in-out infinite;
-}
-
-/* Bewegung: vor/zurück über die gesamte Breite – smooth */
-@keyframes r3-gradient-move{
-  0%   { background-position:   0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position:   0% 50%; }
-}
-
-/* Optional: Dark-Glow ganz subtil (nur auf dunklem BG) */
-/*
-.intro .section-head h1::after{
-  text-shadow: 0 0 6px rgba(137,207,240,.18);
-}
-*/
-
-/* Barrierefreiheit: Animation aus -> statischer Verlauf */
-@media (prefers-reduced-motion: reduce){
-  .intro .section-head h1::after{
-    animation: none;
-    background-position: 50% 50%;
-  }
+  background-position: 50% 50%;
 }
 
 
@@ -766,8 +735,6 @@ textarea:focus-visible {
 .tech-chip.glass {
   background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
   border: 1px solid rgba(255,255,255,0.10);
-  backdrop-filter: blur(10px) saturate(115%);
-  -webkit-backdrop-filter: blur(10px) saturate(115%);
   box-shadow: inset 0 0 1px rgba(255,255,255,0.06), 0 10px 24px rgba(0,0,0,.25);
   transition: transform .2s ease, border-color .2s ease, background .2s ease;
 }
@@ -899,9 +866,7 @@ textarea:focus-visible {
     width: 100%;
     margin: 0;
     padding: 1.1rem 1.5rem 1.35rem;
-    background: rgba(11, 17, 32, 0.97);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    background: #0b1120;
     border-bottom: 1px solid rgba(16, 185, 129, 0.18);
     box-shadow:
       0 20px 40px rgba(0, 0, 0, 0.45),
@@ -1128,17 +1093,14 @@ textarea:focus-visible {
 .autoShow:not(.card--project) > * {
   opacity: 0;
   transform: translateY(28px);
-  filter: blur(4px);
   transition:
     opacity 0.85s cubic-bezier(.22,.61,.36,1),
-    transform 0.85s cubic-bezier(.22,.61,.36,1),
-    filter 0.85s cubic-bezier(.22,.61,.36,1);
+    transform 0.85s cubic-bezier(.22,.61,.36,1);
 }
 
 .autoShow:not(.card--project).is-visible > * {
   opacity: 1;
   transform: translateY(0);
-  filter: blur(0);
 }
 
 .autoShow:not(.card--project).is-visible > *:nth-child(1) { transition-delay: 0.05s; }
@@ -1152,11 +1114,9 @@ textarea:focus-visible {
 .autoShow.card--project {
   opacity: 0;
   transform: translateY(48px) scale(0.98);
-  filter: blur(4px);
   transition:
     opacity 0.9s cubic-bezier(.22,.61,.36,1),
     transform 0.9s cubic-bezier(.22,.61,.36,1),
-    filter 0.9s cubic-bezier(.22,.61,.36,1),
     box-shadow 0.28s ease,
     border-color 0.28s ease;
 }
@@ -1164,7 +1124,6 @@ textarea:focus-visible {
 .autoShow.card--project.is-visible {
   opacity: 1;
   transform: translateY(0) scale(1);
-  filter: blur(0);
 }
 
 .autoShow.card--project.is-visible:hover {
@@ -1202,12 +1161,7 @@ textarea:focus-visible {
     transparent 100%
   );
   background-size: 200% 100%;
-  animation: shimmerDivider 5s ease-in-out infinite;
-}
-
-@keyframes shimmerDivider {
-  0%, 100% { background-position: 100% center; }
-  50% { background-position: 0% center; }
+  background-position: center;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1319,93 +1273,6 @@ textarea:focus-visible {
 @media (prefers-reduced-motion: reduce){
   .f-card{ transition:none; }
   .f-card:hover{ transform:none; }
-}
-/* ===== Flip Text Component ===== */
-/* ---- kompakt & konfliktarm ---- */
-.r3flip{
-  --font: 40px;     /* Schriftgröße */
-  --h: 48px;        /* Höhe einer Zeile */
-  --text: #b3b7bd;  /* grau (fixe Zeilen) */
-  --accent: #d03542;/* rot (wechselnde Zeile) */
-
-  font: 700 var(--font)/1.1 "Roboto", system-ui, Arial, sans-serif;
-  text-transform: uppercase;
-  text-align: center;
-  color: var(--text);
-}
-
-.r3flip__fixed{ display:block; }
-
-.r3flip__vp{
-  display:block;
-  height: var(--h);
-  overflow: hidden;
-  margin: 10px 0 14px;
-}
-
-.r3flip__track{
-  display: inline-flex;
-  flex-direction: column; /* untereinander */
-  align-items: center;
-  will-change: transform;
-  animation: r3flip-hold 6s linear infinite; /* nahtlos + Stopps */
-}
-
-.r3flip__item{
-  display:block;
-  height: var(--h);
-  line-height: var(--h);
-  font-size: var(--font);
-  padding: 0 8px;
-  color: var(--accent);     /* nur Text farbig */
-  background: transparent;
-}
-
-/* Halt pro Wort (20% stehen, 10% wechseln) */
-@keyframes r3flip-hold{
-  0%   { transform: translateY(0); }
-  20%  { transform: translateY(0); }
-
-  30%  { transform: translateY(calc(-1 * var(--h))); }
-  50%  { transform: translateY(calc(-1 * var(--h))); }
-
-  60%  { transform: translateY(calc(-2 * var(--h))); }
-  80%  { transform: translateY(calc(-2 * var(--h))); }
-
-  90%  { transform: translateY(calc(-3 * var(--h))); } /* Duplikat */
-  100% { transform: translateY(calc(-3 * var(--h))); } /* nahtloser Reset */
-}
-
-/* optional kleiner für schmale Screens */
-@media (max-width: 520px){
-  .r3flip{ --font: 32px; --h: 40px; }
-}
-/* Richtung invertieren: von oben nach unten einblenden */
-.r3flip__vp { transform: scaleY(-1); }      /* Viewport auf den Kopf stellen */
-.r3flip__item { transform: scaleY(-1); }    /* Text wieder „zurückdrehen“ */
-/* Oben & unten weiß lassen (falls noch nicht gesetzt) */
-.r3flip__fixed { color: #fff; }
-
-/* Gradient-Text nur für die rotierenden Wörter */
-.item_green {
-  background: linear-gradient(90deg, #7FFF00, #00E676);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.item_blue {
-  background: linear-gradient(90deg, #4ec7f3, #1e90ff);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.item_violett {
-  background: linear-gradient(90deg, #8e44ad, #9b59b6);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
 }
 /*NEUE ÜBERSCHRIFT*/
   .r3-logo {

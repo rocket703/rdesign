@@ -35,55 +35,12 @@ const featuredProjects = featuredSlugs
   .map((slug) => publishedProjects.find((project) => projectSlug(project) === slug))
   .filter((project): project is (typeof publishedProjects)[number] => Boolean(project));
 
-const codeMobile = `async function ship(site) {
-  await site.optimizeAssets();
-  await site.prerender();
-  return site.deploy({ edge: true });
-}`;
-
-const codeDesktop = `/**
- * Hybrid-Setup: schnelle Landingpages + SSR-API
- */
-import { defineConfig } from 'astro/config';
-import vercel from '@astrojs/vercel/serverless';
-
-export default defineConfig({
-  output: 'hybrid',
-  adapter: vercel(),
-  image: {
-    service: { entrypoint: './image-service.ts' },
-  },
-  vite: {
-    build: {
-      cssMinify: 'lightningcss',
-    },
-  },
-});
-
-export async function GET({ cookies, redirect }) {
-  const session = cookies.get('session')?.value;
-  if (!session) return redirect('/login');
-
-  const projects = await db
-    .from('projects')
-    .select('id, title, status')
-    .order('updated_at', { ascending: false });
-
-  return new Response(JSON.stringify(projects.data), {
-    status: 200,
-    headers: {
-      'Content-Type': 'application/json',
-      'Cache-Control': 'private, no-store',
-    },
-  });
-}`;
 ---
 
 <BaseLayout
   title={SITE.defaultTitle}
   description={SITE.defaultDescription}
   jsonLd={homePageSchema(faqItems, Astro.site)}
-  smoothScroll
 >
 <article class="p-world home-world">
   <!-- ═══ 01 TECHNICAL ═══ -->
@@ -92,15 +49,11 @@ export async function GET({ cookies, redirect }) {
       <div class="hero-ambient" aria-hidden="true">
         <div class="hero-grid"></div>
         <div class="hero-spotlight"></div>
-        <div class="hero-orb hero-orb--1"></div>
-        <div class="hero-orb hero-orb--2"></div>
-        <div class="hero-orb hero-orb--3"></div>
-        <div class="hero-ring hero-ring--1"></div>
-        <div class="hero-ring hero-ring--2"></div>
       </div>
 
       <div class="p-tech-hero__inner">
         <div class="p-tech-hero__brand intro">
+          <p class="p-tech-hero__zone-label">01 / Technical</p>
           <div class="section-head hero-brand">
             <h1 class="r3-logo">
               <span class="hero-terminal is-booting" data-phase="deployed" aria-hidden="true">
@@ -119,6 +72,16 @@ export async function GET({ cookies, redirect }) {
               </span>
             </h1>
           </div>
+          <p class="p-tech-hero__value">
+            Individuelles Webdesign aus Magdeburg — klar gestaltet, schnell geladen und ohne Baukasten.
+          </p>
+          <p class="p-tech-hero__audience">
+            Für Vereine, Events, lokale Unternehmen und digitale Produkte.
+          </p>
+          <div class="p-tech-hero__actions">
+            <a href="/kontakt/" class="p-tech-hero__cta p-tech-hero__cta--primary">Projekt anfragen</a>
+            <a href="#projekte" class="p-tech-hero__cta p-tech-hero__cta--secondary">Referenzen ansehen</a>
+          </div>
         </div>
 
         <StyleShowcase />
@@ -127,179 +90,27 @@ export async function GET({ cookies, redirect }) {
 
     <TechSeam />
 
-    <section id="leistungen" class="section services services--tech">
-    <div class="container">
-      <div class="section-head autoShow">
-        <span class="eyebrow eyebrow--race" data-num="02">Leistungen</span>
-        <h2 class="section-title">Was ich für dich <br /> umsetze</h2>
-        <div class="title-divider"></div>
-        <p class="section-lead">
-          Kein Template-Baukasten. Vier Wege, wie ich digitale Produkte baue —
-          mit eigener Design-DNA, sauberem Code und Tempo, das man spürt.
-        </p>
+    <section class="tech-manifesto" id="technik" aria-labelledby="tech-manifesto-title">
+      <div class="container tech-manifesto__inner autoShow">
+        <div class="tech-manifesto__head">
+          <p>&gt; r³/prinzipien</p>
+          <h2 id="tech-manifesto-title">So arbeite ich.</h2>
+        </div>
+        <ol class="tech-manifesto__rail">
+          <li><span>01</span><strong>Erst verstehen.<br />Dann gestalten.</strong></li>
+          <li><span>02</span><strong>Schnell ist keine<br />Zusatzoption.</strong></li>
+          <li><span>03</span><strong>Direkter Draht statt<br />Agentur-Pingpong.</strong></li>
+        </ol>
+        <p class="tech-manifesto__stamp">gebaut in Magdeburg · für echte Menschen</p>
       </div>
+    </section>
 
-      <ul class="services-grid">
-        <li class="service-card service-card--01 autoShow">
-          <span class="service-card__num" aria-hidden="true">01</span>
-          <header class="service-card__head">
-            <p class="service-card__path"><span class="service-card__prompt">&gt;_</span> publish.static</p>
-          </header>
-          <div class="service-card__body">
-            <h3>Webseiten &amp; Landingpages</h3>
-            <p class="service-card__text">
-              Vom ersten Pixel bis PageSpeed grün. Typografie, die hängen bleibt —
-              nicht noch eine austauschbare One-Pager-Schablone.
-            </p>
-          </div>
-          <ul class="service-card__chips" aria-label="Schwerpunkte">
-            <li>Astro</li><li>SEO</li><li>Barrierefrei</li>
-          </ul>
-        </li>
-
-        <li class="service-card service-card--02 autoShow">
-          <span class="service-card__num" aria-hidden="true">02</span>
-          <header class="service-card__head">
-            <p class="service-card__path"><span class="service-card__prompt">&gt;_</span> platform.core</p>
-          </header>
-          <div class="service-card__body">
-            <h3>Web-Apps &amp; Dashboards</h3>
-            <p class="service-card__text">
-              Login, Datenbank, Admin — Systeme, die mit deinem Alltag mitwachsen.
-              Architektur, die du später nicht bereust.
-            </p>
-          </div>
-          <ul class="service-card__chips" aria-label="Schwerpunkte">
-            <li>Supabase</li><li>SSR</li><li>Auth</li>
-          </ul>
-        </li>
-
-        <li class="service-card service-card--03 autoShow">
-          <span class="service-card__num" aria-hidden="true">03</span>
-          <header class="service-card__head">
-            <p class="service-card__path"><span class="service-card__prompt">&gt;_</span> mobile.app</p>
-          </header>
-          <div class="service-card__body">
-            <h3>Native Apps</h3>
-            <p class="service-card__text">
-              Eine Codebasis, zwei Stores. Dein Produkt in der Hosentasche —
-              gebaut mit dem Stack, den ich selbst täglich einsetze.
-            </p>
-          </div>
-          <ul class="service-card__chips" aria-label="Schwerpunkte">
-            <li>Expo</li><li>iOS</li><li>Android</li>
-          </ul>
-        </li>
-
-        <li class="service-card service-card--04 autoShow">
-          <span class="service-card__num" aria-hidden="true">04</span>
-          <header class="service-card__head">
-            <p class="service-card__path"><span class="service-card__prompt">&gt;_</span> maintain.loop</p>
-          </header>
-          <div class="service-card__body">
-            <h3>Betreuung &amp; Weiterentwicklung</h3>
-            <p class="service-card__text">
-              Launch ist kein Ende. Updates, Performance, neue Features —
-              ich bleibe Ansprechpartner, nicht nur der einmalige Deploy.
-            </p>
-          </div>
-          <ul class="service-card__chips" aria-label="Schwerpunkte">
-            <li>Updates</li><li>Monitoring</li><li>Support</li>
-          </ul>
-        </li>
-      </ul>
-
-      <p class="services-cta autoShow">
-        <a href="/kontakt/" class="services-cta__btn">
-          <span class="services-cta__prompt" aria-hidden="true">&gt;</span>
-          Projekt anfragen
-        </a>
-      </p>
-    </div>
-  </section>
-
-  <section class="section dev-showcase">
-    <div class="container">
-      <div class="section-head autoShow">
-        <span class="eyebrow eyebrow--race" data-num="03">Tech Stack</span>
-        <h2 class="section-title">Engineering trifft <br/> modernes Design</h2>
-        <div class="title-divider"></div>
-        <p class="section-lead">
-          Astro für blitzschnelle Frontends, TypeScript für saubere Logik, Supabase oder eigene APIs
-          für alles, was dynamisch sein muss — ein Stack, der Ladezeit und Wartbarkeit zusammenbringt.
-        </p>
-      </div>
-      
-      <div class="skill-grid">
-        <div class="skill-card primary">
-          <p class="skill-card__path"><span class="skill-card__prompt">&gt;_</span> perf.core</p>
-          <h3>Kompromisslos schnell</h3>
-          <p>
-            WebP/AVIF, kritisches CSS, Lazy Loading und saubere Caches — Core Web Vitals
-            im grünen Bereich, nicht nur im Pitch-Deck.
-          </p>
-          <ul class="skill-card__stats" aria-label="Schwerpunkte Performance">
-            <li>LCP &lt; 2,5s</li>
-            <li>CLS &lt; 0,1</li>
-            <li>Edge-ready</li>
-          </ul>
-        </div>
-
-        <div class="skill-card secondary">
-          <p class="skill-card__path"><span class="skill-card__prompt">&gt;_</span> arch.clean</p>
-          <h3>Saubere Architektur</h3>
-          <p>
-            Komponenten, klare Ordnerstruktur, dokumentierte Schnittstellen — damit du später
-            Features nachziehen kannst, ohne alles neu zu bauen.
-          </p>
-          <ul class="skill-card__stats" aria-label="Schwerpunkte Architektur">
-            <li>TypeScript</li>
-            <li>SSR/SSG</li>
-            <li>CI-ready</li>
-          </ul>
-        </div>
-
-        <div class="skill-card dynamic-cube">
-          <p class="skill-card__path"><span class="skill-card__prompt">&gt;_</span> stack.rotate</p>
-          <div class="cube-scene" aria-hidden="true">
-            <div class="cube-scene__aura"></div>
-            <div class="cube-scene__orbit"></div>
-            <div class="cube-scene__orbit cube-scene__orbit--inner"></div>
-            <div class="cube-wrapper">
-              <div class="cube">
-                <div class="face face--front"><span>Astro</span></div>
-                <div class="face face--back"><span>TS</span></div>
-                <div class="face face--right"><span>CSS</span></div>
-                <div class="face face--left"><span>JS</span></div>
-                <div class="face face--top"><span>SSR</span></div>
-                <div class="face face--bottom"><span>API</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="skill-card code-window">
-          <div class="window-header">
-            <div class="dot-group">
-              <span class="dot red"></span>
-              <span class="dot yellow"></span>
-              <span class="dot green"></span>
-            </div>
-            <span class="filename">astro.config.ts</span>
-          </div>
-          <div class="code-area" id="dev-code-area">
-            <pre><code id="dev-showcase-code" class="language-ts">{codeMobile}</code><span class="code-cursor" id="dev-code-cursor" aria-hidden="true"></span></pre>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
   </div>
 
   <CandyTapeDivider />
 
-  <!-- ═══ 02 CANDY ═══ -->
-  <div class="p-zone p-zone--candy" id="about">
+  <!-- ═══ 02 SIGNATURE ═══ -->
+  <div class="p-zone p-zone--candy" id="candy">
     <div class="p-zone__inner p-zone__inner--header">
       <ZoneHeader
         variant="candy"
@@ -318,7 +129,7 @@ export async function GET({ cookies, redirect }) {
       </div>
     </div>
 
-    <section class="candy-about" aria-labelledby="candy-about-title">
+    <section class="candy-about" id="about" aria-labelledby="candy-about-title">
       <div class="container">
         <div class="candy-about__inner">
           <figure class="candy-about__portrait autoShow">
@@ -326,7 +137,9 @@ export async function GET({ cookies, redirect }) {
               <div class="candy-about__frame" aria-hidden="true"></div>
               <div class="candy-about__photo">
                 <img
-                  src="/images/IMG_1907.webp"
+                  src="/images/responsive/IMG_1907-480.webp"
+                  srcset="/images/responsive/IMG_1907-480.webp 480w, /images/responsive/IMG_1907-800.webp 800w"
+                  sizes="(max-width: 899px) min(78vw, 320px), 320px"
                   alt="Dustin Rose – Webentwickler in Magdeburg"
                   width="320"
                   height="320"
@@ -347,14 +160,8 @@ export async function GET({ cookies, redirect }) {
             </h3>
             <p class="candy-about__role">Webentwickler &amp; UI/UX Designer</p>
             <div class="candy-about__text">
-              <p>
-                Kein Baukasten, kein Blindflug. Ich verbinde Design, sauberen Code und Performance —
-                damit deine Seite nicht nur gut aussieht, sondern auch gefunden wird.
-              </p>
-              <p>
-                Von der ersten Skizze bis zum Deploy: ein Ansprechpartner, klare Sprache und Ergebnisse,
-                die du messen kannst.
-              </p>
+              <p>Ich verbinde Gestaltung, sauberen Code und Performance — ohne Baukasten und ohne unnötige Umwege.</p>
+              <p>Von der ersten Idee bis zum Launch bekommst du einen direkten Ansprechpartner und nachvollziehbare Entscheidungen.</p>
             </div>
             <ul class="candy-about__bubbles" aria-label="Schwerpunkte">
               <li>Performance</li>
@@ -407,26 +214,82 @@ export async function GET({ cookies, redirect }) {
     </p>
   </section>
 
-  <section id="faq" class="section faq faq--clean">
+  <section id="leistungen" class="section services services--clean">
     <div class="container">
       <div class="clean-block-head autoShow">
-        <h3 class="clean-block-head__title">Häufige Fragen</h3>
-        <p class="clean-block-head__lead">Webdesign in Magdeburg — kurz und ehrlich beantwortet.</p>
+        <p class="clean-block-head__kicker">Was ich umsetze</p>
+        <h3 class="clean-block-head__title">Vier Wege zu deinem digitalen Produkt</h3>
+        <p class="clean-block-head__lead">
+          Vom fokussierten Webauftritt bis zur langfristig betreuten Plattform — passend zum Ziel, nicht zum Trend.
+        </p>
       </div>
 
-      <div class="faq-grid faq-grid--clean">
-        {faqItems.map((item) => (
-          <details class="faq-item autoShow">
-            <summary>{item.question}</summary>
-            <p>{item.answer}</p>
-          </details>
-        ))}
-      </div>
+      <ul class="services-grid">
+        <li class="service-card autoShow">
+          <header class="service-card__head">
+            <p class="service-card__path"><span class="service-card__prompt">&gt;_</span> publish.static</p>
+          </header>
+          <div class="service-card__body">
+            <h4>Webseiten &amp; Landingpages</h4>
+            <p class="service-card__text">Individuelles Design, saubere Inhalte, SEO und schnelle Ladezeiten ohne austauschbare Schablone.</p>
+          </div>
+          <ul class="service-card__chips" aria-label="Schwerpunkte"><li>Astro</li><li>SEO</li><li>Barrierefrei</li></ul>
+        </li>
+
+        <li class="service-card autoShow">
+          <header class="service-card__head">
+            <p class="service-card__path"><span class="service-card__prompt">&gt;_</span> platform.core</p>
+          </header>
+          <div class="service-card__body">
+            <h4>Web-Apps &amp; Dashboards</h4>
+            <p class="service-card__text">Login, Datenbank und Admin-Bereiche — Systeme, die mit deinem Arbeitsalltag mitwachsen.</p>
+          </div>
+          <ul class="service-card__chips" aria-label="Schwerpunkte"><li>Supabase</li><li>SSR</li><li>Auth</li></ul>
+        </li>
+
+        <li class="service-card autoShow">
+          <header class="service-card__head">
+            <p class="service-card__path"><span class="service-card__prompt">&gt;_</span> mobile.app</p>
+          </header>
+          <div class="service-card__body">
+            <h4>Native Apps</h4>
+            <p class="service-card__text">Eine belastbare Codebasis für iOS und Android — vom ersten Prototyp bis zum Store-Release.</p>
+          </div>
+          <ul class="service-card__chips" aria-label="Schwerpunkte"><li>Expo</li><li>iOS</li><li>Android</li></ul>
+        </li>
+
+        <li class="service-card autoShow">
+          <header class="service-card__head">
+            <p class="service-card__path"><span class="service-card__prompt">&gt;_</span> maintain.loop</p>
+          </header>
+          <div class="service-card__body">
+            <h4>Betreuung &amp; Weiterentwicklung</h4>
+            <p class="service-card__text">Updates, Performance und neue Funktionen — auch nach dem Launch bleibt der Kontakt direkt.</p>
+          </div>
+          <ul class="service-card__chips" aria-label="Schwerpunkte"><li>Updates</li><li>Monitoring</li><li>Support</li></ul>
+        </li>
+      </ul>
     </div>
   </section>
 
-    <ZoneCut variant="cradle" fill="#141c12" accent="#6b5344" front="#e8e0d4" />
+  <section class="project-process" aria-labelledby="process-title">
+    <div class="container">
+      <div class="clean-block-head autoShow">
+        <p class="clean-block-head__kicker">Zusammenarbeit</p>
+        <h3 class="clean-block-head__title" id="process-title">In vier klaren Schritten zum Launch</h3>
+      </div>
+      <ol class="project-process__grid">
+        <li class="project-process__step autoShow"><span>01</span><h4>Kennenlernen</h4><p>Ziele, Zielgruppe und Rahmen in einem kurzen Gespräch klären.</p></li>
+        <li class="project-process__step autoShow"><span>02</span><h4>Konzept</h4><p>Struktur, Gestaltung und technische Lösung nachvollziehbar festlegen.</p></li>
+        <li class="project-process__step autoShow"><span>03</span><h4>Umsetzung</h4><p>Design und Entwicklung mit regelmäßigen, sichtbaren Zwischenständen.</p></li>
+        <li class="project-process__step autoShow"><span>04</span><h4>Launch</h4><p>Qualitätsprüfung, Veröffentlichung und eine saubere Übergabe.</p></li>
+      </ol>
+    </div>
+  </section>
+
   </div>
+
+  <ZoneCut variant="cradle" fill="#141c12" accent="#6b5344" front="#e8e0d4" />
 
   <!-- ═══ 04 GROUNDED ═══ -->
   <section class="p-zone p-zone--earth" id="abschluss" aria-labelledby="earth-title">
@@ -444,110 +307,32 @@ export async function GET({ cookies, redirect }) {
           <p>Webdesign Magdeburg · remote möglich · kein Baukasten, kein Bullshit.</p>
         </div>
       </div>
-      <div class="p-earth-actions autoShow">
-        <a href="/kontakt/" class="p-earth-btn">Projekt anfragen</a>
-        <a href="/projekte/" class="p-earth-btn p-earth-btn--ghost">Alle Referenzen</a>
+    </div>
+
+    <section id="faq" class="faq faq--earth" aria-labelledby="faq-title">
+      <div class="container">
+        <div class="earth-faq__head autoShow">
+          <p>Vor der Anfrage</p>
+          <h3 id="faq-title">Häufige Fragen, ehrlich beantwortet</h3>
+        </div>
+        <div class="faq-grid">
+          {faqItems.map((item) => (
+            <details class="faq-item autoShow">
+              <summary>{item.question}</summary>
+              <p>{item.answer}</p>
+            </details>
+          ))}
+        </div>
       </div>
+    </section>
+
+    <div class="p-earth-actions p-earth-actions--final autoShow">
+      <a href="/kontakt/" class="p-earth-btn">Unverbindlich anfragen</a>
+      <a href="/projekte/" class="p-earth-btn p-earth-btn--ghost">Alle Referenzen</a>
     </div>
   </section>
 </article>
 </BaseLayout>
-
-<script define:vars={{ codeMobile, codeDesktop }}>
-  (function () {
-    const codeEl = document.getElementById('dev-showcase-code');
-    const cursorEl = document.getElementById('dev-code-cursor');
-    const codeArea = document.getElementById('dev-code-area');
-    if (!codeEl || !codeArea) return;
-
-    const desktopMq = window.matchMedia('(min-width: 1024px)');
-    const reducedMq = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-    const highlight = (src) => {
-      const esc = (s) =>
-        s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      let html = esc(src);
-      html = html.replace(/(\/\*\*[\s\S]*?\*\/|\/\/[^\n]*)/g, '<span class="tok-cm">$1</span>');
-      html = html.replace(/('(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*")/g, '<span class="tok-str">$1</span>');
-      html = html.replace(
-        /\b(import|export|default|async|function|return|const|await|from|new|if)\b/g,
-        '<span class="tok-kw">$1</span>'
-      );
-      html = html.replace(/\b([A-Z][a-zA-Z]+)\b/g, '<span class="tok-type">$1</span>');
-      html = html.replace(/\b(GET|POST|Response|JSON)\b/g, '<span class="tok-fn">$1</span>');
-      return html;
-    };
-
-    const finish = (text, withHighlight = true) => {
-      if (withHighlight) {
-        codeEl.innerHTML = highlight(text);
-      } else {
-        codeEl.textContent = text;
-      }
-      if (cursorEl) cursorEl.remove();
-      codeArea.classList.add('is-typing-done');
-    };
-
-    let typingTimer = null;
-    let charIndex = 0;
-    let sourceText = codeMobile;
-
-    const typeNext = () => {
-      if (charIndex <= sourceText.length) {
-        codeEl.textContent = sourceText.slice(0, charIndex);
-        charIndex += 1;
-        typingTimer = window.setTimeout(typeNext, 14);
-      } else {
-        finish(sourceText);
-      }
-    };
-
-    const startTyping = () => {
-      if (typingTimer) window.clearTimeout(typingTimer);
-      charIndex = 0;
-      sourceText = codeDesktop;
-      codeArea.classList.remove('is-typing-done');
-      if (cursorEl && !cursorEl.parentElement) {
-        codeEl.insertAdjacentElement('afterend', cursorEl);
-      }
-      codeEl.textContent = '';
-      typeNext();
-    };
-
-    const applyMode = () => {
-      if (typingTimer) window.clearTimeout(typingTimer);
-      if (!desktopMq.matches) {
-        finish(codeMobile, true);
-        return;
-      }
-      if (reducedMq.matches) {
-        finish(codeDesktop, true);
-        return;
-      }
-      startTyping();
-    };
-
-    if ('IntersectionObserver' in window) {
-      const io = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              applyMode();
-              io.disconnect();
-            }
-          });
-        },
-        { threshold: 0.25 }
-      );
-      io.observe(codeArea);
-    } else {
-      applyMode();
-    }
-
-    desktopMq.addEventListener('change', applyMode);
-    reducedMq.addEventListener('change', applyMode);
-  })();
-</script>
 
 <script>
   (() => {
@@ -596,6 +381,24 @@ export async function GET({ cookies, redirect }) {
     };
 
     showStep();
+  })();
+</script>
+
+<script>
+  (() => {
+    const animatedSections = document.querySelectorAll('.candy-marquee');
+    if (!animatedSections.length || !('IntersectionObserver' in window)) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          entry.target.classList.toggle('is-active', entry.isIntersecting);
+        });
+      },
+      { rootMargin: '10% 0px', threshold: 0.05 }
+    );
+
+    animatedSections.forEach((element) => observer.observe(element));
   })();
 </script>
 
@@ -721,21 +524,6 @@ export async function GET({ cookies, redirect }) {
     box-shadow: 0 0 22px rgba(16, 185, 129, 0.38);
   }
 
-  .service-card__num {
-    position: absolute;
-    top: 0.35rem;
-    right: 0.5rem;
-    z-index: 2;
-    font-size: clamp(3.5rem, 10vw, 4.5rem);
-    font-weight: 900;
-    line-height: 1;
-    letter-spacing: -0.06em;
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(16, 185, 129, 0.12);
-    pointer-events: none;
-    user-select: none;
-  }
-
   .service-card__head,
   .service-card__body,
   .service-card__chips {
@@ -787,7 +575,7 @@ export async function GET({ cookies, redirect }) {
     min-height: 0;
   }
 
-  .service-card h3 {
+  .service-card :is(h3, h4) {
     position: relative;
     z-index: 1;
     margin: 0 0 0.6rem;
@@ -911,7 +699,7 @@ export async function GET({ cookies, redirect }) {
       min-height: 0;
     }
 
-    .service-card h3 {
+    .service-card :is(h3, h4) {
       min-height: 0;
     }
 
@@ -990,7 +778,6 @@ export async function GET({ cookies, redirect }) {
     border-radius: 16px;
     padding: 2.5rem;
     transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    backdrop-filter: blur(10px);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1296,8 +1083,6 @@ export async function GET({ cookies, redirect }) {
       rgba(56, 189, 248, 0.08) 42%,
       transparent 72%
     );
-    filter: blur(10px);
-    animation: cubeAuraPulse 5s ease-in-out infinite;
     pointer-events: none;
   }
 
@@ -1307,7 +1092,6 @@ export async function GET({ cookies, redirect }) {
     height: 9.5rem;
     border-radius: 50%;
     border: 1px dashed rgba(16, 185, 129, 0.28);
-    animation: cubeOrbitSpin 22s linear infinite;
     pointer-events: none;
   }
 
@@ -1348,8 +1132,8 @@ export async function GET({ cookies, redirect }) {
     width: var(--cube-size);
     height: var(--cube-size);
     transform-style: preserve-3d;
-    animation: cubeTumbleY 7s linear infinite;
-    will-change: transform;
+    animation: cubeTumbleY 12s linear infinite;
+    animation-play-state: paused;
   }
 
   .cube {
@@ -1357,8 +1141,7 @@ export async function GET({ cookies, redirect }) {
     width: 100%;
     height: 100%;
     transform-style: preserve-3d;
-    animation: cubeTumbleX 5s linear infinite;
-    will-change: transform;
+    transform: rotateX(-14deg);
   }
 
   .face {
@@ -1436,19 +1219,8 @@ export async function GET({ cookies, redirect }) {
     to { transform: rotateY(360deg); }
   }
 
-  @keyframes cubeTumbleX {
-    from { transform: rotateX(0deg); }
-    to { transform: rotateX(360deg); }
-  }
-
-  @keyframes cubeOrbitSpin {
-    0% { transform: rotateZ(0deg); }
-    100% { transform: rotateZ(360deg); }
-  }
-
-  @keyframes cubeAuraPulse {
-    0%, 100% { opacity: 0.75; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.05); }
+  .dynamic-cube.is-active .cube-wrapper {
+    animation-play-state: running;
   }
 
   @media (max-width: 768px) {
@@ -1473,6 +1245,11 @@ export async function GET({ cookies, redirect }) {
     .cube-scene__orbit--inner {
       width: 6.25rem;
       height: 6.25rem;
+    }
+
+    .cube-wrapper {
+      animation: none;
+      transform: rotateY(-28deg);
     }
   }
 
@@ -1933,13 +1710,12 @@ export async function GET({ cookies, redirect }) {
 
 #intro {
   position: relative;
-  min-height: 100svh;
-  min-height: 100vh;
+  min-height: clamp(32rem, 68vh, 42rem);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: clamp(5rem, 12vh, 7rem) 1.25rem clamp(4rem, 10vh, 6rem);
+  padding: clamp(3.5rem, 8vh, 5rem) 1.25rem clamp(3rem, 7vh, 4.5rem);
   background: #030712;
 }
 
@@ -2012,17 +1788,6 @@ export async function GET({ cookies, redirect }) {
     -webkit-mask-composite: source-in;
   }
 
-  .hero-orb--1 {
-    left: 14%;
-  }
-
-  .hero-orb--2 {
-    right: 12%;
-  }
-
-  .hero-orb--3 {
-    right: 22%;
-  }
 }
 
 .hero-spotlight {
@@ -2034,80 +1799,6 @@ export async function GET({ cookies, redirect }) {
   height: min(52vh, 400px);
   border-radius: 50%;
   background: radial-gradient(ellipse, rgba(16, 185, 129, 0.1) 0%, transparent 68%);
-}
-
-.hero-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(72px);
-  will-change: transform;
-  animation: heroOrbDrift 22s ease-in-out infinite;
-}
-
-.hero-orb--1 {
-  width: min(48vw, 440px);
-  height: min(48vw, 440px);
-  background: rgba(16, 185, 129, 0.32);
-  top: 8%;
-  left: 6%;
-}
-
-.hero-orb--2 {
-  width: min(38vw, 340px);
-  height: min(38vw, 340px);
-  background: rgba(14, 165, 233, 0.22);
-  bottom: 12%;
-  right: 4%;
-  animation-delay: -7s;
-}
-
-.hero-orb--3 {
-  width: min(30vw, 280px);
-  height: min(30vw, 280px);
-  background: rgba(139, 92, 246, 0.18);
-  top: 38%;
-  right: 18%;
-  animation-delay: -14s;
-}
-
-.hero-ring {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  border-radius: 50%;
-  border: 1px solid rgba(16, 185, 129, 0.12);
-  transform: translate(-50%, -48%);
-  animation: heroRingPulse 9s ease-in-out infinite;
-}
-
-.hero-ring--1 {
-  width: min(78vw, 560px);
-  height: min(78vw, 560px);
-  opacity: 0.55;
-}
-
-.hero-ring--2 {
-  width: min(95vw, 720px);
-  height: min(95vw, 720px);
-  opacity: 0.28;
-  animation-delay: -4.5s;
-}
-
-@keyframes heroOrbDrift {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(3.5%, -4%) scale(1.06); }
-  66% { transform: translate(-4%, 3%) scale(0.94); }
-}
-
-@keyframes heroRingPulse {
-  0%, 100% {
-    transform: translate(-50%, -48%) scale(1);
-    opacity: 0.35;
-  }
-  50% {
-    transform: translate(-50%, -48%) scale(1.04);
-    opacity: 0.65;
-  }
 }
 
 #intro .section-head {
@@ -2263,88 +1954,169 @@ export async function GET({ cookies, redirect }) {
     -webkit-mask-image: radial-gradient(ellipse 88% 70% at 50% 44%, #000 10%, transparent 78%);
   }
 
-  .hero-orb {
-    filter: blur(56px);
-    opacity: 0.75;
-  }
-
-  .hero-orb--1 {
-    width: 70vw;
-    height: 70vw;
-    top: 4%;
-    left: -8%;
-  }
-
-  .hero-orb--2 {
-    width: 55vw;
-    height: 55vw;
-    bottom: 8%;
-    right: -10%;
-  }
-
-  .hero-orb--3 {
-    display: none;
-  }
-
-  .hero-ring--2 {
-    display: none;
-  }
-
-  .hero-ring--1 {
-    width: min(92vw, 420px);
-    height: min(92vw, 420px);
-  }
-
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-orb,
-  .hero-ring,
   .code-cursor,
   .hero-terminal__cursor,
   .hero-terminal__dot {
     animation: none;
   }
 }
-/* =========================================
-   SUBTLE BUBBLES
-   ========================================= */
 
-.subtle-bubbles {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
+/* Neue Kundenreise: Clean bündelt Beweise, Angebot und Ablauf. */
+.services--clean {
+  padding: clamp(3rem, 7vw, 5rem) 0;
+  color: #0f172a;
+  background: transparent;
 }
 
-.subtle-bubble {
-  position: absolute;
-  bottom: -10px;
-  border-radius: 50%;
-  background: rgba(16, 185, 129, 0.15);
-  border: 1px solid rgba(16, 185, 129, 0.2);
-  animation: bubbleRise linear infinite;
+.services--clean .service-card {
+  min-height: 18rem;
+  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(15, 23, 42, 0.1);
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.07);
 }
 
-@keyframes bubbleRise {
-  0% {
-    transform: translateY(0) translateX(0);
-    opacity: 0;
-  }
-  10% {
-    opacity: 0.6;
-  }
-  90% {
-    opacity: 0.3;
-  }
-  100% {
-    transform: translateY(-100vh) translateX(var(--drift));
-    opacity: 0;
+.services--clean .service-card__head::after,
+.services--clean .service-card__chips {
+  border-color: rgba(15, 23, 42, 0.08);
+}
+
+.services--clean .service-card :is(h3, h4) {
+  color: #0f172a;
+}
+
+.services--clean .service-card__text,
+.services--clean .service-card__path {
+  color: #64748b;
+}
+
+.services--clean .service-card__chips li {
+  color: #475569;
+  background: #f1f5f9;
+  border-color: #e2e8f0;
+}
+
+.services--clean .service-card:hover {
+  border-color: rgba(16, 185, 129, 0.28);
+  box-shadow: 0 20px 42px rgba(15, 23, 42, 0.1);
+}
+
+.clean-block-head__kicker {
+  margin: 0 0 0.65rem;
+  font-family: ui-monospace, monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #059669;
+}
+
+.project-process {
+  padding: clamp(2.5rem, 6vw, 4.5rem) 0 clamp(4rem, 8vw, 6rem);
+}
+
+.project-process__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-process__step {
+  min-width: 0;
+  padding: 1.35rem;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.68);
+}
+
+.project-process__step > span {
+  display: block;
+  margin-bottom: 1rem;
+  font-family: ui-monospace, monospace;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #059669;
+}
+
+.project-process__step h4 {
+  margin: 0 0 0.55rem;
+  font-size: 1rem;
+  color: #0f172a;
+}
+
+.project-process__step p {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: #64748b;
+}
+
+.faq--earth {
+  position: relative;
+  z-index: 1;
+  padding: clamp(3rem, 7vw, 5rem) 0 0 !important;
+  background: transparent !important;
+}
+
+.earth-faq__head {
+  max-width: 720px;
+  margin: 0 auto clamp(1.75rem, 4vw, 2.5rem);
+  text-align: center;
+}
+
+.earth-faq__head > p {
+  margin: 0 0 0.6rem;
+  font-family: ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8fbc8f;
+}
+
+.earth-faq__head h3 {
+  margin: 0;
+  font-size: clamp(1.55rem, 4vw, 2.4rem);
+  color: #e8e0d4;
+}
+
+.faq.faq--earth .faq-item {
+  border: 1px solid rgba(168, 152, 136, 0.32);
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow: none;
+}
+
+.faq.faq--earth .faq-item::before {
+  background: #8fbc8f;
+  opacity: 0.42;
+}
+
+.faq.faq--earth .faq-item summary {
+  color: #e8e0d4;
+}
+
+.faq.faq--earth .faq-item p {
+  color: rgba(232, 224, 212, 0.72);
+}
+
+@media (max-width: 900px) {
+  .project-process__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
+@media (max-width: 560px) {
+  .project-process__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .services--clean .service-card {
+    min-height: 0;
+  }
+}
 </style>

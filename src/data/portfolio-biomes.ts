@@ -22,11 +22,11 @@ export const BIOME_META: Record<
   },
   candy: {
     num: '02',
-    label: 'Candy World',
-    path: 'play.mode',
-    title: 'Laut, bunt, menschlich',
+    label: 'Signature',
+    path: 'studio.self',
+    title: 'Design mit Haltung',
     description:
-      'Events, Bands, Marken mit Charakter — Pop statt PowerPoint, Rundungen statt Rasterbüro.',
+      'Persönlich, direkt und mit eigener Handschrift — damit dein Auftritt nicht wie der nächste Baukasten aussieht.',
   },
   clean: {
     num: '03',

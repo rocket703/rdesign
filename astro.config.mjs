@@ -7,6 +7,5 @@ export default defineConfig({
   integrations: [sitemap()],
   redirects: {
     '/projekte/gedankenrein-coaching': '/projekte/',
-    '/projekte/gedankenrein-coaching/': '/projekte/',
   },
 });

@@ -257,7 +257,6 @@
   background: color-mix(in srgb, var(--sc-bg) 90%, transparent);
   border: 1px solid color-mix(in srgb, var(--sc-accent) 70%, transparent);
   border-radius: calc(var(--sc-radius-sm) * 0.55);
-  backdrop-filter: blur(4px);
 }
 
 .style-preview__tag::after {
@@ -405,7 +404,6 @@
 }
 
 .style-showcase[data-active-style='modern'] .style-card {
-  backdrop-filter: blur(12px);
 }
 
 .style-showcase[data-active-style='modern'] .style-card__cta {

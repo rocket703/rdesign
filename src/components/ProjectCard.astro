@@ -13,11 +13,27 @@ interface Props {
 
 const { title, description, image, tags, id, variant = 'default' } = Astro.props;
 const cardClass = variant === 'default' ? 'card--project' : `card--project card--project-${variant}`;
+const responsiveBase = image.endsWith('.webp')
+  ? image.replace('/images/', '/images/responsive/').replace(/\.webp$/, '')
+  : null;
+const imageSrcSet = responsiveBase
+  ? `${responsiveBase}-480.webp 480w, ${responsiveBase}-800.webp 800w, ${image} 1600w`
+  : undefined;
 ---
 
 <a class:list={['card', 'autoShow', cardClass]} href={`/projekte/${id}`}>
   <div class="card-media-wrap">
-    <img src={image} alt={`Vorschau von ${title}`} class="card-media" loading="lazy" />
+    <img
+      src={responsiveBase ? `${responsiveBase}-800.webp` : image}
+      srcset={imageSrcSet}
+      sizes="(max-width: 699px) calc(100vw - 3rem), (max-width: 1100px) 50vw, 380px"
+      width="800"
+      height="450"
+      alt={`Vorschau von ${title}`}
+      class="card-media"
+      loading="lazy"
+      decoding="async"
+    />
   </div>
   <div class="card-body">
     <p class="project-path"><span class="project-prompt">&gt;_</span> proj.{id}</p>

@@ -130,12 +130,7 @@ const statusTime = new Date().toLocaleTimeString('de-DE', {
   }
 
   .cursor {
-    animation: blink 1s step-end infinite;
     font-weight: bold;
-  }
-
-  @keyframes blink {
-    50% { opacity: 0; }
   }
 
   .status-badge {
@@ -164,12 +159,6 @@ const statusTime = new Date().toLocaleTimeString('de-DE', {
     background: #10b981;
     border-radius: 50%;
     box-shadow: 0 0 10px #10b981;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
   }
 
   .f-nav {
@@ -230,9 +219,7 @@ const statusTime = new Date().toLocaleTimeString('de-DE', {
     text-transform: lowercase;
     pointer-events: none;
     user-select: none;
-    --footer-offset: 0px;
-    transform: translateX(calc(-50% + var(--footer-offset)));
-    will-change: transform;
+    transform: translateX(-50%);
   }
 
   .wm-sup {
