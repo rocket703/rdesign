@@ -8,32 +8,18 @@
 
 <style>
   .candy-tape {
+    --tape-h: clamp(1.8rem, 3.6vw, 2.4rem);
     position: relative;
-    z-index: 6;
+    z-index: 8;
     display: grid;
     align-items: center;
     width: 100%;
-    min-height: clamp(4.5rem, 9vw, 6.5rem);
-    margin-block: -1px;
+    height: var(--tape-h);
+    margin-block: calc(var(--tape-h) / -2);
     padding: 0 clamp(1rem, 4vw, 3rem);
-    overflow: hidden;
-    background:
-      radial-gradient(ellipse 42% 100% at 50% 100%, rgba(255, 78, 205, 0.12), transparent 70%),
-      linear-gradient(180deg, #070b14 0%, #0b0a19 42%, #140820 100%);
-  }
-
-  .candy-tape::before {
-    content: '';
-    position: absolute;
-    inset: 50% 0 auto;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.08) 15%,
-      rgba(255, 255, 255, 0.08) 85%,
-      transparent
-    );
+    overflow: visible;
+    pointer-events: none;
+    background: transparent;
   }
 
   .candy-tape__track {
@@ -72,7 +58,7 @@
 
   @media (max-width: 560px) {
     .candy-tape {
-      min-height: 3.75rem;
+      --tape-h: 1.6rem;
     }
 
     .candy-tape__track {

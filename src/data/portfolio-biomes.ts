@@ -24,7 +24,7 @@ export const BIOME_META: Record<
     num: '02',
     label: 'Signature',
     path: 'studio.self',
-    title: 'Design mit Haltung',
+    title: 'Design mit Charakter',
     description:
       'Persönlich, direkt und mit eigener Handschrift — damit dein Auftritt nicht wie der nächste Baukasten aussieht.',
   },

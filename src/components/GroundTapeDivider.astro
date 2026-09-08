@@ -1,0 +1,111 @@
+---
+const phrase = 'END • OF • THIS • SITE • DO • NOT • CROSS';
+const repeats = Array.from({ length: 10 }, () => phrase);
+---
+
+<div class="ground-tape" aria-hidden="true">
+  <div class="ground-tape__band">
+    <div class="ground-tape__track">
+      {repeats.map((word) => (
+        <span class="ground-tape__word">{word}</span>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .ground-tape {
+    --tape-h: clamp(2.45rem, 4.8vw, 3.1rem);
+    position: relative;
+    z-index: 8;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: var(--tape-h);
+    margin-block: calc(var(--tape-h) / -2);
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .ground-tape__band {
+    --tape: #d2ff00;
+    --ink: #141c12;
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--tape);
+    transform: none;
+    box-shadow:
+      0 8px 20px rgba(0, 0, 0, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  }
+
+  .ground-tape__band::before,
+  .ground-tape__band::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 0.7rem;
+    z-index: 2;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      -45deg,
+      var(--ink) 0 5px,
+      var(--tape) 5px 10px
+    );
+  }
+
+  .ground-tape__band::before {
+    top: 0;
+  }
+
+  .ground-tape__band::after {
+    bottom: 0;
+  }
+
+  .ground-tape__track {
+    display: flex;
+    width: max-content;
+    align-items: center;
+  }
+
+  .ground-tape__word {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    padding-inline: 1.15rem;
+    font-family: ui-monospace, 'Cascadia Code', monospace;
+    font-size: clamp(0.68rem, 1.7vw, 0.82rem);
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .ground-tape__word::after {
+    content: '•';
+    margin-left: 1.15rem;
+    font-size: 0.85em;
+    color: var(--ink);
+  }
+
+  @media (max-width: 640px) {
+    .ground-tape {
+      --tape-h: 2.35rem;
+    }
+
+    .ground-tape__word {
+      padding-inline: 0.85rem;
+      letter-spacing: 0.1em;
+    }
+
+    .ground-tape__word::after {
+      margin-left: 0.85rem;
+    }
+  }
+</style>

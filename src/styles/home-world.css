@@ -1187,7 +1187,7 @@
     radial-gradient(ellipse 40% 30% at 50% 50%, rgba(255, 209, 102, 0.06), transparent 60%),
     linear-gradient(168deg, #140820 0%, #251245 32%, #1a0a2e 68%, #0d0616 100%);
   color: #fff5ff;
-  padding-top: clamp(1rem, 3vw, 2rem);
+  padding-top: clamp(2rem, 4.5vw, 3rem);
   overflow: hidden;
 }
 
@@ -1413,7 +1413,7 @@
   justify-content: center;
   width: min(100% - 2rem, 760px);
   margin: clamp(2rem, 5vw, 3rem) auto 0;
-  padding-bottom: clamp(2.5rem, 6vw, 4rem);
+  padding-bottom: clamp(2.6rem, 5.5vw, 3.4rem);
 }
 
 @media (max-width: 560px) {
@@ -1516,3 +1516,14 @@
 }
 
 /* legacy overrides removed — candy uses .candy-about */
+
+body:has(.home-world) main {
+  position: relative;
+  z-index: 2;
+}
+
+body:has(.home-world) .site-footer {
+  position: relative;
+  z-index: 1;
+  border-top: none;
+}
