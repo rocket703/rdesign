@@ -26,7 +26,7 @@ export const BIOME_META: Record<
     path: 'studio.self',
     title: 'Design mit Charakter',
     description:
-      'Persönlich, direkt und mit eigener Handschrift — damit dein Auftritt nicht wie der nächste Baukasten aussieht.',
+    'Persönlich, direkt und mit eigener Handschrift — für einen Auftritt, der zu dir passt.',
   },
   clean: {
     num: '03',
@@ -44,5 +44,5 @@ export const EARTH_META = {
   path: 'craft.local',
   title: 'Handwerk aus Magdeburg',
   description:
-    'Kein Agentur-Buzzword-Bingo. Solide Umsetzung, ehrliche Kommunikation — digital gebaut wie etwas, das bleiben soll.',
+    'Solide Umsetzung, ehrliche Kommunikation — digital gebaut in Magdeburg, damit es bleibt.',
 };
