@@ -1,0 +1,66 @@
+---
+import { techIcon } from '../lib/tech-icons';
+
+interface Props {
+  tags: string[];
+  class?: string;
+}
+
+const { tags, class: className } = Astro.props;
+const items = tags.map((label) => ({ label, icon: techIcon(label) }));
+---
+
+<ul class:list={['tech-icons', className]} aria-label="Technologien">
+  {items.map(({ label, icon }) => (
+    <li class="tech-icons__item" title={icon?.title ?? label}>
+      {icon ? (
+        <svg
+          viewBox="0 0 24 24"
+          width="22"
+          height="22"
+          role="img"
+          aria-label={icon.title}
+          fill={icon.mode === 'fill' ? 'currentColor' : 'none'}
+          stroke={icon.mode === 'stroke' ? 'currentColor' : 'none'}
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d={icon.path} />
+        </svg>
+      ) : (
+        <span class="tech-icons__text">{label}</span>
+      )}
+    </li>
+  ))}
+</ul>
+
+<style>
+  .tech-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    /* margin-top steuert der Container, z. B. „auto“ für bündige Kartenböden */
+    margin: var(--tech-icons-mt, 0) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tech-icons__item {
+    display: grid;
+    place-items: center;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    padding: 0 0.5rem;
+    border-radius: 9px;
+    color: var(--tech-icon-color, #94a3b8);
+    background: var(--tech-icon-bg, rgba(255, 255, 255, 0.05));
+    border: 1px solid var(--tech-icon-border, rgba(255, 255, 255, 0.08));
+  }
+
+  .tech-icons__text {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+</style>

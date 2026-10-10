@@ -1,0 +1,148 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LegalPageShell from '../../components/LegalPageShell.astro';
+import OfferIcon from '../../components/OfferIcon.astro';
+import { offers, offerPath, type Offer } from '../../data/offers';
+import {
+  breadcrumbSchema,
+  canonicalUrl,
+  faqQuestions,
+  offerServiceSchema,
+  schemaGraph,
+  webPageSchema,
+} from '../../lib/seo';
+import '../../styles/offer.css';
+
+export function getStaticPaths() {
+  return offers.map((offer) => ({ params: { slug: offer.slug }, props: { offer } }));
+}
+
+const { offer } = Astro.props as { offer: Offer };
+const pathname = offerPath(offer);
+const otherOffers = offers.filter((other) => other.slug !== offer.slug);
+const contactHref = `/kontakt/?thema=${offer.slug}`;
+---
+
+<BaseLayout
+  title={offer.seoTitle}
+  description={offer.seoDesc}
+  jsonLd={schemaGraph([
+    webPageSchema({
+      type: ['WebPage', 'FAQPage'],
+      name: offer.seoTitle,
+      description: offer.seoDesc,
+      pathname,
+      site: Astro.site,
+      about: { '@id': `${canonicalUrl(pathname, Astro.site)}#offer` },
+      mainEntity: faqQuestions(offer.faq),
+    }),
+    offerServiceSchema({
+      name: offer.title,
+      description: offer.seoDesc,
+      pathname,
+      site: Astro.site,
+    }),
+    breadcrumbSchema(
+      [
+        { name: 'Start', path: '/' },
+        { name: 'Leistungen', path: '/#leistungen' },
+        { name: offer.title, path: pathname },
+      ],
+      Astro.site,
+    ),
+  ])}
+>
+  <LegalPageShell wide legalNav={false} title={offer.title} lead={offer.lead}>
+    <div class="offer-layout">
+      <aside class="offer-aside">
+        <article class="legal-block offer-summary autoShow">
+          <span class="offer-summary__icon">
+            <OfferIcon name={offer.icon} size={26} />
+          </span>
+          <h2 class="legal-block__title">Auf einen Blick</h2>
+          <dl class="offer-facts">
+            {offer.facts.map((fact) => (
+              <div class="offer-facts__row">
+                <dt>{fact.label}</dt>
+                <dd>{fact.value}</dd>
+              </div>
+            ))}
+            <div class="offer-facts__row">
+              <dt>Preis</dt>
+              <dd>{offer.price ?? 'Festpreis auf Anfrage'}</dd>
+            </div>
+          </dl>
+          <a href={contactHref} class="offer-cta">Projekt anfragen</a>
+          <p class="offer-summary__note">Kostenlos & unverbindlich – Antwort meist innerhalb von 24 h.</p>
+        </article>
+
+        {offer.reference && (
+          <a href={offer.reference.href} class="legal-block offer-reference autoShow">
+            <span class="offer-reference__label">Referenz</span>
+            <strong>{offer.reference.title}</strong>
+            <span>{offer.reference.text}</span>
+            <span class="offer-reference__more">Zum Projekt →</span>
+          </a>
+        )}
+      </aside>
+
+      <div class="offer-main">
+        <article class="legal-block autoShow">
+          <h2 class="legal-block__title">Worum es geht</h2>
+          <div class="legal-block__body">
+            {offer.intro.map((paragraph) => <p>{paragraph}</p>)}
+          </div>
+        </article>
+
+        <article class="legal-block autoShow">
+          <h2 class="legal-block__title">Das bekommst du</h2>
+          <ul class="offer-checklist">
+            {offer.deliverables.map((item) => (
+              <li>
+                <span class="offer-checklist__mark" aria-hidden="true">✓</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </article>
+
+        <article class="legal-block autoShow">
+          <h2 class="legal-block__title">Für wen sich das lohnt</h2>
+          <ul class="legal-list">
+            {offer.audience.map((item) => <li>{item}</li>)}
+          </ul>
+        </article>
+
+        <article class="legal-block autoShow">
+          <h2 class="legal-block__title">Häufige Fragen</h2>
+          <div class="offer-faq">
+            {offer.faq.map((item) => (
+              <details class="offer-faq__item">
+                <summary>{item.question}</summary>
+                <p>{item.answer}</p>
+              </details>
+            ))}
+          </div>
+        </article>
+      </div>
+
+    </div>
+
+    <nav class="offer-more autoShow" aria-label="Weitere Angebote">
+      <p class="offer-more__title">Weitere Angebote</p>
+      <div class="offer-more__grid">
+        {otherOffers.map((other) => (
+          <a href={offerPath(other)} class="offer-more__card">
+            <span class="offer-summary__icon">
+              <OfferIcon name={other.icon} size={22} />
+            </span>
+            <span>
+              <strong>{other.title}</strong>
+              <span>{other.teaser}</span>
+            </span>
+          </a>
+        ))}
+      </div>
+    </nav>
+  </LegalPageShell>
+</BaseLayout>

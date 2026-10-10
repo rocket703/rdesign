@@ -1,7 +1,7 @@
 const W = 1440;
 const H = 128;
 
-/** Steep racing slash — top edge of the fill (left high → right low). */
+/** Steep racing slash – top edge of the fill (left high → right low). */
 export function techSeamEdgePoints(): Array<[number, number]> {
   return [
     [-40, 78],

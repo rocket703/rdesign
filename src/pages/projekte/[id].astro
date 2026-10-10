@@ -2,8 +2,10 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { render } from 'astro:content';
 import { getPublishedProjects, projectSlug } from '../../lib/projects';
+import DeviceShowcase from '../../components/DeviceShowcase.astro';
 import {
   breadcrumbSchema,
+  canonicalUrl,
   creativeWorkSchema,
   schemaGraph,
   webPageSchema,
@@ -21,13 +23,17 @@ const { project } = Astro.props;
 const { Content } = await render(project);
 const projectLink = project.data.customerUrl;
 const projectStatus = project.data.status;
+const statusLabels: Record<string, string> = {
+  online: 'Online',
+  offline: 'Offline',
+  'im aufbau': 'Im Aufbau',
+  archived: 'Archiviert',
+};
+const statusLabel = statusLabels[projectStatus.toLowerCase()] ?? projectStatus;
 const title = project.data.title;
-const responsiveImageBase = project.data.image.endsWith('.webp')
-  ? project.data.image.replace('/images/', '/images/responsive/').replace(/\.webp$/, '')
-  : null;
 const hasSpace = title.trim().includes(' ');
 const slug = projectSlug(project);
-const projectPath = `/projekte/${slug}`;
+const projectPath = `/projekte/${slug}/`;
 const pageTitle = project.data.seoTitle ?? `${project.data.title} | r³webdesign`;
 const pageDescription = project.data.seoDesc ?? project.data.subtitle;
 const liveHost = (() => {
@@ -49,6 +55,7 @@ const liveHost = (() => {
       description: pageDescription,
       pathname: projectPath,
       site: Astro.site,
+      mainEntity: { '@id': `${canonicalUrl(projectPath, Astro.site)}#project` },
     }),
     breadcrumbSchema(
       [
@@ -74,16 +81,12 @@ const liveHost = (() => {
 
       <nav class="project-nav" aria-label="Projektnavigation">
         <a href="/projekte/" class="project-back">
-          <span class="project-back__prompt" aria-hidden="true">&gt;_</span>
-          <span>zurück.projekte</span>
+          <span class="project-back__prompt" aria-hidden="true">←</span>
+          <span>Alle Projekte</span>
         </a>
       </nav>
 
       <header class="project-hero">
-        <p class="project-path project-hero__path">
-          <span class="project-prompt">&gt;_</span>
-          <span>proj.{slug}</span>
-        </p>
         <h1 class={`section-title project-hero__title ${!hasSpace ? 'is-single-word' : ''}`}>
           {project.data.title}
         </h1>
@@ -101,59 +104,44 @@ const liveHost = (() => {
 
       <section class="project-showcase" aria-label="Projektvorschau">
         <a href={projectLink} target="_blank" rel="noopener noreferrer" class="project-showcase__link">
-          <div class="project-showcase__frame">
-            <img
-              src={responsiveImageBase ? `${responsiveImageBase}-800.webp` : project.data.image}
-              srcset={responsiveImageBase
-                ? `${responsiveImageBase}-480.webp 480w, ${responsiveImageBase}-800.webp 800w`
-                : undefined}
-              sizes="(max-width: 900px) calc(100vw - 2rem), 1080px"
-              width="800"
-              height="450"
-              alt={`Vorschau: ${project.data.title}`}
-              loading="eager"
-              fetchpriority="high"
-              decoding="async"
-            />
-          </div>
+          <DeviceShowcase
+            desktop={project.data.image}
+            mobile={project.data.imageMobile}
+            title={project.data.title}
+            priority
+          />
           <span class="project-showcase__hint">
-            <span class="project-showcase__hint-prompt" aria-hidden="true">&gt;</span>
-            Live-Seite öffnen
+            Webseite ansehen
+            <span class="project-showcase__hint-prompt" aria-hidden="true">↗</span>
           </span>
         </a>
+        {project.data.mobileNote && <p class="project-showcase__note">{project.data.mobileNote}</p>}
       </section>
 
       <div class="project-layout">
         <article class="project-panel project-panel--main">
-          <p class="project-panel__path">
-            <span class="project-prompt">&gt;_</span>
-            <span>analysis.md</span>
-          </p>
-          <h2 class="project-panel__title">Projekt-Analyse</h2>
+          <h2 class="project-panel__title">Über das Projekt</h2>
           <div class="project-prose">
             <Content />
           </div>
         </article>
 
         <aside class="project-panel project-panel--sidebar">
-          <p class="project-panel__path">
-            <span class="project-prompt">&gt;_</span>
-            <span>meta.json</span>
-          </p>
+          <h2 class="project-panel__title">Eckdaten</h2>
           <dl class="project-facts">
             <div class="project-facts__row">
               <dt>Status</dt>
-              <dd>{projectStatus}</dd>
+              <dd>{statusLabel}</dd>
             </div>
             {project.data.techStack?.length ? (
               <div class="project-facts__row">
-                <dt>Stack</dt>
+                <dt>Technik</dt>
                 <dd>{project.data.techStack.slice(0, 4).join(' · ')}{project.data.techStack.length > 4 ? ' …' : ''}</dd>
               </div>
             ) : null}
             {liveHost ? (
               <div class="project-facts__row">
-                <dt>Live</dt>
+                <dt>Webseite</dt>
                 <dd><a href={projectLink} target="_blank" rel="noopener noreferrer">{liveHost}</a></dd>
               </div>
             ) : null}
@@ -164,11 +152,9 @@ const liveHost = (() => {
           </dl>
           <p class="project-panel__note">Interesse an einer ähnlichen Umsetzung?</p>
           <a href={projectLink} target="_blank" rel="noopener noreferrer" class="project-cta">
-            <span class="project-cta__prompt" aria-hidden="true">&gt;</span>
             Webseite besuchen
           </a>
           <a href="/kontakt/" class="project-cta project-cta--ghost">
-            <span class="project-cta__prompt" aria-hidden="true">&gt;</span>
             Projekt anfragen
           </a>
         </aside>
@@ -200,11 +186,10 @@ const liveHost = (() => {
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
-    font-family: ui-monospace, 'Cascadia Code', monospace;
+    font-family: inherit;
     font-size: 0.78rem;
     font-weight: 600;
     letter-spacing: 0.04em;
-    text-transform: lowercase;
     text-decoration: none;
     color: #94a3b8;
     transition: color 0.2s ease;
@@ -225,11 +210,6 @@ const liveHost = (() => {
     margin: 0 auto clamp(3rem, 6vw, 4.5rem);
     padding: 0 0.25rem;
     background: none;
-  }
-
-  .project-hero__path {
-    justify-content: center;
-    margin-bottom: 1rem;
   }
 
   .project-hero__title {
@@ -267,7 +247,7 @@ const liveHost = (() => {
   }
 
   .project-tags li {
-    font-family: ui-monospace, 'Cascadia Code', monospace;
+    font-family: inherit;
     font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 0.04em;
@@ -289,49 +269,14 @@ const liveHost = (() => {
     color: inherit;
   }
 
-  .project-showcase__frame {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(11, 17, 32, 0.9);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.06),
-      0 18px 40px rgba(0, 0, 0, 0.35);
-    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.35s ease;
-  }
+  /* Desktop + Smartphone: Handy-Rahmen überlappt die Desktop-Ansicht unten rechts */
 
-  .project-showcase__frame::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent-lime) 0%, #10b981 35%, #38bdf8 70%, transparent 100%);
-    opacity: 0.75;
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  .project-showcase__frame img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top center;
-    transition: transform 0.45s cubic-bezier(0.2, 1, 0.3, 1);
-  }
-
-  .project-showcase__link:hover .project-showcase__frame {
-    transform: translateY(-6px);
-    border-color: rgba(16, 185, 129, 0.25);
-  }
-
-  .project-showcase__link:hover .project-showcase__frame img {
-    transform: scale(1.03);
+  .project-showcase__note {
+    max-width: 60ch;
+    margin: 0.85rem 0 0;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: #94a3b8;
   }
 
   .project-showcase__hint {
@@ -339,12 +284,11 @@ const liveHost = (() => {
     align-items: center;
     gap: 0.4rem;
     margin-top: 0.85rem;
-    font-family: ui-monospace, monospace;
+    font-family: inherit;
     font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 0.04em;
-    text-transform: lowercase;
-    color: #64748b;
+    color: #94a3b8;
     transition: color 0.2s ease;
   }
 
@@ -353,7 +297,7 @@ const liveHost = (() => {
   }
 
   .project-showcase__link:hover .project-showcase__hint {
-    color: #94a3b8;
+    color: #e2e8f0;
   }
 
   .project-layout {
@@ -394,19 +338,6 @@ const liveHost = (() => {
     background: linear-gradient(90deg, var(--accent-lime) 0%, #10b981 35%, #38bdf8 70%, transparent 100%);
     opacity: 0.75;
     pointer-events: none;
-  }
-
-  .project-panel__path {
-    display: flex;
-    align-items: center;
-    gap: 0.35rem;
-    margin: 0 0 1rem;
-    font-family: ui-monospace, 'Cascadia Code', monospace;
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    text-transform: lowercase;
-    color: #64748b;
   }
 
   .project-panel__title {
@@ -484,12 +415,12 @@ const liveHost = (() => {
 
   .project-facts dt {
     margin: 0;
-    font-family: ui-monospace, monospace;
+    font-family: inherit;
     font-size: 0.68rem;
     font-weight: 600;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: #64748b;
+    color: #94a3b8;
   }
 
   .project-facts dd {
@@ -506,7 +437,6 @@ const liveHost = (() => {
   .project-facts dd a {
     color: #10b981;
     text-decoration: none;
-    text-transform: lowercase;
     word-break: break-all;
   }
 
@@ -544,12 +474,6 @@ const liveHost = (() => {
 
   .project-cta + .project-cta {
     margin-top: 0.75rem;
-  }
-
-  .project-cta__prompt {
-    font-family: ui-monospace, monospace;
-    color: #10b981;
-    font-weight: 700;
   }
 
   .project-cta:hover {

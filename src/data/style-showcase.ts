@@ -1,18 +1,25 @@
 export const STYLE_PRESETS = [
-  { id: 'lando', label: 'Lando', description: 'Neon, schräg, Racing-Energy' },
-  { id: 'clean', label: 'Clean', description: 'Weißraum, feine Linien' },
-  { id: 'modern', label: 'Modern', description: 'Glas, Gradient, Glow' },
-  { id: 'a11y', label: 'Barrierefrei', description: 'Kontrast, Klarheit, Fokus' },
+  { id: 'modern', label: 'Modern', description: 'Glas, Farbverlauf, Leuchten' },
+  { id: 'clean', label: 'Schlicht', description: 'Viel Weißraum, feine Linien, klassische Schrift' },
+  { id: 'lando', label: 'Sportlich', description: 'Neon, schräg, voller Energie' },
+  { id: 'a11y', label: 'Barrierefrei', description: 'Starker Kontrast, große Schrift, klare Fokus-Rahmen' },
 ] as const;
 
 export type StylePresetId = (typeof STYLE_PRESETS)[number]['id'];
 
 export const SHOWCASE_COPY = {
-  eyebrow: 'CSS Live',
-  text: 'Button, Typo, Rand und Schatten — ein Markup, vier komplett andere Welten. So baue ich Systeme, die sich anfühlen, nicht nur aussehen.',
-  cta: 'Projekt anfragen',
-  preview: {
-    pill: 'Live',
-    tags: ['Radius', 'Schatten', 'Rand'] as const,
+  title: 'Welcher Stil passt zu dir?',
+  text: 'Dieselbe Webseite, vier Stile: Schrift, Farben, Ecken und Schatten machen den Unterschied. Klick dich durch.',
+  site: {
+    name: 'Café an der Elbe',
+    eyebrow: 'Magdeburg · seit 1998',
+    title: 'Frühstück mit Elbblick',
+    text: 'Hausgemachter Kuchen, regionaler Kaffee und ein Platz an der Sonne.',
+    button: 'Tisch reservieren',
+    cards: [
+      { title: 'Frühstück', meta: 'ab 8 Uhr' },
+      { title: 'Kuchen', meta: 'täglich frisch' },
+      { title: 'Terrasse', meta: '40 Plätze' },
+    ],
   },
 } as const;

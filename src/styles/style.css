@@ -186,13 +186,6 @@ textarea:focus-visible {
   display: none;
 }
 
-.main-nav .nav-link__prompt {
-  font-family: ui-monospace, 'Cascadia Code', monospace;
-  font-size: 0.85em;
-  font-weight: 700;
-  color: #10b981;
-}
-
 @media (min-width: 821px) {
   .nav-cta-desktop {
     display: inline-flex;
@@ -390,8 +383,8 @@ textarea:focus-visible {
   opacity: .9;
 }*/
 
-/* Intro H1 + Unterzeile */
-.intro .section-head h1 {
+/* Intro-Wortmarke + Slogan */
+.intro .section-head .r3-logo {
   display: inline-block;
   position: relative;
   font-size: clamp(2.2rem, 5vw, 3.6rem);
@@ -406,7 +399,7 @@ textarea:focus-visible {
   -webkit-background-clip: text;
           background-clip: text;
 }
-.intro .section-head h1::before {
+.intro .section-head .r3-logo::before {
   content: "";
   position: absolute;
   inset: -.35rem -.75rem;
@@ -416,14 +409,13 @@ textarea:focus-visible {
   border-radius: 14px;
   z-index: -1;
 }
-/* SUBLINE unter dem Logo */
-/* H1 darf die Subline aufnehmen und mittig ausrichten */
-.intro .section-head h1{
+/* Wortmarke nimmt den Slogan auf und richtet ihn mittig aus */
+.intro .section-head .r3-logo{
   position: relative;
-  text-align: center;          /* stellt sicher, dass ::after mittig sitzt */
+  text-align: center;          /* stellt sicher, dass der Slogan mittig sitzt */
 }
 
-.intro .section-head h1.r3-logo {
+.intro .section-head .r3-logo {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
@@ -433,55 +425,31 @@ textarea:focus-visible {
 }
 
 @media (max-width: 768px) {
-  .intro .section-head h1.r3-logo {
+  .intro .section-head .r3-logo {
     padding: 0.7rem 1rem 0.8rem;
     margin-top: 0.35rem;
   }
 
-  .intro .section-head h1.r3-logo::before {
+  .intro .section-head .r3-logo::before {
     inset: -0.2rem -0.6rem;
     border-radius: 12px;
   }
 
-  .intro .section-head h1.r3-logo::after {
-    margin-top: 0.75rem;
-    font-size: clamp(0.82rem, 2.8vw, 0.95rem);
-    line-height: 1.35;
-    padding: 0 0.15rem;
-  }
 }
 
-/* Subline: NUR bunte Schrift – smooth linear-gradient ohne Sprung */
-.intro .section-head h1::after{
-  content: "Webentwicklung • Design • Appentwicklung";
-  display: block;              /* steht unter dem H1 */
-  margin: .9rem auto 0;        /* Abstand nach oben, zentriert */
-  padding: 0;                  /* keine Fläche/Box */
-  font-size: clamp(0.95rem, 2.3vw, 1.15rem);
-  font-weight: 600;
-  letter-spacing: .02em;
-  line-height: 1.2;
-
-  /* animierter, nahtloser Verlauf in der Schrift */
-  background: linear-gradient(
-    90deg,
-    #00c2ff,
-    #33ff8c,
-    #ffc640,
-    #e54cff,
-    #00c2ff  /* erste Farbe am Ende wiederholen -> kein Sprung */
-  );
-  background-size: 300% 100%;
-  background-position: 0% 50%;
-  color: transparent;
-  -webkit-background-clip: text;
-          background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  background-position: 50% 50%;
+/* Claim (H1) unter der Wortmarke */
+.intro .section-head .r3-logo__claim {
+  margin: 0.85rem 0 0;
+  font-size: clamp(0.72rem, 1.6vw, 0.9rem);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-shadow: none;
+  color: #6ee7b7;
 }
 
-
+/* Slogan unter der Wortmarke */
 
 /* Einleitungstext */
 .vorstellung {
@@ -648,25 +616,12 @@ textarea:focus-visible {
   transform: scale(1.05);
 }
 .card-body { padding: 1.25rem 1.25rem 1.3rem; }
-.project-path{
-  display: flex;
-  align-items: center;
-  gap: .35rem;
-  margin: 0 0 .7rem;
-  min-height: 1.15rem;
-  font-family: ui-monospace, 'Cascadia Code', monospace;
-  font-size: .72rem;
-  font-weight: 500;
-  letter-spacing: .04em;
-  color: #64748b;
-  text-transform: lowercase;
-}
-.project-prompt{ color: #10b981; font-weight: 700; }
-.card-body h3 { font-size: 1.35rem; font-weight: 700; color: #f3f4f6; margin: 0 0 .45rem; }
+
+.card-body .card-title { font-size: 1.35rem; font-weight: 700; color: #f3f4f6; margin: 0 0 .45rem; }
 .card-body p { font-size: .98rem; color: #9ca3af; margin: 0 0 1rem; }
 .tags { display: flex; gap: .5rem; flex-wrap: wrap; }
 .tags span {
-  font-family: ui-monospace, 'Cascadia Code', monospace;
+  font-family: inherit;
   background: rgba(0, 0, 0, 0.35);
   color: #cbd5e1;
   padding: .3rem .55rem;
@@ -938,7 +893,7 @@ textarea:focus-visible {
 @media (max-width: 480px) {
   .intro { padding: 4.25rem .75rem 2.75rem; }
   .vorstellung { font-size: .96rem; }
-  .card-body h3 { font-size: 1.2rem; }
+  .card-body .card-title { font-size: 1.2rem; }
   .card-body p { font-size: .92rem; }
   .project-detail .project-media { height: 170px; }
 }
@@ -1212,6 +1167,7 @@ textarea:focus-visible {
 
 /* Chips immer nach unten drücken */
 .tags {
+  --tech-icons-mt: auto;   /* gilt auch für die Icon-Liste der Projektkarten */
   margin-top: auto;        /* schiebt .tags an das untere Ende der Karte */
   padding-top: .75rem;     /* etwas Luft über den Chips */
 }
@@ -1302,7 +1258,7 @@ textarea:focus-visible {
   /* Badge-3 */
   .r3-badge {
     position: absolute;
-    background: linear-gradient(135deg, #009f73 0%, #0080b5 50%, #005b99 100%);
+    background: linear-gradient(145deg, #34d399 0%, #10b981 55%, #059669 100%);
     left: 0.40em;   /* näher an die obere linke Ecke */
     top: 0.0em;    /* höher setzen */
     width: 0.9em;
@@ -1316,7 +1272,6 @@ textarea:focus-visible {
     transform: rotate(18deg);
     line-height: 1;
     box-shadow: 0 6px 12px rgba(0,0,0,.4);
-
 
   }
 

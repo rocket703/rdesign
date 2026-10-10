@@ -7,7 +7,7 @@ export const faqItems: FaqItem[] = [
   {
     question: 'Was kostet eine professionelle Webseite in Magdeburg?',
     answer:
-      'Aktuell suche ich spannende private Projekte, um mein Portfolio gezielt zu erweitern. Wenn dein Vorhaben inhaltlich passt, finden wir eine faire, transparente Lösung, die zu Umfang und Ziel passt.',
+      'Jedes Projekt wird individuell kalkuliert – nach Umfang, Funktionen und Zielen. Nach einem kostenlosen Erstgespräch bekommst du ein transparentes Festpreisangebot, ohne versteckte Kosten und ohne monatliche Baukasten-Gebühren.',
   },
   {
     question: 'Wie lange dauert die Umsetzung einer neuen Homepage?',
@@ -17,26 +17,31 @@ export const faqItems: FaqItem[] = [
   {
     question: 'Machst du nur Design oder auch Entwicklung und SEO?',
     answer:
-      'Beides. Von UX/UI-Design über Entwicklung bis technisches SEO, Performance und Deployment. Ziel ist eine Seite, die nicht nur gut aussieht, sondern auch gefunden wird.',
+      'Beides. Von der Gestaltung über die Programmierung bis zur Suchmaschinenoptimierung, kurzen Ladezeiten und der Veröffentlichung. Ziel ist eine Seite, die nicht nur gut aussieht, sondern auch gefunden wird.',
   },
   {
     question: 'Kann ich meine Webseite später selbst pflegen?',
     answer:
-      'Ja. Auf Wunsch bekommst du ein Setup, mit dem Inhalte einfach aktualisiert werden können. Außerdem gibt es eine kurze Einweisung oder laufende Betreuung, wenn du es abgeben willst.',
+      'Ja. Auf Wunsch bekommst du eine Lösung, mit der du Inhalte einfach selbst aktualisieren kannst. Außerdem gibt es eine kurze Einweisung oder laufende Betreuung, wenn du es abgeben willst.',
   },
   {
     question: 'Arbeitest du nur in Magdeburg oder auch remote?',
     answer:
-      'Beides. Viele Projekte laufen komplett remote — Briefing per Video, Umsetzung digital. Für Kunden in Magdeburg und Umgebung treffe ich mich gern persönlich zum Kick-off.',
+      'Beides. Viele Projekte laufen komplett remote – Briefing per Video, Umsetzung digital. Mit Kunden aus Magdeburg und Umgebung treffe ich mich gern persönlich zum Kick-off.',
   },
   {
     question: 'Was unterscheidet deine Seiten von Baukasten-Anbietern?',
     answer:
-      'Kein Theme von der Stange: individuelles Layout, Code den du besitzt, und Performance die du messen kannst. Keine monatliche Baukasten-Miete für das, was du eigentlich einmal sauber gebaut haben willst.',
+      'Keine Vorlage von der Stange: ein individuelles Layout, eine Webseite, die dir gehört, und Ladezeiten, die man messen kann. Keine monatliche Baukasten-Miete für etwas, das einmal sauber gebaut sein soll.',
   },
   {
-    question: 'Welchen Tech-Stack setzt du ein — und warum?',
+    question: 'Welche Technik setzt du ein – und warum?',
     answer:
-      'Meist Astro fürs Frontend — schnell, wenig JavaScript, gut für SEO. Braucht das Projekt Login, Datenbank oder Echtzeit? Dann kommen Supabase, SSR oder APIs dazu. Immer passend zum Vorhaben, nicht passend zum Hype.',
+      'Meist Astro – damit werden Seiten sehr schnell und sind für Google gut lesbar. Braucht dein Projekt Login, Datenbank oder Live-Daten, kommen passende Bausteine wie Supabase dazu. Immer passend zum Vorhaben, nicht zum Trend.',
+  },
+  {
+    question: 'Kann ich SEO-Check, Relaunch oder Barrierefreiheits-Check auch einzeln buchen?',
+    answer:
+      'Ja. Alle drei Pakete sind eigenständig buchbar – du brauchst dafür keine neue Webseite von mir. Sie lassen sich aber auch kombinieren: Ein Check vor dem Relaunch zeigt zum Beispiel genau, worauf es beim Neubau ankommt.',
   },
 ];

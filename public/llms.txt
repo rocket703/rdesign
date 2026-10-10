@@ -27,3 +27,9 @@
 ## Technologie
 
 Astro, TypeScript, Supabase, Vercel, GitHub Pages, Expo — je nach Projektanforderung.
+
+## Schnellstart-Angebote
+
+- SEO-Check: https://r3webdesign.de/leistungen/seo-check/
+- Webseiten-Relaunch: https://r3webdesign.de/leistungen/relaunch/
+- Barrierefreiheits-Check (WCAG 2.1 AA, BFSG): https://r3webdesign.de/leistungen/barrierefreiheit/

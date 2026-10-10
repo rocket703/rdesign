@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LegalPageShell from '../components/LegalPageShell.astro';
-import { contactPageSchema, personSchema, professionalServiceSchema, schemaGraph, webPageSchema } from '../lib/seo';
+import { contactPageSchema, personSchema, professionalServiceSchema, schemaGraph } from '../lib/seo';
 
 const pageTitle = 'Kontakt – Webdesign Magdeburg | r³webdesign';
 const pageDescription =
@@ -12,13 +12,7 @@ const pageDescription =
   title={pageTitle}
   description={pageDescription}
   jsonLd={schemaGraph([
-    webPageSchema({
-      name: pageTitle,
-      description: pageDescription,
-      pathname: Astro.url.pathname,
-      site: Astro.site,
-    }),
-    contactPageSchema(Astro.site),
+    contactPageSchema({ name: pageTitle, description: pageDescription, site: Astro.site }),
     personSchema(Astro.site),
     professionalServiceSchema(Astro.site),
   ])}
@@ -27,13 +21,10 @@ const pageDescription =
     wide
     eyebrow="Lass uns sprechen"
     title="Projekt anfragen"
-    lead="Ob Webseite, App oder komplette digitale Lösung — beschreib kurz dein Vorhaben, ich melde mich zeitnah."
+    lead="Ob Webseite, App oder komplette digitale Lösung – beschreib kurz dein Vorhaben, ich melde mich zeitnah."
   >
     <div class="contact-layout">
       <article class="legal-block legal-block--form autoShow">
-        <p class="legal-block__path">
-          <span class="legal-block__prompt">&gt;_</span> contact.send
-        </p>
         <h2 class="legal-block__title">Nachricht schreiben</h2>
 
         <div id="form-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
@@ -61,7 +52,7 @@ const pageDescription =
               class="form-input"
             />
             <label for="name">Name</label>
-            <span class="error-msg" id="name-error">Bitte geben Sie Ihren Namen ein.</span>
+            <span class="error-msg" id="name-error">Bitte gib deinen Namen ein.</span>
           </div>
 
           <div class="form-group float-field">
@@ -75,7 +66,7 @@ const pageDescription =
               class="form-input"
             />
             <label for="email">E-Mail</label>
-            <span class="error-msg" id="email-error">Bitte geben Sie eine gültige E-Mail ein.</span>
+            <span class="error-msg" id="email-error">Bitte gib eine gültige E-Mail-Adresse ein.</span>
           </div>
 
           <div class="form-group float-field float-field--textarea">
@@ -88,7 +79,7 @@ const pageDescription =
               class="form-textarea"
             ></textarea>
             <label for="message">Nachricht</label>
-            <span class="error-msg" id="message-error">Bitte schreiben Sie eine Nachricht.</span>
+            <span class="error-msg" id="message-error">Bitte schreib mir eine Nachricht.</span>
           </div>
 
           <div class="form-group checkbox-group">
@@ -105,7 +96,7 @@ const pageDescription =
                 Ich habe die <a href="/datenschutz/" class="legal-link">Datenschutzerklärung</a> gelesen und stimme der Verarbeitung meiner Angaben zur Kontaktaufnahme zu.
               </span>
             </label>
-            <span class="error-msg" id="privacy-error">Bitte bestätigen Sie die Datenschutzerklärung.</span>
+            <span class="error-msg" id="privacy-error">Bitte bestätige die Datenschutzerklärung.</span>
           </div>
 
           <button type="submit" class="submit-button">
@@ -117,9 +108,6 @@ const pageDescription =
 
       <aside class="contact-aside">
         <article class="legal-block autoShow">
-          <p class="legal-block__path">
-            <span class="legal-block__prompt">&gt;_</span> contact.response
-          </p>
           <h2 class="legal-block__title">Schnelle Antwort</h2>
           <div class="legal-block__body">
             <p>In der Regel antworte ich innerhalb von 24 Stunden auf deine Anfrage.</p>
@@ -127,22 +115,16 @@ const pageDescription =
         </article>
 
         <article class="legal-block autoShow">
-          <p class="legal-block__path">
-            <span class="legal-block__prompt">&gt;_</span> contact.briefing
-          </p>
           <h2 class="legal-block__title">Kostenlose Erstberatung</h2>
           <div class="legal-block__body">
-            <p>Lassen wir klären, was du brauchst — unverbindlich und transparent.</p>
+            <p>Lass uns klären, was du brauchst – unverbindlich und transparent.</p>
           </div>
         </article>
 
         <article class="legal-block autoShow">
-          <p class="legal-block__path">
-            <span class="legal-block__prompt">&gt;_</span> contact.custom
-          </p>
           <h2 class="legal-block__title">Individuelle Lösungen</h2>
           <div class="legal-block__body">
-            <p>Kein Baukasten, sondern maßgeschneiderter Code für dein Vorhaben.</p>
+            <p>Kein Baukasten, sondern eine maßgeschneiderte Umsetzung für dein Vorhaben.</p>
           </div>
         </article>
       </aside>
@@ -169,6 +151,18 @@ const pageDescription =
     </div>
   </div>
 </BaseLayout>
+
+<script>
+  import { offers } from '../data/offers';
+
+  // Anfrage von einer Schnellstart-Seite: Nachricht mit dem Thema vorbelegen
+  const topic = new URLSearchParams(window.location.search).get('thema');
+  const offer = offers.find((item) => item.slug === topic);
+  const messageField = document.querySelector<HTMLTextAreaElement>('#message');
+  if (offer && messageField && !messageField.value) {
+    messageField.value = `Hallo Dustin, ich interessiere mich für: ${offer.title}.\n\n`;
+  }
+</script>
 
 <script>
   const form = document.querySelector('.contact-form');
@@ -247,7 +241,7 @@ const pageDescription =
       if (!isValid) {
         form.classList.add('shake');
         setTimeout(() => form.classList.remove('shake'), 500);
-        setFormStatus('Bitte prüfen Sie die markierten Felder.');
+        setFormStatus('Bitte prüf die markierten Felder.');
         const firstInvalid = form.querySelector('[aria-invalid="true"]');
         firstInvalid?.focus();
         return;
@@ -281,7 +275,7 @@ const pageDescription =
           throw new Error(data.message || 'Senden fehlgeschlagen');
         }
       } catch (error) {
-        setFormStatus('Senden fehlgeschlagen. Bitte versuchen Sie es später erneut oder schreiben Sie direkt per E-Mail.');
+        setFormStatus('Senden fehlgeschlagen. Bitte versuch es später erneut oder schreib mir direkt per E-Mail.');
         console.error(error);
       } finally {
         submitBtn.classList.remove('loading');

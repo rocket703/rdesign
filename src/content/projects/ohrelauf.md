@@ -3,6 +3,8 @@ title: "Wolmirstedter Ohrelauf 2026"
 subtitle: "Moderne statische Website mit Mobile‑First‑Design, integrierter Event‑Anmeldung und hoher Performance."
 customerUrl: "https://ohrelauf.de"
 image: "/images/ohrelauf.webp"
+imageMobile: "/images/ohrelauf-mobile.webp"
+mobileNote: "Mobile First: Auf dem Smartphone startet die Seite mit einem eigenen Intro-Vorhang zum Wischen – ein Erlebnis, das es so nur mobil gibt."
 techStack: ["HTML5", "CSS3", "JavaScript", "GitHub Pages", "Static Site"]
 seoTitle: "Wolmirstedter Ohrelauf 2026 – Spendenlauf für Blaue Nasen e.V."
 seoDesc: "Case Study: Moderne, schnelle Webseite für den Spendenlauf »Ohrelauf 2026« in Wolmirstedt."

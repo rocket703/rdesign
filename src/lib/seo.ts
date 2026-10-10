@@ -20,6 +20,8 @@ export const SITE = {
   streetAddress: 'Lindenplan 26',
   postalCode: '39120',
   defaultOgImage: '/og-default.webp',
+  logo: '/icon-512.png',
+  portrait: '/images/IMG_1907.webp',
   defaultTitle: 'Webdesign Magdeburg | Homepage & Webentwicklung – r³webdesign',
   defaultDescription:
     'Webdesign und Webentwicklung in Magdeburg: schnelle Homepages, moderne Web-Apps und SEO-starke Umsetzung mit Astro, TypeScript und klarer UX.',
@@ -61,8 +63,9 @@ export function personSchema(site: URL | string = SITE.url) {
     '@id': `${absoluteUrl('/', site)}#person`,
     name: SITE.legalName,
     url: absoluteUrl('/', site),
+    image: absoluteUrl(SITE.portrait, site),
     email: SITE.email,
-    jobTitle: 'Webentwickler & UI/UX Designer',
+    jobTitle: 'Webentwickler & Webdesigner',
     worksFor: { '@id': `${absoluteUrl('/', site)}#service` },
     address: {
       '@type': 'PostalAddress',
@@ -96,6 +99,8 @@ export function professionalServiceSchema(site: URL | string = SITE.url) {
     '@id': `${absoluteUrl('/', site)}#service`,
     name: `${SITE.name} – Webdesign Magdeburg`,
     url: absoluteUrl('/', site),
+    logo: absoluteUrl(SITE.logo, site),
+    image: absoluteUrl(SITE.defaultOgImage, site),
     email: SITE.email,
     areaServed: [
       { '@type': 'City', name: SITE.city },
@@ -121,19 +126,15 @@ export function professionalServiceSchema(site: URL | string = SITE.url) {
   };
 }
 
-export function faqPageSchema(items: FaqItem[], site: URL | string = SITE.url) {
-  return {
-    '@type': 'FAQPage',
-    '@id': `${absoluteUrl('/', site)}#faq`,
-    mainEntity: items.map((item) => ({
-      '@type': 'Question',
-      name: item.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: item.answer,
-      },
-    })),
-  };
+export function faqQuestions(items: FaqItem[]) {
+  return items.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer,
+    },
+  }));
 }
 
 export const PORTFOLIO = {
@@ -153,12 +154,12 @@ export function projectListSchema(projects: ProjectListItem[], site: URL | strin
       '@type': 'ListItem',
       position: index + 1,
       name: project.title,
-      url: absoluteUrl(`/projekte/${project.slug}`, site),
+      url: absoluteUrl(`/projekte/${project.slug}/`, site),
       item: {
         '@type': 'CreativeWork',
         name: project.title,
         description: project.description,
-        url: absoluteUrl(`/projekte/${project.slug}`, site),
+        url: absoluteUrl(`/projekte/${project.slug}/`, site),
         image: absoluteUrl(project.image, site),
         creator: { '@id': `${absoluteUrl('/', site)}#person` },
       },
@@ -166,41 +167,51 @@ export function projectListSchema(projects: ProjectListItem[], site: URL | strin
   };
 }
 
-export function contactPageSchema(site: URL | string = SITE.url) {
-  return {
-    '@type': 'ContactPage',
-    '@id': `${absoluteUrl('/kontakt/', site)}#contact`,
-    name: 'Kontakt – Webdesign Magdeburg | r³webdesign',
-    url: absoluteUrl('/kontakt/', site),
-    description:
-      'Projektanfrage für Webdesign, Homepage oder Web-App in Magdeburg. Direkter Kontakt zu Dustin Rose (r³webdesign).',
-    inLanguage: SITE.language,
-    isPartOf: { '@id': `${absoluteUrl('/', site)}#website` },
-    about: { '@id': `${absoluteUrl('/', site)}#person` },
-    mainEntity: { '@id': `${absoluteUrl('/', site)}#service` },
-  };
-}
-
-export function webPageSchema({
+export function contactPageSchema({
   name,
   description,
-  pathname,
   site = SITE.url,
 }: {
   name: string;
   description: string;
+  site?: URL | string;
+}) {
+  return webPageSchema({
+    type: 'ContactPage',
+    name,
+    description,
+    pathname: '/kontakt/',
+    site,
+    about: { '@id': `${absoluteUrl('/', site)}#person` },
+    mainEntity: { '@id': `${absoluteUrl('/', site)}#service` },
+  });
+}
+
+export function webPageSchema({
+  type = 'WebPage',
+  name,
+  description,
+  pathname,
+  site = SITE.url,
+  ...extra
+}: {
+  type?: string | string[];
+  name: string;
+  description: string;
   pathname: string;
   site?: URL | string;
+  [key: string]: unknown;
 }) {
   const url = canonicalUrl(pathname, site);
   return {
-    '@type': 'WebPage',
+    '@type': type,
     '@id': `${url}#webpage`,
     name,
     description,
     url,
     inLanguage: SITE.language,
     isPartOf: { '@id': `${absoluteUrl('/', site)}#website` },
+    ...extra,
   };
 }
 
@@ -246,9 +257,36 @@ export function creativeWorkSchema({
     creator: { '@id': `${absoluteUrl('/', site)}#person` },
     inLanguage: SITE.language,
     ...(liveUrl && liveUrl !== '#'
-      ? { sameAs: liveUrl }
+      ? { about: { '@type': 'WebSite', name: title, url: liveUrl } }
       : {}),
     ...(keywords.length ? { keywords: keywords.join(', ') } : {}),
+  };
+}
+
+export function offerServiceSchema({
+  name,
+  description,
+  pathname,
+  site = SITE.url,
+}: {
+  name: string;
+  description: string;
+  pathname: string;
+  site?: URL | string;
+}) {
+  return {
+    '@type': 'Service',
+    '@id': `${canonicalUrl(pathname, site)}#offer`,
+    name,
+    description,
+    serviceType: name,
+    url: canonicalUrl(pathname, site),
+    provider: { '@id': `${absoluteUrl('/', site)}#service` },
+    areaServed: [
+      { '@type': 'City', name: SITE.city },
+      { '@type': 'Country', name: 'Deutschland' },
+    ],
+    inLanguage: SITE.language,
   };
 }
 
@@ -258,12 +296,14 @@ export function homePageSchema(items: FaqItem[], site: URL | string = SITE.url) 
     personSchema(site),
     professionalServiceSchema(site),
     webPageSchema({
+      type: ['WebPage', 'FAQPage'],
       name: SITE.defaultTitle,
       description: SITE.defaultDescription,
       pathname: '/',
       site,
+      about: { '@id': `${absoluteUrl('/', site)}#service` },
+      mainEntity: faqQuestions(items),
     }),
-    faqPageSchema(items, site),
   ]);
 }
 

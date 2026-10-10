@@ -7,6 +7,8 @@ const projects = defineCollection({
     title: z.string(),
     subtitle: z.string(),
     image: z.string(),
+    imageMobile: z.string().optional(),
+    mobileNote: z.string().optional(),
     techStack: z.array(z.string()).default([]),
     customerUrl: z.string().catch("#"),
     status: z.string().catch("online"),

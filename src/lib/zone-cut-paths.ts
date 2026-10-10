@@ -46,18 +46,20 @@ export function cutFillPoints(variant: CutVariant): string | null {
   return `0,${H} ${top} ${W},${H}`;
 }
 
-/** Closed SVG path — earth below the cradle edge. */
+/** Closed SVG path – earth below the cradle edge. */
 export function cutFillPath(variant: CutVariant): string | null {
   if (variant === 'cradle') {
     return `${cradleTopEdge()} L ${W} ${H} L 0 ${H} Z`;
   }
   if (variant === 'drop') {
+    // Nur die hellen Schultern unter der Kante – die Nase selbst bleibt
+    // transparent, damit der Candy-Hintergrund nahtlos durchläuft.
     return [
-      `M 0 0 H ${W} V 22 H 1220`,
-      `C 1154 22, 1128 142, 1030 142`,
-      `H 410`,
-      `C 312 142, 286 22, 220 22`,
-      `H 0 Z`,
+      `M 0 22 H 220`,
+      `C 286 22, 312 142, 410 142`,
+      `H 1030`,
+      `C 1128 142, 1154 22, 1220 22`,
+      `H ${W} V ${H} H 0 Z`,
     ].join(' ');
   }
   return null;

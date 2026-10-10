@@ -6,11 +6,13 @@
     "dev": "astro dev",
     "build": "astro build && cp dist/sitemap-0.xml dist/sitemap.xml",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "images": "node scripts/build-images.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.2",
     "@fontsource-variable/inter": "^5.2.8",
-    "astro": "^6.1.9"
+    "astro": "^6.1.9",
+    "simple-icons": "^16.34.0"
   }
 }

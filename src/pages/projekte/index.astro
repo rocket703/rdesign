@@ -34,22 +34,17 @@ const projectListItems: ProjectListItem[] = sortedProjects.map((project) => ({
     <div class="main-container">
       <nav class="portfolio-nav" aria-label="Seitennavigation">
         <a href="/" class="portfolio-back">
-          <span class="portfolio-back__prompt" aria-hidden="true">&gt;_</span>
-          <span>zurück.start</span>
+          <span class="portfolio-back__prompt" aria-hidden="true">←</span>
+          <span>Zur Startseite</span>
         </a>
       </nav>
 
       <header class="portfolio-hero">
-        <p class="project-path portfolio-hero__path">
-          <span class="project-prompt">&gt;_</span>
-          <span>portfolio/</span>
-        </p>
-        <span class="eyebrow eyebrow--race">Projekte</span>
         <h1 class="section-title">Referenzprojekte</h1>
         <div class="title-divider"></div>
         <p class="section-lead portfolio-hero__lead">
-          Webseiten, Apps und Plattformen aus Magdeburg und Umgebung — von statischen
-          Landingpages bis Fullstack mit Login und Dashboard.
+          Webseiten, Apps und Plattformen aus Magdeburg und Umgebung – von schlanken
+          Landingpages bis zu Plattformen mit Login und eigenem Verwaltungsbereich.
         </p>
       </header>
 
@@ -61,6 +56,7 @@ const projectListItems: ProjectListItem[] = sortedProjects.map((project) => ({
             image={project.data.image}
             tags={project.data.techStack}
             id={projectSlug(project)}
+            headingLevel={2}
           />
         ))}
       </div>
@@ -68,7 +64,6 @@ const projectListItems: ProjectListItem[] = sortedProjects.map((project) => ({
       <footer class="portfolio-foot autoShow">
         <p class="portfolio-foot__note">Ähnliches Vorhaben?</p>
         <a href="/kontakt/" class="portfolio-cta">
-          <span class="portfolio-cta__prompt" aria-hidden="true">&gt;</span>
           Projekt anfragen
         </a>
       </footer>
@@ -98,11 +93,10 @@ const projectListItems: ProjectListItem[] = sortedProjects.map((project) => ({
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
-    font-family: ui-monospace, 'Cascadia Code', monospace;
+    font-family: inherit;
     font-size: 0.78rem;
     font-weight: 600;
     letter-spacing: 0.04em;
-    text-transform: lowercase;
     text-decoration: none;
     color: #94a3b8;
     transition: color 0.2s ease;
@@ -121,11 +115,6 @@ const projectListItems: ProjectListItem[] = sortedProjects.map((project) => ({
     text-align: center;
     max-width: 780px;
     margin: 0 auto clamp(2.5rem, 6vw, 4rem);
-  }
-
-  .portfolio-hero__path {
-    justify-content: center;
-    margin-bottom: 1rem;
   }
 
   .portfolio-hero__lead {
@@ -149,12 +138,11 @@ const projectListItems: ProjectListItem[] = sortedProjects.map((project) => ({
 
   .portfolio-foot__note {
     margin: 0;
-    font-family: ui-monospace, monospace;
+    font-family: inherit;
     font-size: 0.78rem;
     font-weight: 600;
     letter-spacing: 0.04em;
-    text-transform: lowercase;
-    color: #64748b;
+    color: #94a3b8;
   }
 
   .portfolio-cta {
@@ -163,20 +151,15 @@ const projectListItems: ProjectListItem[] = sortedProjects.map((project) => ({
     gap: 0.5rem;
     padding: 0.85rem 1.35rem;
     border-radius: 10px;
-    font-family: ui-monospace, monospace;
+    font-family: inherit;
     font-size: 0.82rem;
     font-weight: 700;
     letter-spacing: 0.03em;
-    text-transform: lowercase;
     text-decoration: none;
     color: #ecfdf5;
     background: linear-gradient(145deg, rgba(16, 185, 129, 0.22) 0%, rgba(16, 185, 129, 0.08) 100%);
     border: 1px solid rgba(16, 185, 129, 0.35);
     transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .portfolio-cta__prompt {
-    color: #34d399;
   }
 
   .portfolio-cta:hover {

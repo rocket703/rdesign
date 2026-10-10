@@ -1,0 +1,102 @@
+{
+  "/images/3viertel12.webp": {
+    "width": 1292,
+    "height": 782,
+    "base": "/images/responsive/3viertel12",
+    "variants": [
+      480,
+      800,
+      1200,
+      1292
+    ]
+  },
+  "/images/IMG_1907.webp": {
+    "width": 1621,
+    "height": 2162,
+    "base": "/images/responsive/IMG_1907",
+    "variants": [
+      480,
+      800,
+      1200,
+      1600,
+      1621
+    ]
+  },
+  "/images/cafe-latte.webp": {
+    "width": 1200,
+    "height": 1200,
+    "base": "/images/responsive/cafe-latte",
+    "variants": [
+      480,
+      800,
+      1200
+    ]
+  },
+  "/images/ohrelauf-mobile.webp": {
+    "width": 1170,
+    "height": 2220,
+    "base": "/images/responsive/ohrelauf-mobile",
+    "variants": [
+      480,
+      800,
+      1170
+    ]
+  },
+  "/images/ohrelauf.webp": {
+    "width": 2880,
+    "height": 1620,
+    "base": "/images/responsive/ohrelauf",
+    "variants": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "/images/projekt-1.webp": {
+    "width": 2842,
+    "height": 1358,
+    "base": "/images/responsive/projekt-1",
+    "variants": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "/images/radsportclub-magdeburg.webp": {
+    "width": 1342,
+    "height": 745,
+    "base": "/images/responsive/radsportclub-magdeburg",
+    "variants": [
+      480,
+      800,
+      1200,
+      1342
+    ]
+  },
+  "/images/startplatzboerse-mobile.webp": {
+    "width": 1170,
+    "height": 2220,
+    "base": "/images/responsive/startplatzboerse-mobile",
+    "variants": [
+      480,
+      800,
+      1170
+    ]
+  },
+  "/images/startplatzboerse.webp": {
+    "width": 2880,
+    "height": 1620,
+    "base": "/images/responsive/startplatzboerse",
+    "variants": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  }
+}

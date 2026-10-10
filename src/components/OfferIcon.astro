@@ -1,0 +1,47 @@
+---
+import type { OfferIcon } from '../data/offers';
+
+interface Props {
+  name: OfferIcon;
+  size?: number;
+}
+
+const { name, size = 24 } = Astro.props;
+---
+
+<svg
+  class="offer-icon"
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.8"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  {name === 'search' && (
+    <>
+      <circle cx="10.5" cy="10.5" r="6.5" />
+      <path d="M15.5 15.5 20 20" />
+      <path d="M7.5 12.5l2-2.5 2 1.5 2-3" />
+    </>
+  )}
+  {name === 'refresh' && (
+    <>
+      <path d="M20 11a8 8 0 0 0-14.3-4.9L4 8" />
+      <path d="M4 4v4h4" />
+      <path d="M4 13a8 8 0 0 0 14.3 4.9L20 16" />
+      <path d="M20 20v-4h-4" />
+    </>
+  )}
+  {name === 'access' && (
+    <>
+      <circle cx="12" cy="4.5" r="1.8" />
+      <path d="M5 8.5c2.3.7 4.6 1 7 1s4.7-.3 7-1" />
+      <path d="M12 9.5V14" />
+      <path d="M9 21l3-7 3 7" />
+    </>
+  )}
+</svg>

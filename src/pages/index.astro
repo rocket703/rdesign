@@ -5,16 +5,20 @@ import ProjectCard from '../components/ProjectCard.astro';
 import { getPublishedProjects, projectSlug } from '../lib/projects';
 import { faqItems } from '../data/faq';
 import ZoneCut from '../components/ZoneCut.astro';
+import { cutFillPath, CUT_VIEWBOX } from '../lib/zone-cut-paths';
 import ZoneHeader from '../components/ZoneHeader.astro';
+import ZoneWatermark from '../components/ZoneWatermark.astro';
 import TechSeam from '../components/TechSeam.astro';
 import StyleShowcase from '../components/StyleShowcase.astro';
+import OfferIcon from '../components/OfferIcon.astro';
+import { offers, offerPath } from '../data/offers';
+import { responsiveImage } from '../lib/images';
 import CandyTapeDivider from '../components/CandyTapeDivider.astro';
 import GroundTapeDivider from '../components/GroundTapeDivider.astro';
 import { BIOME_META, EARTH_META } from '../data/portfolio-biomes';
 import '../styles/home-world.css';
 
 import { homePageSchema, SITE } from '../lib/seo';
-
 
 const candyMarqueeWords = [
   'Webdesign Magdeburg',
@@ -28,6 +32,31 @@ const candyMarqueeWords = [
   'Mit Charakter',
   'Direkt',
 ] as const;
+
+// Hügel-Silhouette als Maske für die Earth-Zone: deren eigener Hintergrund
+// füllt den Hügel, darüber scheint die Clean-Zone durch – ohne Nahtkante.
+const earthMaskSvg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='${CUT_VIEWBOX}' preserveAspectRatio='none'><path d='${cutFillPath('cradle')}'/></svg>`;
+const earthMask = `url("data:image/svg+xml,${encodeURIComponent(earthMaskSvg)}")`;
+
+const steps = [
+  {
+    title: 'Kennenlernen & Konzept',
+    text: 'Erst verstehen, dann gestalten: Im Erstgespräch klären wir Ziele, Zielgruppe und Inhalte. Danach bekommst du ein klares Konzept und ein transparentes Festpreisangebot.',
+    check: 'Kostenlos & unverbindlich',
+  },
+  {
+    title: 'Design & Umsetzung',
+    text: 'Du siehst regelmäßig sichtbare Zwischenstände und sprichst immer direkt mit der Person, die deine Seite baut – ohne Ticketsysteme und Umwege.',
+    check: 'Antwort meist innerhalb von 24 h',
+  },
+  {
+    title: 'Launch & Betreuung',
+    text: 'Nach der Qualitätsprüfung geht deine Seite live – schnell geladen, auch mobil. Danach bleibe ich für Updates und neue Funktionen ansprechbar.',
+    check: 'Performance von Anfang an',
+  },
+] as const;
+
+const portrait = responsiveImage(SITE.portrait, 480);
 
 const publishedProjects = await getPublishedProjects();
 
@@ -54,55 +83,52 @@ const featuredProjects = featuredSlugs
 
       <div class="p-tech-hero__inner">
         <div class="p-tech-hero__brand intro">
-          <p class="p-tech-hero__zone-label">01 / Technical</p>
           <div class="section-head hero-brand">
-            <h1 class="r3-logo">
-              <span class="hero-terminal is-booting" data-phase="deployed" aria-hidden="true">
-                <span class="hero-terminal__prompt">&gt;_</span>
-                <span class="hero-terminal__cmd">r³</span>
-                <span class="hero-terminal__cursor"></span>
-                <span class="hero-terminal__status">
-                  <span class="hero-terminal__dot"></span>
-                  <span class="hero-terminal__label" data-hero-status>deployed</span>
-                </span>
-              </span>
+            <div class="r3-logo">
               <span class="r3-word">
                 <span class="r3-r">r</span>
                 <span class="r3-badge">3</span>
                 <span class="r3-rest">webdesign</span>
               </span>
-            </h1>
+              <h1 class="r3-logo__claim">Webdesign &amp; Webentwicklung in Magdeburg</h1>
+            </div>
           </div>
           <p class="p-tech-hero__value">
-            Individuelles Webdesign aus Magdeburg — klar gestaltet, schnell geladen und ohne Baukasten.
-          </p>
-          <p class="p-tech-hero__audience">
-            Für Vereine, Events, lokale Unternehmen und digitale Produkte.
+            Klar gestaltet, schnell geladen und ohne Baukasten – für Vereine, Events und lokale Unternehmen.
           </p>
           <div class="p-tech-hero__actions">
             <a href="/kontakt/" class="p-tech-hero__cta p-tech-hero__cta--primary">Projekt anfragen</a>
-            <a href="#projekte" class="p-tech-hero__cta p-tech-hero__cta--secondary">Referenzen ansehen</a>
+            <a href="#projekte" class="p-tech-hero__cta p-tech-hero__cta--secondary">Projekte ansehen</a>
           </div>
         </div>
 
-        <StyleShowcase />
       </div>
     </header>
 
     <TechSeam />
 
     <section class="tech-manifesto" id="technik" aria-labelledby="tech-manifesto-title">
-      <div class="container tech-manifesto__inner autoShow">
-        <div class="tech-manifesto__head">
-          <p>&gt; r³/prinzipien</p>
-          <h2 id="tech-manifesto-title">So arbeite ich.</h2>
-        </div>
-        <ol class="tech-manifesto__rail">
-          <li><span>01</span><strong>Erst verstehen.<br />Dann gestalten.</strong></li>
-          <li><span>02</span><strong>Schnell ist keine<br />Zusatzoption.</strong></li>
-          <li><span>03</span><strong>Direkter Draht statt<br />langer Umwege.</strong></li>
+      <div class="container tech-manifesto__inner">
+        <header class="tech-manifesto__head zone-h zone-h--bar autoShow">
+          <ZoneWatermark num="01" />
+          <span class="tech-manifesto__kicker">Ablauf</span>
+          <h2 class="zone-h__title" id="tech-manifesto-title">Schritt für Schritt</h2>
+          <p class="zone-h__desc">
+            Drei klare Schritte vom ersten Gespräch bis nach dem Launch – mit einem festen Ansprechpartner.
+          </p>
+        </header>
+        <ol class="tech-manifesto__pipeline">
+          {steps.map((step, index) => (
+            <li class="tech-manifesto__step autoShow">
+              <span class="tech-manifesto__num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+              <div class="tech-manifesto__body">
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
+                <p class="tech-manifesto__check"><span aria-hidden="true">✓</span> {step.check}</p>
+              </div>
+            </li>
+          ))}
         </ol>
-        <p class="tech-manifesto__stamp">gebaut in Magdeburg · für Vereine, Events und Unternehmen</p>
       </div>
     </section>
 
@@ -124,8 +150,8 @@ const featuredProjects = featuredSlugs
 
     <div class="candy-marquee" aria-hidden="true">
       <div class="candy-marquee__track">
-        {[...candyMarqueeWords, ...candyMarqueeWords].map((word) => (
-          <span class="candy-marquee__word">{word}</span>
+        {[...candyMarqueeWords, ...candyMarqueeWords].map((word, index) => (
+          <span class:list={['candy-marquee__word', { 'candy-marquee__word--clone': index >= candyMarqueeWords.length }]}>{word}</span>
         ))}
       </div>
     </div>
@@ -138,8 +164,8 @@ const featuredProjects = featuredSlugs
               <div class="candy-about__frame" aria-hidden="true"></div>
               <div class="candy-about__photo">
                 <img
-                  src="/images/responsive/IMG_1907-480.webp"
-                  srcset="/images/responsive/IMG_1907-480.webp 480w, /images/responsive/IMG_1907-800.webp 800w"
+                  src={portrait.src}
+                  srcset={portrait.srcset}
                   sizes="(max-width: 899px) min(78vw, 320px), 320px"
                   alt="Dustin Rose – Webentwickler in Magdeburg"
                   width="320"
@@ -155,27 +181,28 @@ const featuredProjects = featuredSlugs
           </figure>
 
           <article class="candy-about__card autoShow">
-            <p class="candy-about__tag">Über mich</p>
-            <h3 class="candy-about__title" id="candy-about-title">
+            <h2 class="candy-about__title" id="candy-about-title">
               Hi, ich bin <span class="candy-about__name">Dustin</span>.
-            </h3>
-            <p class="candy-about__role">Webentwickler &amp; UI/UX Designer</p>
+            </h2>
+            <p class="candy-about__role">Webentwickler &amp; Webdesigner</p>
             <div class="candy-about__text">
-              <p>Ich verbinde Gestaltung, sauberen Code und Performance — ohne Baukasten und ohne unnötige Umwege.</p>
+              <p>Ich verbinde Gestaltung, Technik und schnelle Ladezeiten – ohne Baukasten und ohne unnötige Umwege.</p>
               <p>Von der ersten Idee bis zum Launch bekommst du einen direkten Ansprechpartner und nachvollziehbare Entscheidungen.</p>
             </div>
             <ul class="candy-about__bubbles" aria-label="Schwerpunkte">
               <li>Performance</li>
               <li>Barrierefrei</li>
-              <li>Design + Code</li>
+              <li>Alles aus einer Hand</li>
             </ul>
           </article>
         </div>
       </div>
     </section>
+
+    <StyleShowcase />
   </div>
 
-  <ZoneCut variant="drop" fill="#0d0616" accent="#10b981" front="#f8fafc" />
+  <ZoneCut variant="drop" fill="#0d0616" accent="#10b981" front="#faf9f6" />
 
   <!-- ═══ 03 CLEAN ═══ -->
   <div class="p-zone p-zone--clean">
@@ -191,9 +218,9 @@ const featuredProjects = featuredSlugs
 
     <section id="projekte" class="section projects projects--clean">
       <div class="clean-block-head autoShow">
-        <h3 class="clean-block-head__title">Ausgewählte Referenzen</h3>
+        <h2 class="clean-block-head__title">Ausgewählte Projekte</h2>
         <p class="clean-block-head__lead">
-          Drei Projekte — von der Vereinswebsite bis zur Fullstack-Plattform.
+          Drei Projekte – von der Vereins-Webseite bis zur Online-Plattform.
         </p>
       </div>
       <div class="card-grid card-grid--clean">
@@ -219,81 +246,78 @@ const featuredProjects = featuredSlugs
     <div class="container">
       <div class="clean-block-head autoShow">
         <p class="clean-block-head__kicker">Was ich umsetze</p>
-        <h3 class="clean-block-head__title">Vier Wege zu deinem digitalen Produkt</h3>
+        <h2 class="clean-block-head__title">Vier Wege zu deinem digitalen Produkt</h2>
         <p class="clean-block-head__lead">
-          Vom fokussierten Webauftritt bis zur langfristig betreuten Plattform — passend zum Ziel, nicht zum Trend.
+          Vom fokussierten Webauftritt bis zur langfristig betreuten Plattform – passend zum Ziel, nicht zum Trend.
         </p>
       </div>
 
       <ul class="services-grid">
         <li class="service-card autoShow">
-          <header class="service-card__head">
-            <p class="service-card__path"><span class="service-card__prompt">&gt;_</span> publish.static</p>
-          </header>
           <div class="service-card__body">
-            <h4>Webseiten &amp; Landingpages</h4>
+            <h3>Webseiten &amp; Landingpages</h3>
             <p class="service-card__text">Individuelles Design, saubere Inhalte, SEO und schnelle Ladezeiten ohne austauschbare Schablone.</p>
           </div>
-          <ul class="service-card__chips" aria-label="Schwerpunkte"><li>Astro</li><li>SEO</li><li>Barrierefrei</li></ul>
+          <ul class="service-card__chips" aria-label="Schwerpunkte"><li>Individuell</li><li>SEO</li><li>Barrierefrei</li></ul>
         </li>
 
         <li class="service-card autoShow">
-          <header class="service-card__head">
-            <p class="service-card__path"><span class="service-card__prompt">&gt;_</span> platform.core</p>
-          </header>
           <div class="service-card__body">
-            <h4>Web-Apps &amp; Dashboards</h4>
-            <p class="service-card__text">Login, Datenbank und Admin-Bereiche — Systeme, die mit deinem Arbeitsalltag mitwachsen.</p>
+            <h3>Web-Apps &amp; Dashboards</h3>
+            <p class="service-card__text">Login, Datenbank und Admin-Bereiche – Systeme, die mit deinem Arbeitsalltag mitwachsen.</p>
           </div>
-          <ul class="service-card__chips" aria-label="Schwerpunkte"><li>Supabase</li><li>SSR</li><li>Auth</li></ul>
+          <ul class="service-card__chips" aria-label="Schwerpunkte"><li>Login</li><li>Datenbank</li><li>Admin</li></ul>
         </li>
 
         <li class="service-card autoShow">
-          <header class="service-card__head">
-            <p class="service-card__path"><span class="service-card__prompt">&gt;_</span> mobile.app</p>
-          </header>
           <div class="service-card__body">
-            <h4>Native Apps</h4>
-            <p class="service-card__text">Eine belastbare Codebasis für iOS und Android — vom ersten Prototyp bis zum Store-Release.</p>
+            <h3>Native Apps</h3>
+            <p class="service-card__text">Eine belastbare Codebasis für iOS und Android – vom ersten Prototyp bis zum Store-Release.</p>
           </div>
-          <ul class="service-card__chips" aria-label="Schwerpunkte"><li>Expo</li><li>iOS</li><li>Android</li></ul>
+          <ul class="service-card__chips" aria-label="Schwerpunkte"><li>iOS</li><li>Android</li><li>App Stores</li></ul>
         </li>
 
         <li class="service-card autoShow">
-          <header class="service-card__head">
-            <p class="service-card__path"><span class="service-card__prompt">&gt;_</span> maintain.loop</p>
-          </header>
           <div class="service-card__body">
-            <h4>Betreuung &amp; Weiterentwicklung</h4>
-            <p class="service-card__text">Updates, Performance und neue Funktionen — auch nach dem Launch bleibt der Kontakt direkt.</p>
+            <h3>Betreuung &amp; Weiterentwicklung</h3>
+            <p class="service-card__text">Updates, Sicherheit und neue Funktionen – auch nach dem Launch bleibt der Kontakt direkt.</p>
           </div>
-          <ul class="service-card__chips" aria-label="Schwerpunkte"><li>Updates</li><li>Monitoring</li><li>Support</li></ul>
+          <ul class="service-card__chips" aria-label="Schwerpunkte"><li>Updates</li><li>Sicherheit</li><li>Support</li></ul>
         </li>
       </ul>
     </div>
   </section>
 
-  <section class="project-process" aria-labelledby="process-title">
+  <section class="quickstart" aria-labelledby="quickstart-title">
     <div class="container">
       <div class="clean-block-head autoShow">
-        <p class="clean-block-head__kicker">Zusammenarbeit</p>
-        <h3 class="clean-block-head__title" id="process-title">In vier klaren Schritten zum Launch</h3>
+        <p class="clean-block-head__kicker">Schnellstart</p>
+        <h2 class="clean-block-head__title" id="quickstart-title">Du hast schon eine Webseite?</h2>
+        <p class="clean-block-head__lead">
+          Drei feste Pakete für bestehende Seiten – mit klarem Ergebnis und Festpreis.
+        </p>
       </div>
-      <ol class="project-process__grid">
-        <li class="project-process__step autoShow"><span>01</span><h4>Kennenlernen</h4><p>Ziele, Zielgruppe und Rahmen in einem kurzen Gespräch klären.</p></li>
-        <li class="project-process__step autoShow"><span>02</span><h4>Konzept</h4><p>Struktur, Gestaltung und technische Lösung nachvollziehbar festlegen.</p></li>
-        <li class="project-process__step autoShow"><span>03</span><h4>Umsetzung</h4><p>Design und Entwicklung mit regelmäßigen, sichtbaren Zwischenständen.</p></li>
-        <li class="project-process__step autoShow"><span>04</span><h4>Launch</h4><p>Qualitätsprüfung, Veröffentlichung und eine saubere Übergabe.</p></li>
-      </ol>
+      <ul class="quickstart__grid">
+        {offers.map((offer) => (
+          <li class="autoShow">
+            <a href={offerPath(offer)} class="quickstart-card">
+              <span class="quickstart-card__icon">
+                <OfferIcon name={offer.icon} />
+              </span>
+              <h3 class="quickstart-card__title">{offer.title}</h3>
+              <p class="quickstart-card__text">{offer.teaser}</p>
+              <span class="quickstart-card__more">Mehr erfahren <span aria-hidden="true">→</span></span>
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
   </div>
 
-  <ZoneCut variant="cradle" fill="#141c12" accent="#6b5344" front="#e8e0d4" />
-
   <!-- ═══ 04 GROUNDED ═══ -->
-  <section class="p-zone p-zone--earth" id="abschluss" aria-labelledby="earth-title">
+  <section class="p-zone p-zone--earth" id="abschluss" aria-labelledby="earth-title" style={`--earth-mask: ${earthMask}`}>
     <div class="p-zone__inner">
       <div>
         <ZoneHeader
@@ -305,7 +329,7 @@ const featuredProjects = featuredSlugs
           titleId="earth-title"
         />
         <div class="p-earth-panel autoShow">
-          <p>Webdesign Magdeburg · remote möglich · individuell und direkt.</p>
+          <p>Webdesign aus Magdeburg · remote möglich · individuell und direkt.</p>
         </div>
       </div>
     </div>
@@ -313,8 +337,7 @@ const featuredProjects = featuredSlugs
     <section id="faq" class="faq faq--earth" aria-labelledby="faq-title">
       <div class="container">
         <div class="earth-faq__head autoShow">
-          <p>Vor der Anfrage</p>
-          <h3 id="faq-title">Häufige Fragen, ehrlich beantwortet</h3>
+          <h2 id="faq-title">Häufige Fragen, ehrlich beantwortet</h2>
         </div>
         <div class="faq-grid">
           {faqItems.map((item) => (
@@ -328,64 +351,14 @@ const featuredProjects = featuredSlugs
     </section>
 
     <div class="p-earth-actions p-earth-actions--final autoShow">
-      <a href="/kontakt/" class="p-earth-btn">Unverbindlich anfragen</a>
-      <a href="/projekte/" class="p-earth-btn p-earth-btn--ghost">Alle Referenzen</a>
+      <a href="/kontakt/" class="p-earth-btn">Projekt anfragen</a>
+      <a href="/projekte/" class="p-earth-btn p-earth-btn--ghost">Alle Projekte ansehen</a>
     </div>
   </section>
 
   <GroundTapeDivider />
 </article>
 </BaseLayout>
-
-<script>
-  (() => {
-    const root = document.querySelector('.hero-terminal');
-    const label = document.querySelector('[data-hero-status]');
-    if (!root || !label) return;
-
-    const sequence = [
-      { phase: 'deployed', text: 'deployed', hold: 750 },
-      { phase: 'building', text: 'building…', hold: 1100 },
-      { phase: 'ready', text: 'ready', hold: 0 },
-    ];
-
-    const finish = () => {
-      root.classList.remove('is-booting', 'is-fading');
-      root.classList.add('is-ready');
-      root.dataset.phase = 'ready';
-      label.textContent = 'ready';
-    };
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      finish();
-      return;
-    }
-
-    let step = 0;
-
-    const showStep = () => {
-      const current = sequence[step];
-      root.dataset.phase = current.phase;
-      label.textContent = current.text;
-
-      if (current.phase === 'ready') {
-        finish();
-        return;
-      }
-
-      step += 1;
-      setTimeout(() => {
-        root.classList.add('is-fading');
-        setTimeout(() => {
-          root.classList.remove('is-fading');
-          showStep();
-        }, 160);
-      }, current.hold);
-    };
-
-    showStep();
-  })();
-</script>
 
 <script>
   (() => {
@@ -534,42 +507,6 @@ const featuredProjects = featuredSlugs
     z-index: 2;
   }
 
-  .service-card__head {
-    width: 100%;
-    flex-shrink: 0;
-    margin-bottom: 0.85rem;
-    padding-bottom: 0.65rem;
-  }
-
-  .service-card__head::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    right: calc(0.5rem + clamp(3.2rem, 9vw, 4.2rem) + 0.65rem);
-    height: 1px;
-    background: rgba(255, 255, 255, 0.06);
-  }
-
-  .service-card__path {
-    display: flex;
-    align-items: center;
-    gap: 0.35rem;
-    margin: 0;
-    min-height: 1.15rem;
-    font-family: ui-monospace, 'Cascadia Code', monospace;
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    color: #64748b;
-    text-transform: lowercase;
-  }
-
-  .service-card__prompt {
-    color: #10b981;
-    font-weight: 700;
-  }
-
   .service-card__body {
     flex: 1;
     display: flex;
@@ -605,7 +542,7 @@ const featuredProjects = featuredSlugs
     position: relative;
     z-index: 1;
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     gap: 0.35rem;
     width: 100%;
     min-height: 1.85rem;
@@ -617,10 +554,10 @@ const featuredProjects = featuredSlugs
   }
 
   .service-card__chips li {
-    flex: 1 1 0;
+    flex: 1 1 auto;
     min-width: 0;
-    font-family: ui-monospace, monospace;
-    font-size: 0.6rem;
+    font-family: inherit;
+    font-size: 0.68rem;
     font-weight: 600;
     letter-spacing: 0.04em;
     text-transform: uppercase;
@@ -661,7 +598,7 @@ const featuredProjects = featuredSlugs
   }
 
   .services-cta__prompt {
-    font-family: ui-monospace, monospace;
+    font-family: inherit;
     color: #10b981;
     font-weight: 700;
   }
@@ -819,12 +756,11 @@ const featuredProjects = featuredSlugs
     align-items: center;
     gap: 0.35rem;
     margin: 0 0 0.85rem;
-    font-family: ui-monospace, 'Cascadia Code', monospace;
+    font-family: inherit;
     font-size: 0.72rem;
     font-weight: 500;
     letter-spacing: 0.04em;
     color: #64748b;
-    text-transform: lowercase;
   }
 
   .skill-card__prompt {
@@ -843,7 +779,7 @@ const featuredProjects = featuredSlugs
   }
 
   .skill-card__stats li {
-    font-family: ui-monospace, monospace;
+    font-family: inherit;
     font-size: 0.62rem;
     font-weight: 600;
     letter-spacing: 0.04em;
@@ -904,12 +840,12 @@ const featuredProjects = featuredSlugs
   .filename { 
     font-size: 0.8rem; 
     color: #607b96; 
-    font-family: 'Fira Code', monospace; 
+    font-family: inherit; 
   }
 
   .code-area {
     padding: 2rem;
-    font-family: 'Fira Code', ui-monospace, monospace;
+    font-family: inherit;
     font-size: 0.9rem;
     line-height: 1.6;
     overflow-x: auto;
@@ -1163,7 +1099,7 @@ const featuredProjects = featuredSlugs
   }
 
   .face span {
-    font-family: ui-monospace, 'Cascadia Code', monospace;
+    font-family: inherit;
     font-size: 0.68rem;
     font-weight: 800;
     letter-spacing: 0.05em;
@@ -1315,11 +1251,10 @@ const featuredProjects = featuredSlugs
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
-    font-family: ui-monospace, 'Cascadia Code', monospace;
+    font-family: inherit;
     font-size: 0.82rem;
     font-weight: 600;
     letter-spacing: 0.04em;
-    text-transform: lowercase;
     text-decoration: none;
     color: #94a3b8;
     transition: color 0.2s ease;
@@ -1569,11 +1504,10 @@ const featuredProjects = featuredSlugs
     transform: translateX(-50%);
     margin: 0;
     padding: 0.35rem 0.75rem;
-    font-family: ui-monospace, 'Cascadia Code', monospace;
+    font-family: inherit;
     font-size: 0.68rem;
     font-weight: 600;
     letter-spacing: 0.04em;
-    text-transform: lowercase;
     color: #cbd5e1;
     white-space: nowrap;
     background: rgba(11, 17, 32, 0.92);
@@ -1622,11 +1556,10 @@ const featuredProjects = featuredSlugs
     align-items: center;
     gap: 0.35rem;
     margin: 0 0 1rem;
-    font-family: ui-monospace, 'Cascadia Code', monospace;
+    font-family: inherit;
     font-size: 0.72rem;
     font-weight: 500;
     letter-spacing: 0.04em;
-    text-transform: lowercase;
     color: #64748b;
   }
 
@@ -1647,7 +1580,7 @@ const featuredProjects = featuredSlugs
     margin: 0 0 1.35rem;
     padding-bottom: 1.25rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    font-family: ui-monospace, 'Cascadia Code', monospace;
+    font-family: inherit;
     font-size: clamp(0.82rem, 2vw, 0.95rem);
     font-weight: 600;
     letter-spacing: 0.03em;
@@ -1676,7 +1609,7 @@ const featuredProjects = featuredSlugs
   }
 
   .about__chips li {
-    font-family: ui-monospace, monospace;
+    font-family: inherit;
     font-size: 0.62rem;
     font-weight: 600;
     letter-spacing: 0.04em;
@@ -1811,140 +1744,6 @@ const featuredProjects = featuredSlugs
 
 /* Hero brand: intro logo styles from style.css — no local overrides */
 
-.hero-terminal {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: center;
-  gap: 0.35rem;
-  margin: 0 0 0.7rem;
-  padding: 0;
-  pointer-events: none;
-  font-family: ui-monospace, 'Cascadia Code', monospace;
-  font-size: clamp(0.72rem, 2.4vw, 0.86rem);
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  line-height: 1;
-  text-transform: lowercase;
-  color: #64748b;
-  -webkit-text-fill-color: currentColor;
-  background: none;
-  background-clip: border-box;
-}
-
-.hero-terminal__status {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  margin-left: 0.15rem;
-  padding-left: 0.55rem;
-  border-left: 1px solid rgba(16, 185, 129, 0.22);
-}
-
-.hero-terminal__prompt {
-  color: #10b981;
-  font-weight: 700;
-}
-
-.hero-terminal__cmd {
-  color: #94a3b8;
-}
-
-.hero-terminal__cursor {
-  display: inline-block;
-  width: 2px;
-  height: 0.95em;
-  margin-left: 1px;
-  background: #10b981;
-  opacity: 0.85;
-}
-
-.hero-terminal.is-booting .hero-terminal__cursor {
-  animation: heroTerminalBlink 1.1s step-end infinite;
-}
-
-.hero-terminal.is-ready .hero-terminal__cursor {
-  display: none;
-}
-
-.hero-terminal__dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  background: #64748b;
-  transition: background 0.25s ease, box-shadow 0.25s ease;
-}
-
-.hero-terminal[data-phase='building'] .hero-terminal__dot {
-  background: #fbbf24;
-  box-shadow: 0 0 10px rgba(251, 191, 36, 0.55);
-}
-
-.hero-terminal[data-phase='ready'] .hero-terminal__dot,
-.hero-terminal.is-ready .hero-terminal__dot {
-  background: #34d399;
-  box-shadow: 0 0 10px rgba(52, 211, 153, 0.65);
-}
-
-.hero-terminal.is-booting .hero-terminal__dot {
-  animation: heroStatusPulse 1.1s ease-in-out infinite;
-}
-
-.hero-terminal.is-ready .hero-terminal__dot {
-  animation: none;
-}
-
-.hero-terminal__label {
-  color: #94a3b8;
-  min-width: 4.8em;
-  text-align: left;
-  transition: opacity 0.16s ease;
-}
-
-.hero-terminal.is-fading .hero-terminal__label {
-  opacity: 0.25;
-}
-
-.hero-terminal.is-ready .hero-terminal__label {
-  color: #cbd5e1;
-  opacity: 1;
-}
-
-@keyframes heroTerminalBlink {
-  0%, 100% { opacity: 0.85; }
-  50% { opacity: 0; }
-}
-
-@keyframes heroStatusPulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.15); opacity: 0.75; }
-}
-
-@media (min-width: 769px) {
-  .hero-terminal {
-    margin-bottom: 0.75rem;
-    font-size: 0.86rem;
-  }
-}
-
-@media (max-width: 380px) {
-  .hero-terminal {
-    font-size: 0.66rem;
-    gap: 0.28rem;
-  }
-
-  .hero-terminal__status {
-    padding-left: 0.4rem;
-    margin-left: 0.05rem;
-  }
-
-  .hero-terminal__label {
-    min-width: 4.2em;
-  }
-}
-
 @media (max-width: 768px) {
   #intro {
     min-height: auto;
@@ -1960,9 +1759,7 @@ const featuredProjects = featuredSlugs
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .code-cursor,
-  .hero-terminal__cursor,
-  .hero-terminal__dot {
+  .code-cursor {
     animation: none;
   }
 }
@@ -2008,55 +1805,12 @@ const featuredProjects = featuredSlugs
 
 .clean-block-head__kicker {
   margin: 0 0 0.65rem;
-  font-family: ui-monospace, monospace;
+  font-family: inherit;
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #059669;
-}
-
-.project-process {
-  padding: clamp(2.5rem, 6vw, 4.5rem) 0 clamp(4rem, 8vw, 6rem);
-}
-
-.project-process__grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.project-process__step {
-  min-width: 0;
-  padding: 1.35rem;
-  border: 1px solid rgba(15, 23, 42, 0.1);
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.68);
-}
-
-.project-process__step > span {
-  display: block;
-  margin-bottom: 1rem;
-  font-family: ui-monospace, monospace;
-  font-size: 0.75rem;
-  font-weight: 800;
-  color: #059669;
-}
-
-.project-process__step h4 {
-  margin: 0 0 0.55rem;
-  font-size: 1rem;
-  color: #0f172a;
-}
-
-.project-process__step p {
-  margin: 0;
-  font-size: 0.86rem;
-  line-height: 1.55;
-  color: #64748b;
 }
 
 .faq--earth {
@@ -2074,14 +1828,14 @@ const featuredProjects = featuredSlugs
 
 .earth-faq__head > p {
   margin: 0 0 0.6rem;
-  font-family: ui-monospace, monospace;
+  font-family: inherit;
   font-size: 0.72rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #8fbc8f;
 }
 
-.earth-faq__head h3 {
+.earth-faq__head h2 {
   margin: 0;
   font-size: clamp(1.55rem, 4vw, 2.4rem);
   color: #e8e0d4;
@@ -2106,17 +1860,7 @@ const featuredProjects = featuredSlugs
 .faq.faq--earth .faq-item p {
   color: rgba(232, 224, 212, 0.72);
 }
-
-@media (max-width: 900px) {
-  .project-process__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
 @media (max-width: 560px) {
-  .project-process__grid {
-    grid-template-columns: 1fr;
-  }
 
   .services--clean .service-card {
     min-height: 0;

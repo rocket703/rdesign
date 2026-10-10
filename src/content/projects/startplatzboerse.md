@@ -1,8 +1,10 @@
 ---
 title: "Startplatzboerse.com"
-subtitle: "Fullstack-Plattform für den Zweitmarkt von Startplätzen — sicher, schnell und skalierbar."
+subtitle: "Fullstack-Plattform für den Zweitmarkt von Startplätzen – sicher, schnell und skalierbar."
 customerUrl: "https://startplatzboerse.com/"
 image: "/images/startplatzboerse.webp"
+imageMobile: "/images/startplatzboerse-mobile.webp"
+mobileNote: "Mobil optimiert: Auf dem Smartphone werden die beiden Hauptaktionen zu großen, daumenfreundlichen Buttons, und die Kennzahlen rücken in eine kompakte Leiste."
 techStack: ["Astro", "Supabase", "PostgreSQL", "Resend", "Vercel", "Tailwind CSS"]
 seoTitle: "Startplatzbörse – Fullstack Web-App | r³webdesign"
 seoDesc: "Case Study: Entwicklung einer Handelsplattform für Startplätze mit OTP-Login, Dashboard und Messaging."
@@ -18,7 +20,7 @@ tasks:
   - "Kontinuierliche Erweiterung der Kernfunktionen."
 ---
 
-Die **Startplatzbörse** ist eine spezialisierte Fullstack-Lösung für den sicheren Handel von Startplätzen. Ziel ist ein reibungsloser Ablauf vom Login bis zum erfolgreichen Austausch — ohne Umwege über externe Messenger oder undurchsichtige Prozesse.
+Die **Startplatzbörse** ist eine spezialisierte Fullstack-Lösung für den sicheren Handel von Startplätzen. Ziel ist ein reibungsloser Ablauf vom Login bis zum erfolgreichen Austausch – ohne Umwege über externe Messenger oder undurchsichtige Prozesse.
 
 **Sicherheit und Nutzerführung:**
 Die Plattform setzt auf ein modernes **OTP-System (One-Time-Password)**. Die Authentifizierung erfolgt über **Supabase Auth**, während **Resend** die Zustellung der magischen Login-Links übernimmt. Das sorgt für maximale Sicherheit bei minimaler Reibung im Onboarding-Prozess.

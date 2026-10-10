@@ -1,25 +1,19 @@
 ---
 const currentYear = new Date().getFullYear();
-const statusTime = new Date().toLocaleTimeString('de-DE', {
-  hour: '2-digit',
-  minute: '2-digit',
-});
 ---
 
 <footer class="site-footer">
   <div class="footer-body">
     <div class="footer-grid">
       <div class="item-left">
-        <div class="status-badge" role="status" aria-label={`System online, ${statusTime} Uhr`}>
-          <span class="pulse-dot" aria-hidden="true"></span>
-          SYSTEM ONLINE · {statusTime}
-        </div>
+        <p class="f-badge">
+          <span class="f-badge__dot" aria-hidden="true"></span>
+          Webdesign aus Magdeburg
+        </p>
       </div>
       <div class="item-center">
         <a href="/" class="f-logo">r³webdesign</a>
-        <div class="f-slogan">
-          <span class="cmd">&gt;</span> Code. Design. Performance<span class="cursor">_</span>
-        </div>
+        <p class="f-slogan">Design. Entwicklung. Betreuung.</p>
       </div>
       <div class="item-right">
         <nav class="f-nav" aria-label="Rechtliches">
@@ -116,30 +110,23 @@ const statusTime = new Date().toLocaleTimeString('de-DE', {
   }
 
   .f-slogan {
-    font-family: ui-monospace, 'Cascadia Code', monospace;
     color: #10b981;
-    font-size: clamp(0.72rem, 2.2vw, 0.9rem);
+    font-size: clamp(0.8rem, 2.2vw, 0.95rem);
+    font-weight: 600;
+    letter-spacing: 0.02em;
     line-height: 1.45;
     margin: 0;
     white-space: nowrap;
   }
 
-  .cmd {
-    opacity: 0.6;
-    margin-right: 0.35rem;
-  }
-
-  .cursor {
-    font-weight: bold;
-  }
-
-  .status-badge {
+  .f-badge {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-family: ui-monospace, monospace;
-    font-size: 0.72rem;
-    color: #64748b;
+    margin: 0;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #94a3b8;
     border: 1px solid #334155;
     padding: 6px 14px;
     border-radius: 50px;
@@ -147,12 +134,12 @@ const statusTime = new Date().toLocaleTimeString('de-DE', {
     transition: border-color 0.3s ease, background 0.3s ease;
   }
 
-  .status-badge:hover {
+  .f-badge:hover {
     border-color: #10b981;
     background: rgba(16, 185, 129, 0.05);
   }
 
-  .pulse-dot {
+  .f-badge__dot {
     width: 8px;
     height: 8px;
     flex-shrink: 0;
@@ -184,9 +171,9 @@ const statusTime = new Date().toLocaleTimeString('de-DE', {
   }
 
   .f-copy {
-    color: #334155;
+    color: #94a3b8;
     font-size: 0.7rem;
-    font-family: ui-monospace, monospace;
+    font-family: inherit;
     margin: 0;
     line-height: 1.4;
   }
@@ -216,7 +203,6 @@ const statusTime = new Date().toLocaleTimeString('de-DE', {
     color: transparent;
     -webkit-text-stroke: 1.5px rgba(16, 185, 129, 0.14);
     white-space: nowrap;
-    text-transform: lowercase;
     pointer-events: none;
     user-select: none;
     transform: translateX(-50%);
@@ -260,8 +246,8 @@ const statusTime = new Date().toLocaleTimeString('de-DE', {
   }
 
   @media (max-width: 480px) {
-    .status-badge {
-      font-size: 0.65rem;
+    .f-badge {
+      font-size: 0.72rem;
       padding: 6px 10px;
     }
 
@@ -290,9 +276,5 @@ const statusTime = new Date().toLocaleTimeString('de-DE', {
       transition: none;
     }
 
-    .pulse-dot,
-    .cursor {
-      animation: none;
-    }
   }
 </style>
