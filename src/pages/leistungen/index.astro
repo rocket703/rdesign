@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LegalPageShell from '../../components/LegalPageShell.astro';
 import OfferIcon from '../../components/OfferIcon.astro';
-import { offers, offerPath } from '../../data/offers';
+import { packages, offerPath } from '../../data/offers';
 import { services } from '../../data/services';
 import { breadcrumbSchema, schemaGraph, webPageSchema, absoluteUrl } from '../../lib/seo';
 import '../../styles/offer.css';
@@ -53,6 +53,9 @@ const pageDescription =
             <ul class="service-list__chips" aria-label="Schwerpunkte">
               {service.chips.map((chip) => <li>{chip}</li>)}
             </ul>
+            {service.href && (
+              <a class="service-list__ref" href={service.href}>Mehr zu {service.title} →</a>
+            )}
             {service.reference && (
               <a class="service-list__ref" href={`/projekte/${service.reference.slug}/`}>
                 Referenz: {service.reference.title} →
@@ -69,7 +72,7 @@ const pageDescription =
         Du hast schon eine Webseite? Diese drei Pakete sind einzeln buchbar – mit klarem Ergebnis und Festpreis.
       </p>
       <div class="offer-more__grid offer-more__grid--three">
-        {offers.map((offer) => (
+        {packages.map((offer) => (
           <a href={offerPath(offer)} class="offer-more__card">
             <span class="offer-summary__icon">
               <OfferIcon name={offer.icon} size={22} />

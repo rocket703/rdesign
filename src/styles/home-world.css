@@ -949,6 +949,20 @@
   background: #ffd166;
 }
 
+.candy-about__more {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: #ffd166;
+}
+
+.candy-about__more:hover {
+  color: #ffe29a;
+}
+
 .candy-about__title {
   margin: 0 0 0.5rem;
   font-size: clamp(1.65rem, 4vw, 2.35rem);

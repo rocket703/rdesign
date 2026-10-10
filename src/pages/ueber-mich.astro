@@ -1,0 +1,211 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LegalPageShell from '../components/LegalPageShell.astro';
+import { responsiveImage } from '../lib/images';
+import { SITE, absoluteUrl, breadcrumbSchema, personSchema, schemaGraph, webPageSchema } from '../lib/seo';
+import '../styles/offer.css';
+
+const pageTitle = 'Über mich – Dustin Rose, Webentwickler | r³webdesign';
+const pageDescription =
+  'Dustin Rose, Webentwickler und Webdesigner aus Magdeburg: seit 5 Jahren Webseiten, Web-Apps und Server-Betrieb, zertifiziert in Responsive Web Design.';
+const portrait = responsiveImage(SITE.portrait, 320);
+
+const skills = [
+  { title: 'Gestaltung & UX', items: ['Individuelles Webdesign', 'Responsive Design', 'Barrierefreiheit (WCAG)'] },
+  { title: 'Entwicklung', items: ['HTML, CSS, JavaScript, TypeScript', 'Astro, React Native / Expo', 'Supabase, PostgreSQL, Edge Functions'] },
+  { title: 'Sichtbarkeit', items: ['Technisches SEO', 'Strukturierte Daten (Schema.org)', 'Performance & Core Web Vitals'] },
+  { title: 'Betrieb & Sicherheit', items: ['Linux-Server, Docker, Proxmox', 'Monitoring mit Prometheus & Grafana', 'Backups, Updates, CI mit GitHub Actions'] },
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  jsonLd={schemaGraph([
+    webPageSchema({
+      type: 'ProfilePage',
+      name: pageTitle,
+      description: pageDescription,
+      pathname: '/ueber-mich/',
+      site: Astro.site,
+      mainEntity: { '@id': `${absoluteUrl('/', Astro.site)}#person` },
+    }),
+    personSchema(Astro.site),
+    breadcrumbSchema(
+      [
+        { name: 'Start', path: '/' },
+        { name: 'Über mich', path: '/ueber-mich/' },
+      ],
+      Astro.site,
+    ),
+  ])}
+>
+  <LegalPageShell
+    wide
+    legalNav={false}
+    title="Über mich"
+    lead="Ich bin Dustin Rose – Webentwickler und Webdesigner aus Magdeburg. Unter r³webdesign entwickle ich Webseiten und Web-Apps, bei denen Gestaltung, Technik und Ladezeit zusammenpassen."
+  >
+    <div class="offer-layout">
+      <aside class="offer-aside">
+        <article class="legal-block about-card autoShow">
+          <img
+            class="about-card__photo"
+            src={portrait.src}
+            srcset={portrait.srcset}
+            sizes="(max-width: 899px) 60vw, 320px"
+            width={portrait.width}
+            height={portrait.height}
+            alt="Dustin Rose, Webentwickler in Magdeburg"
+            loading="eager"
+            decoding="async"
+          />
+          <h2 class="legal-block__title">Dustin Rose</h2>
+          <dl class="offer-facts">
+            <div class="offer-facts__row"><dt>Rolle</dt><dd>Webentwickler &amp; Webdesigner</dd></div>
+            <div class="offer-facts__row"><dt>Erfahrung</dt><dd>seit 5 Jahren im Web</dd></div>
+            <div class="offer-facts__row"><dt>Standort</dt><dd>Magdeburg · remote</dd></div>
+            <div class="offer-facts__row">
+              <dt>Zertifikat</dt>
+              <dd>
+                <a href={SITE.certificate.url} target="_blank" rel="noopener" class="legal-link">Responsive Web Design ↗</a><br />
+                freeCodeCamp
+              </dd>
+            </div>
+          </dl>
+          <div class="about-card__links">
+            <a href={SITE.profiles.linkedin} rel="me noopener" target="_blank" class="service-list__ref">LinkedIn ↗</a>
+            <a href={SITE.profiles.github} rel="me noopener" target="_blank" class="service-list__ref">GitHub ↗</a>
+          </div>
+          <a href="/kontakt/" class="offer-cta">Projekt anfragen</a>
+        </article>
+      </aside>
+
+      <div class="offer-main">
+        <article class="legal-block autoShow">
+          <h2 class="legal-block__title">Wie ich zum Webdesign gekommen bin</h2>
+          <div class="legal-block__body">
+            <p>
+              Angefangen hat alles 2020 mit dem Wolmirstedter Ohrelauf: Ich habe die damalige WordPress-Seite des
+              Spendenlaufs betreut – und schnell gemerkt, wie viel Zeit Plugins, Updates und langsame Ladezeiten kosten.
+              Seitdem beschäftige ich mich intensiv mit Webdesign und Webentwicklung. Die WordPress-Seite wurde später
+              eingestellt, zwischenzeitlich lief der Ohrelauf über Google Sites – heute hat er wieder eine eigene Webseite,
+              die ich komplett neu und ohne WordPress entwickelt habe: schneller, mobil optimiert und einfach zu betreiben.
+            </p>
+            <p>
+              Meine Grundlagen habe ich unter anderem mit dem Zertifikat
+              <a class="legal-link" href={SITE.certificate.url} target="_blank" rel="noopener">Responsive Web Design</a>
+              von freeCodeCamp gelegt. Den Großteil meines Wissens habe ich mir aber in echten Projekten erarbeitet: vom
+              schlanken Vereinsauftritt bis zur kompletten Plattform mit Datenbank, Benutzerkonten und App.
+            </p>
+          </div>
+        </article>
+
+        <article class="legal-block autoShow">
+          <h2 class="legal-block__title">Vom Elektroniker zum Webentwickler</h2>
+          <div class="legal-block__body">
+            <p>
+              Beruflich komme ich aus der Technik: Als gelernter Elektroniker war ich rund zehn Jahre in der Industrie
+              tätig – in Instandhaltung, Störungsbeseitigung und technischer Dokumentation. Danach habe ich als
+              Selbstständiger im Finanzdienstleistungsbereich gearbeitet und Kunden persönlich beraten.
+            </p>
+            <p>
+              Beides prägt meine Arbeit bis heute: Fehler systematisch eingrenzen, sauber dokumentieren, zuverlässig
+              liefern – und Technik so erklären, dass sie auch ohne Fachwissen verständlich ist.
+            </p>
+          </div>
+        </article>
+
+        <article class="legal-block autoShow">
+          <h2 class="legal-block__title">Projekte, die mich geprägt haben</h2>
+          <div class="legal-block__body">
+            <p>
+              Das umfangreichste Projekt ist <a class="legal-link" href="/projekte/startplatzboerse/">Startplatzbörse</a>:
+              eine Community-Plattform für den Handel mit Startplätzen bei Lauf-, Rad- und Triathlon-Events – als
+              Webseite und als Mobile App. Ich betreue sie eigenverantwortlich: von der Datenbank mit Zugriffsregeln über
+              Anmeldung und Benutzerkonten, serverseitige Funktionen und automatische Tests bis zu Deployment und App-Updates.
+            </p>
+            <p>
+              Daneben sind verschiedene Webseiten für Vereine und lokale Projekte entstanden, etwa für den
+              <a class="legal-link" href="/projekte/ohrelauf/">Wolmirstedter Ohrelauf</a> und den
+              <a class="legal-link" href="/projekte/radsportclub-magdeburg/">Radsportclub Magdeburg</a>. Bei diesen
+              Projekten stehen schnelle Ladezeiten, eine einfache Bedienung auf dem Smartphone und gute Auffindbarkeit
+              bei Google im Mittelpunkt.
+            </p>
+          </div>
+        </article>
+
+        <article class="legal-block autoShow">
+          <h2 class="legal-block__title">Betrieb, Monitoring und Sicherheit</h2>
+          <div class="legal-block__body">
+            <p>
+              Eine Webseite ist mit dem Launch nicht fertig – sie muss zuverlässig laufen. In meiner eigenen
+              Server-Umgebung betreibe ich über ein Dutzend Dienste auf Linux: virtualisiert mit Proxmox, in getrennten
+              Containern, abgesichert per VPN und zentral verschlüsselt.
+            </p>
+            <p>
+              Dazu gehören Monitoring mit Prometheus und Grafana, eine Übersicht über anstehende Updates, gespiegelte
+              Datenträger, regelmäßige Snapshots und Backups sowie eine lückenlose Dokumentation. Diese Erfahrung fließt
+              direkt in die <a class="legal-link" href="/leistungen/">Betreuung</a> deiner Webseite ein: Updates,
+              Sicherheit und Backups behalte ich im Blick, damit du dich um dein Geschäft kümmern kannst.
+            </p>
+          </div>
+        </article>
+
+        <article class="legal-block autoShow">
+          <h2 class="legal-block__title">Was ich mitbringe</h2>
+          <ul class="service-list">
+            {skills.map((group) => (
+              <li class="service-list__item">
+                <h3 class="about-skill__title">{group.title}</h3>
+                <ul class="legal-list">
+                  {group.items.map((item) => <li>{item}</li>)}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </article>
+
+        <article class="legal-block autoShow">
+          <h2 class="legal-block__title">Wie ich arbeite</h2>
+          <div class="legal-block__body">
+            <p>
+              Bei mir hast du einen festen Ansprechpartner – vom ersten Gespräch über Konzept und Umsetzung bis zur
+              Betreuung nach dem Launch. Ich setze keine Baukästen ein, sondern entwickle jede Seite individuell, damit
+              sie schnell lädt, gut aussieht und dir gehört. Wie das konkret abläuft, findest du unter
+              <a class="legal-link" href="/leistungen/">Leistungen</a>.
+            </p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </LegalPageShell>
+</BaseLayout>
+
+<style>
+  .about-card {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .about-card__photo {
+    width: 100%;
+    max-width: 16rem;
+    height: auto;
+    margin-bottom: 1rem;
+    border-radius: 12px;
+  }
+
+  .about-card__links {
+    display: flex;
+    gap: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .about-skill__title {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    font-weight: 800;
+    color: #f8fafc;
+  }
+</style>

@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LegalPageShell from '../components/LegalPageShell.astro';
-import { contactPageSchema, personSchema, professionalServiceSchema, schemaGraph } from '../lib/seo';
+import { SITE, contactPageSchema, personSchema, professionalServiceSchema, schemaGraph } from '../lib/seo';
 
 const pageTitle = 'Kontakt – Webdesign Magdeburg | r³webdesign';
 const pageDescription =
@@ -108,23 +108,32 @@ const pageDescription =
 
       <aside class="contact-aside">
         <article class="legal-block autoShow">
-          <h2 class="legal-block__title">Schnelle Antwort</h2>
+          <h2 class="legal-block__title">Direkt erreichen</h2>
           <div class="legal-block__body">
-            <p>In der Regel antworte ich innerhalb von 24 Stunden auf deine Anfrage.</p>
+            <p>
+              E-Mail: <a href={`mailto:${SITE.email}`} class="legal-link">{SITE.email}</a><br />
+              Antwort in der Regel innerhalb von 24 Stunden.
+            </p>
           </div>
         </article>
 
         <article class="legal-block autoShow">
-          <h2 class="legal-block__title">Kostenlose Erstberatung</h2>
+          <h2 class="legal-block__title">Kostenloses Erstgespräch</h2>
           <div class="legal-block__body">
-            <p>Lass uns klären, was du brauchst – unverbindlich und transparent.</p>
+            <p>
+              In rund 15 Minuten klären wir, was du brauchst und welche Lösung passt – per Telefon, Video oder
+              persönlich in Magdeburg. Unverbindlich und mit transparentem Festpreisangebot danach.
+            </p>
           </div>
         </article>
 
         <article class="legal-block autoShow">
-          <h2 class="legal-block__title">Individuelle Lösungen</h2>
+          <h2 class="legal-block__title">Standort &amp; Einzugsgebiet</h2>
           <div class="legal-block__body">
-            <p>Kein Baukasten, sondern eine maßgeschneiderte Umsetzung für dein Vorhaben.</p>
+            <p>
+              {SITE.streetAddress}, {SITE.postalCode} {SITE.city}<br />
+              Termine vor Ort in {SITE.serviceArea.join(', ')} – remote deutschlandweit.
+            </p>
           </div>
         </article>
       </aside>

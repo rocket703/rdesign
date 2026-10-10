@@ -14,12 +14,15 @@ export const SITE = {
   url: 'https://r3webdesign.de',
   locale: 'de_DE',
   language: 'de-DE',
-  email: 'dustin.rose@gmx.de',
+  email: 'info@r3webdesign.de',
   city: 'Magdeburg',
   region: 'Sachsen-Anhalt',
   country: 'DE',
   streetAddress: 'Lindenplan 26',
   postalCode: '39120',
+  geo: { latitude: 52.0924474, longitude: 11.6247054 },
+  // Einzugsgebiet für Vor-Ort-Termine; remote deutschlandweit
+  serviceArea: ['Magdeburg', 'Halle (Saale)', 'Burg', 'Schönebeck (Elbe)', 'Wolmirstedt', 'Barleben'],
   defaultOgImage: '/og-default.webp',
   logo: '/icon-512.png',
   portrait: '/images/IMG_1907.webp',
@@ -28,6 +31,11 @@ export const SITE = {
     'Webdesign und Webentwicklung in Magdeburg: schnelle Homepages, moderne Web-Apps und SEO-starke Umsetzung mit Astro, TypeScript und klarer UX.',
   profiles: {
     github: 'https://github.com/rocket703',
+    linkedin: 'https://www.linkedin.com/in/dustin-rose-dev',
+  },
+  certificate: {
+    name: 'Responsive Web Design',
+    url: 'https://www.freecodecamp.org/certification/fcc-c08648df-44dc-4a8d-ab29-92c81906e3e4/responsive-web-design',
   },
 } as const;
 
@@ -68,6 +76,13 @@ export function personSchema(site: URL | string = SITE.url) {
     image: absoluteUrl(SITE.portrait, site),
     email: SITE.email,
     jobTitle: 'Webentwickler & Webdesigner',
+    hasCredential: {
+      '@type': 'EducationalOccupationalCredential',
+      name: SITE.certificate.name,
+      url: SITE.certificate.url,
+      credentialCategory: 'Zertifikat',
+      recognizedBy: { '@type': 'Organization', name: 'freeCodeCamp', url: 'https://www.freecodecamp.org' },
+    },
     worksFor: { '@id': `${absoluteUrl('/', site)}#service` },
     address: {
       '@type': 'PostalAddress',
@@ -90,8 +105,12 @@ export function personSchema(site: URL | string = SITE.url) {
       'Astro',
       'TypeScript',
       'Supabase',
+      'React Native',
+      'Linux-Serverbetrieb',
+      'Docker',
+      'Monitoring',
     ],
-    sameAs: [SITE.profiles.github],
+    sameAs: [SITE.profiles.linkedin, SITE.profiles.github],
   };
 }
 
@@ -106,9 +125,25 @@ export function professionalServiceSchema(site: URL | string = SITE.url) {
     image: absoluteUrl(SITE.defaultOgImage, site),
     email: SITE.email,
     areaServed: [
-      { '@type': 'City', name: SITE.city },
+      ...SITE.serviceArea.map((name) => ({ '@type': 'City', name })),
       { '@type': 'AdministrativeArea', name: SITE.region },
+      { '@type': 'Country', name: 'Deutschland' },
     ],
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: SITE.geo.latitude,
+      longitude: SITE.geo.longitude,
+    },
+    founder: { '@id': `${absoluteUrl('/', site)}#person` },
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'customer service',
+      email: SITE.email,
+      url: absoluteUrl('/kontakt/', site),
+      availableLanguage: ['de'],
+      areaServed: 'DE',
+    },
+    sameAs: [SITE.profiles.linkedin],
     address: {
       '@type': 'PostalAddress',
       streetAddress: SITE.streetAddress,

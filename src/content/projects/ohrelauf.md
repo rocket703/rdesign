@@ -21,7 +21,7 @@ tasks:
   - "GitHub Pages Hosting für kostenlose, sichere und blitzschnelle Auslieferung."
 ---
 
-Für den **Wolmirstedter Ohrelauf**, einen regionalen Spendenlauf mit gesellschaftlichem Engagement, wurde eine **moderne statische Website** entwickelt, die alte Google‑Sites‑Lösung komplett erneuert. Die neue Webseite setzt auf ein schlankes HTML/CSS/JavaScript‑Stack und wird statisch über GitHub gehostet – das Ergebnis: blitzschnelle Ladezeiten, höchste Zuverlässigkeit und null Abhängigkeiten von CMS‑Systemen.
+Mit dem **Wolmirstedter Ohrelauf**, einem regionalen Spendenlauf, verbindet mich eine lange Geschichte: 2020/2021 habe ich die damalige WordPress‑Seite betreut. Diese wurde später eingestellt, danach lief der Auftritt eine Zeit lang über Google Sites. Mit dem Redesign ist nun eine **moderne statische Website** entstanden, die die Google‑Sites‑Lösung komplett ersetzt. Die neue Webseite setzt auf ein schlankes HTML/CSS/JavaScript‑Stack und wird statisch über GitHub gehostet – das Ergebnis: blitzschnelle Ladezeiten, höchste Zuverlässigkeit und null Abhängigkeiten von CMS‑Systemen.
 
 **Kernpunkte des Umbaus:**
 Das Design folgt konsequent dem Mobile‑First‑Ansatz mit intuitiven Touch‑Interfaces für die Streckenauswahl und ein benutzerfreundliches Anmeldeformular. Sämtliche Bilder wurden in das moderne WebP‑Format konvertiert, wodurch sich die Dateigröße drastisch reduzierte. Die SEO wurde von Grund auf neu strukturiert – mit aussagekräftigen Meta‑Tags, Open‑Graph‑Integration und semantisch korrektem Markup.

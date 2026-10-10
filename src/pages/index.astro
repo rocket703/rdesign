@@ -12,7 +12,7 @@ import TechSeam from '../components/TechSeam.astro';
 import StyleShowcase from '../components/StyleShowcase.astro';
 import OfferIcon from '../components/OfferIcon.astro';
 import OfferVisual from '../components/OfferVisual.astro';
-import { offers, offerPath } from '../data/offers';
+import { packages, offerPath } from '../data/offers';
 import { services } from '../data/services';
 import { responsiveImage } from '../lib/images';
 import CandyTapeDivider from '../components/CandyTapeDivider.astro';
@@ -196,6 +196,7 @@ const featuredProjects = featuredSlugs
               <li>Barrierefrei</li>
               <li>Alles aus einer Hand</li>
             </ul>
+            <a href="/ueber-mich/" class="candy-about__more">Mehr über mich →</a>
           </article>
         </div>
       </div>
@@ -264,6 +265,9 @@ const featuredProjects = featuredSlugs
             <ul class="service-card__chips" aria-label="Schwerpunkte">
               {service.chips.map((chip) => <li>{chip}</li>)}
             </ul>
+            {service.href && (
+              <a class="service-card__link" href={service.href}>Mehr erfahren <span aria-hidden="true">→</span></a>
+            )}
           </li>
         ))}
       </ul>
@@ -283,7 +287,7 @@ const featuredProjects = featuredSlugs
         </p>
       </div>
       <ul class="quickstart__grid">
-        {offers.map((offer) => (
+        {packages.map((offer) => (
           <li class="autoShow">
             <a href={offerPath(offer)} class="quickstart-card">
               <OfferVisual name={offer.icon} />
@@ -493,6 +497,23 @@ const featuredProjects = featuredSlugs
 
   .service-card__head,
   .service-card__body,
+  .service-card__link {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: 0.4rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--r3-green-ink);
+  }
+
+  .service-card__link:hover {
+    text-decoration: underline;
+  }
+
   .service-card__chips {
     position: relative;
     z-index: 2;

@@ -5,15 +5,17 @@
 ## Kontakt
 
 - [Projektanfrage](https://r3webdesign.de/kontakt/): Kontaktformular, kostenloses Erstgespräch
-- E-Mail: dustin.rose@gmx.de
+- E-Mail: info@r3webdesign.de
 - Standort: Lindenplan 26, 39120 Magdeburg, Deutschland
+- [LinkedIn](https://www.linkedin.com/in/dustin-rose-dev)
 - [GitHub](https://github.com/rocket703)
+- [Über mich](https://r3webdesign.de/ueber-mich/): Dustin Rose, Werdegang und Projekte
 
 ## Leistungen
 
 - [Leistungsübersicht](https://r3webdesign.de/leistungen/): alle Leistungen auf einen Blick
-- Webseiten & Landingpages: individuelles Design, SEO, Barrierefreiheit, schnelle Ladezeiten
-- Web-Apps & Dashboards: Login, Datenbank, Admin-Bereiche
+- [Webdesign Magdeburg](https://r3webdesign.de/leistungen/webdesign-magdeburg/): neue Webseiten für Unternehmen, Vereine und Selbstständige – individuell, schnell, mit technischem SEO
+- [Webentwicklung & Web-Apps](https://r3webdesign.de/leistungen/webentwicklung/): Web-Apps, Portale und Dashboards mit Login, Datenbank und Admin-Bereich
 - Native Apps: iOS und Android aus einer Codebasis
 - Betreuung & Weiterentwicklung: Updates, Sicherheit, neue Funktionen
 

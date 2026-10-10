@@ -19,7 +19,7 @@ export function getStaticPaths() {
 
 const { offer } = Astro.props as { offer: Offer };
 const pathname = offerPath(offer);
-const otherOffers = offers.filter((other) => other.slug !== offer.slug);
+const otherOffers = offers.filter((other) => other.slug !== offer.slug && other.kind === offer.kind);
 const contactHref = `/kontakt/?thema=${offer.slug}`;
 ---
 
@@ -94,6 +94,15 @@ const contactHref = `/kontakt/?thema=${offer.slug}`;
           </div>
         </article>
 
+        {offer.sections?.map((section) => (
+          <article class="legal-block autoShow">
+            <h2 class="legal-block__title">{section.heading}</h2>
+            <div class="legal-block__body">
+              {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+            </div>
+          </article>
+        ))}
+
         <article class="legal-block autoShow">
           <h2 class="legal-block__title">{offer.headings.deliverables}</h2>
           <ul class="offer-checklist">
@@ -128,8 +137,8 @@ const contactHref = `/kontakt/?thema=${offer.slug}`;
 
     </div>
 
-    <nav class="offer-more autoShow" aria-label="Weitere Angebote">
-      <p class="offer-more__title">Weitere Angebote</p>
+    <nav class="offer-more autoShow" aria-label={offer.kind === 'service' ? 'Weitere Leistungen' : 'Weitere Pakete'}>
+      <p class="offer-more__title">{offer.kind === 'service' ? 'Weitere Leistungen' : 'Weitere Pakete'}</p>
       <div class="offer-more__grid">
         {otherOffers.map((other) => (
           <a href={offerPath(other)} class="offer-more__card">
