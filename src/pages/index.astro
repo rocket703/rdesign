@@ -11,6 +11,7 @@ import ZoneWatermark from '../components/ZoneWatermark.astro';
 import TechSeam from '../components/TechSeam.astro';
 import StyleShowcase from '../components/StyleShowcase.astro';
 import OfferIcon from '../components/OfferIcon.astro';
+import OfferVisual from '../components/OfferVisual.astro';
 import { offers, offerPath } from '../data/offers';
 import { responsiveImage } from '../lib/images';
 import CandyTapeDivider from '../components/CandyTapeDivider.astro';
@@ -301,12 +302,18 @@ const featuredProjects = featuredSlugs
         {offers.map((offer) => (
           <li class="autoShow">
             <a href={offerPath(offer)} class="quickstart-card">
-              <span class="quickstart-card__icon">
-                <OfferIcon name={offer.icon} />
-              </span>
-              <h3 class="quickstart-card__title">{offer.title}</h3>
+              <OfferVisual name={offer.icon} />
+              <div class="quickstart-card__head">
+                <span class="quickstart-card__icon">
+                  <OfferIcon name={offer.icon} size={22} />
+                </span>
+                <h3 class="quickstart-card__title">{offer.title}</h3>
+              </div>
               <p class="quickstart-card__text">{offer.teaser}</p>
-              <span class="quickstart-card__more">Mehr erfahren <span aria-hidden="true">→</span></span>
+              <div class="quickstart-card__foot">
+                <span class="quickstart-card__meta">{offer.facts.find((fact) => fact.label === 'Dauer')?.value}</span>
+                <span class="quickstart-card__more">Mehr erfahren <span class="quickstart-card__arrow" aria-hidden="true">→</span></span>
+              </div>
             </a>
           </li>
         ))}
