@@ -9,6 +9,7 @@ export type ProjectListItem = {
 
 export const SITE = {
   name: 'r³webdesign',
+  alternateName: 'r3webdesign',
   legalName: 'Dustin Rose',
   url: 'https://r3webdesign.de',
   locale: 'de_DE',
@@ -22,7 +23,7 @@ export const SITE = {
   defaultOgImage: '/og-default.webp',
   logo: '/icon-512.png',
   portrait: '/images/IMG_1907.webp',
-  defaultTitle: 'Webdesign Magdeburg | Homepage & Webentwicklung – r³webdesign',
+  defaultTitle: 'Webdesign Magdeburg & Webentwicklung | r³webdesign',
   defaultDescription:
     'Webdesign und Webentwicklung in Magdeburg: schnelle Homepages, moderne Web-Apps und SEO-starke Umsetzung mit Astro, TypeScript und klarer UX.',
   profiles: {
@@ -50,6 +51,7 @@ export function webSiteSchema(site: URL | string = SITE.url) {
     '@type': 'WebSite',
     '@id': `${absoluteUrl('/', site)}#website`,
     name: SITE.name,
+    alternateName: SITE.alternateName,
     url: absoluteUrl('/', site),
     inLanguage: SITE.language,
     description: SITE.defaultDescription,
@@ -98,6 +100,7 @@ export function professionalServiceSchema(site: URL | string = SITE.url) {
     '@type': 'ProfessionalService',
     '@id': `${absoluteUrl('/', site)}#service`,
     name: `${SITE.name} – Webdesign Magdeburg`,
+    alternateName: [SITE.name, SITE.alternateName],
     url: absoluteUrl('/', site),
     logo: absoluteUrl(SITE.logo, site),
     image: absoluteUrl(SITE.defaultOgImage, site),

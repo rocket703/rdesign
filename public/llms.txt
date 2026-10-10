@@ -1,35 +1,36 @@
 # r³webdesign
 
-> Webentwickler Dustin Rose aus Magdeburg (Sachsen-Anhalt). Unter r³webdesign entstehen schnelle Homepages, Web-Apps und native Apps — Schwerpunkt Performance, klares Design und sauberer Code.
+> Webdesign und Webentwicklung von Dustin Rose aus Magdeburg (Sachsen-Anhalt). Individuelle Webseiten, Web-Apps und native Apps – ohne Baukasten, mit Schwerpunkt auf Performance, Barrierefreiheit und technischem SEO. Persönlicher Ansprechpartner, Projekte vor Ort in Magdeburg und remote.
 
 ## Kontakt
 
-- Website: https://r3webdesign.de
+- [Projektanfrage](https://r3webdesign.de/kontakt/): Kontaktformular, kostenloses Erstgespräch
 - E-Mail: dustin.rose@gmx.de
 - Standort: Lindenplan 26, 39120 Magdeburg, Deutschland
-- GitHub: https://github.com/rocket703
+- [GitHub](https://github.com/rocket703)
 
 ## Leistungen
 
-- Webseiten & Landingpages (Astro, SEO, Barrierefreiheit)
-- Web-Apps & Dashboards (Supabase, SSR, Auth)
-- Native Apps (Expo, iOS, Android)
-- Betreuung, Performance, Weiterentwicklung
+- [Leistungsübersicht](https://r3webdesign.de/leistungen/): alle Leistungen auf einen Blick
+- Webseiten & Landingpages: individuelles Design, SEO, Barrierefreiheit, schnelle Ladezeiten
+- Web-Apps & Dashboards: Login, Datenbank, Admin-Bereiche
+- Native Apps: iOS und Android aus einer Codebasis
+- Betreuung & Weiterentwicklung: Updates, Sicherheit, neue Funktionen
+
+## Pakete für bestehende Webseiten
+
+- [SEO-Check](https://r3webdesign.de/leistungen/seo-check/): Technik, Inhalte und Ladezeiten geprüft, priorisierter Bericht und Besprechung
+- [Webseiten-Relaunch](https://r3webdesign.de/leistungen/relaunch/): Redesign und Umzug ohne Verlust von Inhalten oder Rankings
+- [Barrierefreiheits-Check](https://r3webdesign.de/leistungen/barrierefreiheit/): Prüfung nach WCAG 2.1 AA, mit Blick auf das BFSG
 
 ## Referenzprojekte
 
-- Startplatzboerse.com — Fullstack-Plattform (Astro, Supabase, Vercel)
-- Wolmirstedter Ohrelauf — Event-Website, statisch, GitHub Pages
-- Radsportclub Magdeburg — Vereinswebsite mit Kontaktformular
-- 3viertel12 — Band-Website mit Astro
-- Portfolio & Case Studies: https://r3webdesign.de/projekte/
+- [Startplatzbörse](https://r3webdesign.de/projekte/startplatzboerse/): Online-Plattform für den Handel mit Startplätzen bei Lauf-, Rad- und Triathlon-Events
+- [Wolmirstedter Ohrelauf](https://r3webdesign.de/projekte/ohrelauf/): Event-Website mit Online-Anmeldung, Umzug von Google Sites
+- [Radsportclub Magdeburg](https://r3webdesign.de/projekte/radsportclub-magdeburg/): Vereinswebsite mit Kontaktformular
+- [Atelier Haarkunst](https://r3webdesign.de/projekte/atelier-haarkunst/): Website für einen Friseursalon
+- [Alle Projekte](https://r3webdesign.de/projekte/)
 
-## Technologie
+## Häufige Fragen
 
-Astro, TypeScript, Supabase, Vercel, GitHub Pages, Expo — je nach Projektanforderung.
-
-## Schnellstart-Angebote
-
-- SEO-Check: https://r3webdesign.de/leistungen/seo-check/
-- Webseiten-Relaunch: https://r3webdesign.de/leistungen/relaunch/
-- Barrierefreiheits-Check (WCAG 2.1 AA, BFSG): https://r3webdesign.de/leistungen/barrierefreiheit/
+- [FAQ auf der Startseite](https://r3webdesign.de/#faq): Kosten, Dauer, Pflege, Zusammenarbeit, Technik

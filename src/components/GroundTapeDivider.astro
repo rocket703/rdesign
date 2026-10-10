@@ -1,13 +1,14 @@
 ---
 const phrase = 'SEITENENDE • BITTE • NICHT • BETRETEN';
 const repeats = Array.from({ length: 10 }, () => phrase);
+// Text kommt per CSS (content: attr) – so steht er nicht im HTML-Text der Seite
 ---
 
-<div class="ground-tape" aria-hidden="true">
+<div class="ground-tape" aria-hidden="true" data-nosnippet>
   <div class="ground-tape__band">
     <div class="ground-tape__track">
       {repeats.map((word) => (
-        <span class="ground-tape__word">{word}</span>
+        <span class="ground-tape__word" data-text={word}></span>
       ))}
     </div>
   </div>
@@ -79,12 +80,16 @@ const repeats = Array.from({ length: 10 }, () => phrase);
     align-items: center;
     padding-inline: 1.15rem;
     font-family: inherit;
-    font-size: clamp(0.68rem, 1.7vw, 0.82rem);
+    font-size: clamp(0.75rem, 1.7vw, 0.82rem);
     font-weight: 800;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--ink);
     white-space: nowrap;
+  }
+
+  .ground-tape__word::before {
+    content: attr(data-text);
   }
 
   .ground-tape__word::after {

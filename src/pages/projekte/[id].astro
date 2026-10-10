@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { render } from 'astro:content';
 import { getPublishedProjects, projectSlug } from '../../lib/projects';
 import DeviceShowcase from '../../components/DeviceShowcase.astro';
+import { offers, offerPath } from '../../data/offers';
 import {
   breadcrumbSchema,
   canonicalUrl,
@@ -30,6 +31,10 @@ const statusLabels: Record<string, string> = {
   archived: 'Archiviert',
 };
 const statusLabel = statusLabels[projectStatus.toLowerCase()] ?? projectStatus;
+const relatedOffer = offers.find((offer) => offer.slug === project.data.relatedOffer);
+const related = relatedOffer
+  ? { href: offerPath(relatedOffer), label: relatedOffer.title }
+  : { href: '/leistungen/', label: 'Alle Leistungen' };
 const title = project.data.title;
 const hasSpace = title.trim().includes(' ');
 const slug = projectSlug(project);
@@ -157,6 +162,9 @@ const liveHost = (() => {
           <a href="/kontakt/" class="project-cta project-cta--ghost">
             Projekt anfragen
           </a>
+          <a href={related.href} class="project-related">
+            Passende Leistung: {related.label} <span aria-hidden="true">→</span>
+          </a>
         </aside>
       </div>
 
@@ -185,6 +193,7 @@ const liveHost = (() => {
   .project-back {
     display: inline-flex;
     align-items: center;
+    min-height: 44px;
     gap: 0.45rem;
     font-family: inherit;
     font-size: 0.78rem;
@@ -248,7 +257,7 @@ const liveHost = (() => {
 
   .project-tags li {
     font-family: inherit;
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.04em;
     text-transform: uppercase;
@@ -285,7 +294,7 @@ const liveHost = (() => {
     gap: 0.4rem;
     margin-top: 0.85rem;
     font-family: inherit;
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.04em;
     color: #94a3b8;
@@ -416,7 +425,7 @@ const liveHost = (() => {
   .project-facts dt {
     margin: 0;
     font-family: inherit;
-    font-size: 0.68rem;
+    font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.04em;
     text-transform: uppercase;
@@ -442,6 +451,21 @@ const liveHost = (() => {
 
   .project-facts dd a:hover {
     text-decoration: underline;
+  }
+
+  .project-related {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: 0.5rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: #34d399;
+  }
+
+  .project-related:hover {
+    color: #6ee7b7;
   }
 
   .project-panel__note {

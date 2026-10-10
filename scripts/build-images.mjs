@@ -11,6 +11,12 @@ const MANIFEST = 'src/data/image-manifest.json';
 const WIDTHS = [480, 800, 1200, 1600, 2400];
 const QUALITY = 80;
 
+// Abweichende Einstellungen je Bild (z. B. kleine Anzeige oder Farbfilter darüber)
+const OVERRIDES = {
+  // Porträt: max. 320 px breit angezeigt (640 px für Retina), Duotone-Filter darüber
+  'IMG_1907.webp': { quality: 60, widths: [320, 640] },
+};
+
 await mkdir(OUTPUT_DIR, { recursive: true });
 
 // Alte Varianten entfernen, damit keine verwaisten Größen liegen bleiben
@@ -25,16 +31,17 @@ for (const file of sources) {
   const sourcePath = path.join(SOURCE_DIR, file);
   const { width, height } = await sharp(sourcePath).metadata();
   const name = path.parse(file).name;
+  const { quality = QUALITY, maxWidth = Infinity, widths = WIDTHS } = OVERRIDES[file] ?? {};
 
   // Nur verkleinern: Breiten oberhalb des Originals entfallen,
   // das Original selbst kommt als größte Variante dazu.
-  const targets = WIDTHS.filter((w) => w < width);
-  if (!targets.includes(width) && width <= WIDTHS.at(-1)) targets.push(width);
+  const targets = widths.filter((w) => w < width && w <= maxWidth);
+  if (!targets.includes(width) && width <= widths.at(-1) && width <= maxWidth) targets.push(width);
 
   const variants = [];
   for (const target of targets) {
     const output = path.join(OUTPUT_DIR, `${name}-${target}.webp`);
-    await sharp(sourcePath).resize({ width: target }).webp({ quality: QUALITY }).toFile(output);
+    await sharp(sourcePath).resize({ width: target }).webp({ quality }).toFile(output);
     variants.push(target);
   }
 

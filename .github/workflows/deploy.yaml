@@ -15,6 +15,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # volle Historie: Sitemap-lastmod kommt aus git log
+          fetch-depth: 0
       - name: Install, build, and upload with Astro
         uses: withastro/action@v3
         with:

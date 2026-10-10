@@ -147,7 +147,7 @@
 }
 
 .offer-facts dt {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -204,7 +204,7 @@
 }
 
 .offer-reference__label {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -280,4 +280,105 @@
   .offer-more__card:hover {
     transform: none;
   }
+}
+
+/* ── Übersicht /leistungen/ ── */
+.offer-section {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.offer-section__title {
+  margin: 0;
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #f8fafc;
+}
+
+.offer-section__lead {
+  max-width: 62ch;
+  margin: 0 0 0.5rem;
+  line-height: 1.65;
+  color: #94a3b8;
+}
+
+.service-list {
+  display: grid;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 700px) {
+  .service-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.service-list__item {
+  display: flex;
+  flex-direction: column;
+}
+
+.service-list__item .legal-block__title {
+  margin-bottom: 0.5rem;
+}
+
+.service-list__text {
+  flex: 1;
+  margin: 0;
+  line-height: 1.65;
+  color: #94a3b8;
+}
+
+.service-list__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.service-list__chips li {
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.service-list__ref {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 0.5rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: #34d399;
+}
+
+.service-list__ref:hover {
+  color: #6ee7b7;
+}
+
+@media (min-width: 900px) {
+  .offer-more__grid--three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.offer-cta-block {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+}
+
+.offer-cta-block .legal-block__title {
+  margin: 0;
 }

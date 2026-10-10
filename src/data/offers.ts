@@ -15,6 +15,8 @@ export type Offer = {
   deliverables: string[];
   audience: string[];
   facts: { label: string; value: string }[];
+  /** Zwischenüberschriften mit Keyword – je Seite unterschiedlich */
+  headings: { intro: string; deliverables: string; audience: string; faq: string; summary: string };
   /** Ab Januar 2027 eintragen, z. B. 'ab 290 €' – bis dahin „Festpreis auf Anfrage“ */
   price?: string;
   reference?: { title: string; text: string; href: string };
@@ -30,6 +32,13 @@ export const offers: Offer[] = [
     seoTitle: 'SEO-Check für deine Webseite – Magdeburg | r³webdesign',
     seoDesc:
       'SEO-Audit aus Magdeburg: Technik, Inhalte, Ladezeiten und lokale Sichtbarkeit deiner Webseite geprüft – mit priorisiertem Bericht und Besprechung.',
+    headings: {
+      intro: 'Was ist ein SEO-Check?',
+      deliverables: 'Was der SEO-Check prüft',
+      audience: 'Für wen sich ein SEO-Check lohnt',
+      faq: 'Häufige Fragen zum SEO-Check',
+      summary: 'SEO-Check auf einen Blick',
+    },
     lead: 'Warum wird deine Webseite nicht gefunden? Ich prüfe Technik, Inhalte und Performance – und du bekommst eine klare Liste, was sich wirklich lohnt.',
     intro: [
       'Viele Webseiten verschenken Sichtbarkeit durch Kleinigkeiten: fehlende Seitentitel, zu große Bilder, eine unklare Struktur. Der SEO-Check zeigt dir genau, wo deine Seite steht und welche Schritte den größten Effekt haben – verständlich erklärt, ohne Fachchinesisch.',
@@ -78,6 +87,13 @@ export const offers: Offer[] = [
     seoTitle: 'Webseiten-Relaunch & Redesign – Magdeburg | r³webdesign',
     seoDesc:
       'Redesign und Relaunch deiner Webseite aus Magdeburg: modernes Design, schnelle Ladezeiten und ein sauberer Umzug ohne Ranking-Verlust.',
+    headings: {
+      intro: 'Wann sich ein Webseiten-Relaunch lohnt',
+      deliverables: 'Was beim Relaunch passiert',
+      audience: 'Für welche Webseiten ein Relaunch passt',
+      faq: 'Häufige Fragen zum Relaunch',
+      summary: 'Relaunch auf einen Blick',
+    },
     lead: 'Deine Webseite ist in die Jahre gekommen? Ich bringe sie auf den aktuellen Stand – modern, schnell und mobil, ohne dass Inhalte oder Google-Rankings verloren gehen.',
     intro: [
       'Ältere Baukasten- oder WordPress-Seiten sind oft langsam, schwer zu pflegen und auf dem Smartphone unpraktisch. Beim Relaunch übernehmen wir, was funktioniert, und bauen den Rest neu – mit einem sauberen Umzug, damit Besucher und Google alle Seiten wiederfinden.',
@@ -128,9 +144,16 @@ export const offers: Offer[] = [
     title: 'Barrierefreiheits-Check',
     icon: 'access',
     teaser: 'Prüfung nach WCAG 2.1 – damit deine Seite für alle nutzbar ist und du weißt, wo du stehst.',
-    seoTitle: 'Barrierefreiheits-Check (BFSG & WCAG) – Magdeburg | r³webdesign',
+    seoTitle: 'Barrierefreiheits-Check (BFSG, WCAG) | r³webdesign',
     seoDesc:
-      'Barrierefreiheits-Check für deine Webseite aus Magdeburg: Prüfung nach WCAG 2.1 AA mit verständlichem Bericht und konkreten Maßnahmen – auch mit Blick auf das BFSG.',
+      'Barrierefreiheits-Check aus Magdeburg: Prüfung nach WCAG 2.1 AA mit verständlichem Bericht und konkreten Maßnahmen – auch mit Blick auf das BFSG.',
+    headings: {
+      intro: 'Warum Barrierefreiheit wichtig ist',
+      deliverables: 'Was der Barrierefreiheits-Check prüft',
+      audience: 'Für wen der Check sinnvoll ist',
+      faq: 'Häufige Fragen zu Barrierefreiheit und BFSG',
+      summary: 'Barrierefreiheits-Check auf einen Blick',
+    },
     lead: 'Kann wirklich jeder deine Webseite nutzen – auch mit Screenreader, Tastatur oder Sehschwäche? Der Check zeigt dir, wo Barrieren sind und wie du sie beseitigst.',
     intro: [
       'Barrierefreiheit hilft nicht nur Menschen mit Einschränkungen: Klare Kontraste, gut lesbare Texte und eine logische Struktur machen eine Seite für alle besser – und für Suchmaschinen verständlicher.',

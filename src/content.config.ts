@@ -17,6 +17,8 @@ const projects = defineCollection({
     seoTitle: z.string().optional(),
     seoDesc: z.string().optional(),
     tasks: z.array(z.string()).optional(),
+    /** Slug eines Angebots unter /leistungen/ (z. B. „relaunch“) für die interne Verlinkung */
+    relatedOffer: z.string().optional(),
   }),
 });
 

@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE } from '../lib/seo';
 import '../styles/fonts.css';
+import interFont from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 import '../styles/style.css';
 
 interface Props {
@@ -45,6 +46,7 @@ const jsonLdString = jsonLd ? JSON.stringify(jsonLd) : null;
   <meta name="geo.placename" content="Magdeburg" />
 
   <link rel="canonical" href={canonicalURL} />
+  <link rel="preload" href={interFont} as="font" type="font/woff2" crossorigin />
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content={SITE.name} />

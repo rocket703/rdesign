@@ -62,6 +62,10 @@
   transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
+.style-lab__tab {
+  min-height: 44px;
+}
+
 .style-lab__tab:hover {
   border-color: rgba(255, 255, 255, 0.5);
   background: rgba(255, 255, 255, 0.12);

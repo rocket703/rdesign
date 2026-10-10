@@ -216,7 +216,7 @@
   display: inline-block;
   margin-bottom: 1rem;
   padding: 0.35rem 0.85rem;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -410,7 +410,7 @@
 
 .p-tech-hero__stats li {
   font-family: inherit;
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -429,7 +429,7 @@
 .p-tech-hero__eyebrow {
   margin: 0 0 0.75rem;
   font-family: inherit;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -609,6 +609,7 @@
   margin: 0;
   max-width: 42ch;
   font-size: clamp(0.95rem, 2vw, 1.08rem);
+  font-weight: 400;
   line-height: 1.65;
 }
 
@@ -633,7 +634,7 @@
 .zone-h--tech .zone-h__num,
 .zone-h--tech .zone-h__label {
   font-family: inherit;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -689,7 +690,7 @@
   /* gleiche Höhe wie die eckigen Labels der anderen Zonen (2px Rahmen) */
   border: 2px solid transparent;
   border-radius: 999px;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 900;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -718,7 +719,7 @@
   display: inline-block;
   margin-bottom: 1rem;
   padding: 0.35rem 0.85rem;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -795,7 +796,7 @@
   padding: 0.35rem 0.7rem;
   border: 2px solid var(--p-earth-brown);
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1294,7 +1295,7 @@
 
 .p-zone__num {
   font-family: inherit;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   opacity: 0.5;
@@ -1302,7 +1303,7 @@
 
 .p-zone__label {
   font-family: inherit;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;

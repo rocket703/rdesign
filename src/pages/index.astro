@@ -13,6 +13,7 @@ import StyleShowcase from '../components/StyleShowcase.astro';
 import OfferIcon from '../components/OfferIcon.astro';
 import OfferVisual from '../components/OfferVisual.astro';
 import { offers, offerPath } from '../data/offers';
+import { services } from '../data/services';
 import { responsiveImage } from '../lib/images';
 import CandyTapeDivider from '../components/CandyTapeDivider.astro';
 import GroundTapeDivider from '../components/GroundTapeDivider.astro';
@@ -57,7 +58,7 @@ const steps = [
   },
 ] as const;
 
-const portrait = responsiveImage(SITE.portrait, 480);
+const portrait = responsiveImage(SITE.portrait, 320);
 
 const publishedProjects = await getPublishedProjects();
 
@@ -113,10 +114,10 @@ const featuredProjects = featuredSlugs
         <header class="tech-manifesto__head zone-h zone-h--bar autoShow">
           <ZoneWatermark num="01" />
           <span class="tech-manifesto__kicker">Ablauf</span>
-          <h2 class="zone-h__title" id="tech-manifesto-title">Schritt für Schritt</h2>
-          <p class="zone-h__desc">
-            Drei klare Schritte vom ersten Gespräch bis nach dem Launch – mit einem festen Ansprechpartner.
-          </p>
+          <p class="zone-h__title">Schritt für Schritt</p>
+          <h2 class="zone-h__desc" id="tech-manifesto-title">
+            So läuft ein Webdesign-Projekt ab: drei klare Schritte vom ersten Gespräch bis nach dem Launch.
+          </h2>
         </header>
         <ol class="tech-manifesto__pipeline">
           {steps.map((step, index) => (
@@ -219,7 +220,7 @@ const featuredProjects = featuredSlugs
 
     <section id="projekte" class="section projects projects--clean">
       <div class="clean-block-head autoShow">
-        <h2 class="clean-block-head__title">Ausgewählte Projekte</h2>
+        <h2 class="clean-block-head__title">Referenzen aus Magdeburg &amp; Umgebung</h2>
         <p class="clean-block-head__lead">
           Drei Projekte – von der Vereins-Webseite bis zur Online-Plattform.
         </p>
@@ -246,46 +247,29 @@ const featuredProjects = featuredSlugs
   <section id="leistungen" class="section services services--clean">
     <div class="container">
       <div class="clean-block-head autoShow">
-        <p class="clean-block-head__kicker">Was ich umsetze</p>
-        <h2 class="clean-block-head__title">Vier Wege zu deinem digitalen Produkt</h2>
+        <p class="clean-block-head__kicker">Leistungen</p>
+        <h2 class="clean-block-head__title">Webdesign, Web-Apps &amp; Apps</h2>
         <p class="clean-block-head__lead">
           Vom fokussierten Webauftritt bis zur langfristig betreuten Plattform – passend zum Ziel, nicht zum Trend.
         </p>
       </div>
 
       <ul class="services-grid">
-        <li class="service-card autoShow">
-          <div class="service-card__body">
-            <h3>Webseiten &amp; Landingpages</h3>
-            <p class="service-card__text">Individuelles Design, saubere Inhalte, SEO und schnelle Ladezeiten ohne austauschbare Schablone.</p>
-          </div>
-          <ul class="service-card__chips" aria-label="Schwerpunkte"><li>Individuell</li><li>SEO</li><li>Barrierefrei</li></ul>
-        </li>
-
-        <li class="service-card autoShow">
-          <div class="service-card__body">
-            <h3>Web-Apps &amp; Dashboards</h3>
-            <p class="service-card__text">Login, Datenbank und Admin-Bereiche – Systeme, die mit deinem Arbeitsalltag mitwachsen.</p>
-          </div>
-          <ul class="service-card__chips" aria-label="Schwerpunkte"><li>Login</li><li>Datenbank</li><li>Admin</li></ul>
-        </li>
-
-        <li class="service-card autoShow">
-          <div class="service-card__body">
-            <h3>Native Apps</h3>
-            <p class="service-card__text">Eine belastbare Codebasis für iOS und Android – vom ersten Prototyp bis zum Store-Release.</p>
-          </div>
-          <ul class="service-card__chips" aria-label="Schwerpunkte"><li>iOS</li><li>Android</li><li>App Stores</li></ul>
-        </li>
-
-        <li class="service-card autoShow">
-          <div class="service-card__body">
-            <h3>Betreuung &amp; Weiterentwicklung</h3>
-            <p class="service-card__text">Updates, Sicherheit und neue Funktionen – auch nach dem Launch bleibt der Kontakt direkt.</p>
-          </div>
-          <ul class="service-card__chips" aria-label="Schwerpunkte"><li>Updates</li><li>Sicherheit</li><li>Support</li></ul>
-        </li>
+        {services.map((service) => (
+          <li class="service-card autoShow">
+            <div class="service-card__body">
+              <h3>{service.title}</h3>
+              <p class="service-card__text">{service.text}</p>
+            </div>
+            <ul class="service-card__chips" aria-label="Schwerpunkte">
+              {service.chips.map((chip) => <li>{chip}</li>)}
+            </ul>
+          </li>
+        ))}
       </ul>
+      <p class="projects-more projects-more--clean autoShow">
+        <a href="/leistungen/" class="projects-more__link">Alle Leistungen im Überblick →</a>
+      </p>
     </div>
   </section>
 
@@ -344,7 +328,7 @@ const featuredProjects = featuredSlugs
     <section id="faq" class="faq faq--earth" aria-labelledby="faq-title">
       <div class="container">
         <div class="earth-faq__head autoShow">
-          <h2 id="faq-title">Häufige Fragen, ehrlich beantwortet</h2>
+          <h2 id="faq-title">Häufige Fragen zum Webdesign</h2>
         </div>
         <div class="faq-grid">
           {faqItems.map((item) => (
@@ -564,7 +548,7 @@ const featuredProjects = featuredSlugs
     flex: 1 1 auto;
     min-width: 0;
     font-family: inherit;
-    font-size: 0.68rem;
+    font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.04em;
     text-transform: uppercase;
@@ -764,7 +748,7 @@ const featuredProjects = featuredSlugs
     gap: 0.35rem;
     margin: 0 0 0.85rem;
     font-family: inherit;
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: 0.04em;
     color: #64748b;
@@ -787,7 +771,7 @@ const featuredProjects = featuredSlugs
 
   .skill-card__stats li {
     font-family: inherit;
-    font-size: 0.62rem;
+    font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.04em;
     text-transform: uppercase;
@@ -925,7 +909,7 @@ const featuredProjects = featuredSlugs
 
     .skill-card__path {
       margin-bottom: 0.55rem;
-      font-size: 0.68rem;
+      font-size: 0.75rem;
     }
 
     .skill-card__stats {
@@ -963,7 +947,7 @@ const featuredProjects = featuredSlugs
   }
 
   .filename {
-    font-size: 0.7rem; /* Dateiname dezent verkleinert */
+    font-size: 0.75rem; /* Dateiname dezent verkleinert */
   }
 
   .code-area {
@@ -1107,7 +1091,7 @@ const featuredProjects = featuredSlugs
 
   .face span {
     font-family: inherit;
-    font-size: 0.68rem;
+    font-size: 0.75rem;
     font-weight: 800;
     letter-spacing: 0.05em;
     text-transform: uppercase;
@@ -1257,6 +1241,7 @@ const featuredProjects = featuredSlugs
   .projects-more__link {
     display: inline-flex;
     align-items: center;
+    min-height: 44px;
     gap: 0.45rem;
     font-family: inherit;
     font-size: 0.82rem;
@@ -1512,7 +1497,7 @@ const featuredProjects = featuredSlugs
     margin: 0;
     padding: 0.35rem 0.75rem;
     font-family: inherit;
-    font-size: 0.68rem;
+    font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.04em;
     color: #cbd5e1;
@@ -1564,7 +1549,7 @@ const featuredProjects = featuredSlugs
     gap: 0.35rem;
     margin: 0 0 1rem;
     font-family: inherit;
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: 0.04em;
     color: #64748b;
@@ -1617,7 +1602,7 @@ const featuredProjects = featuredSlugs
 
   .about__chips li {
     font-family: inherit;
-    font-size: 0.62rem;
+    font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.04em;
     text-transform: uppercase;
@@ -1813,7 +1798,7 @@ const featuredProjects = featuredSlugs
 .clean-block-head__kicker {
   margin: 0 0 0.65rem;
   font-family: inherit;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1836,7 +1821,7 @@ const featuredProjects = featuredSlugs
 .earth-faq__head > p {
   margin: 0 0 0.6rem;
   font-family: inherit;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #8fbc8f;

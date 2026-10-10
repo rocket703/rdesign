@@ -4,7 +4,7 @@ subtitle: "Moderne statische Vereinswebsite mit Mobile‑First‑Design, integri
 customerUrl: "https://www.radsportclub-magdeburg.de"
 image: "/images/radsportclub-magdeburg.webp"
 techStack: ["HTML5", "CSS3", "JavaScript", "GitHub Pages", "Web3Forms", "Mailtory"]
-seoTitle: "Radsportclub Magdeburg – Moderne Vereinswebseite | r³webdesign"
+seoTitle: "Radsportclub Magdeburg – Vereinswebseite | r³webdesign"
 seoDesc: "Case Study: Moderne, schnelle Vereinswebseite für den Radsportclub Magdeburg mit Kontaktformular und E‑Mail‑Marketing."
 status: "online"
 biome: "technical"

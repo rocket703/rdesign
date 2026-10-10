@@ -45,7 +45,7 @@ const contactHref = `/kontakt/?thema=${offer.slug}`;
     breadcrumbSchema(
       [
         { name: 'Start', path: '/' },
-        { name: 'Leistungen', path: '/#leistungen' },
+        { name: 'Leistungen', path: '/leistungen/' },
         { name: offer.title, path: pathname },
       ],
       Astro.site,
@@ -59,7 +59,7 @@ const contactHref = `/kontakt/?thema=${offer.slug}`;
           <span class="offer-summary__icon">
             <OfferIcon name={offer.icon} size={26} />
           </span>
-          <h2 class="legal-block__title">Auf einen Blick</h2>
+          <h2 class="legal-block__title">{offer.headings.summary}</h2>
           <dl class="offer-facts">
             {offer.facts.map((fact) => (
               <div class="offer-facts__row">
@@ -88,14 +88,14 @@ const contactHref = `/kontakt/?thema=${offer.slug}`;
 
       <div class="offer-main">
         <article class="legal-block autoShow">
-          <h2 class="legal-block__title">Worum es geht</h2>
+          <h2 class="legal-block__title">{offer.headings.intro}</h2>
           <div class="legal-block__body">
             {offer.intro.map((paragraph) => <p>{paragraph}</p>)}
           </div>
         </article>
 
         <article class="legal-block autoShow">
-          <h2 class="legal-block__title">Das bekommst du</h2>
+          <h2 class="legal-block__title">{offer.headings.deliverables}</h2>
           <ul class="offer-checklist">
             {offer.deliverables.map((item) => (
               <li>
@@ -107,14 +107,14 @@ const contactHref = `/kontakt/?thema=${offer.slug}`;
         </article>
 
         <article class="legal-block autoShow">
-          <h2 class="legal-block__title">Für wen sich das lohnt</h2>
+          <h2 class="legal-block__title">{offer.headings.audience}</h2>
           <ul class="legal-list">
             {offer.audience.map((item) => <li>{item}</li>)}
           </ul>
         </article>
 
         <article class="legal-block autoShow">
-          <h2 class="legal-block__title">Häufige Fragen</h2>
+          <h2 class="legal-block__title">{offer.headings.faq}</h2>
           <div class="offer-faq">
             {offer.faq.map((item) => (
               <details class="offer-faq__item">
