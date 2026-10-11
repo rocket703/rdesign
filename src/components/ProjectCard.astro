@@ -23,6 +23,9 @@ const inProgress = isInProgress(status);
 const media = responsiveImage(image, 800);
 const accents = ['var(--c-turf)', 'var(--c-slate)', 'var(--c-deep)'];
 const color = accents[accent % accents.length];
+// mobil zeigt die Karte nur die ersten Technik-Icons in einer Reihe, der Rest als „+N“
+const TECH_MOBILE = 5;
+const techMore = tags.length - TECH_MOBILE;
 ---
 
 <a class="project-card autoShow" href={`/projekte/${id}/`} style={`--card: ${color}`}>
@@ -45,7 +48,10 @@ const color = accents[accent % accents.length];
       ? <h2 class="project-card__title">{title}</h2>
       : <h3 class="project-card__title">{title}</h3>}
     <p class="project-card__text">{description}</p>
-    <TechIcons tags={tags} class="project-card__tech" />
+    <div class="project-card__techrow">
+      <TechIcons tags={tags} class="project-card__tech" />
+      {techMore > 0 && <span class="project-card__more" aria-hidden="true">+{techMore}</span>}
+    </div>
   </div>
   <span class="project-card__cta">Projekt ansehen <span aria-hidden="true">→</span></span>
 </a>
@@ -150,12 +156,80 @@ const color = accents[accent % accents.length];
     color: var(--c-slate);
   }
 
+  .project-card__techrow {
+    margin-top: 0.85rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--c-line);
+  }
+
   .project-card :global(.project-card__tech) {
     --tech-icon-bg: transparent;
     --tech-icon-border: var(--c-line);
     --tech-icon-color: var(--c-slate);
-    padding-top: 0.9rem;
-    border-top: 1px solid var(--c-line);
+    min-width: 0;
+  }
+
+  .project-card__more {
+    display: none;
+    place-items: center;
+    flex: none;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    padding: 0 0.5rem;
+    border-radius: 9px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--c-slate);
+    border: 1px dashed var(--c-line);
+  }
+
+  /* Mobil (Wischleisten): Karte kompakter, damit sie ganz auf den Bildschirm passt –
+     flacheres Vorschaubild, Text max. 3 Zeilen, Technik in einer Reihe */
+  @media (max-width: 819px) {
+    .project-card__media {
+      aspect-ratio: 16 / 9;
+    }
+
+    .project-card__body {
+      padding: 1rem 1.25rem 0.75rem;
+    }
+
+    .project-card__title {
+      font-size: 1.15rem;
+    }
+
+    .project-card__text {
+      /* nicht strecken, sonst greift die 3-Zeilen-Begrenzung nicht; Rest füllt der Platz darunter */
+      flex: none;
+      margin-bottom: auto;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      overflow: hidden;
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    .project-card :global(.project-card__tech) {
+      flex-wrap: nowrap;
+      overflow: hidden;
+    }
+
+    .project-card :global(.project-card__tech .tech-icons__item:nth-child(n + 6)) {
+      display: none;
+    }
+
+    .project-card__more {
+      display: grid;
+    }
+
+    .project-card__cta {
+      margin: 0.25rem 0 1.5rem -18px;
+    }
   }
 
   /* Band unten links mit umgeknickter Ecke */

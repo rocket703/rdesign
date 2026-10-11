@@ -249,6 +249,23 @@ const currentYear = new Date().getFullYear();
       white-space: normal;
       max-width: 22rem;
     }
+
+    /* Mobil kompakter: Badge entfällt, Logo und Slogan rücken zusammen */
+    .item-left {
+      display: none;
+    }
+
+    .footer-body {
+      padding-top: clamp(2rem, 6vw, 2.75rem);
+    }
+
+    .footer-grid {
+      gap: 1.25rem;
+    }
+
+    .item-center {
+      gap: 0.1rem;
+    }
   }
 
   @media (max-width: 480px) {

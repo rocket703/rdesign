@@ -111,6 +111,11 @@
   text-align: center;
 }
 
+/* Altes .intro { overflow: hidden } schnitt Schatten und Schrauben der Glasplatte ab */
+.p-tech-hero__brand.intro {
+  overflow: visible;
+}
+
 .p-tech-hero__value {
   max-width: 48ch;
   margin: clamp(1rem, 2.5vw, 1.5rem) auto 0;

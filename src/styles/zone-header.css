@@ -170,11 +170,16 @@
 
 .zone-h--bar .zone-h__watermark-svg {
   position: absolute;
-  top: 0;
+  top: 50%;
   left: clamp(1.1rem, 2.5vw, 1.6rem);
   z-index: 0;
   height: 100%;
   width: auto;
+  /* Bei großer Systemschrift wird der Block höher – die Zahl wächst dann nicht unbegrenzt mit
+     und ragt nicht über den Bildschirmrand (Obergrenze greift praktisch nur mobil) */
+  max-height: 38vw;
+  max-width: calc(100% - clamp(1.1rem, 2.5vw, 1.6rem));
+  transform: translateY(-50%);
   overflow: visible;
   pointer-events: none;
 }
