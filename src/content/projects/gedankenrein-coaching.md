@@ -6,6 +6,7 @@ image: "/images/projekt-2.webp"
 techStack: ["WordPress", "HTML5", "CSS3", "Bootstrap", "jQuery", "SEO"]
 seoTitle: "GedankenRein Coaching – Website | r³webdesign"
 seoDesc: "Projekt: GedankenRein Coaching – SEO-starke WordPress‑Website mit responsivem Design, hoher Performance und sauberer Informationsarchitektur."
+category: "Coaching-Website"
 status: "archived"
 archived: true
 tasks:

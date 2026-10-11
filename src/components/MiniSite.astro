@@ -1,0 +1,49 @@
+---
+// Beispiel-Webseite „Café an der Elbe“ für das Stil-Labor (rein dekorativ)
+import { SHOWCASE_COPY } from '../data/style-showcase';
+import { responsiveImage } from '../lib/images';
+
+interface Props {
+  /** sizes-Attribut des Café-Fotos */
+  sizes?: string;
+}
+
+const { sizes = '240px' } = Astro.props;
+const { site } = SHOWCASE_COPY;
+// Stockfoto: Drew Coffman via Unsplash, CC0 – https://commons.wikimedia.org/wiki/File:Two_Hands_Cafe_latte_art_(Unsplash).jpg
+const photo = responsiveImage('/images/cafe-latte.webp', 480);
+---
+
+<div class="mini-site">
+  <div class="mini-site__bar">
+    <span class="mini-site__logo">{site.name}</span>
+    <span class="mini-site__nav"><i></i><i></i><i></i></span>
+  </div>
+  <div class="mini-site__hero">
+    <div class="mini-site__copy">
+      <span class="mini-site__eyebrow">{site.eyebrow}</span>
+      <span class="mini-site__title">{site.title}</span>
+      <span class="mini-site__text">{site.text}</span>
+      <span class="mini-site__btn">{site.button}</span>
+    </div>
+    <img
+      class="mini-site__image"
+      src={photo.src}
+      srcset={photo.srcset}
+      sizes={sizes}
+      width={photo.width}
+      height={photo.height}
+      alt=""
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+  <div class="mini-site__cards">
+    {site.cards.map((card) => (
+      <span class="mini-site__card">
+        <span class="mini-site__card-title">{card.title}</span>
+        <span class="mini-site__card-meta">{card.meta}</span>
+      </span>
+    ))}
+  </div>
+</div>

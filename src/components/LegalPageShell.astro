@@ -1,27 +1,96 @@
 ---
+import CtaBand from './CtaBand.astro';
 import '../styles/legal.css';
+import '../styles/cards.css';
+import '../styles/sub-hero.css';
+
+type Theme = 'clean' | 'dark';
+type Crumb = { label: string; href: string };
 
 interface Props {
-  eyebrow?: string;
   title: string;
   lead: string;
+  /** Teil des Titels, der wie „Ohne Baukasten.“ auf der Startseite markiert wird */
+  mark?: string;
+  /** Pfad über dem Titel – „Start“ steht automatisch vorne, die aktuelle Seite hinten */
+  crumbs?: Crumb[];
+  /** Bezeichnung der aktuellen Seite im Pfad (Standard: Titel) */
+  crumbLabel?: string;
+  /** kleiner Hinweis neben dem Pfad, z. B. „In Arbeit“ */
+  status?: string;
+  /** Kopf füllt am Desktop die erste Bildschirmhöhe (alle Kerninfos ohne Scrollen) */
+  fold?: boolean;
+  /** Zurück-Button vor dem Pfad: Ziel und Beschriftung */
+  back?: { href: string; label: string };
   wide?: boolean;
+  /** volle Inhaltsbreite wie auf der Startseite (1200 px) */
+  xwide?: boolean;
   legalNav?: boolean;
+  /** Farbwelt: „clean“ (hell, Standard) oder „dark“ */
+  theme?: Theme;
+  /** nachtblauer Abschluss-Aufruf am Seitenende (Standard: an, außer auf Rechtsseiten) */
+  cta?: boolean;
 }
 
-const { eyebrow, title, lead, wide = false, legalNav = true } = Astro.props;
+const {
+  title,
+  lead,
+  mark,
+  crumbs = [],
+  crumbLabel = title,
+  status,
+  fold = false,
+  back = { href: '/', label: 'Zur Startseite' },
+  wide = false,
+  xwide = false,
+  legalNav = true,
+  theme = 'clean',
+  cta = !legalNav,
+} = Astro.props;
+
+const trail: Crumb[] = [{ label: 'Start', href: '/' }, ...crumbs];
+const markAt = mark ? title.indexOf(mark) : -1;
+const hasAside = Astro.slots.has('hero');
 ---
 
-<div class:list={['legal-page', wide && 'legal-page--wide']}>
-  <section class="legal-hero">
-    <div class="legal-hero__ambient" aria-hidden="true">
-      <div class="legal-hero__grid"></div>
-    </div>
-    <div class="section-head autoShow">
-      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
-      <h1 class="section-title">{title}</h1>
-      <div class="title-divider"></div>
-      <p class="section-lead">{lead}</p>
+<div class:list={['legal-page', `legal-page--${theme}`, wide && 'legal-page--wide', xwide && 'legal-page--xwide']}>
+  <section class:list={['sub-hero', hasAside && 'sub-hero--aside', fold && 'sub-hero--fold']}>
+    <div class="sub-hero__ambient" aria-hidden="true"></div>
+    <div class="sub-hero__inner">
+      <a href={back.href} class="sub-hero__back" data-page-back>
+        <span aria-hidden="true">←</span> {back.label}
+      </a>
+      <div class="sub-hero__main autoShow">
+        <div class="sub-hero__top">
+          <nav class="sub-hero__crumbs" aria-label="Brotkrumen">
+            <ol>
+              {trail.map((crumb) => (
+                <li>
+                  <a href={crumb.href}>{crumb.label}</a>
+                </li>
+              ))}
+              <li><span aria-current="page">{crumbLabel}</span></li>
+            </ol>
+          </nav>
+          {status && <span class="sub-hero__status">{status}</span>}
+        </div>
+        <h1 class="sub-hero__title">
+          {markAt >= 0 ? (
+            <Fragment>
+              {title.slice(0, markAt)}<mark>{mark}</mark>{title.slice(markAt + mark!.length)}
+            </Fragment>
+          ) : (
+            title
+          )}
+        </h1>
+        <p class="sub-hero__lead">{lead}</p>
+        <slot name="hero-main" />
+      </div>
+      {hasAside && (
+        <div class="sub-hero__aside autoShow">
+          <slot name="hero" />
+        </div>
+      )}
     </div>
   </section>
 
@@ -39,4 +108,29 @@ const { eyebrow, title, lead, wide = false, legalNav = true } = Astro.props;
       )}
     </div>
   </section>
+  {cta && <CtaBand />}
 </div>
+
+<script>
+  // Zurück-Button: Scrollposition per Verlauf behalten, wenn man genau vom Ziel kam.
+  document.querySelectorAll<HTMLAnchorElement>('[data-page-back]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      try {
+        const from = document.referrer ? new URL(document.referrer) : null;
+        const target = new URL(link.href, location.href);
+        const isExpectedBackTarget =
+          from &&
+          from.origin === location.origin &&
+          from.pathname === target.pathname &&
+          (!target.hash || from.hash === target.hash);
+
+        if (isExpectedBackTarget && history.length > 1) {
+          event.preventDefault();
+          history.back();
+        }
+      } catch {
+        /* festes Ziel verwenden */
+      }
+    });
+  });
+</script>

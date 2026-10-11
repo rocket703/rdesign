@@ -41,7 +41,7 @@ const jsonLdString = jsonLd ? JSON.stringify(jsonLd) : null;
   <meta name="description" content={description} />
   <meta name="author" content={SITE.legalName} />
   <meta name="robots" content={robots} />
-  <meta name="theme-color" content="#10b981" />
+  <meta name="theme-color" content="#22323a" />
   <meta name="geo.region" content="DE-ST" />
   <meta name="geo.placename" content="Magdeburg" />
 
@@ -116,6 +116,35 @@ const jsonLdString = jsonLd ? JSON.stringify(jsonLd) : null;
   <style is:global>
 
   :root {
+    /* ── Palette ──
+       1 Hintergrund · 2 Akzent-Hintergründe · 2 Highlights */
+    --c-bg: #f4f4f9;          /* Hintergrund: Ghost White */
+    --c-deep: #22323a;        /* Akzent-Hintergrund 1: Deep Slate (dunkles Blue Slate) */
+    --c-sky: #b8dbd9;         /* Akzent-Hintergrund 2: Light Blue */
+    --c-turf: #04724d;        /* Highlight 1: Turf Green */
+    --c-slate: #586f7c;       /* Highlight 2: Blue Slate */
+    /* zusätzliche Akzente – Varianten bestehender Farben */
+    --c-forest: #0b3d2e;      /* Deep Forest: dunkles Turf Green */
+    --c-mist: #dfeeed;        /* Mist: helles Light Blue */
+    --c-cream: #f1e3c2;       /* Cream: Papier-Highlight (Karten & Buttons) */
+    /* Papier-Stil: zerknitterte Struktur (SVG-Lichtfilter) und federnde Drehung */
+    --paper-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.011 0.016' numOctaves='5' seed='11' stitchTiles='stitch'/%3E%3CfeDiffuseLighting lighting-color='%23fff' surfaceScale='2.4'%3E%3CfeDistantLight azimuth='45' elevation='56'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+    --paper-spring: linear(0, 0.417 25.5%, 0.867 49.4%, 1 57.7%, 0.925 65.1%, 0.908 68.6%, 0.902 72.2%, 0.916 78.2%, 0.988 92.1%, 1);
+    /* abgeleitete Farben */
+    --c-ink: #1b262c;
+    --c-muted: var(--c-slate);
+    --c-line: rgba(88, 111, 124, 0.28);
+    --c-surface: #ffffff;
+    --c-turf-hover: #035c3e;
+    --c-on-sky: #2b3a42;      /* Fließtext auf Light Blue (Kontrast 8:1) */
+    /* Aliase für bestehende Stile */
+    --c-black: var(--c-deep);
+    --c-dark: var(--c-deep);
+    --c-mint: var(--c-sky);
+    --c-green: var(--c-turf);
+    --c-green-ink: var(--c-turf);
+    --c-gold: var(--c-sky);
+
     --bg-dark: #030712;
     --bg-surface: #0b1120;
     --r3-green: #10b981;
@@ -123,7 +152,7 @@ const jsonLdString = jsonLd ? JSON.stringify(jsonLd) : null;
     --r3-green-deep: #059669;
     --r3-green-ink: #047857;
     --text-muted: #94a3b8;
-    --site-header-height: 4.75rem;
+    --site-header-height: 4.25rem;
   }
 
   html {
@@ -141,15 +170,15 @@ const jsonLdString = jsonLd ? JSON.stringify(jsonLd) : null;
   }
 
   html, body {
-    background-color: var(--bg-dark);
-    color: #fff;
+    background-color: var(--c-bg);
+    color: var(--c-ink);
     margin: 0;
     padding: 0;
     min-height: 100%;
   }
 
   body {
-    background: #0b1120;
+    background: var(--c-bg);
   }
 
   main {

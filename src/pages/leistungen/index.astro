@@ -3,7 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import LegalPageShell from '../../components/LegalPageShell.astro';
 import OfferIcon from '../../components/OfferIcon.astro';
 import { packages, offerPath } from '../../data/offers';
-import { services } from '../../data/services';
+import { services, serviceIcons } from '../../data/services';
 import { breadcrumbSchema, schemaGraph, webPageSchema, absoluteUrl } from '../../lib/seo';
 import '../../styles/offer.css';
 
@@ -34,6 +34,7 @@ const pageDescription =
   ])}
 >
   <LegalPageShell
+    back={{ href: '/#leistungen', label: 'Zurück zu den Leistungen' }}
     wide
     legalNav={false}
     title="Leistungen"
@@ -48,19 +49,32 @@ const pageDescription =
       <ul class="service-list">
         {services.map((service) => (
           <li class="legal-block service-list__item autoShow">
-            <h3 class="legal-block__title">{service.title}</h3>
+            <div class="service-card__head">
+              <span class="service-list__cap" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={serviceIcons[service.icon]} />
+              </span>
+              <h3 class="legal-block__title">{service.title}</h3>
+            </div>
             <p class="service-list__text">{service.text}</p>
             <ul class="service-list__chips" aria-label="Schwerpunkte">
               {service.chips.map((chip) => <li>{chip}</li>)}
             </ul>
-            {service.href && (
-              <a class="service-list__ref" href={service.href}>Mehr zu {service.title} →</a>
-            )}
-            {service.reference && (
-              <a class="service-list__ref" href={`/projekte/${service.reference.slug}/`}>
-                Referenz: {service.reference.title} →
-              </a>
-            )}
+            <div class="service-card__foot">
+              {service.href ? (
+                <a class="service-card__link" href={service.href}>
+                  Mehr erfahren<span class="sr-only"> über {service.title}</span> <span aria-hidden="true">→</span>
+                </a>
+              ) : (
+                <a class="service-card__link" href="/kontakt/">
+                  Projekt anfragen <span aria-hidden="true">→</span>
+                </a>
+              )}
+              {service.reference && (
+                <a class="service-card__ref" href={`/projekte/${service.reference.slug}/`}>
+                  Referenz: {service.reference.title}
+                </a>
+              )}
+            </div>
           </li>
         ))}
       </ul>
@@ -69,9 +83,10 @@ const pageDescription =
     <section class="offer-section" aria-labelledby="packages-title">
       <h2 class="offer-section__title" id="packages-title">Feste Pakete für bestehende Webseiten</h2>
       <p class="offer-section__lead">
-        Du hast schon eine Webseite? Diese drei Pakete sind einzeln buchbar – mit klarem Ergebnis und Festpreis.
+        Du hast schon eine Webseite? Diese vier Pakete sind einzeln buchbar – mit klarem Ergebnis und Festpreis.
       </p>
-      <div class="offer-more__grid offer-more__grid--three">
+      <div class="plan-carousel" data-carousel>
+      <div class="offer-more__grid offer-more__grid--four" data-carousel-track>
         {packages.map((offer) => (
           <a href={offerPath(offer)} class="offer-more__card">
             <span class="offer-summary__icon">
@@ -84,14 +99,17 @@ const pageDescription =
           </a>
         ))}
       </div>
+      <div class="carousel-dots carousel-dots--more" role="group" aria-label="Pakete: Karte wählen">
+        {packages.map((offer, index) => (
+          <button type="button" class="carousel-dots__dot" data-carousel-dot={index} aria-label={`${offer.title} anzeigen`} aria-current={index === 0 ? 'true' : undefined}></button>
+        ))}
+      </div>
+      </div>
     </section>
-
-    <aside class="legal-block offer-cta-block autoShow">
-      <h2 class="legal-block__title">Nicht sicher, was du brauchst?</h2>
-      <p class="service-list__text">
-        Beschreib kurz dein Vorhaben – im kostenlosen Erstgespräch finden wir gemeinsam die passende Lösung.
-      </p>
-      <a href="/kontakt/" class="offer-cta">Projekt anfragen</a>
-    </aside>
   </LegalPageShell>
 </BaseLayout>
+
+<script>
+  import { initCarousels } from '../../scripts/carousel';
+  initCarousels();
+</script>

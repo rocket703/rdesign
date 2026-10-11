@@ -30,7 +30,7 @@
   font-weight: 900;
   line-height: 1.05;
   letter-spacing: -0.04em;
-  color: #fff5ff;
+  color: var(--c-ink);
 }
 
 .style-lab__text {
@@ -38,7 +38,7 @@
   margin: 0 0 1.5rem;
   font-size: 1.02rem;
   line-height: 1.65;
-  color: rgba(255, 245, 255, 0.75);
+  color: var(--c-muted);
 }
 
 /* Stil-Auswahl */
@@ -50,14 +50,14 @@
 
 .style-lab__tab {
   padding: 0.55rem 0.95rem;
-  border: 1px solid rgba(255, 255, 255, 0.24);
+  border: 1px solid var(--c-line);
   border-radius: 4px;
   font: inherit;
   font-size: 0.92rem;
   font-weight: 700;
   line-height: 1.2;
-  color: #fff5ff;
-  background: rgba(255, 255, 255, 0.06);
+  color: var(--c-ink);
+  background: var(--c-surface);
   cursor: pointer;
   transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
@@ -67,19 +67,19 @@
 }
 
 .style-lab__tab:hover {
-  border-color: rgba(255, 255, 255, 0.5);
-  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--c-green);
+  background: var(--c-mint);
 }
 
 /* Gewählter Stil: Candy-Gelb wie das „Dustin · Magdeburg“-Etikett */
 .style-lab__tab[aria-pressed='true'] {
-  color: #1a0a2e;
-  background: #ffd166;
-  border-color: #ffd166;
+  color: #052e24;
+  background: var(--r3-green-bright);
+  border-color: var(--c-green);
 }
 
 .style-lab__tab:focus-visible {
-  outline: 2px solid #ffd166;
+  outline: 2px solid var(--c-green-ink);
   outline-offset: 3px;
 }
 
@@ -87,7 +87,7 @@
   min-height: 1.5em;
   margin: 1rem 0 0;
   font-size: 0.88rem;
-  color: rgba(255, 245, 255, 0.6);
+  color: var(--c-muted);
 }
 
 /* ── Variablen der Beispielseite: Standard = Modern ── */
@@ -112,6 +112,264 @@
   --ms-text-size: 0.82rem;
 
   min-width: 0;
+}
+
+/* ── Geräte-Mockups: Laptop (Desktop) und Smartphone (mobil) ──
+   Jede Bühne hat die Pixelmaße ihres Fotos und wird per --k auf die Breite skaliert. */
+.device-mock {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.device-mock__stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: scale(var(--k, 0.5));
+  transform-origin: 0 0;
+}
+
+.device-mock__img {
+  display: block;
+  filter: drop-shadow(0 40px 40px rgba(34, 50, 58, 0.22));
+}
+
+.device-mock__screen {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+/* Laptop: 1440 × 890, Display 1120 × 692 */
+.device-mock--laptop {
+  max-width: 720px;
+  aspect-ratio: 1440 / 890;
+}
+
+.device-mock--laptop .device-mock__stage,
+.device-mock--laptop .device-mock__img {
+  width: 1440px;
+  height: 890px;
+}
+
+.device-mock--laptop .device-mock__screen {
+  top: 38px;
+  left: 158px;
+  width: 1126px;
+  height: 692px;
+}
+
+/* Smartphone: 440 × 850, Display 370 × 772 (Foto in der Mitte gekürzt – realistischere Proportionen) */
+.device-mock--phone {
+  display: none;
+  max-width: 290px;
+  aspect-ratio: 440 / 850;
+}
+
+.device-mock--phone .device-mock__stage,
+.device-mock--phone .device-mock__img {
+  width: 440px;
+  height: 850px;
+}
+
+.device-mock--phone .device-mock__screen {
+  top: 38px;
+  left: 38px;
+  width: 370px;
+  height: 772px;
+  border-radius: 40px;
+}
+
+/* Mobil: Smartphone statt Laptop */
+@media (max-width: 699px) {
+  .device-mock--laptop {
+    display: none;
+  }
+
+  .device-mock--phone {
+    display: block;
+  }
+}
+
+/* Kamera-Aussparung oben am Laptop-Display */
+.device-mock--laptop .device-mock__screen::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 3;
+  width: 104px;
+  height: 13px;
+  border-radius: 0 0 7px 7px;
+  background: #050607;
+  transform: translateX(-50%);
+}
+
+.device-mock__screen .mini-site {
+  flex: 1;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  transform: none;
+}
+
+/* ── Laptop: Desktop-Layout der Beispielseite ── */
+.device-mock--laptop .mini-site { padding: 34px 44px; font-size: 18px; }
+.device-mock--laptop .mini-site__bar { margin-bottom: 34px; }
+.device-mock--laptop .mini-site__logo { font-size: 21px; }
+.device-mock--laptop .mini-site__hero { grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 34px; margin-bottom: 30px; }
+.device-mock--laptop .mini-site__title { font-size: 48px; }
+.device-mock--laptop .mini-site__text { font-size: 20px; }
+.device-mock--laptop .mini-site__eyebrow { font-size: 15px; }
+.device-mock--laptop .mini-site__btn { font-size: 18px; padding: 13px 22px; }
+.device-mock--laptop .mini-site__card { padding: 16px 20px; }
+.device-mock--laptop .mini-site__card-title { font-size: 19px; }
+.device-mock--laptop .mini-site__card-meta { font-size: 16px; }
+.device-mock--laptop .mini-site__image { display: block; }
+
+/* ── Smartphone: Mobil-Layout der Beispielseite (alles untereinander) ── */
+.device-mock--phone .mini-site { padding: 18px 20px 24px; font-size: 16px; overflow: hidden; }
+.device-mock--phone .mini-site__bar { margin-bottom: 18px; }
+.device-mock--phone .mini-site__logo { font-size: 17px; }
+.device-mock--phone .mini-site__hero { display: flex; flex-direction: column-reverse; gap: 18px; margin-bottom: 20px; }
+.device-mock--phone .mini-site__image { display: block; aspect-ratio: 16 / 10; }
+.device-mock--phone .mini-site__title { font-size: 32px; }
+.device-mock--phone .mini-site__text { font-size: 16px; }
+.device-mock--phone .mini-site__eyebrow { font-size: 12px; }
+.device-mock--phone .mini-site__btn { align-self: stretch; text-align: center; font-size: 16px; padding: 13px 18px; }
+.device-mock--phone .mini-site__cards { grid-template-columns: 1fr; gap: 10px; }
+.device-mock--phone .mini-site__card { display: flex; justify-content: space-between; align-items: center; padding: 13px 16px; }
+.device-mock--phone .mini-site__card-title { font-size: 16px; }
+.device-mock--phone .mini-site__card-meta { font-size: 14px; }
+
+/* Statusleiste des Smartphones */
+.phone__status {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  height: 40px;
+  padding: 0 26px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0b0f14;
+  background: #ffffff;
+}
+
+.phone__camera {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #050607;
+  transform: translateX(-50%);
+}
+
+.phone__icons {
+  display: flex;
+  gap: 4px;
+}
+
+.phone__icons i {
+  display: block;
+  width: 14px;
+  height: 10px;
+  border-radius: 2px;
+  background: #0b0f14;
+}
+
+.phone__icons i:last-child {
+  width: 22px;
+}
+
+/* Browserleiste – macht klar, dass es eine Webseite ist */
+.laptop__browser {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.45rem 0.7rem;
+  background: #e9edf0;
+  border-bottom: 1px solid #d3dadf;
+}
+
+.laptop__dots {
+  display: flex;
+  gap: 5px;
+}
+
+.laptop__dots i {
+  display: block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #ff5f57;
+}
+
+.laptop__dots i:nth-child(2) { background: #febc2e; }
+.laptop__dots i:nth-child(3) { background: #28c840; }
+
+.laptop__url {
+  flex: 1;
+  max-width: 60%;
+  margin: 0 auto;
+  padding: 0.18rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.68rem;
+  font-weight: 500;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #586f7c;
+  background: #ffffff;
+}
+
+.device-mock__screen .laptop__browser {
+  padding: 10px 16px;
+}
+
+.device-mock__screen .laptop__dots i {
+  width: 15px;
+  height: 15px;
+}
+
+.device-mock__screen .laptop__url {
+  font-size: 16px;
+  padding: 6px 14px;
+}
+
+.mini-site {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  transform: none;
+}
+
+/* ── 3D: leicht nach rechts gedreht, Unterteil liegt flach davor ── */
+
+/* Unterteil: Space Grau, um 90° nach vorn geklappt */
+
+/* Tastatur als Raster aus Tasten */
+
+.mini-site {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Unterschale: perspektivisches Trapez */
+
+.mini-site {
+  border-radius: 0;
+  box-shadow: none;
+  transform: none;
 }
 
 .mini-site {
@@ -250,20 +508,61 @@
 
 /* ── Schlicht ── */
 .style-lab__stage[data-active-style='clean'] {
-  --ms-bg: #ffffff;
-  --ms-surface: #ffffff;
-  --ms-text: #1c1917;
-  --ms-muted: #78716c;
-  --ms-accent: #a16207;
-  --ms-border: 1px solid #e7e5e4;
-  --ms-radius: 4px;
-  --ms-radius-sm: 2px;
-  --ms-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+  --ms-bg: #faf7f2;
+  --ms-surface: transparent;
+  --ms-text: #2b2724;
+  --ms-muted: #8a827a;
+  --ms-accent: #8a6d3b;
+  --ms-border: none;
+  --ms-radius: 0;
+  --ms-radius-sm: 0;
+  --ms-shadow: none;
   --ms-btn-bg: transparent;
-  --ms-btn-text: #1c1917;
-  --ms-btn-border: 1px solid #1c1917;
+  --ms-btn-text: #2b2724;
+  --ms-btn-border: none;
   --ms-title-font: Georgia, 'Times New Roman', serif;
   --ms-title-weight: 400;
+}
+
+/* Schlicht: großzügiger Weißraum, Link statt Button, Karten nur mit Linie */
+.style-lab__stage[data-active-style='clean'] .mini-site {
+  padding: 44px 88px;
+}
+
+.style-lab__stage[data-active-style='clean'] .mini-site__bar {
+  margin-bottom: 44px;
+}
+
+.style-lab__stage[data-active-style='clean'] .mini-site__hero {
+  gap: 72px;
+  margin-bottom: 40px;
+}
+
+.style-lab__stage[data-active-style='clean'] .mini-site__copy {
+  gap: 18px;
+}
+
+.style-lab__stage[data-active-style='clean'] .mini-site__eyebrow {
+  letter-spacing: 0.25em;
+}
+
+.style-lab__stage[data-active-style='clean'] .mini-site__btn {
+  padding: 0 0 4px;
+  border-bottom: 1px solid #2b2724;
+}
+
+.style-lab__stage[data-active-style='clean'] .mini-site__image {
+  border-radius: 999px 999px 0 0;
+  filter: grayscale(0.25);
+}
+
+.style-lab__stage[data-active-style='clean'] .mini-site__cards {
+  gap: 48px;
+}
+
+.style-lab__stage[data-active-style='clean'] .mini-site__card {
+  padding: 16px 0 0;
+  border-top: 1px solid #d9d1c7;
 }
 
 /* ── Sportlich ── */
@@ -288,24 +587,49 @@
 /* ── Barrierefrei ── */
 .style-lab__stage[data-active-style='a11y'] {
   --ms-bg: #ffffff;
-  --ms-surface: #ffffff;
+  --ms-surface: #eef3fb;
   --ms-text: #000000;
   --ms-muted: #1a1a1a;
-  --ms-accent: #0040a8;
+  --ms-accent: #0b3d91;
   --ms-border: 3px solid #000000;
-  --ms-radius: 10px;
-  --ms-radius-sm: 8px;
+  --ms-radius: 12px;
+  --ms-radius-sm: 10px;
   --ms-shadow: none;
-  --ms-btn-bg: #000000;
+  --ms-btn-bg: #0b3d91;
   --ms-btn-text: #ffffff;
-  --ms-btn-border: 3px solid #000000;
+  --ms-btn-border: 3px solid #0b3d91;
   --ms-title-weight: 800;
-  --ms-text-size: 0.95rem;
+}
+
+.style-lab__stage[data-active-style='a11y'] .mini-site__title {
+  text-decoration: underline;
+  text-decoration-color: #0b3d91;
+  text-decoration-thickness: 5px;
+  text-underline-offset: 8px;
+}
+
+.style-lab__stage[data-active-style='a11y'] .mini-site__text {
+  font-size: 1.15em;
+  line-height: 1.6;
+}
+
+.style-lab__stage[data-active-style='a11y'] .mini-site__card-title::before {
+  content: '✓ ';
+  color: #0b3d91;
 }
 
 .style-lab__stage[data-active-style='a11y'] .mini-site__btn {
-  outline: 3px solid #ffbf00;
-  outline-offset: 3px;
+  outline: 4px solid #ffbf00;
+  outline-offset: 4px;
+}
+
+.style-lab__stage[data-active-style='a11y'] .mini-site__image {
+  border: 3px solid #000000;
+}
+
+.style-lab__stage[data-active-style='a11y'] .mini-site__eyebrow {
+  font-size: 1em;
+  letter-spacing: 0.04em;
 }
 
 /* Mobil: Stil-Buttons als 2 × 2-Raster, mittig */
@@ -338,4 +662,46 @@
   .style-lab__tab {
     transition: none;
   }
+}
+
+/* Barrierefrei im Smartphone: große Schrift bleibt, Abstände etwas knapper,
+   damit alle drei Karten auf das (realistisch kürzere) Display passen */
+.style-lab__stage[data-active-style='a11y'] .device-mock--phone .mini-site {
+  padding-top: 14px;
+}
+
+.style-lab__stage[data-active-style='a11y'] .device-mock--phone .mini-site__bar {
+  margin-bottom: 14px;
+}
+
+.style-lab__stage[data-active-style='a11y'] .device-mock--phone .mini-site__hero {
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.style-lab__stage[data-active-style='a11y'] .device-mock--phone .mini-site__cards {
+  gap: 8px;
+}
+
+/* Schlicht im Smartphone: Weißraum, aber an die schmale Breite angepasst */
+.style-lab__stage[data-active-style='clean'] .device-mock--phone .mini-site {
+  padding: 26px 28px 30px;
+}
+
+.style-lab__stage[data-active-style='clean'] .device-mock--phone .mini-site__bar {
+  margin-bottom: 28px;
+}
+
+.style-lab__stage[data-active-style='clean'] .device-mock--phone .mini-site__hero {
+  gap: 26px;
+  margin-bottom: 26px;
+}
+
+.style-lab__stage[data-active-style='clean'] .device-mock--phone .mini-site__cards {
+  gap: 0;
+}
+
+.style-lab__stage[data-active-style='clean'] .device-mock--phone .mini-site__image {
+  border-radius: 160px 160px 0 0;
+  aspect-ratio: 4 / 3;
 }

@@ -2,7 +2,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LegalPageShell from '../../components/LegalPageShell.astro';
 import OfferIcon from '../../components/OfferIcon.astro';
-import { offers, offerPath, type Offer } from '../../data/offers';
+import OfferVisual from '../../components/OfferVisual.astro';
+import { offers, offerPath, packages, type Offer } from '../../data/offers';
 import {
   breadcrumbSchema,
   canonicalUrl,
@@ -21,6 +22,16 @@ const { offer } = Astro.props as { offer: Offer };
 const pathname = offerPath(offer);
 const otherOffers = offers.filter((other) => other.slug !== offer.slug && other.kind === offer.kind);
 const contactHref = `/kontakt/?thema=${offer.slug}`;
+// letztes Wort des Titels wird markiert, z. B. „Webdesign Magdeburg“ → „Magdeburg“
+const titleMark = offer.title.split(' ').pop();
+// Banner-Farben wie bei den Paketkarten der Startseite
+const packageAccents = ['var(--c-turf)', 'var(--c-slate)', 'var(--c-deep)', 'var(--c-forest)'];
+// Wartungsstufen: Farben wie bei den Projektkarten
+const stageAccents = ['var(--c-turf)', 'var(--c-slate)', 'var(--c-deep)'];
+const bannerAccent = offer.kind === 'package' ? packageAccents[packages.indexOf(offer) % packageAccents.length] : 'var(--c-turf)';
+const priceText = offer.price ?? 'Festpreis auf Anfrage';
+// die ersten drei Punkte aus „Das bekommst du“ stehen schon im Kopf – bei „Stichwort: Text“ nur das Stichwort
+const keyPoints = offer.deliverables.slice(0, 3);
 ---
 
 <BaseLayout
@@ -52,94 +63,245 @@ const contactHref = `/kontakt/?thema=${offer.slug}`;
     ),
   ])}
 >
-  <LegalPageShell wide legalNav={false} title={offer.title} lead={offer.lead}>
-    <div class="offer-layout">
-      <aside class="offer-aside">
-        <article class="legal-block offer-summary autoShow">
-          <span class="offer-summary__icon">
-            <OfferIcon name={offer.icon} size={26} />
-          </span>
-          <h2 class="legal-block__title">{offer.headings.summary}</h2>
-          <dl class="offer-facts">
-            {offer.facts.map((fact) => (
-              <div class="offer-facts__row">
-                <dt>{fact.label}</dt>
-                <dd>{fact.value}</dd>
-              </div>
-            ))}
-            <div class="offer-facts__row">
-              <dt>Preis</dt>
-              <dd>{offer.price ?? 'Festpreis auf Anfrage'}</dd>
-            </div>
-          </dl>
-          <a href={contactHref} class="offer-cta">Projekt anfragen</a>
-          <p class="offer-summary__note">Kostenlos & unverbindlich – Antwort meist innerhalb von 24 h.</p>
-        </article>
-
-        {offer.reference && (
-          <a href={offer.reference.href} class="legal-block offer-reference autoShow">
-            <span class="offer-reference__label">Referenz</span>
-            <strong>{offer.reference.title}</strong>
-            <span>{offer.reference.text}</span>
-            <span class="offer-reference__more">Zum Projekt →</span>
-          </a>
-        )}
-      </aside>
-
-      <div class="offer-main">
-        <article class="legal-block autoShow">
-          <h2 class="legal-block__title">{offer.headings.intro}</h2>
-          <div class="legal-block__body">
-            {offer.intro.map((paragraph) => <p>{paragraph}</p>)}
-          </div>
-        </article>
-
-        {offer.sections?.map((section) => (
-          <article class="legal-block autoShow">
-            <h2 class="legal-block__title">{section.heading}</h2>
-            <div class="legal-block__body">
-              {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
-            </div>
-          </article>
+  <LegalPageShell
+    back={offer.kind === 'service' ? { href: '/leistungen/', label: 'Alle Leistungen' } : { href: '/#pakete', label: 'Zurück zu den Paketen' }}
+    wide
+    legalNav={false}
+    crumbs={[{ label: 'Leistungen', href: '/leistungen/' }]}
+    fold
+    title={offer.title}
+    mark={titleMark}
+    lead={offer.lead}
+  >
+    <!-- Erster Bildschirm: Kernaussagen und Anfrage links … -->
+    <div slot="hero-main" class="hero-offer">
+      <ul class="hero-points">
+        {keyPoints.map((point) => (
+          <li>
+            <span class="hero-points__mark" aria-hidden="true">✓</span>
+            <span>{point.includes(': ') ? point.split(': ')[0] : point}</span>
+          </li>
         ))}
+      </ul>
+      <div class="hero-actions">
+        <a href={contactHref} class="offer-cta">Projekt anfragen</a>
+        <a href="#details" class="hero-actions__more">Alle Details <span aria-hidden="true">↓</span></a>
+      </div>
+      <p class="hero-actions__note">Kostenlos &amp; unverbindlich – Antwort meist innerhalb von 24 h.</p>
+    </div>
 
-        <article class="legal-block autoShow">
-          <h2 class="legal-block__title">{offer.headings.deliverables}</h2>
-          <ul class="offer-checklist">
-            {offer.deliverables.map((item) => (
+    <!-- … Eckdaten und Preis rechts -->
+    <article slot="hero" class="hero-product" style={`--pkg: ${bannerAccent}`}>
+      <div class="hero-product__banner" aria-hidden="true">
+        {offer.kind === 'package' ? (
+          <OfferVisual name={offer.icon} />
+        ) : (
+          <span class="hero-product__icon">
+            <OfferIcon name={offer.icon} size={40} />
+          </span>
+        )}
+      </div>
+      <div class="hero-product__body">
+        <h2 class="hero-product__title">{offer.headings.summary}</h2>
+        <dl class="offer-facts">
+          {offer.facts.map((fact) => (
+            <div class="offer-facts__row">
+              <dt>{fact.label}</dt>
+              <dd>{fact.value}</dd>
+            </div>
+          ))}
+        </dl>
+        <p class="hero-product__price">
+          <span>Preis</span>
+          <strong>{priceText}</strong>
+        </p>
+      </div>
+    </article>
+
+    <span id="details" class="offer-anchor" aria-hidden="true"></span>
+
+    {offer.plans?.map((group) => (
+      <section class="legal-block offer-plans autoShow" aria-labelledby={`plans-${group.heading}`}>
+        <h2 class="legal-block__title" id={`plans-${group.heading}`}>{group.heading}</h2>
+        <p class="offer-plans__intro">{group.intro}</p>
+        {group.look === 'stages' ? (
+          <div class="plan-carousel" data-carousel>
+          <ul class="stage-grid" data-carousel-track>
+            {group.plans.map((plan, index) => (
               <li>
-                <span class="offer-checklist__mark" aria-hidden="true">✓</span>
-                {item}
+                <a
+                  href={`${contactHref}&paket=${encodeURIComponent(plan.name)}`}
+                  class="stage-card"
+                  style={`--card: ${stageAccents[index % stageAccents.length]}`}
+                >
+                  <div class="stage-card__media" aria-hidden="true">
+                    <span class="stage-card__icon"><OfferIcon name={offer.icon} size={30} /></span>
+                    <span class="stage-card__meter">
+                      {group.plans.map((_, level) => <i class:list={[level <= index && 'is-on']}></i>)}
+                    </span>
+                  </div>
+                  <span class="stage-card__tag">Stufe {index + 1}</span>
+                  <div class="stage-card__body">
+                    <h3 class="stage-card__title">{plan.name}</h3>
+                    <p class="stage-card__text">{plan.tagline}</p>
+                    <ul class="stage-card__features">
+                      {plan.features.map((feature) => (
+                        <li>
+                          <span class="stage-card__mark" aria-hidden="true">✓</span>
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                    <p class="stage-card__price">{priceText}</p>
+                  </div>
+                  <span class="stage-card__cta">Anfragen <span aria-hidden="true">→</span></span>
+                </a>
               </li>
             ))}
           </ul>
-        </article>
-
-        <article class="legal-block autoShow">
-          <h2 class="legal-block__title">{offer.headings.audience}</h2>
-          <ul class="legal-list">
-            {offer.audience.map((item) => <li>{item}</li>)}
-          </ul>
-        </article>
-
-        <article class="legal-block autoShow">
-          <h2 class="legal-block__title">{offer.headings.faq}</h2>
-          <div class="offer-faq">
-            {offer.faq.map((item) => (
-              <details class="offer-faq__item">
-                <summary>{item.question}</summary>
-                <p>{item.answer}</p>
-              </details>
+          <div class="carousel-dots carousel-dots--stages" role="group" aria-label={`${group.heading}: Karte wählen`}>
+            {group.plans.map((plan, index) => (
+              <button type="button" class="carousel-dots__dot" data-carousel-dot={index} aria-label={`${plan.name} anzeigen`} aria-current={index === 0 ? 'true' : undefined}></button>
             ))}
           </div>
-        </article>
-      </div>
+          </div>
+        ) : (
+          <div class="plan-carousel" data-carousel>
+          <ul class:list={['plan-grid', `plan-grid--${group.plans.length}`]} data-carousel-track>
+            {group.plans.map((plan) => (
+              <li class="plan-card">
+                <h3 class="plan-card__name">{plan.name}</h3>
+                <p class="plan-card__tagline">{plan.tagline}</p>
+                <ul class="plan-card__features">
+                  {plan.features.map((feature) => (
+                    <li>
+                      <span class="plan-card__mark" aria-hidden="true">✓</span>
+                      <span>
+                        {feature.includes(': ') ? (
+                          <Fragment><strong>{feature.split(': ')[0]}:</strong> {feature.split(': ').slice(1).join(': ')}</Fragment>
+                        ) : (
+                          feature
+                        )}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                {plan.variants && (
+                  <p class="plan-card__variants">
+                    <span class="plan-card__variants-label">wählbar:</span>
+                    {plan.variants.map((variant) => <span class="plan-card__variant">{variant}</span>)}
+                  </p>
+                )}
+                <div class="plan-card__foot">
+                  <span class="plan-card__price">{priceText}</span>
+                  <a href={`${contactHref}&paket=${encodeURIComponent(plan.name)}`} class="plan-card__cta">
+                    Anfragen <span aria-hidden="true">→</span>
+                  </a>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <div class="carousel-dots carousel-dots--plans" role="group" aria-label={`${group.heading}: Karte wählen`}>
+            {group.plans.map((plan, index) => (
+              <button type="button" class="carousel-dots__dot" data-carousel-dot={index} aria-label={`${plan.name} anzeigen`} aria-current={index === 0 ? 'true' : undefined}></button>
+            ))}
+          </div>
+          </div>
+        )}
+      </section>
+    ))}
 
+    <div class="offer-main offer-main--full">
+      <article class="legal-block autoShow">
+        <h2 class="legal-block__title">{offer.headings.intro}</h2>
+        <div class="legal-block__body">
+          {offer.intro.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+      </article>
+
+      {offer.sections?.map((section) => (
+        <article class="legal-block autoShow">
+          <h2 class="legal-block__title">{section.heading}</h2>
+          <div class="legal-block__body">
+            {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+          </div>
+        </article>
+      ))}
+
+      <article class="legal-block autoShow">
+        <h2 class="legal-block__title">{offer.headings.deliverables}</h2>
+        <ul class="offer-checklist">
+          {offer.deliverables.map((item) => (
+            <li>
+              <span class="offer-checklist__mark" aria-hidden="true">✓</span>
+              <span>
+                {item.includes(': ') ? (
+                  <Fragment><strong>{item.split(': ')[0]}:</strong> {item.split(': ').slice(1).join(': ')}</Fragment>
+                ) : (
+                  item
+                )}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </article>
+
+      <article class="legal-block autoShow">
+        <h2 class="legal-block__title">{offer.headings.audience}</h2>
+        <ul class="legal-list">
+          {offer.audience.map((item) => <li>{item}</li>)}
+        </ul>
+      </article>
+
+      <article class="legal-block autoShow">
+        <h2 class="legal-block__title">{offer.headings.faq}</h2>
+        <div class="offer-faq">
+          {offer.faq.map((item) => (
+            <details class="offer-faq__item">
+              <summary>{item.question}</summary>
+              <p>{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </article>
+    </div>
+
+    <!-- Abschluss: Anfrage und Referenz nebeneinander statt Seitenspalte -->
+    <div class:list={['offer-aside', 'offer-closing', !offer.reference && !offer.partner && 'offer-closing--single']}>
+      <article class="legal-block offer-summary offer-cta-card autoShow">
+        <div class="offer-cta-card__text">
+          <h2 class="legal-block__title">Interesse an {offer.title}?</h2>
+          <p class="offer-cta-card__price">{priceText}</p>
+        </div>
+        <div class="offer-cta-card__action">
+          <a href={contactHref} class="offer-cta">Projekt anfragen</a>
+          <p class="offer-summary__note">Kostenlos &amp; unverbindlich – Antwort meist innerhalb von 24 h.</p>
+        </div>
+      </article>
+
+      {offer.reference && (
+        <a href={offer.reference.href} class="legal-block offer-reference autoShow">
+          <span class="offer-reference__label">Referenz</span>
+          <strong>{offer.reference.title}</strong>
+          <span>{offer.reference.text}</span>
+          <span class="offer-reference__more">Zum Projekt →</span>
+        </a>
+      )}
+
+      {offer.partner && (
+        <a href={offer.partner.href} target="_blank" rel="noopener" class="legal-block offer-reference autoShow">
+          <span class="offer-reference__label">Technik-Partner</span>
+          <strong>{offer.partner.name}</strong>
+          <span>{offer.partner.text}</span>
+          <span class="offer-reference__more">{offer.partner.linkLabel} <span aria-hidden="true">↗</span><span class="sr-only"> (öffnet in neuem Tab)</span></span>
+        </a>
+      )}
     </div>
 
     <nav class="offer-more autoShow" aria-label={offer.kind === 'service' ? 'Weitere Leistungen' : 'Weitere Pakete'}>
       <p class="offer-more__title">{offer.kind === 'service' ? 'Weitere Leistungen' : 'Weitere Pakete'}</p>
-      <div class="offer-more__grid">
+      <div class="plan-carousel" data-carousel>
+      <div class="offer-more__grid" data-carousel-track>
         {otherOffers.map((other) => (
           <a href={offerPath(other)} class="offer-more__card">
             <span class="offer-summary__icon">
@@ -152,6 +314,19 @@ const contactHref = `/kontakt/?thema=${offer.slug}`;
           </a>
         ))}
       </div>
+      {otherOffers.length > 1 && (
+        <div class="carousel-dots carousel-dots--more" role="group" aria-label={`${offer.kind === 'service' ? 'Weitere Leistungen' : 'Weitere Pakete'}: Karte wählen`}>
+          {otherOffers.map((other, index) => (
+            <button type="button" class="carousel-dots__dot" data-carousel-dot={index} aria-label={`${other.title} anzeigen`} aria-current={index === 0 ? 'true' : undefined}></button>
+          ))}
+        </div>
+      )}
+      </div>
     </nav>
   </LegalPageShell>
 </BaseLayout>
+
+<script>
+  import { initCarousels } from '../../scripts/carousel';
+  initCarousels();
+</script>

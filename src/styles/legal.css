@@ -2,11 +2,15 @@
 
 .legal-page {
   --legal-max: 720px;
-  background: #030712;
+  background: var(--pg-hero-bg, #030712);
 }
 
 .legal-page--wide {
   --legal-max: 960px;
+}
+
+.legal-page--xwide {
+  --legal-max: 1200px;
 }
 
 .legal-hero {
@@ -14,7 +18,7 @@
   overflow: hidden;
   padding: clamp(6rem, 14vh, 8rem) 1.25rem clamp(3rem, 8vh, 4rem);
   text-align: center;
-  background: #030712;
+  background: var(--pg-hero-bg, #030712);
 }
 
 .legal-hero__ambient {
@@ -23,17 +27,17 @@
   pointer-events: none;
   z-index: 0;
   background:
-    radial-gradient(ellipse 90% 55% at 50% 115%, rgba(16, 185, 129, 0.12), transparent 68%),
+    radial-gradient(ellipse 90% 55% at 50% 115%, rgba(4, 114, 77, 0.12), transparent 68%),
     radial-gradient(ellipse 45% 35% at 12% 18%, rgba(56, 189, 248, 0.08), transparent 55%),
-    #030712;
+    var(--pg-hero-bg, #030712);
 }
 
 .legal-hero__grid {
   position: absolute;
   inset: -1px;
   background-image:
-    linear-gradient(rgba(16, 185, 129, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(16, 185, 129, 0.04) 1px, transparent 1px);
+    linear-gradient(rgba(4, 114, 77, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(4, 114, 77, 0.04) 1px, transparent 1px);
   background-size: 44px 44px;
   mask-image: radial-gradient(ellipse 75% 62% at 50% 46%, #000 15%, transparent 72%);
   -webkit-mask-image: radial-gradient(ellipse 75% 62% at 50% 46%, #000 15%, transparent 72%);
@@ -48,7 +52,7 @@
 }
 
 .legal-body {
-  background: #0b1120;
+  background: var(--pg-bg, #0b1120);
   padding: 0 1.25rem clamp(5rem, 12vh, 7rem);
 }
 
@@ -67,12 +71,10 @@
   padding: clamp(1.25rem, 3vw, 1.65rem);
   padding-top: clamp(1.45rem, 3.5vw, 1.85rem);
   background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 42%, transparent 100%),
-    rgba(15, 23, 42, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.07),
-    0 12px 32px rgba(0, 0, 0, 0.28);
+    var(--pg-block-sheen, linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 42%, transparent 100%)),
+    var(--pg-surface, rgba(15, 23, 42, 0.65));
+  border: 1px solid var(--pg-border, rgba(255, 255, 255, 0.07));
+  box-shadow: var(--pg-block-shadow, inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 12px 32px rgba(0, 0, 0, 0.28));
   transition:
     border-color 0.35s ease,
     box-shadow 0.35s ease;
@@ -86,16 +88,14 @@
   right: 0;
   height: 2px;
   border-radius: 14px 14px 0 0;
-  background: linear-gradient(90deg, #10b981 0%, #38bdf8 55%, transparent 100%);
+  background: var(--pg-block-line, linear-gradient(90deg, var(--c-turf) 0%, #38bdf8 55%, transparent 100%));
   opacity: 0.65;
   pointer-events: none;
 }
 
 .legal-block:hover {
-  border-color: rgba(16, 185, 129, 0.22);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 16px 40px rgba(0, 0, 0, 0.35);
+  border-color: var(--pg-border-hover, rgba(4, 114, 77, 0.22));
+  box-shadow: var(--pg-block-shadow-hover, inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 16px 40px rgba(0, 0, 0, 0.35));
 }
 
 .legal-block--contact {
@@ -106,13 +106,13 @@
   margin: 0 0 1rem;
   font-size: clamp(1.1rem, 2.5vw, 1.35rem);
   font-weight: 800;
-  color: #f8fafc;
+  color: var(--pg-heading, #f8fafc);
   letter-spacing: -0.02em;
   line-height: 1.25;
 }
 
 .legal-block__body {
-  color: #94a3b8;
+  color: var(--pg-text, #94a3b8);
   font-size: clamp(0.92rem, 1.8vw, 1rem);
   line-height: 1.75;
 }
@@ -126,43 +126,43 @@
 }
 
 .legal-block__body strong {
-  color: #e2e8f0;
+  color: var(--pg-text-strong, #e2e8f0);
   font-weight: 600;
 }
 
 .legal-block__body code {
   font-family: inherit;
   font-size: 0.88em;
-  color: #cbd5e1;
-  background: rgba(0, 0, 0, 0.35);
+  color: var(--pg-text-list, #cbd5e1);
+  background: var(--pg-tint, rgba(0, 0, 0, 0.35));
   padding: 0.12rem 0.35rem;
   border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--pg-border, rgba(255, 255, 255, 0.08));
 }
 
 .legal-contact {
   font-size: 1.05rem;
   line-height: 1.85;
-  color: #e2e8f0;
+  color: var(--pg-text-strong, #e2e8f0);
 }
 
 .legal-contact .label {
-  color: #94a3b8;
+  color: var(--pg-text, #94a3b8);
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
 .legal-link {
-  color: #10b981;
+  color: var(--pg-link, var(--c-turf));
   text-decoration: none;
-  border-bottom: 1px solid rgba(16, 185, 129, 0.35);
+  border-bottom: 1px solid var(--pg-link-line, rgba(4, 114, 77, 0.35));
   transition: color 0.2s ease, border-color 0.2s ease;
 }
 
 .legal-link:hover {
-  color: #34d399;
-  border-bottom-color: #34d399;
+  color: var(--pg-accent, var(--c-turf));
+  border-bottom-color: var(--pg-accent, var(--c-turf));
 }
 
 .legal-list {
@@ -175,7 +175,7 @@
   position: relative;
   padding-left: 1.25rem;
   margin-bottom: 0.55rem;
-  color: #cbd5e1;
+  color: var(--pg-text-list, #cbd5e1);
   line-height: 1.6;
 }
 
@@ -187,8 +187,8 @@
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #10b981;
-  box-shadow: 0 0 8px rgba(16, 185, 129, 0.45);
+  background: var(--c-turf);
+  box-shadow: 0 0 8px rgba(4, 114, 77, 0.45);
 }
 
 .legal-page__nav {
@@ -205,12 +205,12 @@
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: #94a3b8;
+  color: var(--pg-text, #94a3b8);
   text-decoration: none;
   padding: 0.45rem 0.75rem;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--pg-border, rgba(255, 255, 255, 0.08));
+  background: var(--pg-tint, rgba(255, 255, 255, 0.03));
   transition: border-color 0.2s ease, color 0.2s ease;
   display: inline-flex;
   align-items: center;
@@ -218,13 +218,17 @@
 }
 
 .legal-page__nav a:hover {
-  color: #10b981;
-  border-color: rgba(16, 185, 129, 0.35);
+  color: var(--pg-link, var(--c-turf));
+  border-color: rgba(4, 114, 77, 0.35);
 }
 
 @media (max-width: 768px) {
   .legal-hero {
     padding-top: clamp(5.5rem, 12vh, 6.5rem);
+  }
+
+  .legal-hero--zone {
+    padding-top: clamp(3rem, 8vh, 4rem);
   }
 
   .legal-block {
@@ -282,7 +286,7 @@
   left: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  color: #94a3b8;
+  color: var(--pg-text, #94a3b8);
   font-size: 0.95rem;
   font-weight: 500;
   pointer-events: none;
@@ -310,7 +314,7 @@
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #10b981;
+  color: var(--pg-link, var(--c-turf));
 }
 
 .contact-form .float-field--textarea .form-textarea:focus + label,
@@ -328,11 +332,11 @@
 .contact-form .form-textarea {
   width: 100%;
   box-sizing: border-box;
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--pg-input-bg, rgba(0, 0, 0, 0.2));
+  border: 1px solid var(--pg-input-border, rgba(255, 255, 255, 0.08));
   border-radius: 10px;
   padding: 1rem;
-  color: #f8fafc;
+  color: var(--pg-heading, #f8fafc);
   font-family: inherit;
   font-size: 1rem;
   transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
@@ -341,12 +345,12 @@
 .contact-form .form-input:focus,
 .contact-form .form-textarea:focus {
   outline: none;
-  border-color: rgba(16, 185, 129, 0.55);
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+  border-color: rgba(4, 114, 77, 0.55);
+  box-shadow: 0 0 0 3px rgba(4, 114, 77, 0.12);
 }
 
 .contact-form .error-msg {
-  color: #f87171;
+  color: var(--pg-error, #f87171);
   font-size: 0.82rem;
   margin-top: 0.25rem;
   opacity: 0;
@@ -372,7 +376,7 @@
   display: flex;
   gap: 0.65rem;
   cursor: pointer;
-  color: #94a3b8;
+  color: var(--pg-text, #94a3b8);
   font-size: 0.88rem;
   line-height: 1.55;
 }
@@ -382,7 +386,7 @@
   height: 1.15rem;
   margin-top: 0.15rem;
   flex-shrink: 0;
-  accent-color: #10b981;
+  accent-color: var(--c-turf);
   cursor: pointer;
 }
 
@@ -394,10 +398,10 @@
   width: 100%;
   margin-top: 0.35rem;
   padding: 1rem 1.25rem;
-  border: 1px solid rgba(16, 185, 129, 0.45);
+  border: 1px solid var(--pg-btn-border, rgba(4, 114, 77, 0.45));
   border-radius: 12px;
-  background: rgba(16, 185, 129, 0.14);
-  color: #ecfdf5;
+  background: var(--pg-btn-bg, rgba(4, 114, 77, 0.14));
+  color: var(--pg-btn-text, var(--c-sky));
   font-size: 0.95rem;
   font-weight: 800;
   cursor: pointer;
@@ -409,8 +413,8 @@
 
 .contact-form .submit-button:hover:not(:disabled) {
   transform: translateY(-2px);
-  background: rgba(16, 185, 129, 0.24);
-  border-color: #34d399;
+  background: var(--pg-btn-hover, rgba(4, 114, 77, 0.24));
+  border-color: var(--pg-accent, var(--c-turf));
 }
 
 .contact-form .submit-button:disabled {
@@ -444,6 +448,7 @@
   animation: contactShake 0.4s ease-in-out;
 }
 
+/* Erfolgsfenster nach dem Absenden – im Stil der modernen Karten der Unterseiten */
 .contact-popup {
   position: fixed;
   inset: 0;
@@ -452,8 +457,8 @@
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(8px);
+  background: rgba(34, 50, 58, 0.55);
+  backdrop-filter: blur(6px);
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.35s ease, visibility 0.35s ease;
@@ -467,81 +472,301 @@
 .contact-popup__card {
   position: relative;
   overflow: hidden;
-  border-radius: 14px;
   width: 100%;
   max-width: 420px;
-  padding: 2.5rem 2rem;
+  padding: 2.75rem 2rem 2rem;
+  border: 1px solid rgba(88, 111, 124, 0.2);
+  border-radius: 22px;
   text-align: center;
   background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 42%, transparent 100%),
-    rgba(15, 23, 42, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-  transform: scale(0.94);
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    radial-gradient(120% 60% at 100% 0%, rgba(184, 219, 217, 0.45), transparent 60%),
+    #ffffff;
+  box-shadow:
+    0 1px 2px rgba(34, 50, 58, 0.06),
+    0 40px 80px -30px rgba(34, 50, 58, 0.55);
+  transform: translateY(12px) scale(0.97);
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .contact-popup.is-visible .contact-popup__card {
-  transform: scale(1);
+  transform: none;
 }
 
+/* schmales Warnband oben – wie unter dem Seitenkopf */
 .contact-popup__card::after {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #10b981 0%, #38bdf8 55%, transparent 100%);
+  height: 6px;
+  background: repeating-linear-gradient(-55deg, var(--c-deep) 0 14px, var(--c-sky) 14px 28px);
 }
 
 .contact-popup__icon {
+  display: grid;
+  place-items: center;
   width: 4rem;
   height: 4rem;
   margin: 0 auto 1.25rem;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(16, 185, 129, 0.35);
+  border-radius: 18px;
+  color: #ffffff;
+  background: linear-gradient(145deg, #0a8a5e 0%, var(--c-turf) 55%, var(--c-forest) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 10px 22px -8px rgba(4, 114, 77, 0.6);
+}
+
+.contact-popup__icon svg {
+  width: 32px;
+  height: 32px;
 }
 
 .contact-popup__card h2 {
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.6rem;
   font-size: 1.5rem;
   font-weight: 800;
-  color: #fff;
+  letter-spacing: -0.02em;
+  color: var(--c-ink);
 }
 
 .contact-popup__card p {
-  margin: 0 0 1.5rem;
-  color: #94a3b8;
+  margin: 0 0 1.75rem;
   line-height: 1.6;
+  color: var(--c-slate);
 }
 
 .contact-popup__close {
   width: 100%;
-  padding: 0.9rem 1.25rem;
-  border: 1px solid rgba(16, 185, 129, 0.45);
-  border-radius: 10px;
-  background: rgba(16, 185, 129, 0.16);
-  color: #ecfdf5;
-  font-weight: 700;
+  min-height: 48px;
+  padding: 0.85rem 1.25rem;
+  border: none;
+  border-radius: 12px;
+  font: inherit;
+  font-weight: 800;
+  color: #ffffff;
+  background: var(--c-turf);
+  box-shadow: 0 8px 20px -8px rgba(4, 114, 77, 0.6);
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition: background 0.2s ease, translate 0.2s ease;
 }
 
 .contact-popup__close:hover {
-  background: rgba(16, 185, 129, 0.28);
-  transform: translateY(-2px);
+  background: var(--c-turf-hover);
+  translate: 0 -2px;
+}
+
+.contact-popup__close:focus-visible {
+  outline: 2px solid var(--c-deep);
+  outline-offset: 3px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .legal-block {
+  .legal-block,
+  .contact-popup,
+  .contact-popup__card,
+  .contact-popup__close {
     transition: none;
   }
 
   .contact-form.shake {
     animation: none;
+  }
+}
+
+/* ═══ Farbwelten der Unterseiten – passend zu den Zonen der Startseite ═══ */
+
+/* Zonenkopf statt zentriertem Titel */
+.legal-hero--zone {
+  text-align: left;
+  padding-bottom: clamp(2.5rem, 6vh, 3.5rem);
+}
+
+.legal-hero__zone {
+  position: relative;
+  z-index: 1;
+  max-width: var(--legal-max);
+  margin: 0 auto;
+}
+
+.legal-hero--zone .zone-h {
+  margin-bottom: 0;
+}
+
+/* Unterseiten-Titel kleiner als die Startseiten-Zonen, damit lange Wörter passen */
+.legal-hero--zone .zone-h__title {
+  font-size: clamp(1.8rem, 4.5vw, 3rem);
+  max-width: 20ch;
+  overflow-wrap: break-word;
+}
+
+.legal-hero--zone .zone-h__desc {
+  max-width: 56ch;
+}
+
+/* ── Clean: hell, ruhig – Leistungen & Projekte ── */
+.legal-page--clean {
+  --pg-bg: var(--c-bg);
+  --pg-hero-bg: var(--c-mint);
+  --pg-surface: #ffffff;
+  --pg-block-sheen: linear-gradient(transparent, transparent);
+  --pg-block-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+  --pg-block-shadow-hover: 0 16px 40px rgba(15, 23, 42, 0.1);
+  --pg-block-line: linear-gradient(90deg, var(--c-turf) 0%, var(--c-turf) 50%, transparent 100%);
+  --pg-border: var(--c-line);
+  --pg-border-hover: rgba(4, 114, 77, 0.45);
+  --pg-heading: var(--c-ink);
+  --pg-text: var(--c-slate);
+  --pg-text-strong: var(--c-ink);
+  --pg-text-list: var(--c-ink);
+  --pg-link: var(--c-turf);
+  --pg-link-line: rgba(4, 120, 87, 0.35);
+  --pg-accent: var(--c-turf);
+  --pg-accent-hover: #065f46;
+  --pg-tint: rgba(88, 111, 124, 0.08);
+  --pg-icon-bg: rgba(4, 114, 77, 0.12);
+  --pg-icon-border: rgba(4, 114, 77, 0.3);
+  --pg-input-bg: #ffffff;
+  --pg-input-border: rgba(15, 23, 42, 0.18);
+  --pg-error: #b91c1c;
+  --pg-btn-bg: var(--c-turf);
+  --pg-btn-hover: var(--c-turf-hover);
+  --pg-btn-border: var(--c-turf);
+  --pg-btn-text: #ffffff;
+  background: var(--pg-bg);
+}
+
+.legal-page--clean .legal-hero--zone {
+  background:
+    radial-gradient(ellipse 45% 50% at 100% 20%, rgba(4, 114, 77, 0.1), transparent 55%),
+    linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px) 0 0 / 72px 72px,
+    linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px) 0 0 / 72px 72px,
+    var(--pg-hero-bg);
+}
+
+/* ═══ Redaktioneller Stil: Linien statt Karten ═══ */
+.legal-page--clean .legal-block {
+  padding: 1.75rem 0 0.5rem;
+  border: none;
+  border-top: 1px solid var(--c-line);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.legal-page--clean .legal-block::after {
+  display: none;
+}
+
+.legal-page--clean .legal-block:hover {
+  border-color: var(--c-line);
+  box-shadow: none;
+}
+
+/* Erster Abschnitt jeder Spalte mit kräftiger Linie */
+.legal-page--clean .legal-page__container > .legal-block:first-child,
+.legal-page--clean .offer-main > .legal-block:first-child,
+.legal-page--clean .contact-layout > .legal-block:first-child {
+  border-top: 2px solid var(--c-ink);
+}
+
+.legal-page--clean .legal-block__title {
+  font-size: clamp(1.2rem, 2.4vw, 1.45rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+/* Faktenboxen und Seitenleisten: flache Light-Blue-Flächen */
+.legal-page--clean .offer-aside .legal-block,
+.legal-page--clean .contact-aside .legal-block {
+  padding: 1.5rem;
+  border: none;
+  border-radius: 6px;
+  background: var(--c-sky);
+  --pg-text: var(--c-on-sky);
+  --pg-text-strong: var(--c-black);
+  --pg-link: var(--c-black);
+  --pg-link-line: rgba(0, 0, 0, 0.45);
+  --pg-accent: var(--c-black);
+  --pg-border: rgba(0, 0, 0, 0.14);
+  --pg-icon-bg: rgba(255, 255, 255, 0.6);
+  --pg-icon-border: transparent;
+}
+
+.legal-page--clean .offer-aside .offer-facts dt,
+.legal-page--clean .contact-aside .legal-block__body {
+  color: var(--c-ink);
+}
+
+.legal-page--clean .offer-aside .offer-summary__note {
+  color: var(--c-ink);
+}
+
+/* Projektdaten in der Seitenleiste */
+.legal-page--clean .offer-aside .tech-icons {
+  --tech-icon-bg: rgba(255, 255, 255, 0.6);
+  --tech-icon-border: transparent;
+  --tech-icon-color: var(--c-black);
+}
+
+/* Kopf der Unterseiten liegt auf Light Blue: dunkler Text für ausreichenden Kontrast */
+.legal-hero--zone .zone-h__desc {
+  color: var(--c-on-sky);
+}
+
+.legal-page--clean .legal-page__nav a {
+  color: var(--c-ink);
+  background: transparent;
+}
+
+/* Zurück-Button oben rechts im Kopf der Unterseiten */
+.legal-hero__zone {
+  display: flex;
+  flex-direction: column;
+}
+
+.page-back-btn {
+  position: relative;
+  z-index: 5;
+  align-self: flex-end;
+  order: -1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  margin-bottom: 0.75rem;
+  padding: 0 1.1rem;
+  border: 2px solid var(--c-deep);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--c-deep);
+  background: rgba(255, 255, 255, 0.45);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.page-back-btn:hover {
+  color: #ffffff;
+  background: var(--c-deep);
+}
+
+.page-back-btn:focus-visible {
+  outline: 2px solid var(--c-turf);
+  outline-offset: 3px;
+}
+
+@media (min-width: 900px) {
+  .legal-hero__zone {
+    position: relative;
+  }
+
+  .page-back-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 5;
+    margin: 0;
   }
 }

@@ -1,0 +1,60 @@
+/* ═══ Wischleisten: Punkte unter den Karten ═══
+   Die Leiste selbst (flex + scroll-snap) legt jeder Bereich für seinen Umbruchpunkt fest;
+   hier stehen nur die Punkte. Logik: src/scripts/carousel.ts */
+
+.carousel-dots {
+  display: none;
+  justify-content: center;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+.carousel-dots__dot {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.carousel-dots__dot::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(88, 111, 124, 0.35);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.carousel-dots__dot[aria-current='true']::before {
+  background: var(--c-turf);
+  transform: scale(1.25);
+}
+
+.carousel-dots__dot:focus-visible {
+  outline: 2px solid var(--c-turf);
+  outline-offset: -4px;
+  border-radius: 50%;
+}
+
+/* auf dunklem Grund (z. B. Paket-Bereich der Startseite) */
+.carousel-dots--light .carousel-dots__dot::before {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.carousel-dots--light .carousel-dots__dot[aria-current='true']::before {
+  background: #ffffff;
+}
+
+.carousel-dots--light .carousel-dots__dot:focus-visible {
+  outline-color: #ffffff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-dots__dot::before {
+    transition: none;
+  }
+}

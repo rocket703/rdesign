@@ -41,6 +41,23 @@ const scoreLength = 2 * Math.PI * scoreRadius;
     </div>
   )}
 
+  {name === 'mail' && (
+    <div class="ov-mail">
+      <span class="ov-mail__icon">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="5" width="18" height="14" rx="3" />
+          <path d="m4 7.5 8 5.5 8-5.5" />
+        </svg>
+      </span>
+      <ul class="ov-mail__checks">
+        <li><span>SPF</span><b>✓</b></li>
+        <li><span>DKIM</span><b>✓</b></li>
+        <li><span>DMARC</span><b>✓</b></li>
+      </ul>
+      <span class="ov-mail__score">Zustellbarkeit 10/10</span>
+    </div>
+  )}
+
   {name === 'access' && (
     <div class="ov-a11y">
       <span class="ov-a11y__sample">Aa</span>
@@ -62,9 +79,8 @@ const scoreLength = 2 * Math.PI * scoreRadius;
     overflow: hidden;
     border-radius: 10px;
     background:
-      radial-gradient(circle at 20% 0%, rgba(52, 211, 153, 0.18), transparent 60%),
-      linear-gradient(160deg, #f0fdf8 0%, #f8fafc 100%);
-    border: 1px solid rgba(16, 185, 129, 0.14);
+      var(--c-sky);
+    border: none;
   }
 
   /* ── SEO: Score-Ring + Balken ── */
@@ -86,11 +102,11 @@ const scoreLength = 2 * Math.PI * scoreRadius;
   }
 
   .ov-seo__track {
-    stroke: rgba(16, 185, 129, 0.15);
+    stroke: rgba(4, 114, 77, 0.18);
   }
 
   .ov-seo__value {
-    stroke: #10b981;
+    stroke: var(--c-turf);
     stroke-linecap: round;
     stroke-dasharray: var(--len);
     stroke-dashoffset: var(--len);
@@ -102,7 +118,7 @@ const scoreLength = 2 * Math.PI * scoreRadius;
     transform-origin: 36px 36px;
     font-size: 19px;
     font-weight: 900;
-    fill: #065f46;
+    fill: var(--c-black);
   }
 
   .ov-seo__bars {
@@ -119,14 +135,14 @@ const scoreLength = 2 * Math.PI * scoreRadius;
     gap: 0.15rem;
     font-size: 0.62rem;
     font-weight: 700;
-    color: #475569;
+    color: var(--c-black);
   }
 
   .ov-seo__bars i {
     display: block;
     height: 4px;
     border-radius: 2px;
-    background: linear-gradient(90deg, #10b981, #34d399) 0 0 / 0 100% no-repeat, rgba(16, 185, 129, 0.15);
+    background: linear-gradient(90deg, var(--c-turf), var(--c-turf)) 0 0 / 0 100% no-repeat, rgba(4, 114, 77, 0.18);
     transition: background-size 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s;
   }
 
@@ -185,13 +201,13 @@ const scoreLength = 2 * Math.PI * scoreRadius;
 
   .ov-relaunch__page--new .hero {
     height: 1.6rem;
-    background: linear-gradient(120deg, #10b981, #38bdf8);
+    background: var(--c-turf);
   }
 
   .ov-relaunch__page--new .btn {
     width: 32%;
     height: 0.55rem;
-    background: #0f172a;
+    background: var(--c-black);
   }
 
   .w40 { width: 40%; }
@@ -207,7 +223,7 @@ const scoreLength = 2 * Math.PI * scoreRadius;
     left: var(--split);
     width: 2px;
     margin-left: -1px;
-    background: #10b981;
+    background: var(--c-turf);
     transition: left 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
@@ -223,7 +239,7 @@ const scoreLength = 2 * Math.PI * scoreRadius;
     border-radius: 50%;
     font-size: 0.7rem;
     color: #fff;
-    background: #10b981;
+    background: var(--c-turf);
     transform: translate(-50%, -50%);
   }
 
@@ -234,11 +250,11 @@ const scoreLength = 2 * Math.PI * scoreRadius;
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #64748b;
+    color: var(--c-slate);
   }
 
   .ov-relaunch__label--old { left: 0.5rem; }
-  .ov-relaunch__label--new { right: 0.5rem; color: #047857; }
+  .ov-relaunch__label--new { right: 0.5rem; color: var(--c-turf); }
 
   :global(a:hover) .ov-relaunch,
   :global(a:focus-visible) .ov-relaunch {
@@ -246,6 +262,60 @@ const scoreLength = 2 * Math.PI * scoreRadius;
   }
 
   /* ── Barrierefreiheit: Kontrast-Prüfer ── */
+  /* ── E-Mail: Umschlag, DNS-Prüfungen, Zustellbarkeit ── */
+  .ov-mail {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    column-gap: 1rem;
+    row-gap: 0.45rem;
+  }
+
+  .ov-mail__icon {
+    grid-row: span 2;
+    display: grid;
+    place-items: center;
+    width: 4.25rem;
+    height: 4.25rem;
+    border-radius: 10px;
+    color: #ffffff;
+    background: var(--c-black);
+  }
+
+  .ov-mail__checks {
+    display: grid;
+    gap: 0.2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ov-mail__checks li {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-width: 5.5rem;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: var(--c-black);
+  }
+
+  .ov-mail__checks b {
+    color: var(--c-turf);
+  }
+
+  .ov-mail__score {
+    justify-self: start;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: #ffffff;
+    background: var(--c-turf);
+  }
+
   .ov-a11y {
     display: flex;
     align-items: center;
@@ -261,7 +331,7 @@ const scoreLength = 2 * Math.PI * scoreRadius;
     font-size: 1.9rem;
     font-weight: 900;
     color: #ffffff;
-    background: #0f172a;
+    background: var(--c-black);
     outline: 3px solid transparent;
     outline-offset: 3px;
     transition: outline-color 0.3s ease;
@@ -276,7 +346,7 @@ const scoreLength = 2 * Math.PI * scoreRadius;
     font-size: 1.35rem;
     font-weight: 900;
     letter-spacing: -0.02em;
-    color: #0f172a;
+    color: var(--c-black);
   }
 
   .ov-a11y__badge {
@@ -287,12 +357,12 @@ const scoreLength = 2 * Math.PI * scoreRadius;
     font-weight: 800;
     letter-spacing: 0.04em;
     color: #ffffff;
-    background: #047857;
+    background: var(--c-turf);
   }
 
   :global(a:hover) .ov-a11y__sample,
   :global(a:focus-visible) .ov-a11y__sample {
-    outline-color: #f59e0b;
+    outline-color: var(--c-turf);
   }
 
   @media (prefers-reduced-motion: reduce) {

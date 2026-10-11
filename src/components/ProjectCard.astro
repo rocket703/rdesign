@@ -1,8 +1,8 @@
 ---
 // src/components/ProjectCard.astro
-import type { ProjectBiome } from '../data/portfolio-biomes';
 import { responsiveImage } from '../lib/images';
 import TechIcons from './TechIcons.astro';
+import { isInProgress } from '../lib/project-status';
 
 interface Props {
   title: string;
@@ -10,17 +10,24 @@ interface Props {
   image: string;
   tags: string[];
   id: string;
-  variant?: ProjectBiome | 'default';
   headingLevel?: 2 | 3;
+  status?: string;
+  /** Projektart für das Band (z. B. „Vereinsseite“) */
+  category?: string;
+  /** Position in der Liste – bestimmt die Kartenfarbe */
+  accent?: number;
 }
 
-const { title, description, image, tags, id, variant = 'default', headingLevel = 3 } = Astro.props;
-const cardClass = variant === 'default' ? 'card--project' : `card--project card--project-${variant}`;
+const { title, description, image, tags, id, headingLevel = 3, status = 'online', category, accent = 0 } = Astro.props;
+const inProgress = isInProgress(status);
 const media = responsiveImage(image, 800);
+const accents = ['var(--c-turf)', 'var(--c-slate)', 'var(--c-deep)'];
+const color = accents[accent % accents.length];
 ---
 
-<a class:list={['card', 'autoShow', cardClass]} href={`/projekte/${id}/`}>
-  <div class="card-media-wrap">
+<a class="project-card autoShow" href={`/projekte/${id}/`} style={`--card: ${color}`}>
+  <div class="project-card__media">
+    {inProgress && <span class="status-badge-wip status-badge-wip--card">In Arbeit</span>}
     <img
       src={media.src}
       srcset={media.srcset}
@@ -28,116 +35,171 @@ const media = responsiveImage(image, 800);
       width={media.width ?? 800}
       height={media.height ?? 450}
       alt={`Vorschau von ${title}`}
-      class="card-media"
       loading="lazy"
       decoding="async"
     />
   </div>
-  <div class="card-body">
-    {headingLevel === 2 ? <h2 class="card-title">{title}</h2> : <h3 class="card-title">{title}</h3>}
-    <p>{description}</p>
-    <TechIcons tags={tags} class="tags" />
+  {category && <span class="project-card__tag">{category}</span>}
+  <div class="project-card__body">
+    {headingLevel === 2
+      ? <h2 class="project-card__title">{title}</h2>
+      : <h3 class="project-card__title">{title}</h3>}
+    <p class="project-card__text">{description}</p>
+    <TechIcons tags={tags} class="project-card__tech" />
   </div>
+  <span class="project-card__cta">Projekt ansehen <span aria-hidden="true">→</span></span>
 </a>
 
 <style>
-  /* Candy — round, poppy, bouncy */
-  .card--project-candy {
-    border-radius: 28px;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    background:
-      linear-gradient(160deg, rgba(255, 255, 255, 0.12) 0%, transparent 50%),
-      rgba(22, 10, 38, 0.85);
+  /* Karte mit asymmetrischen Ecken und Bändern, die über den Rand ragen */
+  .project-card {
+    --card: var(--c-turf);
+    --r-big: 56px;
+    --r-small: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-radius: var(--r-big) var(--r-small) var(--r-big) var(--r-small);
+    text-decoration: none;
+    color: var(--c-ink);
+    background: #ffffff;
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.14),
-      0 20px 50px rgba(0, 0, 0, 0.35);
-    transition:
-      transform 0.4s cubic-bezier(0.34, 1.45, 0.64, 1),
-      box-shadow 0.4s ease;
+      10px 12px 0 -2px rgba(34, 50, 58, 0.08),
+      0 18px 36px -16px rgba(34, 50, 58, 0.35);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
-  .card--project-candy .card-media-wrap {
-    border-radius: 22px 22px 0 0;
-    overflow: hidden;
-  }
-
-  .card--project-candy::after {
-    height: 3px;
-    background: linear-gradient(90deg, #ff4ecd, #ffd166, #5de4ff);
-    opacity: 1;
-    border-radius: 28px 28px 0 0;
-  }
-
-  .card--project-candy:hover {
-    transform: translateY(-12px) scale(1.02);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.18),
-      0 28px 60px rgba(255, 78, 205, 0.2);
-  }
-
-  .card--project-candy .card-title {
-    color: #fff;
-  }
-
-  .card--project-candy .card-body > p {
-    color: rgba(255, 245, 255, 0.72);
-  }
-
-  .card--project-candy {
-    --tech-icon-bg: rgba(255, 255, 255, 0.1);
-    --tech-icon-border: rgba(255, 255, 255, 0.15);
-    --tech-icon-color: #fff5ff;
-  }
-
-  /* Clean — minimal, precise */
-  .card--project-clean {
-    border-radius: 12px;
-    border: 1px solid rgba(15, 23, 42, 0.08);
-    background: var(--p-clean-surface, #fff);
-    box-shadow:
-      0 1px 2px rgba(15, 23, 42, 0.04),
-      0 16px 40px rgba(15, 23, 42, 0.06);
-    color: #0f172a;
-  }
-
-  .card--project-clean::after {
-    background: linear-gradient(90deg, #10b981, #cbd5e1);
-    opacity: 0.45;
-  }
-
-  .card--project-clean::before {
-    opacity: 0.2;
-  }
-
-  .card--project-clean:hover {
+  .project-card:hover {
     transform: translateY(-5px);
-    border-color: rgba(16, 185, 129, 0.2);
     box-shadow:
-      0 4px 8px rgba(15, 23, 42, 0.04),
-      0 24px 48px rgba(15, 23, 42, 0.08);
+      12px 16px 0 -2px rgba(34, 50, 58, 0.1),
+      0 26px 44px -18px rgba(34, 50, 58, 0.45);
   }
 
-  .card--project-clean .card-title {
-    color: #0f172a;
+  .project-card:focus-visible {
+    outline: 3px solid var(--card);
+    outline-offset: 6px;
+  }
+
+  .project-card__media {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--r-big) var(--r-small) 0 0;
+    background: var(--c-bg);
+  }
+
+  .project-card__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+  }
+
+  .project-card:hover .project-card__media img {
+    transform: scale(1.04);
+  }
+
+  /* Band rechts mit umgeknickter Ecke */
+  .project-card__tag {
+    position: relative;
+    align-self: flex-end;
+    margin: -1rem -18px 0 0;
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
     font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #ffffff;
+    background: var(--card);
+  }
+
+  .project-card__tag::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    right: 0;
+    border-top: 12px solid var(--card);
+    border-right: 18px solid transparent;
+    filter: brightness(0.65);
+  }
+
+  .project-card__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 1.1rem 1.4rem 1rem;
+  }
+
+  .project-card__title {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 800;
     letter-spacing: -0.02em;
+    line-height: 1.25;
+    color: var(--card);
   }
 
-  .card--project-clean .card-body > p {
-    color: #64748b;
+  .project-card__text {
+    flex: 1;
+    margin: 0 0 1rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--c-slate);
+  }
+
+  .project-card :global(.project-card__tech) {
+    --tech-icon-bg: transparent;
+    --tech-icon-border: var(--c-line);
+    --tech-icon-color: var(--c-slate);
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--c-line);
+  }
+
+  /* Band unten links mit umgeknickter Ecke */
+  .project-card__cta {
+    position: relative;
+    align-self: flex-start;
+    margin: 0.5rem 0 2.25rem -18px;
+    padding: 0.6rem 1.25rem;
     font-size: 0.92rem;
+    font-weight: 800;
+    color: #ffffff;
+    background: var(--card);
   }
 
-  .card--project-clean {
-    --tech-icon-bg: #f1f5f9;
-    --tech-icon-border: #e2e8f0;
-    --tech-icon-color: #475569;
+  .project-card__cta::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    border-bottom: 12px solid var(--card);
+    border-left: 18px solid transparent;
+    filter: brightness(0.65);
+  }
+
+  .project-card__cta span {
+    display: inline-block;
+    transition: transform 0.3s ease;
+  }
+
+  .project-card:hover .project-card__cta span {
+    transform: translateX(4px);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .card--project-candy:hover {
-      transform: translateY(-6px);
-      scale: 1;
+    .project-card,
+    .project-card__media img,
+    .project-card__cta span {
+      transition: none;
+    }
+
+    .project-card:hover,
+    .project-card:hover .project-card__media img,
+    .project-card:hover .project-card__cta span {
+      transform: none;
     }
   }
 </style>

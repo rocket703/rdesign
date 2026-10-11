@@ -19,6 +19,8 @@ const projects = defineCollection({
     tasks: z.array(z.string()).optional(),
     /** Slug eines Angebots unter /leistungen/ (z. B. „relaunch“) für die interne Verlinkung */
     relatedOffer: z.string().optional(),
+    /** Projektart für das Band auf der Projektkarte (z. B. „Vereinsseite“) */
+    category: z.string().optional(),
   }),
 });
 

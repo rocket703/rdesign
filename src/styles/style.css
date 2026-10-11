@@ -1,6 +1,6 @@
 /* ====================== Design tokens ====================== */
 :root {
-  --accent-lime: #d2ff00;
+  --accent-lime: #b8dbd9; /* Highlight 2 (Gold) – Name historisch */
 }
 
 /* ====================== Reset & Basis ====================== */
@@ -21,7 +21,7 @@ body {
 /* Skip-Link */
 .skip-link {
   position: absolute; left: -9999px; top: 0; z-index: 10000;
-  background: #10b981; color: #0b1220; padding: .6rem .9rem; border-radius: .5rem;
+  background: var(--c-turf); color: #0b1220; padding: .6rem .9rem; border-radius: .5rem;
 }
 .skip-link:focus { left: .75rem; top: .75rem; }
 
@@ -50,18 +50,18 @@ a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid #10b981;
+  outline: 2px solid var(--c-turf);
   outline-offset: 2px;
 }
 
 ::selection {
-  background: rgba(16, 185, 129, 0.35);
-  color: #ecfdf5;
+  background: rgba(4, 114, 77, 0.35);
+  color: var(--c-sky);
 }
 
 ::-moz-selection {
-  background: rgba(16, 185, 129, 0.35);
-  color: #ecfdf5;
+  background: rgba(4, 114, 77, 0.35);
+  color: var(--c-sky);
 }
 
 /* ================= Header / Navigation ================= */
@@ -71,8 +71,8 @@ textarea:focus-visible {
   left: 0;
   right: 0;
   width: 100%;
-  background: rgba(11, 17, 32, 0.98);
-  box-shadow: 0 2px 8px rgba(0,0,0,.25);
+  background: var(--c-deep);
+  border-bottom: 1px solid rgba(184, 219, 217, 0.12);
   z-index: 1000;
   padding: 0.75rem clamp(0.75rem, 2vw, 1.35rem);
   gap: 0.75rem;
@@ -90,8 +90,7 @@ textarea:focus-visible {
   width: 100%;
   transform: scaleX(0);
   transform-origin: left center;
-  background: linear-gradient(90deg, #059669, #10b981, var(--accent-lime), #34d399);
-  box-shadow: 0 0 12px rgba(210, 255, 0, 0.25), 0 0 10px rgba(16, 185, 129, 0.35);
+  background: linear-gradient(90deg, var(--c-green), var(--c-gold));
   will-change: transform;
   z-index: 1001;
   pointer-events: none;
@@ -135,7 +134,7 @@ textarea:focus-visible {
   display: inline-block;
   white-space: nowrap;
   text-decoration: none;
-  color: #e5e7eb;
+  color: #f4f4f9;
   font-weight: 600;
   font-size: clamp(0.78rem, 1.05vw, 0.9rem);
   padding: 0.35rem 0.5rem;
@@ -143,7 +142,7 @@ textarea:focus-visible {
 }
 
 .main-nav .nav-list a.nav-link:hover {
-  color: #10b981;
+  color: var(--c-sky);
   transform: translateY(-2px);
 }
 
@@ -163,18 +162,17 @@ textarea:focus-visible {
   text-decoration: none;
   font-weight: 700;
   font-size: clamp(0.78rem, 1.05vw, 0.88rem);
-  color: #ecfdf5;
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.4);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  background: var(--c-turf);
+  border: 1px solid var(--c-green);
   transition: color 0.25s ease, transform 0.2s ease, background 0.25s ease, border-color 0.25s ease;
 }
 
 .nav-cta-desktop:hover,
 .main-nav .nav-list a.nav-link--cta:hover {
-  color: #ecfdf5;
-  background: rgba(16, 185, 129, 0.2);
-  border-color: #34d399;
+  color: #ffffff;
+  background: var(--c-turf-hover);
+  border-color: var(--c-green);
   transform: translateY(-2px);
 }
 
@@ -239,7 +237,7 @@ textarea:focus-visible {
   width: 100%;
   height: 2px;
   border-radius: 2px;
-  background: linear-gradient(90deg, #f1f5f9 0%, #cbd5e1 100%);
+  background: #f4f4f9;
   transform-origin: center;
   transition:
     transform 0.5s cubic-bezier(0.68, -0.45, 0.32, 1.35),
@@ -254,15 +252,15 @@ textarea:focus-visible {
 .burger-menu__line--bot { top: 14px; }
 
 .burger-menu.active {
-  background: rgba(16, 185, 129, 0.1);
+  background: rgba(4, 114, 77, 0.1);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 0 0 1px rgba(16, 185, 129, 0.28),
-    0 0 18px rgba(16, 185, 129, 0.18);
+    0 0 0 1px rgba(4, 114, 77, 0.28),
+    0 0 18px rgba(4, 114, 77, 0.18);
 }
 
 .burger-menu.active .burger-menu__line {
-  background: linear-gradient(90deg, #6ee7b7, #10b981);
+  background: linear-gradient(90deg, var(--c-turf-hover), var(--c-turf));
 }
 
 .burger-menu.active .burger-menu__line--top {
@@ -306,7 +304,7 @@ textarea:focus-visible {
 }
 
 .eyebrow {
-  color: #10b981;
+  color: var(--c-turf);
   text-transform: uppercase;
   letter-spacing: 0.25em;
   font-weight: 800;
@@ -324,7 +322,7 @@ textarea:focus-visible {
 .title-divider {
   width: 80px;
   height: 4px;
-  background: linear-gradient(90deg, #10b981, #059669);
+  background: linear-gradient(90deg, var(--c-turf), var(--c-turf));
   margin: 2rem auto;
   border-radius: 4px;
 }
@@ -374,7 +372,7 @@ textarea:focus-visible {
   background:
     repeating-linear-gradient( 60deg, rgba(148,163,184,0.06) 0 2px, transparent 2px 28px),
     repeating-linear-gradient(-60deg, rgba(148,163,184,0.05) 0 2px, transparent 2px 28px),
-    radial-gradient(600px 280px at 20% 80%, rgba(16,185,129,0.20), transparent 60%),
+    radial-gradient(600px 280px at 20% 80%, rgba(4, 114, 77,0.20), transparent 60%),
     radial-gradient(500px 260px at 80% 20%, rgba(59,130,246,0.18), transparent 65%),
     linear-gradient(180deg, transparent, rgba(0,0,0,0.18));
   -webkit-clip-path: polygon(0% 15%, 18% 10%, 35% 16%, 52% 9%, 72% 14%, 100% 8%, 100% 85%, 77% 92%, 56% 86%, 33% 93%, 12% 88%, 0% 95%);
@@ -394,6 +392,8 @@ textarea:focus-visible {
   margin: 1.25rem 0 1rem;
   padding: .6rem 1rem;
   color: #ecfdf5;
+  /* Original: der Schatten scheint durch die Verlaufsbuchstaben und
+     erzeugt den geprägten, metallischen 3D-Look */
   text-shadow: 0 1px 0 rgba(0,0,0,.35), 0 8px 28px rgba(0,0,0,.45);
   background: linear-gradient(180deg, #f8fafc 0%, #d1fae5 100%);
   -webkit-background-clip: text;
@@ -403,10 +403,24 @@ textarea:focus-visible {
   content: "";
   position: absolute;
   inset: -.35rem -.75rem;
-  background: linear-gradient(180deg, rgba(16,185,129,0.10), rgba(16,185,129,0.06));
-  border: 1px solid rgba(16,185,129,0.35);
-  box-shadow: inset 0 0 1px rgba(255,255,255,0.06), 0 14px 36px rgba(0,0,0,0.32);
-  border-radius: 14px;
+  /* Original-Design der Hero-Karte: dunkle Glasfläche mit grünem Schimmer –
+     auf hellem Hero mit eigenem dunklen Grund */
+  /* Glasschild: getönte, satinierte Scheibe mit Lichtkante und Plattendicke */
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.04) 38%, rgba(255,255,255,0) 60%),
+    linear-gradient(135deg, rgba(184,219,217,0.22), rgba(88,111,124,0.12)),
+    rgba(34, 50, 58, 0.72);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  backdrop-filter: blur(10px) saturate(140%);
+  border: 1px solid rgba(255,255,255,0.32);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.45),
+    inset 0 -3px 0 rgba(184,219,217,0.18),
+    inset 0 0 0 1px rgba(184,219,217,0.08),
+    0 2px 0 rgba(184,219,217,0.35),
+    0 28px 40px -14px rgba(34,50,58,0.55),
+    0 60px 80px -30px rgba(34,50,58,0.35);
+  border-radius: 6px;
   z-index: -1;
 }
 /* Wortmarke nimmt den Slogan auf und richtet ihn mittig aus */
@@ -435,6 +449,17 @@ textarea:focus-visible {
     border-radius: 12px;
   }
 
+}
+
+/* „webdesign“ im Glasschild heller: weicherer Schatten, damit der Silber-Verlauf
+   nicht abgedunkelt wird – der geprägte 3D-Look bleibt über die harte Unterkante */
+.intro .section-head .r3-logo .r3-rest {
+  background: linear-gradient(180deg, #ffffff 0%, #e8f1f0 45%, #c3d3d2 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  text-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.18),
+    0 4px 14px rgba(0, 0, 0, 0.16);
 }
 
 /* Claim (H1) unter der Wortmarke */
@@ -494,7 +519,7 @@ textarea:focus-visible {
 .highlights li:hover {
   transform: translateY(-2px);
   background: rgba(255,255,255,0.08);
-  border-color: rgba(16,185,129,0.35);
+  border-color: rgba(4, 114, 77,0.35);
 }
 
 /* ================= Projekte (Liste) ================= */
@@ -548,52 +573,6 @@ textarea:focus-visible {
     border-color 0.28s ease;
 }
 
-.card--project {
-  height: 100%;
-  position: relative;
-}
-
-.card--project::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #10b981 0%, #38bdf8 55%, transparent 100%);
-  opacity: 0.65;
-  pointer-events: none;
-}
-
-.card--project::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(165deg, rgba(16, 185, 129, 0.18) 0%, transparent 40%, transparent 100%);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0.55;
-  pointer-events: none;
-  transition: opacity 0.28s ease;
-}
-
-.card--project:hover {
-  transform: translateY(-8px);
-  border-color: rgba(16,185,129,0.35);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 18px 40px rgba(0,0,0,.35),
-    0 0 0 1px rgba(16, 185, 129, 0.08);
-}
-
-.card--project:hover::before {
-  opacity: 0.78;
-}
-
 .card-media-wrap {
   overflow: hidden;
   position: relative;
@@ -612,9 +591,6 @@ textarea:focus-visible {
   transition: transform 0.45s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
-.card--project:hover .card-media {
-  transform: scale(1.05);
-}
 .card-body { padding: 1.25rem 1.25rem 1.3rem; }
 
 .card-body .card-title { font-size: 1.35rem; font-weight: 700; color: #f3f4f6; margin: 0 0 .45rem; }
@@ -636,11 +612,6 @@ textarea:focus-visible {
   text-overflow: ellipsis;
 }
 
-.card--project:focus-visible {
-  outline: 2px solid #10b981;
-  outline-offset: 3px;
-}
-
 /* ================= Projekt-Detailseiten ================= */
 .container { max-width: 1200px; margin: 0 auto; }
 .container.narrow { max-width: 860px; }
@@ -656,7 +627,7 @@ textarea:focus-visible {
   background:
     repeating-linear-gradient(60deg, rgba(148,163,184,0.05) 0 2px, transparent 2px 28px),
     repeating-linear-gradient(-60deg, rgba(148,163,184,0.04) 0 2px, transparent 2px 28px),
-    radial-gradient(520px 240px at 18% 78%, rgba(16,185,129,0.14), transparent 60%),
+    radial-gradient(520px 240px at 18% 78%, rgba(4, 114, 77,0.14), transparent 60%),
     radial-gradient(460px 220px at 82% 18%, rgba(59,130,246,0.12), transparent 65%),
     linear-gradient(180deg, transparent, rgba(0,0,0,0.12));
   -webkit-clip-path: polygon(0% 15%, 18% 10%, 35% 16%, 52% 9%, 72% 14%, 100% 8%, 100% 85%, 77% 92%, 56% 86%, 33% 93%, 12% 88%, 0% 95%);
@@ -667,7 +638,7 @@ textarea:focus-visible {
   font-size: clamp(2.2rem, 5vw, 3.2rem);
   font-weight: 800; letter-spacing: -0.02em;
   margin: 0 0 .6rem; line-height: 1.12;
-  background: linear-gradient(180deg, #ecfdf5 0%, #a7f3d0 100%);
+  background: linear-gradient(180deg, var(--c-sky) 0%, var(--c-sky) 100%);
   -webkit-background-clip: text; background-clip: text; color: transparent;
   text-shadow: 0 10px 30px rgba(0,0,0,.35);
 }
@@ -695,8 +666,8 @@ textarea:focus-visible {
 }
 .tech-chip.glass:hover {
   transform: translateY(-2px);
-  border-color: rgba(16,185,129,0.35);
-  background: linear-gradient(180deg, rgba(16,185,129,0.10), rgba(255,255,255,0.04));
+  border-color: rgba(4, 114, 77,0.35);
+  background: linear-gradient(180deg, rgba(4, 114, 77,0.10), rgba(255,255,255,0.04));
 }
 
 /* CTA-Link */
@@ -708,19 +679,19 @@ textarea:focus-visible {
   display: inline-block;
   padding: .75rem 1.1rem; border-radius: 12px; font-weight: 800; text-decoration: none; letter-spacing: .01em;
   color: #0b1220;
-  background: linear-gradient(180deg, rgba(16,185,129,0.90), rgba(52,211,153,0.95));
-  border: 1px solid rgba(16,185,129,0.55);
-  box-shadow: 0 14px 30px rgba(16,185,129,0.22);
+  background: linear-gradient(180deg, rgba(4, 114, 77,0.90), rgba(4, 114, 77,0.95));
+  border: 1px solid rgba(4, 114, 77,0.55);
+  box-shadow: 0 14px 30px rgba(4, 114, 77,0.22);
   transition: transform .15s ease, filter .2s ease, box-shadow .2s ease;
 }
 .glass-link:hover {
   transform: translateY(-1px);
   filter: saturate(110%);
-  box-shadow: 0 18px 36px rgba(16,185,129,0.28);
+  box-shadow: 0 18px 36px rgba(4, 114, 77,0.28);
 }
 .glass-link:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 4px rgba(16,185,129,0.35);
+  box-shadow: 0 0 0 4px rgba(4, 114, 77,0.35);
   border-radius: 12px;
 }
 
@@ -744,7 +715,7 @@ textarea:focus-visible {
 }
 .cover-link:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 4px rgba(16,185,129,0.35);
+  box-shadow: 0 0 0 4px rgba(4, 114, 77,0.35);
   border-radius: 14px;
 }
 .cover-link .project-media {
@@ -778,7 +749,7 @@ textarea:focus-visible {
 /* Legacy footer helpers – padding/layout kommt aus Footer.astro */
 .site-footer p { font-size: 1rem; font-weight: 400; }
 .footer-link { color: #e5e7eb; text-decoration: none; font-size: 1rem; font-weight: 400; margin-top: .5rem; display: inline-block; transition: color .2s ease; }
-.footer-link:hover { color: #10b981; }
+.footer-link:hover { color: var(--c-turf); }
 
 /* ================= Responsive ================= */
 @media (max-width: 1024px) {
@@ -821,11 +792,9 @@ textarea:focus-visible {
     width: 100%;
     margin: 0;
     padding: 1.1rem 1.5rem 1.35rem;
-    background: #0b1120;
-    border-bottom: 1px solid rgba(16, 185, 129, 0.18);
-    box-shadow:
-      0 20px 40px rgba(0, 0, 0, 0.45),
-      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    background: var(--c-deep);
+    border-bottom: 1px solid rgba(184, 219, 217, 0.12);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
     z-index: 999;
     opacity: 0;
     visibility: hidden;
@@ -919,12 +888,12 @@ textarea:focus-visible {
   line-height: 1;
   margin: 0 auto .5rem;
   font-size: clamp(3rem, 16vw, 7rem);
-  background: linear-gradient(180deg, #ecfdf5 0%, #a7f3d0 100%);
+  background: linear-gradient(180deg, var(--c-sky) 0%, var(--c-sky) 100%);
   -webkit-background-clip: text;
           background-clip: text;
   color: transparent;
   text-shadow: 0 10px 30px rgba(0,0,0,.35);
-  filter: drop-shadow(0 10px 30px rgba(16,185,129,.08));
+  filter: drop-shadow(0 10px 30px rgba(4, 114, 77,.08));
   opacity: .95;
 }
 
@@ -939,8 +908,8 @@ textarea:focus-visible {
   margin: .4rem auto 0;
   width: clamp(120px, 28vw, 220px);
   background:
-    repeating-linear-gradient(90deg, rgba(16,185,129,.35) 0 2px, transparent 2px 6px),
-    linear-gradient(90deg, rgba(16,185,129,.45), rgba(52,211,153,.35));
+    repeating-linear-gradient(90deg, rgba(4, 114, 77,.35) 0 2px, transparent 2px 6px),
+    linear-gradient(90deg, rgba(4, 114, 77,.45), rgba(4, 114, 77,.35));
   border-radius: 999px;
   animation: scan 1.8s linear infinite;
   opacity: .8;
@@ -981,7 +950,7 @@ textarea:focus-visible {
   position: absolute; inset: 0;
   pointer-events: none; z-index: -1;
   background:
-    radial-gradient(800px 360px at 15% 0%, rgba(16,185,129,.10), transparent 60%),
+    radial-gradient(800px 360px at 15% 0%, rgba(4, 114, 77,.10), transparent 60%),
     radial-gradient(700px 320px at 85% 10%, rgba(59,130,246,.08), transparent 65%);
   filter: saturate(108%);
 }
@@ -992,7 +961,7 @@ textarea:focus-visible {
   font-weight: 800;
   letter-spacing: -0.01em;
   margin: 0 0 .6rem;
-  background: linear-gradient(180deg, #ecfdf5 0%, #a7f3d0 100%);
+  background: linear-gradient(180deg, var(--c-sky) 0%, var(--c-sky) 100%);
   -webkit-background-clip: text; background-clip: text; color: transparent;
   text-shadow: 0 10px 30px rgba(0,0,0,.35);
 }
@@ -1003,7 +972,7 @@ textarea:focus-visible {
   font-size: clamp(.95rem, 2.4vw, 1.1rem);
   font-weight: 500;
   color: #cbd5e1;
-  background: linear-gradient(90deg,#34d399,#10b981);
+  background: linear-gradient(90deg,var(--c-turf),var(--c-turf));
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 
@@ -1045,60 +1014,10 @@ textarea:focus-visible {
 }
 
 /* Kinder gleiten nacheinander rein (Sektions-Header etc.) */
-.autoShow:not(.card--project) > * {
-  opacity: 0;
-  transform: translateY(28px);
-  transition:
-    opacity 0.85s cubic-bezier(.22,.61,.36,1),
-    transform 0.85s cubic-bezier(.22,.61,.36,1);
-}
-
-.autoShow:not(.card--project).is-visible > * {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.autoShow:not(.card--project).is-visible > *:nth-child(1) { transition-delay: 0.05s; }
-.autoShow:not(.card--project).is-visible > *:nth-child(2) { transition-delay: 0.12s; }
-.autoShow:not(.card--project).is-visible > *:nth-child(3) { transition-delay: 0.19s; }
-.autoShow:not(.card--project).is-visible > *:nth-child(4) { transition-delay: 0.26s; }
-.autoShow:not(.card--project).is-visible > *:nth-child(5) { transition-delay: 0.33s; }
-.autoShow:not(.card--project).is-visible > *:nth-child(6) { transition-delay: 0.40s; }
 
 /* Projekt-Karten: ganzes Element einblenden */
-.autoShow.card--project {
-  opacity: 0;
-  transform: translateY(48px) scale(0.98);
-  transition:
-    opacity 0.9s cubic-bezier(.22,.61,.36,1),
-    transform 0.9s cubic-bezier(.22,.61,.36,1),
-    box-shadow 0.28s ease,
-    border-color 0.28s ease;
-}
-
-.autoShow.card--project.is-visible {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-.autoShow.card--project.is-visible:hover {
-  transform: translateY(-8px) scale(1);
-}
-
-.autoShow.card--project > * {
-  opacity: 1;
-  transform: none;
-  filter: none;
-  transition: none;
-}
 
 /* Stagger im Grid */
-.card-grid .autoShow.card--project:nth-child(1) { transition-delay: .04s; }
-.card-grid .autoShow.card--project:nth-child(2) { transition-delay: .12s; }
-.card-grid .autoShow.card--project:nth-child(3) { transition-delay: .20s; }
-.card-grid .autoShow.card--project:nth-child(4) { transition-delay: .28s; }
-.card-grid .autoShow.card--project:nth-child(5) { transition-delay: .36s; }
-.card-grid .autoShow.card--project:nth-child(6) { transition-delay: .44s; }
 
 /* Sektions-Trenner mit wanderndem Gradient */
 .section-divider {
@@ -1110,9 +1029,9 @@ textarea:focus-visible {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(16, 185, 129, 0.15) 20%,
-    rgba(16, 185, 129, 0.65) 50%,
-    rgba(16, 185, 129, 0.15) 80%,
+    rgba(4, 114, 77, 0.15) 20%,
+    rgba(4, 114, 77, 0.65) 50%,
+    rgba(4, 114, 77, 0.15) 80%,
     transparent 100%
   );
   background-size: 200% 100%;
@@ -1128,9 +1047,7 @@ textarea:focus-visible {
     filter: none !important;
     transition: none !important;
   }
-  .autoShow:not(.card--project) > * {
-    transition-delay: 0s !important;
-  }
+
   .section-divider {
     animation: none;
     background-position: center;
@@ -1320,7 +1237,7 @@ textarea:focus-visible {
 
 .focus-box:hover {
   background: rgba(255, 255, 255, 0.04);
-  border-color: #10b981;
+  border-color: var(--c-turf);
   transform: translateY(-5px);
 }
 
@@ -1328,14 +1245,14 @@ textarea:focus-visible {
 .main-skill { grid-column: span 2; grid-row: span 2; display: flex; flex-direction: column; justify-content: flex-end; }
 .tech-badge { grid-column: span 2; display: flex; flex-direction: column; justify-content: center; }
 .design-skill { grid-column: span 1; }
-.statement { grid-column: span 1; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #000; }
+.statement { grid-column: span 1; background: linear-gradient(135deg, var(--c-turf) 0%, var(--c-turf) 100%); color: #000; }
 
 /* Typografie in den Boxen */
 .box-tag {
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: #10b981;
+  color: var(--c-turf);
   margin-bottom: 1rem;
 }
 
@@ -1343,7 +1260,7 @@ textarea:focus-visible {
 .main-skill p { color: #94a3b8; margin-top: 1rem; max-width: 250px; }
 
 .tech-icons { display: flex; align-items: center; gap: 0.75rem; font-weight: 700; font-size: 1.2rem; margin-bottom: 0.5rem; }
-.dot { width: 6px; height: 6px; background: #10b981; border-radius: 50%; }
+.dot { width: 6px; height: 6px; background: var(--c-turf); border-radius: 50%; }
 
 .statement p { font-weight: 800; font-size: 1.1rem; line-height: 1.3; margin: 0; color: #064e3b; }
 .quote { font-size: 3rem; position: absolute; top: 10px; right: 20px; opacity: 0.2; font-family: serif; }
@@ -1355,7 +1272,7 @@ textarea:focus-visible {
   right: -50px;
   width: 200px;
   height: 200px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(4, 114, 77, 0.15) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -1369,4 +1286,65 @@ textarea:focus-visible {
 @media (max-width: 640px) {
   .focus-grid { grid-template-columns: 1fr; }
   .main-skill, .tech-badge, .design-skill, .statement { grid-column: span 1; }
+}
+
+/* Etikett für Projekte, die noch in Arbeit sind */
+.status-badge-wip {
+  display: inline-block;
+  margin: 0 0 0.75rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1c1400;
+  background: #fbbf24;
+}
+
+.status-badge-wip--card {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 3;
+  margin: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* ═══ Glasschild im Hero: Spiegelung, Abstandhalter ═══ */
+.glass-sign__shine,
+.glass-sign__screw {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* Diagonale Spiegelung auf der Scheibe */
+.glass-sign__shine {
+  inset: -.35rem -.75rem;
+  z-index: -1;
+  border-radius: 6px;
+  background: linear-gradient(115deg, transparent 58%, rgba(255, 255, 255, 0.16) 58%, rgba(255, 255, 255, 0.06) 78%, transparent 78%);
+}
+
+/* Abstandhalter an den Ecken */
+.glass-sign__screw {
+  z-index: 1;
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  background: linear-gradient(145deg, #ffffff 0%, #c9d1d6 45%, #8a989f 100%);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.glass-sign__screw--tl { top: calc(-.35rem - 4px); left: calc(-.75rem - 4px); }
+.glass-sign__screw--tr { top: calc(-.35rem - 4px); right: calc(-.75rem - 4px); }
+.glass-sign__screw--bl { bottom: calc(-.35rem - 4px); left: calc(-.75rem - 4px); }
+.glass-sign__screw--br { bottom: calc(-.35rem - 4px); right: calc(-.75rem - 4px); }
+
+@media (max-width: 768px) {
+  .glass-sign__shine { inset: -0.2rem -0.6rem; }
+  .glass-sign__screw--tl { top: calc(-0.2rem - 4px); left: calc(-0.6rem - 4px); }
+  .glass-sign__screw--tr { top: calc(-0.2rem - 4px); right: calc(-0.6rem - 4px); }
+  .glass-sign__screw--bl { bottom: calc(-0.2rem - 4px); left: calc(-0.6rem - 4px); }
+  .glass-sign__screw--br { bottom: calc(-0.2rem - 4px); right: calc(-0.6rem - 4px); }
 }

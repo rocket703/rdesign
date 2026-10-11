@@ -35,24 +35,22 @@
   .candy-tape__segment {
     display: block;
     height: clamp(1.35rem, 2.8vw, 1.8rem);
-    filter: drop-shadow(0 0 14px rgba(255, 78, 205, 0.18));
+    filter: none;
   }
 
   .candy-tape__segment--left {
-    background: linear-gradient(90deg, #5de4ff, #10b981);
+    background: var(--c-deep);
     clip-path: polygon(0 0, 76% 0, 100% 100%, 0 100%);
   }
 
   .candy-tape__segment--main {
-    background: linear-gradient(90deg, #ff4ecd 0%, #ff6fbd 55%, #ffd166 100%);
+    background: var(--c-deep);
     clip-path: polygon(0 0, 92% 0, 100% 100%, 8% 100%);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.3),
-      0 0 24px rgba(255, 78, 205, 0.16);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
   }
 
   .candy-tape__segment--right {
-    background: linear-gradient(90deg, #ffd166, #d2ff00);
+    background: var(--c-deep);
     clip-path: polygon(0 0, 100% 0, 100% 100%, 24% 100%);
   }
 

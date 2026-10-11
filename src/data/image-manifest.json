@@ -29,6 +29,39 @@
       1200
     ]
   },
+  "/images/laptop-mockup.webp": {
+    "width": 1440,
+    "height": 890,
+    "base": "/images/responsive/laptop-mockup",
+    "variants": [
+      480,
+      800,
+      1200,
+      1440
+    ]
+  },
+  "/images/mailtory-mobile.webp": {
+    "width": 1170,
+    "height": 2220,
+    "base": "/images/responsive/mailtory-mobile",
+    "variants": [
+      480,
+      800,
+      1170
+    ]
+  },
+  "/images/mailtory.webp": {
+    "width": 2880,
+    "height": 1620,
+    "base": "/images/responsive/mailtory",
+    "variants": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
   "/images/ohrelauf-mobile.webp": {
     "width": 1170,
     "height": 2220,
@@ -49,6 +82,14 @@
       1200,
       1600,
       2400
+    ]
+  },
+  "/images/phone-mockup.webp": {
+    "width": 440,
+    "height": 850,
+    "base": "/images/responsive/phone-mockup",
+    "variants": [
+      440
     ]
   },
   "/images/projekt-1.webp": {

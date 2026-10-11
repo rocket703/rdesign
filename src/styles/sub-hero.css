@@ -1,0 +1,505 @@
+/* ═══ Seitenkopf der Unterseiten ═══
+   Gleicher Grund wie der Hero der Startseite (Ghost White, feines Raster, grüner Schimmer),
+   Pfad statt Zurück-Button, markiertes Schlüsselwort wie „Ohne Baukasten.“
+   und rechts ein Bereich, den jede Seite selbst füllen kann (Slot „hero“). */
+
+.sub-hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: clamp(2.25rem, 6vw, 4.5rem) 1.25rem clamp(2.75rem, 6vw, 4.5rem);
+  background: var(--c-bg);
+}
+
+/* Raster und Schimmer wie #intro auf der Startseite */
+.sub-hero__ambient {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 55% 70% at 85% 30%, rgba(4, 114, 77, 0.09), transparent 62%),
+    radial-gradient(ellipse 45% 60% at 10% 90%, rgba(184, 219, 217, 0.35), transparent 65%);
+}
+
+.sub-hero__ambient::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 70% 85% at 60% 40%, #000 20%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 85% at 60% 40%, #000 20%, transparent 75%);
+}
+
+/* Dezenter Abschluss: schmales Warnband wie die Tape-Trenner der Startseite */
+.sub-hero::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 6px;
+  background: repeating-linear-gradient(
+    -55deg,
+    var(--c-deep) 0 14px,
+    var(--c-sky) 14px 28px
+  );
+  opacity: 0.85;
+}
+
+.sub-hero__inner {
+  position: relative;
+  display: grid;
+  gap: clamp(2rem, 5vw, 3.5rem);
+  align-items: center;
+  max-width: var(--legal-max);
+  margin: 0 auto;
+}
+
+@media (min-width: 900px) {
+  .sub-hero__back {
+    position: absolute;
+    top: 2px;
+    right: 0;
+    z-index: 2;
+    margin: 0;
+  }
+
+  /* rechter Bereich rückt unter den Button */
+  .sub-hero--aside .sub-hero__aside {
+    padding-top: 3.5rem;
+  }
+
+  .sub-hero--aside .sub-hero__inner {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    /* Pfad bleibt auf einer Höhe mit dem Zurück-Button */
+    align-items: start;
+  }
+
+  /* neben dem rechten Bereich ist weniger Platz – lange Namen wie Domains sollen nicht umbrechen */
+  .sub-hero--aside .sub-hero__title {
+    max-width: none;
+    font-size: clamp(2rem, 3.6vw, 3.1rem);
+  }
+}
+
+.sub-hero__main {
+  min-width: 0;
+}
+
+/* ── Pfad ── */
+.sub-hero__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.9rem;
+  margin-bottom: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+/* Zurück-Button: schlanke weiße Pille – mobil über dem Pfad, am Desktop oben rechts */
+.sub-hero__back {
+  justify-self: start;
+  margin-bottom: -1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 40px;
+  padding: 0 1rem;
+  border: 1px solid rgba(88, 111, 124, 0.22);
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--c-ink);
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow:
+    0 1px 2px rgba(34, 50, 58, 0.05),
+    0 8px 20px -10px rgba(34, 50, 58, 0.3);
+  transition: translate 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.sub-hero__back span {
+  transition: translate 0.2s ease;
+}
+
+.sub-hero__back:hover {
+  color: var(--c-surface);
+  background: var(--c-deep);
+  translate: 0 -1px;
+}
+
+.sub-hero__back:hover span {
+  translate: -3px 0;
+}
+
+.sub-hero__back:focus-visible {
+  outline: 2px solid var(--c-turf);
+  outline-offset: 3px;
+}
+
+.sub-hero__crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.sub-hero__crumbs li {
+  display: inline-flex;
+  align-items: center;
+}
+
+.sub-hero__crumbs li + li::before {
+  content: '/';
+  margin-inline: 0.5rem;
+  color: rgba(88, 111, 124, 0.55);
+  font-weight: 400;
+}
+
+.sub-hero__crumbs a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--c-slate);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.sub-hero__crumbs a:hover {
+  color: var(--c-turf);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sub-hero__crumbs a:focus-visible {
+  outline: 2px solid var(--c-turf);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.sub-hero__crumbs [aria-current='page'] {
+  color: var(--c-ink);
+}
+
+.sub-hero__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #7a5200;
+  background: rgba(214, 160, 20, 0.16);
+}
+
+.sub-hero__status::before {
+  content: '';
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* ── Titel und Einleitung ── */
+.sub-hero__title {
+  margin: 0;
+  max-width: 18ch;
+  font-size: clamp(1.75rem, 7vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  color: var(--c-ink);
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+
+.sub-hero__title mark {
+  padding: 0 0.1em;
+  color: inherit;
+  background: linear-gradient(transparent 58%, var(--c-sky) 58%, var(--c-sky) 92%, transparent 92%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.sub-hero__lead {
+  max-width: 54ch;
+  margin: clamp(1rem, 2.5vw, 1.35rem) 0 0;
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  line-height: 1.65;
+  color: var(--c-on-sky);
+}
+
+.sub-hero__aside {
+  min-width: 0;
+}
+
+/* ═══ Inhalte für den rechten Bereich ═══ */
+
+/* ── Erster Bildschirm (fold): Kerninfos ohne Scrollen ── */
+@media (min-width: 900px) and (min-height: 620px) {
+  .sub-hero--fold {
+    display: grid;
+    align-content: center;
+    min-height: calc(100svh - var(--site-header-height));
+    padding-block: clamp(2rem, 5vh, 3.5rem);
+  }
+
+  .sub-hero--fold .sub-hero__inner {
+    width: 100%;
+    align-items: center;
+  }
+}
+
+/* Angebot links: die wichtigsten Punkte und die Anfrage */
+.hero-offer {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: clamp(1.25rem, 3vh, 1.75rem);
+}
+
+.hero-points {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hero-points li {
+  display: grid;
+  grid-template-columns: 1.4rem 1fr;
+  gap: 0.65rem;
+  align-items: start;
+  max-width: 52ch;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: var(--c-ink);
+}
+
+.hero-points__mark {
+  display: grid;
+  place-items: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-top: 0.05rem;
+  border-radius: 7px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #ffffff;
+  background: var(--c-turf);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+}
+
+.hero-actions .offer-cta {
+  padding-inline: 1.6rem;
+}
+
+.hero-actions__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--c-turf);
+}
+
+.hero-actions__more span {
+  transition: translate 0.2s ease;
+}
+
+.hero-actions__more:hover span {
+  translate: 0 3px;
+}
+
+.hero-actions__more:focus-visible {
+  outline: 2px solid var(--c-turf);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.hero-actions__note {
+  margin: -0.5rem 0 0;
+  font-size: 0.82rem;
+  color: var(--c-slate);
+}
+
+/* Angebot rechts: Produktkarte mit Streifen-Banner wie die Paketkarten der Startseite */
+.hero-product {
+  --pkg: var(--c-turf);
+  --pg-text: var(--c-slate);
+  --pg-text-strong: var(--c-ink);
+  --pg-border: var(--c-line);
+  overflow: hidden;
+  max-width: 28rem;
+  margin-inline: auto;
+  border: 1px solid rgba(88, 111, 124, 0.2);
+  border-radius: 20px;
+  background: var(--c-surface);
+  box-shadow:
+    0 1px 2px rgba(34, 50, 58, 0.06),
+    0 30px 60px -28px rgba(34, 50, 58, 0.45);
+}
+
+.hero-product__banner {
+  display: grid;
+  place-items: center;
+  min-height: 8.5rem;
+  padding: 1.1rem 1.25rem;
+  color: #ffffff;
+  background:
+    repeating-linear-gradient(-55deg, rgba(255, 255, 255, 0) 0 46px, rgba(255, 255, 255, 0.08) 46px 92px),
+    var(--pkg);
+}
+
+.hero-product__banner .offer-visual {
+  width: 100%;
+  margin: 0;
+}
+
+.hero-product__icon {
+  display: grid;
+  place-items: center;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.25));
+}
+
+.hero-product__body {
+  padding: 1.35rem 1.5rem 1.4rem;
+}
+
+.hero-product__title {
+  margin: 0 0 0.35rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--c-ink);
+}
+
+.hero-product .offer-facts {
+  margin-bottom: 1rem;
+}
+
+.hero-product .offer-facts__row {
+  padding: 0.5rem 0;
+}
+
+.hero-product .offer-facts dt {
+  color: var(--c-slate);
+}
+
+.hero-product__price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  margin: 0;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  background: rgba(4, 114, 77, 0.08);
+}
+
+.hero-product__price span {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-slate);
+}
+
+.hero-product__price strong {
+  font-size: 1.05rem;
+  color: var(--c-forest);
+}
+
+@media (max-width: 899px) {
+  .hero-product {
+    max-width: none;
+  }
+
+  .hero-product__banner {
+    min-height: 6.5rem;
+  }
+}
+
+/* Kontakt: Person mit Antwortzeit */
+.hero-person {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.1rem;
+  align-items: center;
+  max-width: 24rem;
+  margin-inline: auto;
+  padding: 1.25rem 1.4rem;
+  border: 1px solid rgba(88, 111, 124, 0.2);
+  border-radius: 18px;
+  background: var(--c-surface);
+  box-shadow:
+    0 1px 2px rgba(34, 50, 58, 0.05),
+    0 22px 44px -18px rgba(34, 50, 58, 0.3);
+}
+
+.hero-person img {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 3px var(--c-surface), 0 0 0 5px var(--c-sky);
+}
+
+.hero-person__name {
+  margin: 0;
+  font-weight: 800;
+  color: var(--c-ink);
+}
+
+.hero-person__role {
+  margin: 0.1rem 0 0.55rem;
+  font-size: 0.88rem;
+  color: var(--c-slate);
+}
+
+.hero-person__live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--c-turf);
+}
+
+.hero-person__live::before {
+  content: '';
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 0 4px rgba(4, 114, 77, 0.15);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sub-hero__back,
+  .sub-hero__back span,
+  .hero-actions__more span,
+  .sub-hero__crumbs a {
+    transition: none;
+  }
+}

@@ -20,19 +20,6 @@
     updateProgress();
   }
 
-  // FAQ: nur eine Karte gleichzeitig offen
-  const faqItems = document.querySelectorAll('.faq-item');
-  if (faqItems.length) {
-    faqItems.forEach((item) => {
-      item.addEventListener('toggle', () => {
-        if (!item.open) return;
-        faqItems.forEach((other) => {
-          if (other !== item) other.open = false;
-        });
-      });
-    });
-  }
-
   // Tab-Titel wenn man wegnavigiert
   const awayTitle = 'Holst du Kaffee?';
   const defaultTitle = document.title;

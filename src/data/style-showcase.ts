@@ -1,8 +1,8 @@
 export const STYLE_PRESETS = [
   { id: 'modern', label: 'Modern', description: 'Glas, Farbverlauf, Leuchten' },
-  { id: 'clean', label: 'Schlicht', description: 'Viel Weißraum, feine Linien, klassische Schrift' },
+  { id: 'clean', label: 'Schlicht', description: 'Viel Weißraum, Serifenschrift, feine Linien' },
   { id: 'lando', label: 'Sportlich', description: 'Neon, schräg, voller Energie' },
-  { id: 'a11y', label: 'Barrierefrei', description: 'Starker Kontrast, große Schrift, klare Fokus-Rahmen' },
+  { id: 'a11y', label: 'Barrierefrei', description: 'Hoher Kontrast, große Schrift, deutliche Fokus-Rahmen' },
 ] as const;
 
 export type StylePresetId = (typeof STYLE_PRESETS)[number]['id'];

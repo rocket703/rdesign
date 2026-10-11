@@ -275,6 +275,7 @@ export function creativeWorkSchema({
   pathname,
   liveUrl,
   keywords = [],
+  status,
   site = SITE.url,
 }: {
   title: string;
@@ -283,10 +284,12 @@ export function creativeWorkSchema({
   pathname: string;
   liveUrl?: string;
   keywords?: string[];
+  status?: string;
   site?: URL | string;
 }) {
   return {
     '@type': 'CreativeWork',
+    ...(status ? { creativeWorkStatus: status } : {}),
     '@id': `${canonicalUrl(pathname, site)}#project`,
     name: title,
     description,

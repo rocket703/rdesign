@@ -1,6 +1,6 @@
 import type { FaqItem } from './faq';
 
-export type OfferIcon = 'search' | 'refresh' | 'access' | 'layout' | 'code';
+export type OfferIcon = 'search' | 'refresh' | 'access' | 'layout' | 'code' | 'server' | 'mobile' | 'mail';
 
 export type Offer = {
   /** „service“ = Kernleistung (neue Projekte), „package“ = festes Paket für bestehende Seiten */
@@ -24,7 +24,28 @@ export type Offer = {
   /** Ab Januar 2027 eintragen, z. B. 'ab 290 €' – bis dahin „Festpreis auf Anfrage“ */
   price?: string;
   reference?: { title: string; text: string; href: string };
+  /** Technik-Partner mit externem Link, z. B. die E-Mail-Plattform hinter einem Paket */
+  partner?: { name: string; text: string; href: string; linkLabel: string };
+  /** buchbare Tarife, z. B. Hosting- und Wartungspakete – als Karten auf der Leistungsseite */
+  plans?: OfferPlanGroup[];
   faq: FaqItem[];
+};
+
+export type OfferPlan = {
+  name: string;
+  /** für wen der Tarif gedacht ist */
+  tagline: string;
+  features: string[];
+  /** wählbare Varianten, z. B. Globales Cloud-Hosting (CDN) oder Hosting auf deutschem Server */
+  variants?: string[];
+};
+
+export type OfferPlanGroup = {
+  heading: string;
+  intro: string;
+  /** „stages“: Karten im Stil der Projektkarten mit Stufenanzeige (z. B. Wartung Klein/Mittel/Aufwendig) */
+  look?: 'stages';
+  plans: OfferPlan[];
 };
 
 export const offers: Offer[] = [
@@ -229,6 +250,262 @@ export const offers: Offer[] = [
         question: 'Kann die Anwendung später wachsen?',
         answer:
           'Ja. Ich starte meist mit einer schlanken ersten Version und baue sie dann in Etappen aus. Die Datenstruktur plane ich von Anfang an so, dass neue Funktionen ohne Neuentwicklung möglich sind.',
+      },
+    ],
+  },
+  {
+    kind: 'service',
+    slug: 'app-entwicklung',
+    title: 'Native Apps',
+    icon: 'mobile',
+    teaser: 'Apps für iOS und Android aus einer Codebasis – mit React Native und Expo, auf Wunsch mit gemeinsamer Datenbank und Anmeldung wie deine Web-App.',
+    seoTitle: 'App-Entwicklung Magdeburg – iOS & Android Apps | r³webdesign',
+    seoDesc:
+      'App-Entwicklung aus Magdeburg: native Apps für iOS und Android mit React Native und Expo – eine Codebasis, gemeinsame Datenbank mit deiner Web-App, Veröffentlichung im App Store und bei Google Play.',
+    lead: 'Du willst mit deinem Angebot auf das Smartphone? Ich entwickle native Apps für iOS und Android aus einer gemeinsamen Codebasis – auf Wunsch verbunden mit deiner bestehenden Web-App.',
+    headings: {
+      intro: 'App-Entwicklung für iOS und Android aus Magdeburg',
+      deliverables: 'Das gehört zu deiner App',
+      audience: 'Für wen sich eine eigene App lohnt',
+      faq: 'Häufige Fragen zur App-Entwicklung',
+      summary: 'Native Apps auf einen Blick',
+    },
+    intro: [
+      'Eine App ist mehr als eine verkleinerte Webseite: Sie liegt direkt auf dem Startbildschirm, reagiert auf Gesten, kann Push-Nachrichten schicken und fühlt sich auf iPhone und Android-Gerät jeweils vertraut an. Deshalb lohnt sie sich vor allem dann, wenn deine Nutzer regelmäßig und unterwegs mit deinem Angebot arbeiten.',
+      'Ich entwickle Apps mit React Native und Expo. So entsteht aus einer gemeinsamen Codebasis eine echte native App für iOS und eine für Android – ohne dass jede Funktion doppelt gebaut und gepflegt werden muss.',
+    ],
+    sections: [
+      {
+        heading: 'Referenz: Die Startplatzbörse-App',
+        paragraphs: [
+          'Für die Startplatzbörse entsteht gerade eine eigene App für iOS und Android, die im ersten Quartal 2027 erscheint. Sie ist als Expo-Projekt mit React Native aufgebaut und wird aus einer Codebasis für beide Plattformen veröffentlicht.',
+          'Unter der Oberfläche teilt sich die App die Datenbankstrukturen und die Anmeldung mit der bestehenden Web-Plattform: Nutzer melden sich mit demselben Konto an und sehen dieselben Daten – egal ob im Browser oder in der App. Änderungen an Inhalten sind sofort überall sichtbar, und die Regeln für Zugriffe und Rechte gelten an beiden Stellen gleich.',
+          'Das Design dagegen ist komplett eigenständig entwickelt. Statt die Webseite nachzubauen, folgt die App den Gewohnheiten auf dem Smartphone: Navigation mit dem Daumen, klare Bildschirme für einzelne Aufgaben und Bedienelemente, die sich nach iOS und Android anfühlen.',
+        ],
+      },
+      {
+        heading: 'Warum React Native und Expo',
+        paragraphs: [
+          'React Native erzeugt echte native Bedienelemente – die App ist also keine Webseite im App-Rahmen, sondern fühlt sich auf jedem Gerät wie zu Hause an. Expo ergänzt das um bewährte Werkzeuge für Kamera, Standort, Push-Nachrichten, Builds und die Veröffentlichung in den Stores.',
+          'Für dich bedeutet das: eine Codebasis statt zwei, kürzere Entwicklungszeit und einfachere Pflege. Kleinere Korrekturen lassen sich mit Expo sogar ohne neues Store-Review ausliefern.',
+        ],
+      },
+      {
+        heading: 'App und Web-App aus einem Guss',
+        paragraphs: [
+          'Wenn du bereits eine Web-App hast oder beides planst, verbinde ich App und Webseite mit einem gemeinsamen Backend: dieselbe Datenbank, dieselbe Anmeldung, dieselben Zugriffsregeln. So pflegst du Daten nur an einer Stelle, und neue Funktionen im Hintergrund stehen auf allen Geräten zur Verfügung.',
+          'Die Oberflächen entwickle ich dabei bewusst getrennt: Die Webseite bleibt für den großen Bildschirm optimiert, die App für das Smartphone – jede so, wie sie am besten funktioniert.',
+        ],
+      },
+      {
+        heading: 'Vom Prototyp bis in den App Store',
+        paragraphs: [
+          'Wir starten mit einem klickbaren Konzept der wichtigsten Bildschirme. Danach entwickle ich die App in Etappen und du testest Zwischenstände direkt auf deinem eigenen Smartphone – über TestFlight auf dem iPhone und interne Tests bei Google Play.',
+          'Zum Launch bereite ich Store-Einträge, Screenshots und Datenschutzangaben vor und begleite die Prüfung durch Apple und Google. Auch danach bleibe ich dein Ansprechpartner für Updates, neue Betriebssystem-Versionen und weitere Funktionen.',
+        ],
+      },
+    ],
+    deliverables: [
+      'Konzept und Entwürfe der wichtigsten Bildschirme',
+      'App für iOS und Android aus einer Codebasis (React Native & Expo)',
+      'Anbindung an Datenbank und Anmeldung – auf Wunsch gemeinsam mit deiner Web-App',
+      'Push-Nachrichten und Gerätefunktionen nach Bedarf',
+      'Testversionen über TestFlight und Google Play',
+      'Veröffentlichung im App Store und bei Google Play',
+      'Updates und Betreuung nach dem Launch',
+    ],
+    audience: [
+      'Plattformen und Web-Apps, deren Nutzer regelmäßig unterwegs aktiv sind',
+      'Vereine und Veranstalter mit Mitgliederbereich, Terminen oder Anmeldungen',
+      'Gründer, die ihre Idee als App in beiden Stores anbieten wollen',
+    ],
+    facts: [
+      { label: 'Plattformen', value: 'iOS und Android' },
+      { label: 'Technik', value: 'React Native mit Expo' },
+      { label: 'Ergebnis', value: 'App im App Store und bei Google Play' },
+    ],
+    reference: {
+      title: 'Startplatzbörse-App',
+      text: 'App für iOS und Android, Launch im 1. Quartal 2027 – mit gemeinsamer Datenbank und Anmeldung wie die Web-Plattform.',
+      href: '/projekte/startplatzboerse/',
+    },
+    faq: [
+      {
+        question: 'Brauche ich eine App oder reicht eine Web-App?',
+        answer:
+          'Eine Web-App läuft im Browser und reicht oft aus. Eine native App lohnt sich, wenn deine Nutzer sie regelmäßig nutzen, Push-Nachrichten wichtig sind, Gerätefunktionen wie Kamera oder Standort gebraucht werden oder du im App Store und bei Google Play gefunden werden willst.',
+      },
+      {
+        question: 'Kann die App dieselben Daten wie meine Webseite nutzen?',
+        answer:
+          'Ja. App und Web-App können sich Datenbank und Anmeldung teilen – so wie bei der Startplatzbörse. Nutzer melden sich mit demselben Konto an, und alle Inhalte sind auf jedem Gerät aktuell.',
+      },
+      {
+        question: 'Welche Konten brauche ich für die Veröffentlichung?',
+        answer:
+          'Für den App Store brauchst du ein Apple-Developer-Konto, für Android ein Google-Play-Entwicklerkonto. Beide laufen auf deinen Namen, damit die App dir gehört. Ich helfe dir bei der Einrichtung.',
+      },
+      {
+        question: 'Wie lange dauert die Prüfung durch Apple und Google?',
+        answer:
+          'Meist wenige Tage. Damit die Prüfung reibungslos läuft, bereite ich Store-Einträge, Datenschutzangaben und Testzugänge vorab sorgfältig vor.',
+      },
+    ],
+  },
+  {
+    kind: 'service',
+    slug: 'hosting-betreuung',
+    title: 'Hosting & Betreuung',
+    icon: 'server',
+    teaser: 'Globales Cloud-Hosting oder Hosting auf deutschem Server, dazu Wartung, Backups und kleine Änderungen – in drei Stufen buchbar.',
+    seoTitle: 'Hosting & Wartung für Webseiten – Magdeburg | r³webdesign',
+    seoDesc:
+      'Globales Cloud-Hosting oder Hosting auf deutschem Server, Wartung, Backups, Updates und kleine Änderungen für deine Webseite – Betreuung aus Magdeburg in drei Stufen.',
+    lead: 'Deine Webseite ist online – und soll es auch bleiben. Ich kümmere mich um Hosting, Updates, Backups und kleine Änderungen, damit du dich um dein Tagesgeschäft kümmern kannst.',
+    headings: {
+      intro: 'Betrieb und Pflege deiner Webseite aus einer Hand',
+      deliverables: 'Das übernehme ich im Betrieb',
+      audience: 'Für wen sich Hosting und Betreuung lohnen',
+      faq: 'Häufige Fragen zu Hosting und Wartung',
+      summary: 'Hosting & Betreuung auf einen Blick',
+    },
+    intro: [
+      'Eine Webseite ist nach dem Launch nicht fertig: Zertifikate laufen ab, Software braucht Updates, Inhalte ändern sich und irgendwann soll eine neue Seite oder ein Formular dazukommen. Wer sich darum nicht kümmert, riskiert Sicherheitslücken, Ausfälle oder veraltete Informationen.',
+      'Mit Hosting und Betreuung bekommst du einen festen Ansprechpartner für alles, was nach dem Start anfällt. Ich richte das Hosting ein, behalte die Technik im Blick, sichere deine Daten und setze kleine Änderungen schnell um – ohne Ticketsystem und ohne lange Wartezeiten.',
+    ],
+    plans: [
+      {
+        heading: 'Hosting: global in der Cloud oder auf deutschem Server',
+        intro:
+          'Wo deine Webseite liegt, hängt von deinem Projekt und deinen Anforderungen an den Datenschutz ab. Ich berate dich, richte alles ein und betreue es anschließend.',
+        plans: [
+          {
+            name: 'High-Performance Edge-Cloud',
+            tagline: 'Maximale Ladegeschwindigkeit und globale Ausfallsicherheit durch moderne Edge-Architektur.',
+            features: [
+              'Globales CDN-Netzwerk: Blitzschnelle Auslieferung der Website nah am Besucher für minimale Ladezeiten (Core Web Vitals)',
+              'Enterprise-Infrastruktur: Gehostet auf führenden, weltweit verteilten Cloud-Plattformen',
+              'Maximale Skalierbarkeit: Hohe Stabilität und Schutz vor Überlastung – auch bei starken Traffic-Spitzen',
+              'Full-Managed Setup: Inklusive Domain-Konfiguration, DNS-Management und automatischer SSL-Verschlüsselung',
+              'DSGVO-Begleitung: Fachgerechte Einbindung in deine Datenschutzerklärung – inklusive aller nötigen Angaben zum Anbieter',
+            ],
+          },
+          {
+            name: 'Managed vServer (Deutschland)',
+            tagline: 'Volle Datenhoheit und DSGVO-konformes Hosting auf einem eigenen Server in deutschen Rechenzentren.',
+            features: [
+              'Standort Deutschland: Speicherung und Verarbeitung ausschließlich in professionellen deutschen Rechenzentren',
+              'DSGVO-konform: Auftragsverarbeitungsvertrag (AVV) direkt mit deutschem Infrastruktur-Partner',
+              'Datenbank- & App-Ready: Die ideale Basis für dynamische Web-Systeme, Mitgliederbereiche, Formulare & Praxis-Websites',
+              'Integrierte Absicherung: Inklusive Domain-Einrichtung, SSL-Zertifikat, Firewall und automatisierten Backups',
+              'Eigene Ressourcen: Virtueller Server mit fest zugeteilter Leistung statt geteiltem Webspace – für gleichbleibend hohe Geschwindigkeit',
+            ],
+          },
+        ],
+      },
+      {
+        heading: 'Wartung in drei Stufen',
+        look: 'stages',
+        intro:
+          'Je nach Größe deines Projekts brauchst du mehr oder weniger Betreuung. Jede Stufe kannst du mit globalem Cloud-Hosting (CDN) oder mit Hosting auf deutschem Server kombinieren.',
+        plans: [
+          {
+            name: 'Klein',
+            tagline: 'Für Visitenkarten-, Vereins- und Landingpages',
+            features: [
+              'Hosting, Domain und SSL-Zertifikat im Blick',
+              'Updates und regelmäßige Sicherheitsprüfung',
+              'Regelmäßige Backups deiner Webseite',
+              'Überwachung der Erreichbarkeit',
+              'Kleine Text- und Bildänderungen nach Absprache',
+            ],
+          },
+          {
+            name: 'Mittel',
+            tagline: 'Für Unternehmensseiten mit mehreren Bereichen, Formularen oder Blog',
+            features: [
+              'Alles aus „Klein“',
+              'Tägliche Backups',
+              'Regelmäßige Kontrolle von Ladezeiten und SEO-Grundlagen',
+              'Laufende Inhaltsänderungen, z. B. Termine, Leistungen, Team',
+              'Bevorzugte Bearbeitung deiner Anfragen',
+            ],
+          },
+          {
+            name: 'Aufwendig',
+            tagline: 'Für Web-Apps, Plattformen und Mitgliederbereiche',
+            features: [
+              'Alles aus „Mittel“',
+              'Datenbank-Backups mit regelmäßigem Wiederherstellungstest',
+              'Überwachung von Fehlern, Server und Datenbank',
+              'Kleine Weiterentwicklungen und neue Funktionen',
+              'Schnelle Reaktion bei Störungen, direkter Draht zu mir',
+            ],
+          },
+        ],
+      },
+    ],
+    sections: [
+      {
+        heading: 'Backups und Sicherheit',
+        paragraphs: [
+          'Ich sichere deine Webseite regelmäßig – je nach Stufe wöchentlich oder täglich, bei Web-Apps inklusive Datenbank. Die Sicherungen liegen getrennt vom eigentlichen Hosting, damit im Ernstfall nichts verloren geht. Bei der Stufe „Aufwendig“ prüfe ich außerdem regelmäßig, ob sich ein Backup wirklich wiederherstellen lässt.',
+          'Updates spiele ich kontrolliert ein und prüfe danach, ob alles wie gewohnt funktioniert. SSL-Zertifikate werden automatisch erneuert, und ich bekomme eine Meldung, wenn deine Seite einmal nicht erreichbar ist – oft bevor du es selbst merkst.',
+        ],
+      },
+      {
+        heading: 'Kleine Änderungen ohne Umwege',
+        paragraphs: [
+          'Neue Öffnungszeiten, ein aktualisierter Termin, ein Foto vom letzten Event oder ein zusätzlicher Menüpunkt: Solche Änderungen schickst du mir einfach per E-Mail, und ich setze sie zeitnah um. Größere Erweiterungen besprechen wir vorab und ich mache dir ein separates Angebot.',
+        ],
+      },
+      {
+        heading: 'Übernahme bestehender Webseiten',
+        paragraphs: [
+          'Du hast schon eine Webseite, aber niemanden mehr, der sich darum kümmert? Ich schaue mir Technik und Hosting an, sage dir ehrlich, ob sich die Betreuung lohnt oder ein Relaunch sinnvoller ist, und ziehe die Seite auf Wunsch zu einem passenden Hosting um.',
+        ],
+      },
+    ],
+    deliverables: [
+      'Einrichtung von Hosting, Domain, DNS und SSL-Zertifikat',
+      'Updates und regelmäßige Sicherheitsprüfung',
+      'Regelmäßige Backups, bei Bedarf mit Datenbank',
+      'Überwachung der Erreichbarkeit',
+      'Kleine Änderungen an Texten, Bildern und Terminen',
+      'Ein fester Ansprechpartner statt Hotline',
+    ],
+    audience: [
+      'Vereine und Selbstständige, die sich nicht selbst um Technik kümmern wollen',
+      'Unternehmen, die regelmäßig Inhalte aktualisieren',
+      'Betreiber von Web-Apps und Mitgliederbereichen mit sensiblen Daten',
+      'Alle, deren bisherige Webseite niemand mehr betreut',
+    ],
+    facts: [
+      { label: 'Hosting', value: 'globale Cloud (CDN) oder deutscher Server' },
+      { label: 'Wartung', value: 'in drei Stufen buchbar' },
+      { label: 'Ergebnis', value: 'sichere, aktuelle Webseite ohne eigenen Aufwand' },
+    ],
+    price: 'Preis auf Anfrage',
+    faq: [
+      {
+        question: 'Welches Hosting ist das richtige für mich?',
+        answer:
+          'Für schnelle, statische Webseiten ohne personenbezogene Daten ist globales Cloud-Hosting (CDN) oft die einfachste und schnellste Lösung. Verarbeitet deine Seite Formulare, Mitgliederdaten oder andere sensible Informationen, empfehle ich Hosting auf deutschem Server. Im Erstgespräch finden wir gemeinsam die passende Variante.',
+      },
+      {
+        question: 'Kann ich Hosting und Wartung getrennt buchen?',
+        answer:
+          'Ja. Du kannst nur das Hosting von mir einrichten und betreuen lassen oder eine Wartungsstufe für eine Webseite buchen, die woanders liegt. Am einfachsten ist es aber, beides zu kombinieren – dann gibt es einen Ansprechpartner für alles.',
+      },
+      {
+        question: 'Wem gehören Domain und Hosting-Konto?',
+        answer:
+          'Dir. Domain und Hosting laufen auf deinen Namen, ich bekomme nur die Zugänge, die ich für die Betreuung brauche. Wenn du die Betreuung beendest, bleibt alles bei dir.',
+      },
+      {
+        question: 'Was kostet die Betreuung?',
+        answer:
+          'Das hängt von der gewählten Stufe, dem Hosting und der Größe deiner Webseite ab. Schreib mir kurz, worum es geht – du bekommst ein transparentes Angebot.',
       },
     ],
   },
@@ -517,6 +794,108 @@ export const offers: Offer[] = [
         question: 'Reicht nicht ein automatisches Prüf-Tool?',
         answer:
           'Tools finden nur einen Teil der Probleme. Ob sich eine Seite mit Tastatur oder Screenreader wirklich bedienen lässt, zeigt erst eine manuelle Prüfung – und genau die ist Teil des Checks.',
+      },
+    ],
+  },
+  {
+    kind: 'package',
+    slug: 'business-email',
+    title: 'Managed Business E-Mail & DNS',
+    icon: 'mail',
+    teaser: 'Postfächer auf deiner Domain, zuverlässiger Formularversand und sauberes DNS – eingerichtet und betreut auf Servern in Deutschland.',
+    seoTitle: 'Business E-Mail & DNS einrichten – Magdeburg | r³webdesign',
+    seoDesc:
+      'Managed Business E-Mail aus Magdeburg: Postfächer auf deiner Domain, zuverlässiger Formularversand und DNS mit SPF, DKIM und DMARC – DSGVO-konform auf Servern in Deutschland.',
+    lead: 'Zuverlässiger E-Mail-Versand, DSGVO-konforme Postfächer und professionelles DNS-Management aus deutschen Rechenzentren – eingerichtet und betreut aus einer Hand.',
+    headings: {
+      intro: 'E-Mail, die einfach funktioniert',
+      deliverables: 'Das ist im Paket enthalten',
+      audience: 'Für wen sich Managed Business E-Mail lohnt',
+      faq: 'Häufige Fragen zu Business E-Mail und DNS',
+      summary: 'Business E-Mail auf einen Blick',
+    },
+    intro: [
+      'Eine funktionierende E-Mail-Infrastruktur ist das Rückgrat deiner Kommunikation. Ob Kundenanfragen über das Formular auf deiner Webseite oder der tägliche Mailverkehr: Fehlerhafte DNS-Einstellungen oder Mails, die im Spam-Ordner landen, kosten Zeit und im schlimmsten Fall Aufträge.',
+      'Mit Managed Business E-Mail übernehme ich die komplette Einrichtung und den Betrieb deiner E-Mail-Kommunikation – von den Postfächern über die Anbindung deiner Formulare bis zu den DNS-Einträgen, die über die Zustellung entscheiden. Technisch setze ich dafür auf Mailtory, eine E-Mail-Plattform mit eigenen Servern in Deutschland.',
+    ],
+    sections: [
+      {
+        heading: 'Website-Formulare zuverlässig zustellen',
+        paragraphs: [
+          'Kontaktformulare, Buchungsanfragen oder Anmeldungen schicke ich nicht über den Webserver deiner Seite, sondern über eine eigene Versand-Infrastruktur mit sauberer Authentifizierung. So kommen Anfragen zuverlässig bei dir an – auf Wunsch zusätzlich als Ticket, damit keine Anfrage untergeht.',
+          'Genau so läuft übrigens auch das Kontaktformular auf dieser Webseite.',
+        ],
+      },
+      {
+        heading: 'SPF, DKIM und DMARC – richtig eingerichtet',
+        paragraphs: [
+          'Ob eine E-Mail im Posteingang oder im Spam-Ordner landet, entscheiden vor allem drei DNS-Einträge: SPF legt fest, welche Server für deine Domain senden dürfen, DKIM signiert jede ausgehende Mail digital und DMARC regelt, was mit Mails passiert, die diese Prüfungen nicht bestehen. Zusätzlich erzwingt MTA-STS verschlüsselte Verbindungen beim Empfang.',
+          'Ich richte alle Einträge ein, prüfe sie mit einem Zustellbarkeitstest und behalte die regelmäßigen DMARC-Berichte im Blick. So erkenne ich früh, wenn jemand versucht, deine Domain für gefälschte Mails zu missbrauchen.',
+        ],
+      },
+      {
+        heading: 'Postfächer für dich und dein Team',
+        paragraphs: [
+          'Du bekommst Postfächer mit deinen Wunsch-Adressen wie info@ oder vorname@deine-domain.de – mit Webmail im Browser und IMAP/SMTP für alle gängigen Programme. Outlook, Apple Mail, Thunderbird und die Mail-Apps auf iPhone und Android richten sich automatisch ein.',
+          'Weiterleitungen und Aliase verteilen eine Adresse wie info@ an mehrere Personen. Und wenn eine Vertretung auf ein Postfach zugreifen soll, bekommt sie einen eigenen Zugang, der sich später mit einem Klick wieder sperren lässt – ohne Passwort-Wechsel für alle anderen.',
+        ],
+      },
+      {
+        heading: 'Datenschutz und Sicherheit',
+        paragraphs: [
+          'Postfächer, Mailserver und Datenbank laufen auf Servern in Deutschland, ein Vertrag zur Auftragsverarbeitung ist inklusive. Alle Verbindungen sind mit TLS verschlüsselt, ein Spam- und Virenfilter prüft eingehende Mails automatisch, und die Anmeldung lässt sich mit Zwei-Faktor-Authentifizierung absichern.',
+        ],
+      },
+    ],
+    deliverables: [
+      'DSGVO-konforme Business-Postfächer: Sichere E-Mail-Postfächer mit eigenen Wunsch-Adressen (@deine-domain.de) auf deutschen Servern',
+      'Zuverlässiger Formular- & Transaktionsversand: Zustellung aller Website-Formulare, Buchungen & Anfragen über Server mit hoher Reputation – für den Posteingang statt den Spam-Ordner',
+      'Managed DNS & Domain-Sicherheit: Professionelle Einrichtung & Pflege aller DNS-Records (SPF, DKIM, DMARC) für maximale E-Mail-Zustellbarkeit',
+      'Hohe Sicherheitsstandards: Verschlüsselter E-Mail-Transfer (TLS), Spam- & Virenfilter sowie DSGVO-konformer Betrieb mit Auftragsverarbeitungsvertrag',
+      'Zero Maintenance: Vollständige Einrichtung, Wartung und technischer Support aus einer Hand',
+    ],
+    audience: [
+      'Selbstständige und kleine Unternehmen, die noch mit Gmail- oder Provider-Adressen arbeiten',
+      'Betriebe, deren Formular-Anfragen im Spam landen oder verloren gehen',
+      'Vereine und Praxen, die E-Mails DSGVO-konform in Deutschland betreiben wollen',
+      'Alle, die nach einem Webseiten-Relaunch auch ihre E-Mail sauber aufstellen wollen',
+    ],
+    facts: [
+      { label: 'Dauer', value: 'in wenigen Tagen' },
+      { label: 'Standort', value: 'Server in Deutschland' },
+      { label: 'Umfang', value: 'Postfächer, Formulare & DNS' },
+    ],
+    partner: {
+      name: 'Mailtory',
+      text: 'Die E-Mail-Plattform hinter dem Paket – mit eigenen Servern in Deutschland, Ticketsystem und DSGVO-Werkzeugen.',
+      href: 'https://www.mailtory.de/',
+      linkLabel: 'mailtory.de',
+    },
+    faq: [
+      {
+        question: 'Kann ich meine bestehende Domain behalten?',
+        answer:
+          'Ja. Deine Domain bleibt, wo sie ist – ich passe nur die DNS-Einträge an, damit E-Mails über die neuen Postfächer laufen. Den Umstieg plane ich so, dass keine Mail verloren geht.',
+      },
+      {
+        question: 'Was passiert mit meinen alten E-Mails?',
+        answer:
+          'Bestehende Postfächer können übernommen werden: Alte Nachrichten lassen sich aus deinem bisherigen Postfach importieren, sodass du alles an einem Ort hast.',
+      },
+      {
+        question: 'Funktioniert das mit Outlook und dem Smartphone?',
+        answer:
+          'Ja. Die Postfächer arbeiten mit IMAP und SMTP und richten sich in Outlook, Apple Mail, Thunderbird sowie auf iPhone und Android weitgehend automatisch ein. Zusätzlich gibt es Webmail im Browser.',
+      },
+      {
+        question: 'Warum landen meine Formular-Mails im Spam?',
+        answer:
+          'Meist fehlen SPF, DKIM oder DMARC, oder das Formular verschickt Mails direkt über den Webserver, der dafür keine gute Reputation hat. Beides behebe ich mit diesem Paket.',
+      },
+      {
+        question: 'Kann ich das Paket ohne neue Webseite buchen?',
+        answer:
+          'Ja. Das Paket ist einzeln buchbar und funktioniert mit jeder Webseite und jeder Domain – egal, wer deine Seite gebaut hat.',
       },
     ],
   },

@@ -3,6 +3,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { render } from 'astro:content';
 import { getPublishedProjects, projectSlug } from '../../lib/projects';
 import DeviceShowcase from '../../components/DeviceShowcase.astro';
+import LegalPageShell from '../../components/LegalPageShell.astro';
+import TechIcons from '../../components/TechIcons.astro';
+import '../../styles/offer.css';
+import { isInProgress, statusLabel } from '../../lib/project-status';
 import { offers, offerPath } from '../../data/offers';
 import {
   breadcrumbSchema,
@@ -24,19 +28,13 @@ const { project } = Astro.props;
 const { Content } = await render(project);
 const projectLink = project.data.customerUrl;
 const projectStatus = project.data.status;
-const statusLabels: Record<string, string> = {
-  online: 'Online',
-  offline: 'Offline',
-  'im aufbau': 'Im Aufbau',
-  archived: 'Archiviert',
-};
-const statusLabel = statusLabels[projectStatus.toLowerCase()] ?? projectStatus;
+const statusText = statusLabel(projectStatus);
+const inProgress = isInProgress(projectStatus);
 const relatedOffer = offers.find((offer) => offer.slug === project.data.relatedOffer);
 const related = relatedOffer
   ? { href: offerPath(relatedOffer), label: relatedOffer.title }
   : { href: '/leistungen/', label: 'Alle Leistungen' };
 const title = project.data.title;
-const hasSpace = title.trim().includes(' ');
 const slug = projectSlug(project);
 const projectPath = `/projekte/${slug}/`;
 const pageTitle = project.data.seoTitle ?? `${project.data.title} | r³webdesign`;
@@ -77,199 +75,127 @@ const liveHost = (() => {
       pathname: projectPath,
       liveUrl: projectLink,
       keywords: project.data.techStack,
+      status: inProgress ? statusText : undefined,
       site: Astro.site,
     }),
   ])}
 >
-  <article class="project-detail-view">
-    <div class="main-container">
+  <LegalPageShell
+    back={{ href: '/projekte/', label: 'Alle Projekte' }}
+    wide
+    legalNav={false}
+    crumbs={[{ label: 'Projekte', href: '/projekte/' }]}
+    status={inProgress ? 'In Arbeit' : undefined}
+    title={project.data.title}
+    lead={project.data.subtitle}
+  >
+    {inProgress && (
+      <p class="project-wip-note">
+        Dieses Projekt ist noch in Arbeit – Inhalte und Funktionen werden gerade ergänzt.
+      </p>
+    )}
 
-      <nav class="project-nav" aria-label="Projektnavigation">
-        <a href="/projekte/" class="project-back">
-          <span class="project-back__prompt" aria-hidden="true">←</span>
-          <span>Alle Projekte</span>
-        </a>
-      </nav>
-
-      <header class="project-hero">
-        <h1 class={`section-title project-hero__title ${!hasSpace ? 'is-single-word' : ''}`}>
-          {project.data.title}
-        </h1>
-        <div class="title-divider"></div>
-        <p class="section-lead project-hero__lead">{project.data.subtitle}</p>
-
-        {project.data.techStack?.length ? (
-          <ul class="project-tags" aria-label="Technologien">
-            {project.data.techStack.map((tag) => (
-              <li>{tag}</li>
-            ))}
-          </ul>
-        ) : null}
-      </header>
-
-      <section class="project-showcase" aria-label="Projektvorschau">
+    <!-- Oben: Vorschau links, Eckdaten fest daneben -->
+    <div class="project-top">
+      <div class="project-showcase" role="group" aria-label="Projektvorschau">
         <a href={projectLink} target="_blank" rel="noopener noreferrer" class="project-showcase__link">
           <DeviceShowcase
             desktop={project.data.image}
             mobile={project.data.imageMobile}
             title={project.data.title}
+            sizes="(max-width: 900px) calc(100vw - 2.5rem), 680px"
             priority
           />
           <span class="project-showcase__hint">
-            Webseite ansehen
-            <span class="project-showcase__hint-prompt" aria-hidden="true">↗</span>
+            Webseite ansehen <span aria-hidden="true">↗</span>
           </span>
         </a>
         {project.data.mobileNote && <p class="project-showcase__note">{project.data.mobileNote}</p>}
-      </section>
+      </div>
 
-      <div class="project-layout">
-        <article class="project-panel project-panel--main">
-          <h2 class="project-panel__title">Über das Projekt</h2>
-          <div class="project-prose">
-            <Content />
-          </div>
-        </article>
-
-        <aside class="project-panel project-panel--sidebar">
-          <h2 class="project-panel__title">Eckdaten</h2>
-          <dl class="project-facts">
-            <div class="project-facts__row">
+      <aside class="offer-aside project-specs">
+        <article class="legal-block autoShow">
+          <h2 class="legal-block__title">Eckdaten</h2>
+          <dl class="offer-facts">
+            <div class="offer-facts__row">
               <dt>Status</dt>
-              <dd>{statusLabel}</dd>
+              <dd>{statusText}</dd>
             </div>
-            {project.data.techStack?.length ? (
-              <div class="project-facts__row">
-                <dt>Technik</dt>
-                <dd>{project.data.techStack.slice(0, 4).join(' · ')}{project.data.techStack.length > 4 ? ' …' : ''}</dd>
-              </div>
-            ) : null}
             {liveHost ? (
-              <div class="project-facts__row">
+              <div class="offer-facts__row">
                 <dt>Webseite</dt>
-                <dd><a href={projectLink} target="_blank" rel="noopener noreferrer">{liveHost}</a></dd>
+                <dd><a href={projectLink} target="_blank" rel="noopener noreferrer" class="legal-link">{liveHost}</a></dd>
               </div>
             ) : null}
-            <div class="project-facts__row">
+            <div class="offer-facts__row">
               <dt>Ort</dt>
               <dd>Magdeburg · remote</dd>
             </div>
           </dl>
-          <p class="project-panel__note">Interesse an einer ähnlichen Umsetzung?</p>
-          <a href={projectLink} target="_blank" rel="noopener noreferrer" class="project-cta">
-            Webseite besuchen
+          {project.data.techStack?.length ? (
+            <TechIcons tags={project.data.techStack} class="project-tech" />
+          ) : null}
+          <a href="/kontakt/" class="offer-cta">Projekt anfragen</a>
+          <a href={related.href} class="service-list__ref">
+            Passende Leistung: {related.label} →
           </a>
-          <a href="/kontakt/" class="project-cta project-cta--ghost">
-            Projekt anfragen
-          </a>
-          <a href={related.href} class="project-related">
-            Passende Leistung: {related.label} <span aria-hidden="true">→</span>
-          </a>
-        </aside>
-      </div>
-
+        </article>
+      </aside>
     </div>
-  </article>
+
+    <!-- Darunter: Beschreibung mittig -->
+    <article class="legal-block project-about autoShow">
+      <h2 class="legal-block__title">Über das Projekt</h2>
+      <div class="legal-block__body project-prose">
+        <Content />
+      </div>
+    </article>
+  </LegalPageShell>
 </BaseLayout>
 
 <style>
-  .project-detail-view {
-    background-color: #0b1120;
-    color: #fff;
-    min-height: 100vh;
-    padding: clamp(1.5rem, 4vw, 2.5rem) 0 clamp(5rem, 10vw, 8rem);
-  }
 
-  .main-container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-  }
-
-  .project-nav {
-    margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
-  }
-
-  .project-back {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    gap: 0.45rem;
-    font-family: inherit;
-    font-size: 0.78rem;
+  .project-wip-note {
+    margin: 0;
+    padding: 0.85rem 1rem;
+    border-radius: 10px;
     font-weight: 600;
-    letter-spacing: 0.04em;
-    text-decoration: none;
-    color: #94a3b8;
-    transition: color 0.2s ease;
+    color: #713f12;
+    background: #fef3c7;
+    border: 1px solid #fcd34d;
   }
 
-  .project-back__prompt {
-    color: #10b981;
-    font-weight: 700;
+  .project-top {
+    display: grid;
+    gap: clamp(1.75rem, 4vw, 2.5rem);
+    align-items: start;
   }
 
-  .project-back:hover {
-    color: #ecfdf5;
-  }
+  @media (min-width: 900px) {
+    .project-top {
+      grid-template-columns: minmax(0, 1.65fr) minmax(17rem, 0.85fr);
+    }
 
-  .project-hero {
-    text-align: center;
-    max-width: 900px;
-    margin: 0 auto clamp(3rem, 6vw, 4.5rem);
-    padding: 0 0.25rem;
-    background: none;
-  }
-
-  .project-hero__title {
-    margin-bottom: 0;
-  }
-
-  .project-hero__title.is-single-word {
-    white-space: nowrap;
-    font-size: clamp(1.1rem, 7.5vw, 5.5rem);
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  @media (min-width: 1024px) {
-    .project-hero__title.is-single-word {
-      font-size: clamp(2.5rem, 6vw, 4rem);
-      white-space: normal;
-      overflow: visible;
-      text-overflow: unset;
+    /* Eckdaten bleiben neben der Vorschau stehen statt mitzuscrollen */
+    .project-top .project-specs {
+      position: static;
+      grid-column: auto;
+      grid-row: auto;
     }
   }
 
-  .project-hero__lead {
-    margin-top: 0;
-  }
-
-  .project-tags {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem;
-    margin: clamp(1.75rem, 4vw, 2.25rem) 0 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .project-tags li {
-    font-family: inherit;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: #cbd5e1;
-    padding: 0.32rem 0.65rem;
-    border-radius: 4px;
-    background: rgba(0, 0, 0, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
   .project-showcase {
-    margin-bottom: clamp(3rem, 7vw, 5rem);
+    min-width: 0;
+  }
+
+  .project-about {
+    width: 100%;
+    max-width: 68ch;
+    margin: clamp(1rem, 3vw, 2rem) auto 0;
+  }
+
+  .project-about .legal-block__title {
+    text-align: center;
   }
 
   .project-showcase__link {
@@ -278,255 +204,34 @@ const liveHost = (() => {
     color: inherit;
   }
 
-  /* Desktop + Smartphone: Handy-Rahmen überlappt die Desktop-Ansicht unten rechts */
+  .project-showcase__hint {
+    display: inline-flex;
+    gap: 0.35rem;
+    margin-top: 0.85rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--pg-link);
+  }
 
   .project-showcase__note {
     max-width: 60ch;
-    margin: 0.85rem 0 0;
-    font-size: 0.92rem;
+    margin: 0.75rem 0 0;
     line-height: 1.6;
-    color: #94a3b8;
-  }
-
-  .project-showcase__hint {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    margin-top: 0.85rem;
-    font-family: inherit;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    color: #94a3b8;
-    transition: color 0.2s ease;
-  }
-
-  .project-showcase__hint-prompt {
-    color: #10b981;
-  }
-
-  .project-showcase__link:hover .project-showcase__hint {
-    color: #e2e8f0;
-  }
-
-  .project-layout {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: clamp(1.5rem, 4vw, 2rem);
-    align-items: start;
-  }
-
-  @media (min-width: 900px) {
-    .project-layout {
-      grid-template-columns: minmax(0, 1.65fr) minmax(260px, 0.85fr);
-      gap: clamp(1.5rem, 3vw, 2rem);
-    }
-  }
-
-  .project-panel {
-    position: relative;
-    overflow: hidden;
-    padding: clamp(1.35rem, 3vw, 1.85rem);
-    border-radius: 14px;
-    background:
-      linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 42%, transparent 100%),
-      rgba(15, 23, 42, 0.65);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.07),
-      0 12px 32px rgba(0, 0, 0, 0.28);
-  }
-
-  .project-panel::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent-lime) 0%, #10b981 35%, #38bdf8 70%, transparent 100%);
-    opacity: 0.75;
-    pointer-events: none;
-  }
-
-  .project-panel__title {
-    margin: 0 0 1.25rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    font-size: clamp(1.35rem, 3vw, 1.65rem);
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    color: #f3f4f6;
-  }
-
-  .project-prose {
-    color: #94a3b8;
-    font-size: clamp(1rem, 2vw, 1.08rem);
-    line-height: 1.75;
-  }
-
-  .project-prose :global(p) {
-    margin: 0 0 1.25rem;
-  }
-
-  .project-prose :global(p:last-child) {
-    margin-bottom: 0;
+    color: var(--pg-text);
   }
 
   .project-prose :global(strong) {
-    color: #e2e8f0;
-    font-weight: 700;
+    color: var(--pg-text-strong);
   }
 
-  .project-prose :global(ul) {
-    margin: 0 0 1.25rem;
-    padding-left: 1.2rem;
-    color: #94a3b8;
+  .project-prose :global(p) {
+    margin: 0 0 1rem;
   }
 
-  .project-prose :global(li) {
-    margin-bottom: 0.45rem;
-  }
-
-  .project-panel--sidebar {
-    text-align: center;
-  }
-
-  .project-panel--sidebar .project-facts {
-    text-align: left;
-  }
-
-  @media (min-width: 900px) {
-    .project-panel--sidebar {
-      position: sticky;
-      top: calc(var(--site-header-height) + 1rem);
-    }
-  }
-
-  .project-facts {
-    margin: 0 0 1.35rem;
-    padding: 0 0 1.25rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    text-align: left;
-  }
-
-  .project-facts__row {
-    display: grid;
-    grid-template-columns: 4.5rem 1fr;
-    gap: 0.65rem;
-    align-items: baseline;
-    margin-bottom: 0.65rem;
-  }
-
-  .project-facts__row:last-child {
-    margin-bottom: 0;
-  }
-
-  .project-facts dt {
-    margin: 0;
-    font-family: inherit;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: #94a3b8;
-  }
-
-  .project-facts dd {
-    margin: 0;
-    font-size: 0.88rem;
-    line-height: 1.45;
-    color: #cbd5e1;
-  }
-
-  .project-facts__row:first-child dd {
-    text-transform: capitalize;
-  }
-
-  .project-facts dd a {
-    color: #10b981;
-    text-decoration: none;
-    word-break: break-all;
-  }
-
-  .project-facts dd a:hover {
-    text-decoration: underline;
-  }
-
-  .project-related {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    margin-top: 0.5rem;
-    font-size: 0.88rem;
-    font-weight: 700;
-    text-decoration: none;
-    color: #34d399;
-  }
-
-  .project-related:hover {
-    color: #6ee7b7;
-  }
-
-  .project-panel__note {
-    margin: 0 0 1.25rem;
-    color: #94a3b8;
-    line-height: 1.6;
-    font-size: 0.98rem;
-  }
-
-  .project-cta {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    width: 100%;
-    padding: 0.95rem 1.25rem;
-    border-radius: 12px;
-    font-size: 0.92rem;
-    font-weight: 800;
-    letter-spacing: 0.02em;
-    text-decoration: none;
-    color: #ecfdf5;
-    background: rgba(16, 185, 129, 0.12);
-    border: 1px solid rgba(16, 185, 129, 0.45);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.12),
-      0 8px 28px rgba(16, 185, 129, 0.15);
-    transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-  }
-
-  .project-cta + .project-cta {
-    margin-top: 0.75rem;
-  }
-
-  .project-cta:hover {
-    transform: translateY(-2px);
-    background: rgba(16, 185, 129, 0.2);
-    border-color: #34d399;
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.15),
-      0 14px 36px rgba(16, 185, 129, 0.28);
-  }
-
-  .project-cta--ghost {
-    color: #cbd5e1;
-    background: rgba(0, 0, 0, 0.25);
-    border-color: rgba(255, 255, 255, 0.1);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  }
-
-  .project-cta--ghost:hover {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(16, 185, 129, 0.3);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.08),
-      0 10px 24px rgba(0, 0, 0, 0.25);
-  }
-
-  @media (max-width: 480px) {
-    .project-hero__title.is-single-word {
-      font-size: clamp(0.95rem, 7vw, 1.35rem);
-    }
+  :global(.project-tech) {
+    --tech-icon-bg: #f1f5f9;
+    --tech-icon-border: #e2e8f0;
+    --tech-icon-color: #475569;
+    margin: 0.25rem 0 1.25rem;
   }
 </style>

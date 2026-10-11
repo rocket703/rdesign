@@ -1,5 +1,5 @@
 ---
-title: "Wolmirstedter Ohrelauf 2026"
+title: "Wolmirstedter Ohrelauf"
 subtitle: "Moderne statische Website mit Mobile‑First‑Design, integrierter Event‑Anmeldung und hoher Performance."
 customerUrl: "https://ohrelauf.de"
 image: "/images/ohrelauf.webp"
@@ -7,8 +7,9 @@ imageMobile: "/images/ohrelauf-mobile.webp"
 mobileNote: "Mobile First: Auf dem Smartphone startet die Seite mit einem eigenen Intro-Vorhang zum Wischen – ein Erlebnis, das es so nur mobil gibt."
 techStack: ["HTML5", "CSS3", "JavaScript", "GitHub Pages", "Static Site"]
 seoTitle: "Ohrelauf Wolmirstedt – Event-Website | r³webdesign"
-seoDesc: "Case Study: Moderne, schnelle Webseite für den Spendenlauf »Ohrelauf 2026« in Wolmirstedt."
+seoDesc: "Case Study: Moderne, schnelle Webseite für den Spendenlauf Ohrelauf in Wolmirstedt – mit Online-Anmeldung und Mobile-First-Intro."
 status: "online"
+category: "Event-Website"
 biome: "candy"
 relatedOffer: "relaunch"
 tasks:

@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import LegalPageShell from '../components/LegalPageShell.astro';
+import '../styles/offer.css';
 ---
 
 <BaseLayout
@@ -7,160 +9,37 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   description="Diese Seite gibt es leider nicht. Hier geht es zurück zur Startseite und zu den Projekten von r³webdesign."
   noindex={true}
 >
-  <article class="error-view">
-    <div class="main-container">
-      <nav class="error-nav" aria-label="Seitennavigation">
-        <a href="/" class="error-back">
-          <span class="error-back__prompt" aria-hidden="true">←</span>
-          <span>Zur Startseite</span>
-        </a>
-      </nav>
-
-      <header class="error-hero">
-        <p class="error-code-label" aria-hidden="true">
-          <span class="error-code-label__num">404</span>
-        </p>
-        <div class="title-divider"></div>
-        <h1 class="section-title error-hero__title">Seite nicht gefunden</h1>
-        <p class="section-lead error-hero__lead">
-          Diese Seite gibt es leider nicht – vielleicht wurde sie verschoben oder der Link enthält einen Tippfehler.
-        </p>
-      </header>
-
-      <div class="error-actions">
-        <a href="/" class="error-cta error-cta--primary">Zur Startseite</a>
-        <a href="/projekte/" class="error-cta error-cta--ghost">Projekte ansehen</a>
-        <a href="/kontakt/" class="error-cta error-cta--ghost">Projekt anfragen</a>
-      </div>
+  <LegalPageShell
+    wide
+    legalNav={false}
+    cta={false}
+    title="Seite nicht gefunden"
+    mark="nicht gefunden"
+    crumbLabel="Fehler 404"
+    lead="Diese Seite gibt es leider nicht – vielleicht wurde sie verschoben oder der Link enthält einen Tippfehler."
+  >
+    <div class="error-actions">
+      <a href="/" class="offer-cta">Zur Startseite</a>
+      <a href="/projekte/" class="offer-cta error-actions__ghost">Projekte ansehen</a>
+      <a href="/kontakt/" class="offer-cta error-actions__ghost">Projekt anfragen</a>
     </div>
-  </article>
+  </LegalPageShell>
 </BaseLayout>
 
 <style>
-  .error-view {
-    background-color: #0b1120;
-    color: #fff;
-    min-height: calc(100vh - 4rem);
-    padding: clamp(1.5rem, 4vw, 2.5rem) 0 clamp(5rem, 10vw, 8rem);
-  }
-
-  .main-container {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-  }
-
-  .error-nav {
-    margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
-  }
-
-  .error-back {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    gap: 0.45rem;
-    font-family: inherit;
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-decoration: none;
-    color: #94a3b8;
-    transition: color 0.2s ease;
-  }
-
-  .error-back__prompt {
-    color: #10b981;
-    font-weight: 700;
-  }
-
-  .error-back:hover {
-    color: #ecfdf5;
-  }
-
-  .error-hero {
-    text-align: center;
-    margin-bottom: clamp(2rem, 5vw, 3rem);
-  }
-
-  .error-code-label {
-    margin: 0 0 0.25rem;
-    line-height: 1;
-  }
-
-  .error-code-label__num {
-    display: inline-block;
-    font-size: clamp(4.5rem, 18vw, 8rem);
-    font-weight: 900;
-    letter-spacing: -0.06em;
-    line-height: 0.95;
-    background: linear-gradient(180deg, #f8fafc 0%, #6ee7b7 55%, #10b981 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    filter: drop-shadow(0 8px 32px rgba(16, 185, 129, 0.12));
-  }
-
-  .error-hero__title {
-    font-size: clamp(1.35rem, 4vw, 2rem);
-    margin: 0;
-  }
-
-  .error-hero__lead {
-    margin-top: 0.75rem;
-    max-width: 42ch;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
   .error-actions {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.75rem;
+    gap: 1.1rem;
   }
 
-  .error-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.85rem 1.25rem;
-    border-radius: 10px;
-    font-family: inherit;
-    font-size: 0.82rem;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    text-decoration: none;
-    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  .error-actions__ghost {
+    color: var(--pg-link);
+    background: transparent;
+    border: 2px solid var(--pg-link);
   }
 
-  .error-cta--primary {
-    color: #ecfdf5;
-    background: linear-gradient(145deg, rgba(16, 185, 129, 0.22) 0%, rgba(16, 185, 129, 0.08) 100%);
-    border: 1px solid rgba(16, 185, 129, 0.35);
-  }
-
-  .error-cta--primary:hover {
-    transform: translateY(-2px);
-    border-color: rgba(52, 211, 153, 0.55);
-    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.15);
-  }
-
-  .error-cta--ghost {
-    color: #94a3b8;
-    background: rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .error-cta--ghost:hover {
-    color: #ecfdf5;
-    border-color: rgba(16, 185, 129, 0.25);
-    transform: translateY(-2px);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .error-cta--primary:hover,
-    .error-cta--ghost:hover {
-      transform: none;
-    }
+  .error-actions__ghost:hover {
+    background: var(--c-mint);
   }
 </style>

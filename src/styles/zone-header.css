@@ -1,0 +1,212 @@
+/* ═══ Zonenköpfe: Startseite und Unterseiten ═══
+   Kicker/Pille/Stempel, großer Titel, Trennstrich und Wasserzeichen-Zahl.
+   Farben der Zonen als Variablen, damit Unterseiten sie ohne .p-world nutzen können. */
+
+.zone-h {
+  --p-tech-neon: var(--c-gold);
+  --p-clean-ink: var(--c-ink);
+  --p-clean-muted: var(--c-muted);
+}
+
+/* ── Zone headers — display type, watermark nums ── */
+.zone-h {
+  position: relative;
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  isolation: isolate;
+}
+
+.zone-h__watermark {
+  position: absolute;
+  top: -0.15em;
+  left: -0.04em;
+  font-size: clamp(5.5rem, 18vw, 11rem);
+  font-weight: 900;
+  line-height: 0.82;
+  letter-spacing: -0.06em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.06);
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
+}
+
+.zone-h__title {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 0.85rem;
+  font-size: clamp(1.9rem, 5vw, 3.25rem);
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+  /* einheitlich für alle Zonen: Titel brechen zweizeilig um, Köpfe bleiben gleich hoch */
+  max-width: 10ch;
+  text-transform: uppercase;
+}
+
+.zone-h__title-text {
+  display: inline-block;
+}
+
+.zone-h__desc {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  max-width: 42ch;
+  font-size: clamp(0.95rem, 2vw, 1.08rem);
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+/* Tech header */
+.zone-h--tech .zone-h__meta {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+  padding: 0.35rem 0.75rem;
+  transform: skewX(-6deg);
+  border: 1px solid rgba(210, 255, 0, 0.25);
+  background: rgba(210, 255, 0, 0.06);
+}
+
+.zone-h--tech .zone-h__watermark {
+  -webkit-text-stroke-color: rgba(4, 114, 77, 0.08);
+}
+
+.zone-h--tech .zone-h__num,
+.zone-h--tech .zone-h__label {
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--p-tech-neon);
+}
+
+.zone-h--tech .zone-h__num {
+  opacity: 0.65;
+}
+
+.zone-h--tech .zone-h__title {
+  color: #f8fafc;
+}
+
+.zone-h--tech .zone-h__title-text {
+  text-shadow: 0 0 40px rgba(4, 114, 77, 0.15);
+}
+
+.zone-h--tech .zone-h__desc {
+  color: #94a3b8;
+}
+
+/* Zonen-Nummer: grünes ³-Badge aus dem Logo als roter Faden durch alle Zonen */
+.zone-h__n {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.85em;
+  height: 1.55em;
+  margin-right: 0.55em;
+  padding: 0 0.3em;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 0.92em;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1;
+  vertical-align: 0.05em;
+  color: #fff;
+  background: linear-gradient(145deg, var(--c-turf) 0%, var(--c-turf) 55%, var(--c-turf) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 2px 6px rgba(4, 114, 77, 0.35);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* Candy header */
+.zone-h--candy .zone-h__title,
+.zone-h--earth .zone-h__title {
+  color: var(--c-ink);
+}
+
+.zone-h--candy .zone-h__desc,
+.zone-h--earth .zone-h__desc {
+  color: var(--c-muted);
+}
+
+/* Clean header */
+.zone-h__kicker {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--p-clean-ink);
+  border: 2px solid var(--p-clean-ink);
+  transform: skewX(-8deg);
+}
+
+/* Trennstrich links; die Wasserzeichen-Zahl ist exakt so hoch wie er.
+   Farben setzt jede Zone über --zone-bar und --zone-watermark. */
+.zone-h--bar {
+  padding-left: clamp(1.1rem, 2.5vw, 1.6rem);
+}
+
+.zone-h--bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 5px;
+  border-radius: 3px;
+  background: var(--zone-bar);
+}
+
+.zone-h--bar .zone-h__watermark-svg {
+  position: absolute;
+  top: 0;
+  left: clamp(1.1rem, 2.5vw, 1.6rem);
+  z-index: 0;
+  height: 100%;
+  width: auto;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.zone-h--bar .zone-h__watermark-svg text {
+  font-family: 'Inter Variable', 'Inter', system-ui, sans-serif;
+  font-size: 100px;
+  font-weight: 900;
+  font-feature-settings: 'tnum';
+  fill: var(--zone-watermark);
+}
+
+/* Helle Zonen: einheitlich grüner Strich, dezente dunkle Wasserzeichen-Zahl */
+.zone-h--clean,
+.zone-h--candy,
+.zone-h--earth {
+  --zone-bar: var(--c-green);
+  --zone-watermark: rgba(15, 23, 42, 0.07);
+}
+
+.zone-h--clean .zone-h__title {
+  color: var(--p-clean-ink);
+}
+
+.zone-h--clean .zone-h__desc {
+  color: var(--p-clean-muted);
+}
+
+/* Earth header */
+.zone-h--earth .zone-h__title {
+  /* „Handwerk aus“ passt nicht in 10ch – sonst drei Zeilen */
+  max-width: 12ch;
+}
+
+

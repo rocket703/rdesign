@@ -1,12 +1,13 @@
 ---
 import { SHOWCASE_COPY, STYLE_PRESETS } from '../data/style-showcase';
 import { responsiveImage } from '../lib/images';
+import MiniSite from './MiniSite.astro';
 import '../styles/style-showcase.css';
 
 const defaultStyle = STYLE_PRESETS[0];
-const { site } = SHOWCASE_COPY;
-// Stockfoto: Drew Coffman via Unsplash, CC0 – https://commons.wikimedia.org/wiki/File:Two_Hands_Cafe_latte_art_(Unsplash).jpg
-const photo = responsiveImage('/images/cafe-latte.webp', 480);
+// Geräte-Fotos (freigestellt); die Beispielseite wird exakt auf das Display gelegt
+const laptop = responsiveImage('/images/laptop-mockup.webp', 1440);
+const phone = responsiveImage('/images/phone-mockup.webp', 440);
 ---
 
 <section class="style-lab" aria-labelledby="style-lab-title" data-style-showcase>
@@ -32,38 +33,49 @@ const photo = responsiveImage('/images/cafe-latte.webp', 480);
     </div>
 
     <div class="style-lab__stage autoShow" data-active-style={defaultStyle.id} data-style-stage data-nosnippet>
-      <!-- Beispielseite: rein dekorativ, der Stilname wird oben angesagt -->
-      <div class="mini-site" aria-hidden="true">
-        <div class="mini-site__bar">
-          <span class="mini-site__logo">{site.name}</span>
-          <span class="mini-site__nav"><i></i><i></i><i></i></span>
-        </div>
-        <div class="mini-site__hero">
-          <div class="mini-site__copy">
-            <span class="mini-site__eyebrow">{site.eyebrow}</span>
-            <span class="mini-site__title">{site.title}</span>
-            <span class="mini-site__text">{site.text}</span>
-            <span class="mini-site__btn">{site.button}</span>
-          </div>
+      <!-- Beispielseite: Desktop im Laptop, mobil im Smartphone (rein dekorativ) -->
+      <div class="device-mock device-mock--laptop" aria-hidden="true" data-mock data-mock-width="1440">
+        <div class="device-mock__stage">
           <img
-            class="mini-site__image"
-            src={photo.src}
-            srcset={photo.srcset}
-            sizes="(max-width: 899px) 40vw, 240px"
-            width={photo.width}
-            height={photo.height}
+            class="device-mock__img"
+            src={laptop.src}
+            srcset={laptop.srcset}
+            sizes="720px"
+            width={laptop.width}
+            height={laptop.height}
             alt=""
             loading="lazy"
             decoding="async"
           />
+          <div class="device-mock__screen">
+            <div class="laptop__browser">
+              <span class="laptop__dots"><i></i><i></i><i></i></span>
+              <span class="laptop__url">cafe-an-der-elbe.de</span>
+            </div>
+            <MiniSite sizes="320px" />
+          </div>
         </div>
-        <div class="mini-site__cards">
-          {site.cards.map((card) => (
-            <span class="mini-site__card">
-              <span class="mini-site__card-title">{card.title}</span>
-              <span class="mini-site__card-meta">{card.meta}</span>
-            </span>
-          ))}
+      </div>
+
+      <div class="device-mock device-mock--phone" aria-hidden="true" data-mock data-mock-width="440">
+        <div class="device-mock__stage">
+          <img
+            class="device-mock__img"
+            src={phone.src}
+            width={phone.width}
+            height={phone.height}
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+          <div class="device-mock__screen">
+            <div class="phone__status">
+              <span>10:09</span>
+              <span class="phone__camera"></span>
+              <span class="phone__icons"><i></i><i></i><i></i></span>
+            </div>
+            <MiniSite sizes="300px" />
+          </div>
         </div>
       </div>
     </div>
@@ -75,6 +87,16 @@ const photo = responsiveImage('/images/cafe-latte.webp', 480);
   const stage = root?.querySelector('[data-style-stage]');
   const status = root?.querySelector('[data-style-status]');
   const options = root ? [...root.querySelectorAll('[data-style-option]')] : [];
+
+  // Geräte-Bühnen auf die Containerbreite skalieren (Bildkoordinaten je Foto)
+  if ('ResizeObserver' in window) {
+    root?.querySelectorAll('[data-mock]').forEach((box) => {
+      const base = Number(box.dataset.mockWidth);
+      new ResizeObserver(([entry]) => {
+        if (entry.contentRect.width) box.style.setProperty('--k', String(entry.contentRect.width / base));
+      }).observe(box);
+    });
+  }
 
   options.forEach((option) => {
     option.addEventListener('click', () => {

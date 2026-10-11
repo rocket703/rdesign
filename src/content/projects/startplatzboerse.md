@@ -9,6 +9,7 @@ techStack: ["Astro", "Supabase", "PostgreSQL", "Resend", "Vercel", "Tailwind CSS
 seoTitle: "Startplatzbörse – Fullstack Web-App | r³webdesign"
 seoDesc: "Case Study: Entwicklung einer Handelsplattform für Startplätze mit OTP-Login, Dashboard und Messaging."
 status: "Online"
+category: "Online-Plattform"
 biome: "technical"
 tasks:
   - "Entwicklung einer hochperformanten Fullstack-Applikation auf Basis von Astro."

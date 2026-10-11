@@ -43,7 +43,7 @@ const currentYear = new Date().getFullYear();
     --footer-peek-h: calc(
       var(--footer-watermark-size) * var(--footer-watermark-lh) * var(--footer-peek-visible) + var(--footer-superscript-pad)
     );
-    background-color: #0b1120;
+    background-color: var(--c-deep);
     width: 100%;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
     display: flex;
@@ -108,12 +108,12 @@ const currentYear = new Date().getFullYear();
   }
 
   .f-logo:hover {
-    color: #10b981;
-    text-shadow: 0 0 30px rgba(16, 185, 129, 0.3);
+    color: var(--c-sky);
+    text-shadow: 0 0 30px rgba(184, 219, 217, 0.3);
   }
 
   .f-slogan {
-    color: #10b981;
+    color: var(--c-sky);
     font-size: clamp(0.8rem, 2.2vw, 0.95rem);
     font-weight: 600;
     letter-spacing: 0.02em;
@@ -138,17 +138,17 @@ const currentYear = new Date().getFullYear();
   }
 
   .f-badge:hover {
-    border-color: #10b981;
-    background: rgba(16, 185, 129, 0.05);
+    border-color: var(--c-sky);
+    background: rgba(184, 219, 217, 0.05);
   }
 
   .f-badge__dot {
     width: 8px;
     height: 8px;
     flex-shrink: 0;
-    background: #10b981;
+    background: var(--c-turf);
     border-radius: 50%;
-    box-shadow: 0 0 10px #10b981;
+    box-shadow: 0 0 10px var(--c-turf);
   }
 
   .f-nav {
@@ -172,8 +172,8 @@ const currentYear = new Date().getFullYear();
   }
 
   .f-nav a:hover {
-    color: #10b981;
-    text-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+    color: var(--c-sky);
+    text-shadow: 0 0 10px rgba(184, 219, 217, 0.5);
   }
 
   .f-copy {
@@ -193,7 +193,7 @@ const currentYear = new Date().getFullYear();
     overflow: hidden;
     isolation: isolate;
     line-height: 0;
-    background: #0b1120;
+    background: var(--c-deep);
   }
 
   .huge-outline-text {
@@ -207,7 +207,7 @@ const currentYear = new Date().getFullYear();
     font-weight: 900;
     line-height: var(--footer-watermark-lh);
     color: transparent;
-    -webkit-text-stroke: 1.5px rgba(16, 185, 129, 0.14);
+    -webkit-text-stroke: 1.5px rgba(184, 219, 217, 0.14);
     white-space: nowrap;
     pointer-events: none;
     user-select: none;

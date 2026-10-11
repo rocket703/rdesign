@@ -1,9 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LegalPageShell from '../components/LegalPageShell.astro';
+import { responsiveImage } from '../lib/images';
 import { SITE, contactPageSchema, personSchema, professionalServiceSchema, schemaGraph } from '../lib/seo';
 
 const pageTitle = 'Kontakt – Webdesign Magdeburg | r³webdesign';
+const portrait = responsiveImage(SITE.portrait, 160);
 const pageDescription =
   'Projektanfrage für Webdesign, Homepage oder Web-App in Magdeburg. Schreib mir dein Vorhaben – ich melde mich zeitnah zurück.';
 ---
@@ -18,28 +20,35 @@ const pageDescription =
   ])}
 >
   <LegalPageShell
+    cta={false}
     wide
-    eyebrow="Lass uns sprechen"
     title="Projekt anfragen"
+    mark="anfragen"
+    crumbLabel="Kontakt"
     lead="Ob Webseite, App oder komplette digitale Lösung – beschreib kurz dein Vorhaben, ich melde mich zeitnah."
   >
+    <div slot="hero" class="hero-person">
+      <img src={portrait.src} srcset={portrait.srcset} sizes="72px" width="72" height="72" alt="" loading="eager" decoding="async" />
+      <div>
+        <p class="hero-person__name">Dustin Rose</p>
+        <p class="hero-person__role">Webdesign &amp; Webentwicklung · Magdeburg</p>
+        <p class="hero-person__live">Antwort meist innerhalb von 24 h</p>
+      </div>
+    </div>
+
     <div class="contact-layout">
       <article class="legal-block legal-block--form autoShow">
         <h2 class="legal-block__title">Nachricht schreiben</h2>
 
-        <div id="form-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
         <form
-          action="https://api.web3forms.com/submit"
+          data-contact-email={SITE.email}
+          action="https://www.systory.de/v1/formulare/kontaktformular-r-webdesign-7abcb2/einreichen"
           method="POST"
           class="contact-form"
           novalidate
-          aria-describedby="form-status"
         >
-          <input type="hidden" name="access_key" value="d544bd39-97c0-4398-b1b7-3bc12ac7c465" />
-          <input type="hidden" name="redirect" value="false" />
-          <input type="hidden" name="from_name" value="Kontaktanfrage r³webdesign" />
-          <input type="hidden" name="subject" value="Neue Anfrage über Webseite" />
-          <input type="checkbox" name="botcheck" class="hidden" style="display: none;" />
+          <!-- Spam-Falle: bleibt für Menschen unsichtbar und leer -->
+          <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="display: none;" />
 
           <div class="form-group float-field">
             <input
@@ -103,6 +112,14 @@ const pageDescription =
             <span class="btn-text">Nachricht senden</span>
             <span class="btn-loader"></span>
           </button>
+
+          <div id="form-status" class="form-notice" role="status" aria-live="polite" aria-atomic="true" hidden>
+            <span class="form-notice__icon" aria-hidden="true"></span>
+            <p class="form-notice__body">
+              <strong class="form-notice__title"></strong>
+              <span class="form-notice__text"></span>
+            </p>
+          </div>
         </form>
       </article>
 
@@ -151,7 +168,7 @@ const pageDescription =
     <div class="contact-popup__card">
       <div class="contact-popup__icon" aria-hidden="true">
         <svg class="check-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40" aria-hidden="true" focusable="false">
-          <path d="M20 6L9 17L4 12" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
       <h2 id="success-popup-title">Nachricht gesendet!</h2>
@@ -165,11 +182,15 @@ const pageDescription =
   import { offers } from '../data/offers';
 
   // Anfrage von einer Schnellstart-Seite: Nachricht mit dem Thema vorbelegen
-  const topic = new URLSearchParams(window.location.search).get('thema');
+  const params = new URLSearchParams(window.location.search);
+  const topic = params.get('thema');
+  // optional: gewählter Tarif, z. B. „Mittel“ (Hosting & Betreuung)
+  const plan = params.get('paket');
   const offer = offers.find((item) => item.slug === topic);
   const messageField = document.querySelector<HTMLTextAreaElement>('#message');
   if (offer && messageField && !messageField.value) {
-    messageField.value = `Hallo Dustin, ich interessiere mich für: ${offer.title}.\n\n`;
+    const planName = plan && offer.plans?.some((group) => group.plans.some((item) => item.name === plan)) ? ` – ${plan}` : '';
+    messageField.value = `Hallo Dustin, ich interessiere mich für: ${offer.title}${planName}.\n\n`;
   }
 </script>
 
@@ -191,8 +212,21 @@ const pageDescription =
     privacy: 'privacy-error',
   };
 
-  const setFormStatus = (message) => {
-    if (formStatus) formStatus.textContent = message;
+  const contactEmail = form?.dataset.contactEmail ?? '';
+  const noticeIcons = { success: '✓', error: '!' };
+
+  // Sichtbare Meldung unter dem Button; tone: 'success' | 'error'
+  const setFormStatus = (title, text = '', tone = 'error') => {
+    if (!formStatus) return;
+    if (!title) {
+      formStatus.hidden = true;
+      return;
+    }
+    formStatus.dataset.tone = tone;
+    formStatus.querySelector('.form-notice__icon').textContent = noticeIcons[tone];
+    formStatus.querySelector('.form-notice__title').textContent = title;
+    formStatus.querySelector('.form-notice__text').textContent = text;
+    formStatus.hidden = false;
   };
 
   const spawnRipple = (e) => {
@@ -250,7 +284,7 @@ const pageDescription =
       if (!isValid) {
         form.classList.add('shake');
         setTimeout(() => form.classList.remove('shake'), 500);
-        setFormStatus('Bitte prüf die markierten Felder.');
+        setFormStatus('Bitte prüf die markierten Felder.', 'Name, E-Mail, Nachricht und die Zustimmung zur Datenschutzerklärung sind Pflicht.');
         const firstInvalid = form.querySelector('[aria-invalid="true"]');
         firstInvalid?.focus();
         return;
@@ -261,19 +295,39 @@ const pageDescription =
       btnText.textContent = 'Wird gesendet...';
       submitBtn.disabled = true;
 
-      const formData = new FormData(form);
+      const field = (name) => form.elements.namedItem(name);
 
       try {
-        const response = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          body: formData,
-        });
-        const data = await response.json();
+        // Bot hat die Spam-Falle ausgefüllt: Erfolg vortäuschen, nichts senden
+        if (field('website')?.value.trim()) {
+          form.reset();
+          return;
+        }
 
-        if (response.ok && data.success) {
+        // Schlüssel müssen exakt den Feldbezeichnungen im Mailtory-Formular entsprechen
+        const response = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            data: {
+              name: field('name').value.trim(),
+              email: field('email').value.trim(),
+              message: field('message').value.trim(),
+              privacy: `Zugestimmt am ${new Date().toLocaleString('de-DE')}`,
+            },
+          }),
+        });
+        let data = null;
+        try {
+          data = await response.json();
+        } catch {
+          data = null;
+        }
+
+        if (response.ok && data?.ok !== false) {
           form.reset();
           inputs.forEach((input) => clearFieldError(input));
-          setFormStatus('Nachricht erfolgreich gesendet.');
+          setFormStatus('Danke, deine Nachricht ist angekommen.', 'Ich melde mich in der Regel innerhalb von 24 Stunden bei dir.', 'success');
           popupReturnFocus = submitBtn;
           popup?.classList.add('is-visible');
           popup?.setAttribute('aria-hidden', 'false');
@@ -281,10 +335,18 @@ const pageDescription =
           setTimeout(() => popupIcon?.classList.remove('success-pulse'), 800);
           closeBtn?.focus();
         } else {
-          throw new Error(data.message || 'Senden fehlgeschlagen');
+          // Mailtory liefert bei Fehlern einen lesbaren Grund mit (z. B. bei zu vielen Anfragen)
+          const reason = typeof data?.error === 'string' && data.error.trim() ? data.error.trim() : 'Bitte versuch es gleich noch einmal.';
+          setFormStatus(
+            'Deine Nachricht konnte nicht gesendet werden.',
+            `${reason} Du kannst mir auch direkt an ${contactEmail} schreiben.`,
+          );
         }
       } catch (error) {
-        setFormStatus('Senden fehlgeschlagen. Bitte versuch es später erneut oder schreib mir direkt per E-Mail.');
+        setFormStatus(
+          'Keine Verbindung zum Server.',
+          `Prüf bitte deine Internetverbindung und versuch es erneut – oder schreib mir direkt an ${contactEmail}.`,
+        );
         console.error(error);
       } finally {
         submitBtn.classList.remove('loading');
@@ -331,7 +393,8 @@ const pageDescription =
 </script>
 
 <style>
-  .btn-ripple {
+  /* Ripple und Ladekreis entstehen bzw. wechseln per Skript – daher :global, sonst greift der Stil nicht */
+  .submit-button :global(.btn-ripple) {
     position: absolute;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.35);
@@ -347,20 +410,117 @@ const pageDescription =
     }
   }
 
+  /* Rückmeldung unter dem Button: Erfolg grün, Fehler rot */
+  .form-notice {
+    --notice: #b42318;
+    --notice-bg: #fef3f2;
+    --notice-line: rgba(180, 35, 24, 0.28);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.85rem;
+    align-items: start;
+    margin-top: 1rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--notice-line);
+    border-radius: 14px;
+    background: var(--notice-bg);
+    animation: noticeIn 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .form-notice[hidden] {
+    display: none;
+  }
+
+  .form-notice[data-tone='success'] {
+    --notice: var(--c-turf);
+    --notice-bg: #ecf7f2;
+    --notice-line: rgba(4, 114, 77, 0.28);
+  }
+
+  .form-notice__icon {
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #ffffff;
+    background: var(--notice);
+  }
+
+  .form-notice__body {
+    display: grid;
+    gap: 0.15rem;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .form-notice__title {
+    color: var(--notice);
+    font-size: 0.95rem;
+  }
+
+  .form-notice__text {
+    color: var(--c-ink);
+    font-size: 0.9rem;
+  }
+
+  @keyframes noticeIn {
+    from {
+      opacity: 0;
+      translate: 0 -4px;
+    }
+  }
+
+  .btn-loader {
+    display: none;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: btnSpin 0.7s linear infinite;
+  }
+
+  .submit-button:global(.loading) .btn-loader {
+    display: inline-block;
+  }
+
+  @keyframes btnSpin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .submit-button :global(.btn-ripple) {
+      display: none;
+    }
+
+    .form-notice {
+      animation: none;
+    }
+
+    .btn-loader {
+      animation-duration: 1.6s;
+    }
+  }
+
   .contact-popup__icon.success-pulse {
     animation: successRing 0.75s ease-out;
   }
 
   @keyframes successRing {
     0% {
-      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.55);
+      box-shadow: 0 0 0 0 rgba(4, 114, 77, 0.55);
       transform: scale(1);
     }
     40% {
       transform: scale(1.06);
     }
     100% {
-      box-shadow: 0 0 0 22px rgba(16, 185, 129, 0);
+      box-shadow: 0 0 0 22px rgba(4, 114, 77, 0);
       transform: scale(1);
     }
   }

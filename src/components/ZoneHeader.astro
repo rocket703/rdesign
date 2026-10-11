@@ -31,17 +31,7 @@ const hasBar = variant !== 'tech';
     </>
   )}
 
-  {variant === 'candy' && (
-    <span class="zone-h__pill">{label}</span>
-  )}
-
-  {variant === 'clean' && (
-    <span class="zone-h__kicker">{label}</span>
-  )}
-
-  {variant === 'earth' && (
-    <span class="zone-h__stamp">{label}</span>
-  )}
+  {variant !== 'tech' && <span class="zone-h__kicker">{label}</span>}
 
   <p class="zone-h__title" id={titleId}>
     <span class="zone-h__title-text">{title}</span>

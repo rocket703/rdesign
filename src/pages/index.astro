@@ -8,32 +8,21 @@ import ZoneCut from '../components/ZoneCut.astro';
 import { cutFillPath, CUT_VIEWBOX } from '../lib/zone-cut-paths';
 import ZoneHeader from '../components/ZoneHeader.astro';
 import ZoneWatermark from '../components/ZoneWatermark.astro';
-import TechSeam from '../components/TechSeam.astro';
 import StyleShowcase from '../components/StyleShowcase.astro';
 import OfferIcon from '../components/OfferIcon.astro';
 import OfferVisual from '../components/OfferVisual.astro';
 import { packages, offerPath } from '../data/offers';
-import { services } from '../data/services';
+import { services, serviceIcons } from '../data/services';
 import { responsiveImage } from '../lib/images';
 import CandyTapeDivider from '../components/CandyTapeDivider.astro';
 import GroundTapeDivider from '../components/GroundTapeDivider.astro';
+import CtaBand from '../components/CtaBand.astro';
 import { BIOME_META, EARTH_META } from '../data/portfolio-biomes';
+import '../styles/zone-header.css';
 import '../styles/home-world.css';
+import '../styles/carousel.css';
 
 import { homePageSchema, SITE } from '../lib/seo';
-
-const candyMarqueeWords = [
-  'Webdesign Magdeburg',
-  'Events',
-  'Vereine',
-  'Bands',
-  'Unternehmen',
-  'Individuell',
-  'Persönlich',
-  'Performance',
-  'Mit Charakter',
-  'Direkt',
-] as const;
 
 // Hügel-Silhouette als Maske für die Earth-Zone: deren eigener Hintergrund
 // füllt den Hügel, darüber scheint die Clean-Zone durch – ohne Nahtkante.
@@ -59,6 +48,13 @@ const steps = [
 ] as const;
 
 const portrait = responsiveImage(SITE.portrait, 320);
+
+// FAQ in zwei feste Spalten: Aufklappen verschiebt nur die eigene Spalte
+const faqHalf = Math.ceil(faqItems.length / 2);
+const faqColumns = [faqItems.slice(0, faqHalf), faqItems.slice(faqHalf)];
+
+// Bannerfarbe je Paket – aus der Palette
+const packageAccents = ['var(--c-turf)', 'var(--c-slate)', 'var(--c-deep)', 'var(--c-forest)'];
 
 const publishedProjects = await getPublishedProjects();
 
@@ -86,7 +82,12 @@ const featuredProjects = featuredSlugs
       <div class="p-tech-hero__inner">
         <div class="p-tech-hero__brand intro">
           <div class="section-head hero-brand">
-            <div class="r3-logo">
+            <div class="r3-logo glass-sign">
+              <span class="glass-sign__shine" aria-hidden="true"></span>
+              <span class="glass-sign__screw glass-sign__screw--tl" aria-hidden="true"></span>
+              <span class="glass-sign__screw glass-sign__screw--tr" aria-hidden="true"></span>
+              <span class="glass-sign__screw glass-sign__screw--bl" aria-hidden="true"></span>
+              <span class="glass-sign__screw glass-sign__screw--br" aria-hidden="true"></span>
               <span class="r3-word">
                 <span class="r3-r">r</span>
                 <span class="r3-badge">3</span>
@@ -96,8 +97,9 @@ const featuredProjects = featuredSlugs
             </div>
           </div>
           <p class="p-tech-hero__value">
-            Klar gestaltet, schnell geladen und ohne Baukasten – für Vereine, Events und lokale Unternehmen.
+            Klar&nbsp;gestaltet. Schnell&nbsp;geladen. <mark class="p-tech-hero__mark">Ohne&nbsp;Baukasten.</mark>
           </p>
+          <p class="p-tech-hero__sub">Webseiten für Vereine, Events und lokale Unternehmen.</p>
           <div class="p-tech-hero__actions">
             <a href="/kontakt/" class="p-tech-hero__cta p-tech-hero__cta--primary">Projekt anfragen</a>
             <a href="#projekte" class="p-tech-hero__cta p-tech-hero__cta--secondary">Projekte ansehen</a>
@@ -107,30 +109,38 @@ const featuredProjects = featuredSlugs
       </div>
     </header>
 
-    <TechSeam />
-
     <section class="tech-manifesto" id="technik" aria-labelledby="tech-manifesto-title">
       <div class="container tech-manifesto__inner">
         <header class="tech-manifesto__head zone-h zone-h--bar autoShow">
           <ZoneWatermark num="01" />
           <span class="tech-manifesto__kicker">Ablauf</span>
-          <p class="zone-h__title">Schritt für Schritt</p>
+          <p class="zone-h__title">Schritt<br />für Schritt</p>
           <h2 class="zone-h__desc" id="tech-manifesto-title">
             So läuft ein Webdesign-Projekt ab: drei klare Schritte vom ersten Gespräch bis nach dem Launch.
           </h2>
         </header>
-        <ol class="tech-manifesto__pipeline">
-          {steps.map((step, index) => (
-            <li class="tech-manifesto__step autoShow">
-              <span class="tech-manifesto__num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-              <div class="tech-manifesto__body">
-                <h3>{step.title}</h3>
-                <p>{step.text}</p>
-                <p class="tech-manifesto__check"><span aria-hidden="true">✓</span> {step.check}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
+        <div class="tech-manifesto__start autoShow">
+          <p class="tech-manifesto__start-text">
+            Der erste Schritt kostet dich nur ein kurzes Gespräch. Danach weißt du, was deine Webseite braucht,
+            wie lange es dauert und was es kostet.
+          </p>
+          <a href="/kontakt/" class="tech-manifesto__start-btn">Erstgespräch anfragen</a>
+          <p class="tech-manifesto__start-note">Kostenlos · ca. 15 Minuten · Telefon, Video oder vor Ort</p>
+        </div>
+        <div class="tech-manifesto__glass">
+          <ol class="tech-manifesto__pipeline">
+            {steps.map((step, index) => (
+              <li class="tech-manifesto__step autoShow">
+                <span class="tech-manifesto__num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                <div class="tech-manifesto__body">
+                  <h3>{step.title}</h3>
+                  <p>{step.text}</p>
+                  <p class="tech-manifesto__check"><span aria-hidden="true">✓</span> {step.check}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </section>
 
@@ -150,36 +160,30 @@ const featuredProjects = featuredSlugs
       />
     </div>
 
-    <div class="candy-marquee" aria-hidden="true">
-      <div class="candy-marquee__track">
-        {[...candyMarqueeWords, ...candyMarqueeWords].map((word, index) => (
-          <span class:list={['candy-marquee__word', { 'candy-marquee__word--clone': index >= candyMarqueeWords.length }]}>{word}</span>
-        ))}
-      </div>
-    </div>
+    <div class="candy-spacer" aria-hidden="true"></div>
 
     <section class="candy-about" id="about" aria-labelledby="candy-about-title">
       <div class="container">
         <div class="candy-about__inner">
-          <figure class="candy-about__portrait autoShow">
-            <div class="candy-about__avatar">
-              <div class="candy-about__frame" aria-hidden="true"></div>
-              <div class="candy-about__photo">
-                <img
-                  src={portrait.src}
-                  srcset={portrait.srcset}
-                  sizes="(max-width: 899px) min(78vw, 320px), 320px"
-                  alt="Dustin Rose – Webentwickler in Magdeburg"
-                  width="320"
-                  height="320"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <span class="candy-about__duotone" aria-hidden="true"></span>
-                <span class="candy-about__shine" aria-hidden="true"></span>
-              </div>
+          <figure class="about-photo autoShow">
+            <div class="about-photo__frame">
+              <span class="about-photo__img">
+              <img
+                src={portrait.src}
+                srcset={portrait.srcset}
+                sizes="(max-width: 899px) min(78vw, 320px), 320px"
+                alt="Dustin Rose – Webentwickler in Magdeburg"
+                width="320"
+                height="400"
+                loading="lazy"
+                decoding="async"
+              />
+              </span>
             </div>
-            <figcaption class="candy-about__caption">Dustin · Magdeburg</figcaption>
+            <figcaption class="about-photo__caption">
+              <strong>Dustin Rose</strong>
+              <span>Webentwicklung · Magdeburg</span>
+            </figcaption>
           </figure>
 
           <article class="candy-about__card autoShow">
@@ -205,7 +209,7 @@ const featuredProjects = featuredSlugs
     <StyleShowcase />
   </div>
 
-  <ZoneCut variant="drop" fill="#0d0616" accent="#10b981" front="#faf9f6" />
+  <ZoneCut variant="drop" fill="#f4f4f9" accent="#04724d" front="#f4f4f9" />
 
   <!-- ═══ 03 CLEAN ═══ -->
   <div class="p-zone p-zone--clean">
@@ -226,18 +230,27 @@ const featuredProjects = featuredSlugs
           Drei Projekte – von der Vereins-Webseite bis zur Online-Plattform.
         </p>
       </div>
-      <div class="card-grid card-grid--clean">
-      {featuredProjects.map((project) => (
+      <div class="home-carousel" data-carousel>
+      <div class="card-grid card-grid--clean" data-carousel-track>
+      {featuredProjects.map((project, index) => (
         <ProjectCard
-          variant="clean"
+          category={project.data.category}
+          accent={index}
           title={project.data.title}
           description={project.data.subtitle}
           image={project.data.image}
           tags={project.data.techStack}
           id={projectSlug(project)}
+          status={project.data.status}
         />
       ))}
     </div>
+      <div class="carousel-dots carousel-dots--home" role="group" aria-label="Referenzen: Karte wählen">
+        {featuredProjects.map((item, index) => (
+          <button type="button" class="carousel-dots__dot" data-carousel-dot={index} aria-label={`${item.data.title} anzeigen`} aria-current={index === 0 ? 'true' : undefined}></button>
+        ))}
+      </div>
+      </div>
     <p class="projects-more projects-more--clean autoShow">
       <a href="/projekte/" class="projects-more__link">
         Alle Projekte ansehen →
@@ -248,64 +261,81 @@ const featuredProjects = featuredSlugs
   <section id="leistungen" class="section services services--clean">
     <div class="container">
       <div class="clean-block-head autoShow">
-        <p class="clean-block-head__kicker">Leistungen</p>
         <h2 class="clean-block-head__title">Webdesign, Web-Apps &amp; Apps</h2>
         <p class="clean-block-head__lead">
           Vom fokussierten Webauftritt bis zur langfristig betreuten Plattform – passend zum Ziel, nicht zum Trend.
         </p>
       </div>
 
-      <ul class="services-grid">
+      <div class="home-carousel" data-carousel>
+      <ol class="service-index" data-carousel-track>
         {services.map((service) => (
-          <li class="service-card autoShow">
-            <div class="service-card__body">
-              <h3>{service.title}</h3>
-              <p class="service-card__text">{service.text}</p>
-            </div>
-            <ul class="service-card__chips" aria-label="Schwerpunkte">
-              {service.chips.map((chip) => <li>{chip}</li>)}
-            </ul>
+          <li class="service-index__item autoShow">
+            <span class="service-index__cap" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={serviceIcons[service.icon]} />
+            </span>
+            <h3 class="service-index__title">{service.title}</h3>
+            <p class="service-index__text">{service.text}</p>
+            <p class="service-index__tags">{service.chips.join(' · ')}</p>
             {service.href && (
-              <a class="service-card__link" href={service.href}>Mehr erfahren <span aria-hidden="true">→</span></a>
+              <a class="service-index__link" href={service.href}>Mehr erfahren <span aria-hidden="true">→</span></a>
             )}
+            {!service.href && <span class="service-index__link service-index__link--spacer" aria-hidden="true"></span>}
           </li>
         ))}
-      </ul>
-      <p class="projects-more projects-more--clean autoShow">
-        <a href="/leistungen/" class="projects-more__link">Alle Leistungen im Überblick →</a>
+      </ol>
+      <div class="carousel-dots carousel-dots--home" role="group" aria-label="Leistungen: Karte wählen">
+        {services.map((item, index) => (
+          <button type="button" class="carousel-dots__dot" data-carousel-dot={index} aria-label={`${item.title} anzeigen`} aria-current={index === 0 ? 'true' : undefined}></button>
+        ))}
+      </div>
+      </div>
+      <p class="services-more autoShow">
+        <a href="/leistungen/" class="services-cta">
+          <span class="services-cta__label">Alle Leistungen im Überblick</span>
+          <span class="services-cta__cap" aria-hidden="true">→</span>
+        </a>
       </p>
     </div>
   </section>
 
-  <section class="quickstart" aria-labelledby="quickstart-title">
+  <section class="quickstart" id="pakete" aria-labelledby="quickstart-title">
     <div class="container">
       <div class="clean-block-head autoShow">
-        <p class="clean-block-head__kicker">Schnellstart</p>
         <h2 class="clean-block-head__title" id="quickstart-title">Du hast schon eine Webseite?</h2>
         <p class="clean-block-head__lead">
-          Drei feste Pakete für bestehende Seiten – mit klarem Ergebnis und Festpreis.
+          Vier feste Pakete für bestehende Seiten – mit klarem Ergebnis und Festpreis.
         </p>
       </div>
-      <ul class="quickstart__grid">
-        {packages.map((offer) => (
+      <div class="home-carousel" data-carousel>
+      <ul class="quickstart__grid" data-carousel-track>
+        {packages.map((offer, index) => (
           <li class="autoShow">
-            <a href={offerPath(offer)} class="quickstart-card">
-              <OfferVisual name={offer.icon} />
-              <div class="quickstart-card__head">
-                <span class="quickstart-card__icon">
-                  <OfferIcon name={offer.icon} size={22} />
-                </span>
-                <h3 class="quickstart-card__title">{offer.title}</h3>
+            <a href={offerPath(offer)} class="pkg-card" style={`--pkg: ${packageAccents[index % packageAccents.length]}`}>
+              <div class="pkg-card__banner">
+                <OfferVisual name={offer.icon} />
               </div>
-              <p class="quickstart-card__text">{offer.teaser}</p>
-              <div class="quickstart-card__foot">
-                <span class="quickstart-card__meta">{offer.facts.find((fact) => fact.label === 'Dauer')?.value}</span>
-                <span class="quickstart-card__more">Mehr erfahren <span class="quickstart-card__arrow" aria-hidden="true">→</span></span>
+              <span class="pkg-card__tab" aria-hidden="true">
+                <OfferIcon name={offer.icon} size={24} />
+              </span>
+              <div class="pkg-card__body">
+                <h3 class="pkg-card__title">{offer.title}</h3>
+                <p class="pkg-card__text">{offer.teaser}</p>
+              </div>
+              <div class="pkg-card__foot">
+                <span>{offer.facts.find((fact) => fact.label === 'Dauer')?.value}</span>
+                <span class="pkg-card__more">Mehr erfahren <span aria-hidden="true">→</span></span>
               </div>
             </a>
           </li>
         ))}
       </ul>
+      <div class="carousel-dots carousel-dots--home carousel-dots--light" role="group" aria-label="Pakete: Karte wählen">
+        {packages.map((item, index) => (
+          <button type="button" class="carousel-dots__dot" data-carousel-dot={index} aria-label={`${item.title} anzeigen`} aria-current={index === 0 ? 'true' : undefined}></button>
+        ))}
+      </div>
+      </div>
     </div>
   </section>
 
@@ -323,9 +353,6 @@ const featuredProjects = featuredSlugs
           description={EARTH_META.description}
           titleId="earth-title"
         />
-        <div class="p-earth-panel autoShow">
-          <p>Webdesign aus Magdeburg · remote möglich · individuell und direkt.</p>
-        </div>
       </div>
     </div>
 
@@ -335,41 +362,74 @@ const featuredProjects = featuredSlugs
           <h2 id="faq-title">Häufige Fragen zum Webdesign</h2>
         </div>
         <div class="faq-grid">
-          {faqItems.map((item) => (
+          {faqColumns.map((column, col) => (
+            <div class="faq-col">
+          {column.map((item, i) => (
             <details class="faq-item autoShow">
-              <summary>{item.question}</summary>
-              <p>{item.answer}</p>
+              <summary>
+                <span class="faq-item__num" aria-hidden="true">{String(col * faqColumns[0].length + i + 1).padStart(2, '0')}</span>
+                <span class="faq-item__q">{item.question}</span>
+                <span class="faq-item__toggle" aria-hidden="true"></span>
+              </summary>
+              <div class="faq-item__answer"><p>{item.answer}</p></div>
             </details>
+          ))}
+            </div>
           ))}
         </div>
       </div>
     </section>
 
-    <div class="p-earth-actions p-earth-actions--final autoShow">
-      <a href="/kontakt/" class="p-earth-btn">Projekt anfragen</a>
-      <a href="/projekte/" class="p-earth-btn p-earth-btn--ghost">Alle Projekte ansehen</a>
-    </div>
   </section>
+
+  <CtaBand />
 
   <GroundTapeDivider />
 </article>
 </BaseLayout>
 
 <script>
+  // FAQ: gleichmäßiges Auf- und Zuklappen, immer nur eine Frage offen
   (() => {
-    const animatedSections = document.querySelectorAll('.candy-marquee');
-    if (!animatedSections.length || !('IntersectionObserver' in window)) return;
+    const items = [...document.querySelectorAll<HTMLDetailsElement>('.faq-item')];
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const DURATION = 280;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          entry.target.classList.toggle('is-active', entry.isIntersecting);
-        });
-      },
-      { rootMargin: '10% 0px', threshold: 0.05 }
-    );
+    const animate = (item: HTMLDetailsElement, open: boolean) => {
+      const answer = item.querySelector<HTMLElement>('.faq-item__answer');
+      if (!answer || reduced) {
+        item.open = open;
+        return;
+      }
+      item.getAnimations({ subtree: true }).forEach((a) => a.cancel());
+      if (open) item.open = true;
+      const full = answer.scrollHeight;
+      const from = open ? 0 : full;
+      const to = open ? full : 0;
+      const animation = answer.animate(
+        [
+          { height: `${from}px`, opacity: open ? 0 : 1 },
+          { height: `${to}px`, opacity: open ? 1 : 0 },
+        ],
+        { duration: DURATION, easing: 'cubic-bezier(0.25, 0.8, 0.25, 1)' },
+      );
+      if (!open) item.classList.add('is-closing');
+      animation.onfinish = () => {
+        if (!open) {
+          item.open = false;
+          item.classList.remove('is-closing');
+        }
+      };
+    };
 
-    animatedSections.forEach((element) => observer.observe(element));
+    items.forEach((item) => {
+      item.querySelector('summary')?.addEventListener('click', (event) => {
+        event.preventDefault();
+        const willOpen = !item.open || item.classList.contains('is-closing');
+        if (willOpen) items.filter((other) => other !== item && other.open).forEach((other) => animate(other, false));
+        animate(item, willOpen);
+      });
+    });
   })();
 </script>
 
@@ -403,301 +463,16 @@ const featuredProjects = featuredSlugs
     margin-bottom: clamp(2.5rem, 5vw, 4rem);
   }
 
-  .services-grid {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    max-width: 1200px;
-    margin-inline: auto;
-    align-items: stretch;
-  }
-
-  .service-card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    min-height: 18.5rem;
-    align-items: stretch;
-    text-align: left;
-    padding: clamp(1.25rem, 3vw, 1.6rem);
-    padding-top: clamp(1.5rem, 3.5vw, 1.85rem);
-    border-radius: 14px;
-    overflow: hidden;
-    background:
-      linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 42%, transparent 100%),
-      rgba(15, 23, 42, 0.65);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.07),
-      0 12px 32px rgba(0, 0, 0, 0.28);
-    transition:
-      transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
-      border-color 0.4s ease,
-      box-shadow 0.4s ease;
-  }
-
-  .service-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    padding: 1px;
-    background: linear-gradient(
-      165deg,
-      rgba(16, 185, 129, 0.22) 0%,
-      transparent 38%,
-      transparent 100%
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0.5;
-    pointer-events: none;
-    transition: opacity 0.4s ease;
-    z-index: 1;
-  }
-
   /* Bunte Top-Kante: Grün → ausblendend nach rechts (wie Tech-Stack-Karten) */
-  .service-card::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #10b981 0%, #38bdf8 55%, transparent 100%);
-    opacity: 0.65;
-    pointer-events: none;
-    z-index: 3;
-    box-shadow: 0 0 18px rgba(16, 185, 129, 0.28);
-    transition: opacity 0.4s ease, box-shadow 0.4s ease;
-  }
-
-  .service-card:hover {
-    transform: translateY(-5px);
-    border-color: rgba(16, 185, 129, 0.22);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.1),
-      0 20px 48px rgba(0, 0, 0, 0.4),
-      0 0 0 1px rgba(16, 185, 129, 0.08);
-  }
-
-  .service-card:hover::before {
-    opacity: 0.72;
-  }
-
-  .service-card:hover::after {
-    opacity: 0.85;
-    box-shadow: 0 0 22px rgba(16, 185, 129, 0.38);
-  }
-
-  .service-card__head,
-  .service-card__body,
-  .service-card__link {
-    position: relative;
-    z-index: 2;
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    margin-top: 0.4rem;
-    font-size: 0.9rem;
-    font-weight: 700;
-    text-decoration: none;
-    color: var(--r3-green-ink);
-  }
-
-  .service-card__link:hover {
-    text-decoration: underline;
-  }
-
-  .service-card__chips {
-    position: relative;
-    z-index: 2;
-  }
-
-  .service-card__body {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    min-height: 0;
-  }
-
-  .service-card :is(h3, h4) {
-    position: relative;
-    z-index: 1;
-    margin: 0 0 0.6rem;
-    padding-right: 2rem;
-    min-height: 2.75em;
-    font-size: clamp(1.05rem, 2.2vw, 1.28rem);
-    font-weight: 800;
-    line-height: 1.25;
-    color: #f8fafc;
-    letter-spacing: -0.03em;
-  }
-
-  .service-card__text {
-    position: relative;
-    z-index: 1;
-    flex: 1;
-    margin: 0;
-    font-size: clamp(0.88rem, 1.7vw, 0.96rem);
-    line-height: 1.62;
-    color: #94a3b8;
-  }
-
-  .service-card__chips {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-    width: 100%;
-    min-height: 1.85rem;
-    margin: 0.85rem 0 0;
-    padding-top: 0.75rem;
-    padding-left: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-    list-style: none;
-  }
-
-  .service-card__chips li {
-    flex: 1 1 auto;
-    min-width: 0;
-    font-family: inherit;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    text-align: center;
-    color: #cbd5e1;
-    padding: 0.32rem 0.25rem;
-    border-radius: 4px;
-    background: rgba(0, 0, 0, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .services-cta {
-    margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
-    text-align: center;
-  }
-
-  .services-cta__btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 1rem 2rem;
-    border-radius: 12px;
-    font-size: 0.95rem;
-    font-weight: 800;
-    letter-spacing: 0.02em;
-    text-decoration: none;
-    color: #ecfdf5;
-    background: rgba(16, 185, 129, 0.12);
-    border: 1px solid rgba(16, 185, 129, 0.45);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.12),
-      0 8px 28px rgba(16, 185, 129, 0.15);
-    transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-  }
-
-  .services-cta__prompt {
-    font-family: inherit;
-    color: #10b981;
-    font-weight: 700;
-  }
-
-  .services-cta__btn:hover {
-    transform: translateY(-2px);
-    background: rgba(16, 185, 129, 0.2);
-    border-color: #34d399;
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.15),
-      0 14px 36px rgba(16, 185, 129, 0.28);
-  }
-
-  .services-cta__btn:active {
-    transform: translateY(0);
-  }
-
-  @media (min-width: 600px) {
-    .services-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.35rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .services-grid {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.15rem;
-    }
-
-    .service-card {
-      min-height: 19.5rem;
-    }
-  }
-
-  @media (max-width: 599px) {
-    .service-card {
-      min-height: 0;
-    }
-
-    .service-card :is(h3, h4) {
-      min-height: 0;
-    }
-
-    .service-card__chips {
-      flex-wrap: wrap;
-    }
-
-    .service-card__chips li {
-      flex: 0 1 auto;
-      min-width: auto;
-    }
-  }
-
-  .services-grid .autoShow:nth-child(1) { transition-delay: 0.05s; }
-  .services-grid .autoShow:nth-child(2) { transition-delay: 0.12s; }
-  .services-grid .autoShow:nth-child(3) { transition-delay: 0.19s; }
-  .services-grid .autoShow:nth-child(4) { transition-delay: 0.26s; }
 
   /* =========================================
      2. DEV SHOWCASE SEKTION (Tech Stack)
      ========================================= */
 
-  .dev-showcase {
-    background: #0b1120;
-    padding: clamp(5rem, 10vw, 8rem) 0;
-    color: #fff;
-  }
-
   /* --- GRID LAYOUT --- */
-  .skill-grid {
-    display: grid;
-    grid-template-columns: 1fr; /* Mobil: Alles untereinander */
-    gap: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-  }
 
   /* DESKTOP LAYOUT: 3 kleine Karten links, Code rechts */
   @media (min-width: 1024px) {
-    .skill-grid {
-      grid-template-columns: 1fr 1.5fr; 
-      grid-template-rows: auto auto auto; 
-      gap: 2rem;
-      padding: 0;
-    }
 
     /* Links: Die 3 kleinen Karten stapeln sich */
     .primary {
@@ -710,140 +485,13 @@ const featuredProjects = featuredSlugs
       grid-row: 2 / 3;
     }
 
-    .dynamic-cube {
-      grid-column: 1 / 2;
-      grid-row: 3 / 4;
-    }
-
     /* Rechts: Das Code-Fenster über die volle Höhe */
-    .code-window {
-      grid-column: 2 / 3;
-      grid-row: 1 / 4;
-      height: 100%;
-    }
+
   }
 
   /* KARTEN DESIGN */
-  .skill-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    padding: 2.5rem;
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .skill-card:hover {
-    transform: translateY(-5px);
-    border-color: #10b981;
-    background: rgba(255, 255, 255, 0.06);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  }
-
-  .skill-card.primary,
-  .skill-card.secondary {
-    align-items: flex-start;
-    justify-content: flex-start;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .skill-card.primary::before,
-  .skill-card.secondary::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #10b981 0%, #38bdf8 55%, transparent 100%);
-    opacity: 0.65;
-    pointer-events: none;
-  }
-
-  .skill-card__path {
-    display: flex;
-    align-items: center;
-    gap: 0.35rem;
-    margin: 0 0 0.85rem;
-    font-family: inherit;
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    color: #64748b;
-  }
-
-  .skill-card__prompt {
-    color: #10b981;
-    font-weight: 700;
-  }
-
-  .skill-card__stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    list-style: none;
-    margin: 1.15rem 0 0;
-    padding: 0;
-    width: 100%;
-  }
-
-  .skill-card__stats li {
-    font-family: inherit;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: #cbd5e1;
-    padding: 0.3rem 0.5rem;
-    border-radius: 4px;
-    background: rgba(0, 0, 0, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .skill-card h3 {
-    font-size: 1.8rem;
-    font-weight: 800;
-    margin-bottom: 1rem;
-    color: #fff;
-  }
-
-  .skill-card p {
-    color: #94a3b8;
-    line-height: 1.6;
-  }
 
   /* CODE WINDOW */
-  .code-window {
-    background: #011627 !important;
-    padding: 0 !important;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .window-header {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 1rem 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
-  }
-
-  .dot-group { 
-    display: flex; 
-    gap: 8px; 
-  }
-
-  .dot { 
-    width: 12px; 
-    height: 12px; 
-    border-radius: 50%; 
-  }
 
   .red { background: #ff5f56; } 
   .yellow { background: #ffbd2e; } 
@@ -854,372 +502,16 @@ const featuredProjects = featuredSlugs
     color: #607b96; 
     font-family: inherit; 
   }
-
-  .code-area {
-    padding: 2rem;
-    font-family: inherit;
-    font-size: 0.9rem;
-    line-height: 1.6;
-    overflow-x: auto;
-    flex-grow: 1;
-    background: linear-gradient(180deg, rgba(16, 185, 129, 0.04) 0%, transparent 35%);
-  }
-
-  .code-area pre {
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-end;
-  }
-
-  .code-area code {
-    color: #d6deeb;
-    white-space: pre-wrap;
-    word-break: break-word;
-  }
-
-  .code-area :global(.tok-cm) { color: #5c7e9e; font-style: italic; }
-  .code-area :global(.tok-str) { color: #ecc48d; }
-  .code-area :global(.tok-kw) { color: #c792ea; }
-  .code-area :global(.tok-type) { color: #82aaff; }
-  .code-area :global(.tok-fn) { color: #7fdbca; }
-
-  .code-cursor {
-    display: inline-block;
-    width: 2px;
-    height: 1.15em;
-    background: #10b981;
-    box-shadow: 0 0 8px rgba(16, 185, 129, 0.65);
-    margin-left: 2px;
-    flex-shrink: 0;
-    animation: codeCursorBlink 1s step-end infinite;
-  }
-
-  .code-area.is-typing-done .code-cursor {
-    display: none;
-  }
-
-  @keyframes codeCursorBlink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
-
-  @media (max-width: 768px) {
-    .dev-showcase {
-      padding: clamp(4rem, 12vw, 5rem) 0;
-    }
-
-    .skill-grid {
-      gap: 1.25rem;
-      padding: 0 1rem;
-    }
-
-    .skill-card {
-      padding: 1.35rem 1.25rem;
-    }
-
-    .skill-card h3 {
-      font-size: 1.35rem;
-      margin-bottom: 0.65rem;
-    }
-
-    .skill-card p {
-      font-size: 0.9rem;
-      line-height: 1.55;
-    }
-
-    .skill-card__path {
-      margin-bottom: 0.55rem;
-      font-size: 0.75rem;
-    }
-
-    .skill-card__stats {
-      margin-top: 0.85rem;
-    }
-
-    .dynamic-cube {
-      min-height: 0;
-      padding: 1.35rem 1.25rem;
-      gap: 0.75rem;
-    }
-
-    .cube-scene {
-      min-height: 8.5rem;
-    }
-  }
-
   /* --- MOBILE ANPASSUNG FÜR DAS CODE-FENSTER --- */
 @media (max-width: 768px) {
-  .code-window {
-    width: 100%;
-    max-width: 100vw; /* Zwingt das Fenster, strikt im Bildschirm zu bleiben */
-    box-sizing: border-box;
-    margin: 0 auto; /* Zentriert es sauber */
-  }
-
-  .window-header {
-    padding: 0.75rem 1rem; /* Etwas kompakter, spart wertvollen Platz */
-  }
-
-  .dot {
-    /* [PUNKTE_KLEINER] */
-    width: 10px; 
-    height: 10px;
-  }
 
   .filename {
     font-size: 0.75rem; /* Dateiname dezent verkleinert */
   }
 
-  .code-area {
-    padding: 1rem; /* Padding halbiert: Gibt dem Code 2rem mehr Platz zum Atmen */
-    font-size: 0.75rem; /* Die Schrift "ein müh" kleiner */
-  }
 }
 
   /* --- TECH STACK WÜRFEL --- */
-  .dynamic-cube {
-    --cube-size: 5.5rem;
-    --cube-half: calc(var(--cube-size) / 2);
-    min-height: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-start;
-    gap: 1.25rem;
-    perspective: 1100px;
-    overflow: hidden;
-    cursor: default;
-    position: relative;
-    isolation: isolate;
-  }
-
-  .dynamic-cube::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    border-radius: 15px 15px 0 0;
-    background: linear-gradient(90deg, #10b981 0%, #38bdf8 55%, transparent 100%);
-    opacity: 0.65;
-    pointer-events: none;
-    z-index: 3;
-  }
-
-  .dynamic-cube .skill-card__path {
-    margin-bottom: 0;
-    position: relative;
-    z-index: 2;
-  }
-
-  .cube-scene {
-    position: relative;
-    flex: 1;
-    display: grid;
-    place-items: center;
-    min-height: 11rem;
-    margin-top: 0.25rem;
-  }
-
-  .cube-scene__aura {
-    position: absolute;
-    width: 11rem;
-    height: 11rem;
-    border-radius: 50%;
-    background: radial-gradient(
-      circle,
-      rgba(16, 185, 129, 0.22) 0%,
-      rgba(56, 189, 248, 0.08) 42%,
-      transparent 72%
-    );
-    pointer-events: none;
-  }
-
-  .cube-scene__orbit {
-    position: absolute;
-    width: 9.5rem;
-    height: 9.5rem;
-    border-radius: 50%;
-    border: 1px dashed rgba(16, 185, 129, 0.28);
-    pointer-events: none;
-  }
-
-  .cube-scene__orbit::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #34d399;
-    box-shadow: 0 0 10px rgba(16, 185, 129, 0.75);
-    transform: translate(-50%, -50%);
-  }
-
-  .cube-scene__orbit--inner {
-    width: 7.25rem;
-    height: 7.25rem;
-    border-style: solid;
-    border-color: rgba(56, 189, 248, 0.14);
-    animation-direction: reverse;
-    animation-duration: 14s;
-    opacity: 0.85;
-  }
-
-  .cube-scene__orbit--inner::after {
-    top: auto;
-    bottom: 0;
-    background: #38bdf8;
-    box-shadow: 0 0 10px rgba(56, 189, 248, 0.65);
-    width: 5px;
-    height: 5px;
-    transform: translate(-50%, 50%);
-  }
-
-  .cube-wrapper {
-    width: var(--cube-size);
-    height: var(--cube-size);
-    transform-style: preserve-3d;
-    animation: cubeTumbleY 12s linear infinite;
-    animation-play-state: paused;
-  }
-
-  .cube {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-    transform: rotateX(-14deg);
-  }
-
-  .face {
-    position: absolute;
-    width: var(--cube-size);
-    height: var(--cube-size);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    border-radius: 0;
-    border: 1px solid rgba(16, 185, 129, 0.5);
-    background: rgba(8, 15, 28, 0.92);
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
-  }
-
-  .face span {
-    font-family: inherit;
-    font-size: 0.75rem;
-    font-weight: 800;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: #f8fafc;
-    text-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
-    padding: 0 0.15rem;
-  }
-
-  .face--front {
-    background: linear-gradient(145deg, rgba(16, 185, 129, 0.35), rgba(16, 185, 129, 0.08));
-    border-color: rgba(52, 211, 153, 0.55);
-    transform: translateZ(var(--cube-half));
-  }
-
-  .face--back {
-    background: linear-gradient(145deg, rgba(139, 92, 246, 0.32), rgba(139, 92, 246, 0.06));
-    border-color: rgba(167, 139, 250, 0.45);
-    transform: rotateY(180deg) translateZ(var(--cube-half));
-  }
-
-  .face--back span { text-shadow: 0 0 16px rgba(167, 139, 250, 0.45); }
-
-  .face--right {
-    background: linear-gradient(145deg, rgba(56, 189, 248, 0.28), rgba(56, 189, 248, 0.06));
-    border-color: rgba(56, 189, 248, 0.45);
-    transform: rotateY(90deg) translateZ(var(--cube-half));
-  }
-
-  .face--right span { text-shadow: 0 0 16px rgba(56, 189, 248, 0.45); }
-
-  .face--left {
-    background: linear-gradient(145deg, rgba(251, 191, 36, 0.22), rgba(251, 191, 36, 0.05));
-    border-color: rgba(251, 191, 36, 0.4);
-    transform: rotateY(-90deg) translateZ(var(--cube-half));
-  }
-
-  .face--left span { text-shadow: 0 0 14px rgba(251, 191, 36, 0.35); }
-
-  .face--top {
-    background: linear-gradient(145deg, rgba(52, 211, 153, 0.25), rgba(16, 185, 129, 0.06));
-    border-color: rgba(52, 211, 153, 0.4);
-    transform: rotateX(90deg) translateZ(var(--cube-half));
-  }
-
-  .face--bottom {
-    background: linear-gradient(145deg, rgba(99, 102, 241, 0.28), rgba(99, 102, 241, 0.06));
-    border-color: rgba(129, 140, 248, 0.45);
-    transform: rotateX(-90deg) translateZ(var(--cube-half));
-  }
-
-  .face--bottom span { text-shadow: 0 0 14px rgba(129, 140, 248, 0.4); }
-
-  @keyframes cubeTumbleY {
-    from { transform: rotateY(0deg); }
-    to { transform: rotateY(360deg); }
-  }
-
-  .dynamic-cube.is-active .cube-wrapper {
-    animation-play-state: running;
-  }
-
-  @media (max-width: 768px) {
-    .dynamic-cube {
-      --cube-size: 4.75rem;
-    }
-
-    .cube-scene {
-      min-height: 9.5rem;
-    }
-
-    .cube-scene__aura {
-      width: 9rem;
-      height: 9rem;
-    }
-
-    .cube-scene__orbit {
-      width: 8rem;
-      height: 8rem;
-    }
-
-    .cube-scene__orbit--inner {
-      width: 6.25rem;
-      height: 6.25rem;
-    }
-
-    .cube-wrapper {
-      animation: none;
-      transform: rotateY(-28deg);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .cube-wrapper,
-    .cube,
-    .cube-scene__orbit,
-    .cube-scene__aura {
-      animation: none !important;
-    }
-
-    .cube-wrapper {
-      transform: rotateY(24deg);
-    }
-
-    .cube {
-      transform: rotateX(-16deg);
-    }
-  }
 
   /* =========================================
      3. PROJEKTE SEKTION
@@ -1264,158 +556,152 @@ const featuredProjects = featuredSlugs
     align-items: center;
     min-height: 44px;
     gap: 0.45rem;
-    font-family: inherit;
-    font-size: 0.82rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-decoration: none;
-    color: #94a3b8;
-    transition: color 0.2s ease;
-  }
-
-  .projects-more__prompt {
-    color: #10b981;
-    font-weight: 700;
-  }
-
-  .projects-more__link:hover {
-    color: #ecfdf5;
+    /* Schrift, Farben und Hover kommen aus home-world.css (.projects-more--clean) */
   }
 
   /* =========================================
      FAQ SEKTION
      ========================================= */
 
-  .faq:not(.faq--clean) {
-    background-color: #0b1120;
-    padding: 3.5rem 0 8rem;
-  }
-
-  .faq:not(.faq--clean) .section-head {
-    margin-bottom: clamp(2rem, 4vw, 3rem);
-  }
-
+  /* FAQ als Pillen-Karten: Nummer links, runder Plus-Knopf rechts */
   .faq-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1rem;
-    max-width: 980px;
+    max-width: 1080px;
     margin: 0 auto;
     align-items: start;
+  }
+
+  /* Zwei feste Spalten (je 4 Fragen) */
+  .faq-col {
+    display: grid;
+    gap: 1rem;
+    align-content: start;
   }
 
   @media (min-width: 900px) {
     .faq-grid {
       grid-template-columns: 1fr 1fr;
-      gap: 1.2rem;
+      gap: 1.5rem;
+    }
+
+    .faq-col {
+      gap: 1.1rem;
     }
   }
 
   .faq-item {
+    --faq-accent: var(--c-turf);
     position: relative;
-    border-radius: 14px;
-    overflow: hidden;
-    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+    padding: 7px;
+    border-radius: 2.4rem;
+    background: #ffffff;
+    box-shadow: 0 14px 30px rgba(34, 50, 58, 0.12);
   }
 
-  .faq:not(.faq--clean) .faq-item {
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background:
-      linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 42%, transparent 100%),
-      rgba(11, 17, 32, 0.9);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.06),
-      0 10px 24px rgba(0, 0, 0, 0.22);
-  }
-
-  .faq:not(.faq--clean) .faq-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #10b981 0%, #38bdf8 55%, transparent 100%);
-    opacity: 0.65;
-    pointer-events: none;
-  }
-
-  .faq:not(.faq--clean) .faq-item:hover {
-    transform: translateY(-2px);
-    border-color: rgba(16, 185, 129, 0.22);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.08),
-      0 16px 30px rgba(0, 0, 0, 0.28);
-  }
-
-  .faq:not(.faq--clean) .faq-item summary {
-    list-style: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    box-sizing: border-box;
-    min-height: calc(2.1rem + 2.7em);
-    padding: 1.1rem 2.9rem 1rem 1.1rem;
-    font-weight: 700;
-    color: #f3f4f6;
-    line-height: 1.35;
-    position: relative;
+  .faq-item:nth-child(even) {
+    --faq-accent: var(--c-slate);
   }
 
   .faq-item summary {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: clamp(0.65rem, 2vw, 1rem);
+    min-height: 4.25rem;
+    padding: 0.5rem 0.5rem 0.5rem clamp(0.9rem, 3vw, 1.25rem);
+    border-radius: 2.1rem;
+    border-bottom: 2px solid var(--faq-accent);
+    background:
+      linear-gradient(115deg, rgba(88, 111, 124, 0.12) 0 4.5rem, transparent 4.5rem),
+      linear-gradient(180deg, #ffffff 0%, var(--c-bg) 100%);
     list-style: none;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    box-sizing: border-box;
-    min-height: calc(2.1rem + 2.7em);
-    padding: 1.1rem 2.9rem 1rem 1.1rem;
-    font-weight: 700;
-    line-height: 1.35;
-    position: relative;
-  }
-
-  .faq--clean .faq-item summary {
-    color: #0f172a;
-  }
-
-  .faq--clean .faq-item p {
-    color: #475569;
   }
 
   .faq-item summary::-webkit-details-marker {
     display: none;
   }
 
-  .faq-item summary::after {
-    content: '+';
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #10b981;
-    font-size: 1.2rem;
+  .faq-item summary:focus-visible {
+    outline: 2px solid var(--faq-accent);
+    outline-offset: 3px;
+  }
+
+  .faq-item__num {
+    font-size: 1.05rem;
+    font-weight: 900;
+    font-feature-settings: 'tnum';
+    color: var(--faq-accent);
+  }
+
+  .faq-item__q {
+    font-size: clamp(0.92rem, 2.4vw, 1rem);
     font-weight: 700;
-    transition: transform 0.2s ease;
+    line-height: 1.35;
+    color: var(--c-ink);
   }
 
-  .faq-item[open] summary::after {
-    transform: translateY(-50%) rotate(45deg);
+  /* Runder Knopf mit Plus, dreht beim Öffnen zum × */
+  .faq-item__toggle {
+    position: relative;
+    flex-shrink: 0;
+    width: 2.9rem;
+    height: 2.9rem;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.35), transparent 55%), var(--faq-accent);
+    box-shadow:
+      0 0 0 5px rgba(88, 111, 124, 0.12),
+      0 4px 10px rgba(34, 50, 58, 0.25);
+    transition: transform 0.3s ease;
   }
 
-  .faq:not(.faq--clean) .faq-item p {
+  .faq-item__toggle::before,
+  .faq-item__toggle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1rem;
+    height: 2px;
+    border-radius: 2px;
+    background: #ffffff;
+    transform: translate(-50%, -50%);
+  }
+
+  .faq-item__toggle::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  .faq-item[open]:not(.is-closing) .faq-item__toggle {
+    transform: rotate(135deg);
+  }
+
+  .faq-item summary:hover .faq-item__toggle {
+    box-shadow:
+      0 0 0 7px rgba(88, 111, 124, 0.16),
+      0 6px 14px rgba(34, 50, 58, 0.3);
+  }
+
+  /* Antwort: Höhe wird per Script animiert (siehe unten) */
+  .faq-item__answer {
+    overflow: hidden;
+  }
+
+  .faq-item__answer > p {
     margin: 0;
-    padding: 0 1.1rem 1.1rem;
-    color: #94a3b8;
-    line-height: 1.65;
+    padding: 1rem 1.4rem 1.2rem;
     font-size: 0.98rem;
+    line-height: 1.65;
+    color: var(--c-slate);
   }
 
-  .faq-item p {
-    margin: 0;
-    padding: 0 1.1rem 1.1rem;
-    line-height: 1.65;
-    font-size: 0.98rem;
+  @media (prefers-reduced-motion: reduce) {
+    .faq-item__toggle {
+      transition: none;
+    }
   }
 
   /* =========================================
@@ -1434,225 +720,7 @@ const featuredProjects = featuredSlugs
     z-index: 1;
   }
 
-  .about__inner {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: clamp(2rem, 5vw, 3rem);
-    align-items: center;
-    max-width: 1100px;
-    margin-inline: auto;
-  }
-
-  .about__media {
-    position: relative;
-    width: min(280px, 72vw);
-    margin: 0 auto;
-    flex-shrink: 0;
-  }
-
-  .about__avatar-shell {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1;
-  }
-
-  .about__avatar {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 2px solid rgba(255, 255, 255, 0.08);
-    box-shadow:
-      0 20px 48px rgba(0, 0, 0, 0.45),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.06);
-  }
-
-  .about__frame {
-    position: absolute;
-    inset: -3px;
-    border-radius: 50%;
-    background: linear-gradient(165deg, rgba(210, 255, 0, 0.35) 0%, #10b981 35%, #38bdf8 70%, transparent 100%);
-    opacity: 0.55;
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  .about__media img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    max-width: none;
-    object-fit: cover;
-    object-position: center;
-  }
-
   /* Blur-Animation nicht auf rundes Bild (Mobile-Bug) */
-  .about__avatar-shell.autoShow {
-    opacity: 0;
-    transform: translateY(20px);
-    transition:
-      opacity 0.85s cubic-bezier(0.22, 0.61, 0.36, 1),
-      transform 0.85s cubic-bezier(0.22, 0.61, 0.36, 1);
-  }
-
-  .about__avatar-shell.autoShow.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .about__avatar-shell.autoShow > * {
-    opacity: 1;
-    transform: none;
-    filter: none;
-    transition: none;
-  }
-
-  .about__badge {
-    position: absolute;
-    left: 50%;
-    bottom: -0.35rem;
-    z-index: 2;
-    transform: translateX(-50%);
-    margin: 0;
-    padding: 0.35rem 0.75rem;
-    font-family: inherit;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    color: #cbd5e1;
-    white-space: nowrap;
-    background: rgba(11, 17, 32, 0.92);
-    border: 1px solid rgba(16, 185, 129, 0.35);
-    border-radius: 999px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-  }
-
-  .about__prompt {
-    color: #10b981;
-    font-weight: 700;
-  }
-
-  .about__panel {
-    position: relative;
-    overflow: hidden;
-    padding: clamp(1.35rem, 3vw, 1.85rem);
-    border-radius: 14px;
-    background:
-      linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 42%, transparent 100%),
-      rgba(15, 23, 42, 0.65);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.07),
-      0 12px 32px rgba(0, 0, 0, 0.28);
-  }
-
-  .about__panel::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent-lime) 0%, #10b981 35%, #38bdf8 70%, transparent 100%);
-    opacity: 0.75;
-    pointer-events: none;
-  }
-
-  .about__panel .eyebrow {
-    margin-bottom: 0.85rem;
-  }
-
-  .about__path {
-    display: flex;
-    align-items: center;
-    gap: 0.35rem;
-    margin: 0 0 1rem;
-    font-family: inherit;
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    color: #64748b;
-  }
-
-  .about__title {
-    margin: 0 0 0.45rem;
-    font-size: clamp(1.85rem, 4.5vw, 2.75rem);
-    font-weight: 900;
-    line-height: 1.12;
-    letter-spacing: -0.03em;
-    color: #fff;
-  }
-
-  .about__name {
-    color: #fff;
-  }
-
-  .about__role {
-    margin: 0 0 1.35rem;
-    padding-bottom: 1.25rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    font-family: inherit;
-    font-size: clamp(0.82rem, 2vw, 0.95rem);
-    font-weight: 600;
-    letter-spacing: 0.03em;
-    color: #10b981;
-  }
-
-  .about__text p {
-    margin: 0 0 1rem;
-    color: #94a3b8;
-    line-height: 1.75;
-    font-size: clamp(0.98rem, 2vw, 1.08rem);
-  }
-
-  .about__text p:last-child {
-    margin-bottom: 0;
-  }
-
-  .about__chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin: 1.35rem 0 0;
-    padding: 1rem 0 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-    list-style: none;
-  }
-
-  .about__chips li {
-    font-family: inherit;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: #cbd5e1;
-    padding: 0.32rem 0.65rem;
-    border-radius: 4px;
-    background: rgba(0, 0, 0, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  @media (min-width: 900px) {
-    .about__inner {
-      grid-template-columns: minmax(240px, 300px) 1fr;
-      gap: clamp(2.5rem, 5vw, 4.5rem);
-    }
-
-    .about__media {
-      width: 100%;
-      max-width: 300px;
-      margin: 0;
-      justify-self: center;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .about__frame {
-      opacity: 0.45;
-    }
-  }
    /* =========================================
      HERO SEKTION 
      ========================================= */
@@ -1665,16 +733,9 @@ const featuredProjects = featuredSlugs
   justify-content: center;
   overflow: hidden;
   padding: clamp(3.5rem, 8vh, 5rem) 1.25rem clamp(3rem, 7vh, 4.5rem);
-  background: #030712;
 }
 
-@media (min-width: 769px) {
-  #intro {
-    background: #0b1120;
-  }
-}
-
-/* --- Ambient Hintergrund --- */
+/* --- Ambient Hintergrund (hell, mit grünem und goldenem Schimmer) --- */
 .hero-ambient {
   position: absolute;
   inset: 0;
@@ -1682,44 +743,15 @@ const featuredProjects = featuredSlugs
   overflow: hidden;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 90% 55% at 50% 115%, rgba(16, 185, 129, 0.14), transparent 68%),
-    radial-gradient(ellipse 45% 35% at 12% 18%, rgba(56, 189, 248, 0.09), transparent 55%),
-    radial-gradient(ellipse 40% 30% at 88% 22%, rgba(167, 139, 250, 0.08), transparent 52%),
-    #030712;
-}
-
-@media (min-width: 769px) {
-  .hero-ambient {
-    background:
-      radial-gradient(ellipse 70% 55% at 50% 115%, rgba(16, 185, 129, 0.14), transparent 68%),
-      radial-gradient(ellipse 38% 32% at 22% 18%, rgba(56, 189, 248, 0.09), transparent 55%),
-      radial-gradient(ellipse 38% 32% at 78% 22%, rgba(167, 139, 250, 0.08), transparent 52%),
-      #0b1120;
-  }
-
-  .hero-ambient::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      90deg,
-      #0b1120 0%,
-      rgba(11, 17, 32, 0.85) 6%,
-      transparent 22%,
-      transparent 78%,
-      rgba(11, 17, 32, 0.85) 94%,
-      #0b1120 100%
-    );
-    pointer-events: none;
-  }
+    var(--c-bg);
 }
 
 .hero-grid {
   position: absolute;
   inset: -1px;
   background-image:
-    linear-gradient(rgba(16, 185, 129, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(16, 185, 129, 0.045) 1px, transparent 1px);
+    linear-gradient(rgba(15, 23, 42, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
   background-size: 44px 44px;
   mask-image: radial-gradient(ellipse 75% 62% at 50% 46%, #000 15%, transparent 72%);
   -webkit-mask-image: radial-gradient(ellipse 75% 62% at 50% 46%, #000 15%, transparent 72%);
@@ -1747,7 +779,7 @@ const featuredProjects = featuredSlugs
   width: min(92vw, 680px);
   height: min(52vh, 400px);
   border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(16, 185, 129, 0.1) 0%, transparent 68%);
+  background: radial-gradient(ellipse, rgba(4, 114, 77, 0.1) 0%, transparent 68%);
 }
 
 #intro .section-head {
@@ -1770,50 +802,11 @@ const featuredProjects = featuredSlugs
   }
 
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .code-cursor {
-    animation: none;
-  }
-}
-
 /* Neue Kundenreise: Clean bündelt Beweise, Angebot und Ablauf. */
 .services--clean {
   padding: clamp(3rem, 7vw, 5rem) 0;
   color: #0f172a;
   background: transparent;
-}
-
-.services--clean .service-card {
-  min-height: 18rem;
-  background: rgba(255, 255, 255, 0.82);
-  border-color: rgba(15, 23, 42, 0.1);
-  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.07);
-}
-
-.services--clean .service-card__head::after,
-.services--clean .service-card__chips {
-  border-color: rgba(15, 23, 42, 0.08);
-}
-
-.services--clean .service-card :is(h3, h4) {
-  color: #0f172a;
-}
-
-.services--clean .service-card__text,
-.services--clean .service-card__path {
-  color: #64748b;
-}
-
-.services--clean .service-card__chips li {
-  color: #475569;
-  background: #f1f5f9;
-  border-color: #e2e8f0;
-}
-
-.services--clean .service-card:hover {
-  border-color: rgba(16, 185, 129, 0.28);
-  box-shadow: 0 20px 42px rgba(15, 23, 42, 0.1);
 }
 
 .clean-block-head__kicker {
@@ -1823,13 +816,13 @@ const featuredProjects = featuredSlugs
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #059669;
+  color: var(--c-turf);
 }
 
 .faq--earth {
   position: relative;
   z-index: 1;
-  padding: clamp(3rem, 7vw, 5rem) 0 0 !important;
+  padding: clamp(1.5rem, 4vw, 2.75rem) 0 clamp(4.5rem, 10vw, 7rem) !important;
   background: transparent !important;
 }
 
@@ -1845,38 +838,18 @@ const featuredProjects = featuredSlugs
   font-size: 0.75rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #8fbc8f;
+  color: var(--c-green-ink);
 }
 
 .earth-faq__head h2 {
   margin: 0;
   font-size: clamp(1.55rem, 4vw, 2.4rem);
-  color: #e8e0d4;
+  color: var(--c-ink);
 }
 
-.faq.faq--earth .faq-item {
-  border: 1px solid rgba(168, 152, 136, 0.32);
-  border-radius: 2px;
-  background: rgba(0, 0, 0, 0.2);
-  box-shadow: none;
-}
-
-.faq.faq--earth .faq-item::before {
-  background: #8fbc8f;
-  opacity: 0.42;
-}
-
-.faq.faq--earth .faq-item summary {
-  color: #e8e0d4;
-}
-
-.faq.faq--earth .faq-item p {
-  color: rgba(232, 224, 212, 0.72);
-}
-@media (max-width: 560px) {
-
-  .services--clean .service-card {
-    min-height: 0;
-  }
-}
 </style>
+
+<script>
+  import { initCarousels } from '../scripts/carousel';
+  initCarousels();
+</script>
