@@ -53,6 +53,13 @@
   outline-color: #ffffff;
 }
 
+/* Karten in Wischleisten liegen seitlich außerhalb des Bildes – das Einblenden beim Scrollen
+   (autoShow) würde sie bis zum Wischen unsichtbar lassen. Daher hier immer sichtbar. */
+[data-carousel-track] .autoShow,
+[data-carousel-track] > .autoShow {
+  opacity: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .carousel-dots__dot::before {
     transition: none;

@@ -22,6 +22,11 @@ export function initCarousels(root: ParentNode = document): void {
       () => {
         cancelAnimationFrame(frame);
         frame = requestAnimationFrame(() => {
+          // Am Rand der Leiste können die äußeren Karten nicht mittig einrasten –
+          // dort gilt die erste bzw. letzte Karte als aktiv
+          const maxScroll = track.scrollWidth - track.clientWidth;
+          if (track.scrollLeft <= 2) return setActive(0);
+          if (track.scrollLeft >= maxScroll - 2) return setActive(items.length - 1);
           const center = track.scrollLeft + track.clientWidth / 2;
           let active = 0;
           let best = Infinity;

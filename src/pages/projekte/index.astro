@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import LegalPageShell from '../../components/LegalPageShell.astro';
 import '../../styles/offer.css';
+import '../../styles/carousel.css';
 import { getPublishedProjects, projectSlug } from '../../lib/projects';
 import {
   PORTFOLIO,
@@ -41,7 +42,9 @@ const projectListItems: ProjectListItem[] = sortedProjects.map((project) => ({
     crumbLabel="Projekte"
     lead="Webseiten, Apps und Plattformen aus Magdeburg und Umgebung – von schlanken Landingpages bis zu Plattformen mit Login und eigenem Verwaltungsbereich."
   >
-    <div class="card-grid portfolio-grid">
+    <!-- Mobil: Projekte zum Wischen mit Punkten -->
+    <div class="portfolio-carousel" data-carousel>
+    <div class="card-grid portfolio-grid" data-carousel-track>
       {sortedProjects.map((project, index) => (
         <ProjectCard
           category={project.data.category}
@@ -56,6 +59,12 @@ const projectListItems: ProjectListItem[] = sortedProjects.map((project) => ({
         />
       ))}
     </div>
+      <div class="carousel-dots portfolio-dots" role="group" aria-label="Projekte: Karte wählen">
+        {sortedProjects.map((project, index) => (
+          <button type="button" class="carousel-dots__dot" data-carousel-dot={index} aria-label={`${project.data.title} anzeigen`} aria-current={index === 0 ? 'true' : undefined}></button>
+        ))}
+      </div>
+    </div>
   </LegalPageShell>
 </BaseLayout>
 
@@ -64,4 +73,45 @@ const projectListItems: ProjectListItem[] = sortedProjects.map((project) => ({
     margin-top: 0;
     gap: 1.5rem;
   }
+
+  .portfolio-carousel {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /* Mobil (einspaltig bis 819 px): Wischleiste bis an den Bildschirmrand,
+     Bänder der Projektkarten ragen 18 px über – daher Abstand und Innenrand */
+  @media (max-width: 819px) {
+    .portfolio-grid {
+      display: flex;
+      gap: 2.5rem;
+      margin-inline: calc(50% - 50vw);
+      padding: 0.5rem 2rem 1.5rem;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: 2rem;
+      scrollbar-width: none;
+    }
+
+    .portfolio-grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    .portfolio-grid > :global(*) {
+      flex: 0 0 min(80%, 21rem);
+      height: auto;
+      align-self: stretch;
+      scroll-snap-align: center;
+    }
+
+    .portfolio-dots {
+      display: flex;
+    }
+  }
 </style>
+
+<script>
+  import { initCarousels } from '../../scripts/carousel';
+  initCarousels();
+</script>

@@ -60,6 +60,13 @@
   --tech-icon-color: var(--c-ink);
 }
 
+@media (max-width: 479px) {
+  .legal-page--clean :is(.offer-aside, .contact-aside) .legal-block,
+  .legal-page--clean .service-list__item.legal-block {
+    padding: 1.25rem;
+  }
+}
+
 /* Karten ohne eigenen Link bleiben beim Hovern ruhig */
 .legal-page--clean :is(.offer-aside, .contact-aside) .legal-block:hover,
 .legal-page--clean .service-list__item.legal-block:hover {

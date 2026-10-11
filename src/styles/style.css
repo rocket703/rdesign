@@ -423,6 +423,18 @@ textarea:focus-visible {
   border-radius: 6px;
   z-index: -1;
 }
+/* Handys/Touch: Glasplatte ohne Echtzeit-Weichzeichner (Scroll-Leistung), Tönung etwas dichter */
+@media (hover: none), (max-width: 899px) {
+  .intro .section-head .r3-logo::before {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.04) 38%, rgba(255,255,255,0) 60%),
+      linear-gradient(135deg, rgba(184,219,217,0.22), rgba(88,111,124,0.12)),
+      rgba(34, 50, 58, 0.78);
+  }
+}
+
 /* Wortmarke nimmt den Slogan auf und richtet ihn mittig aus */
 .intro .section-head .r3-logo{
   position: relative;

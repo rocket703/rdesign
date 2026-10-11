@@ -94,10 +94,16 @@
   }
 
   .p-tech-hero__brand,
-  .p-tech-hero__brand .section-head,
-  .p-tech-hero__brand .r3-logo {
+  .p-tech-hero__brand .section-head {
     width: 100%;
     max-width: 100%;
+  }
+
+  /* Glasplatte ragt per ::before und Schrauben etwa 0,6rem + 4px über die Wortmarke hinaus –
+     deshalb schmaler, damit Ecken und Schrauben nicht am Bildschirmrand abgeschnitten werden */
+  .p-tech-hero__brand .r3-logo {
+    width: calc(100% - 1.6rem - 8px);
+    max-width: calc(100% - 1.6rem - 8px);
   }
 }
 
@@ -210,6 +216,17 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.95),
     inset 1px 0 0 rgba(255, 255, 255, 0.6),
     -20px 30px 60px -24px rgba(34, 50, 58, 0.35);
+}
+
+/* Handys/Touch: Echtzeit-Weichzeichner über die (sehr breite) Scheibe kostet beim Scrollen
+   spürbar Leistung (Ruckeln z. B. auf Samsung S23). Der Grund dahinter ist fast einfarbig –
+   ein etwas dichterer Milchglas-Ton sieht nahezu gleich aus. */
+@media (hover: none), (max-width: 899px) {
+  .tech-manifesto__glass {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.62) 0%, rgba(255, 255, 255, 0.36) 100%);
+  }
 }
 
 /* Lichtreflex: diagonaler Glanz über die Scheibe */
@@ -1299,6 +1316,8 @@
 
 .pkg-card__title {
   margin: 0 0 0.55rem;
+  /* Platz für die Icon-Lasche rechts */
+  padding-right: 4.5rem;
   font-size: 1.25rem;
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -1318,7 +1337,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.75rem;
+  white-space: nowrap;
   min-height: 52px;
   margin-top: 1.1rem;
   padding: 0 1.25rem;
@@ -1732,6 +1752,9 @@ body:has(.home-world) .site-footer {
   /* Bänder ragen 18 px über den Kartenrand – daher Abstand und Innenrand */
   .home-world .projects--clean .card-grid--clean > * {
     flex: 0 0 min(80%, 21rem);
+    /* height: 100% der Karte verhindert sonst das Strecken – alle Karten gleich hoch */
+    height: auto;
+    align-self: stretch;
     scroll-snap-align: center;
   }
 
