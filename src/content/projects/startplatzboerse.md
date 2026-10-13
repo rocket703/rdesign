@@ -21,13 +21,16 @@ tasks:
   - "Kontinuierliche Erweiterung der Kernfunktionen."
 ---
 
-Die **Startplatzbörse** ist eine spezialisierte Fullstack-Lösung für den sicheren Handel von Startplätzen. Ziel ist ein reibungsloser Ablauf vom Login bis zum erfolgreichen Austausch – ohne Umwege über externe Messenger oder undurchsichtige Prozesse.
+Die Startplatzbörse ist eine maßgeschneiderte Fullstack-Plattform für den sicheren und unkomplizierten Handel von Startplätzen im Ausdauersport (Laufen, Radsport, Triathlon & Hyrox). Ziel ist ein reibungsloser Ablauf vom Login bis zum erfolgreichen Ticket-Transfer – komplett ohne Umwege über externe Messenger, unübersichtliche Social-Media-Gruppen oder undurchsichtige Prozesse.
 
 **Sicherheit und Nutzerführung:**
-Die Plattform setzt auf ein modernes **OTP-System (One-Time-Password)**. Die Authentifizierung erfolgt über **Supabase Auth**, während **Resend** die Zustellung der magischen Login-Links übernimmt. Das sorgt für maximale Sicherheit bei minimaler Reibung im Onboarding-Prozess.
+Die Plattform setzt auf ein modernes, passwortloses OTP-System (One-Time-Password). Die Authentifizierung erfolgt nahtlos über Supabase Auth, während der deutsche E-Mail-Anbieter Mailtory die zuverlässige und blitzschnelle Zustellung der magic Login-Links übernimmt. Das sorgt für maximale Sicherheit, höchste Zustellraten und 100 % DSGVO-Konformität bei minimaler Reibung im Onboarding-Prozess.
 
 **Features & Interaktion:**
-Nach dem Login erhalten Nutzer Zugriff auf ein **Dashboard**, in dem sie Inserate erstellen, bearbeiten und den Status ihrer Angebote einsehen. Ein zentrales Kernfeature ist das **Messaging-System**: Über On-Plattform-Chatnachrichten klären Käufer und Verkäufer Details zum Ticket-Transfer direkt in der App.
+Nach dem Login erhalten Nutzer Zugriff auf ein persönliches Dashboard, in dem sie Inserate erstellen, bearbeiten und den Status ihrer Angebote verwalten. Ein zentrales Kernfeature ist das integrierte Messaging-System: Über On-Plattform-Chatnachrichten klären Käufer und Verkäufer alle Details zum Ticket-Transfer direkt in der App. Das schafft Vertrauen, erhöht die Verweildauer und schützt die Privatsphäre beider Parteien.
 
-**Infrastruktur:**
-Das Projekt nutzt die Edge-Infrastruktur von **Vercel** für schnelle Reaktionszeiten und profitiert von einer robusten PostgreSQL-Datenbank auf **Supabase**. Die Architektur ist stabil im Betrieb und für zukünftige Erweiterungen vorbereitet.
+**Infrastruktur & Performance:**
+Das Projekt nutzt die globale Edge-Infrastruktur von Vercel für minimale Ladezeiten und eine exzellente Performance auf allen Endgeräten. Im Hintergrund garantiert eine robuste PostgreSQL-Datenbank auf Supabase die sichere Datenhaltung. Die gesamte Architektur ist extrem stabil im Betrieb, für hohe Zugriffszahlen skaliert und für zukünftige Erweiterungen vorbereitet.
+
+**Zukunft & Weiterentwicklung:**
+Ab Q1 ist eine gezielte Erweiterung der Plattform geplant: Die Integration eines sicheren On-Plattform-Bezahlsystems. Damit wird künftig nicht nur die Kommunikation, sondern auch die finanzielle Abwicklung direkt und geschützt über die Anwendung laufen, was das Vertrauen der Nutzer weiter stärkt und den gesamten Prozess noch nahtloser gestaltet.

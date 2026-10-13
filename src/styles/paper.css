@@ -1,0 +1,378 @@
+/* ═══ Papier-Stil der Unterseiten – passend zu den Leistungskarten der Startseite ═══
+   Baut auf legal.css und offer.css auf. Alle Regeln hängen an .legal-page--paper (Standard im hellen Thema),
+   damit sie unabhängig von der Lade-Reihenfolge der Stylesheets greifen. */
+
+.legal-page--paper {
+  --paper-color: var(--c-cream);
+  --paper-cap: var(--c-turf);
+  --paper-shadow:
+    0 14px 30px rgba(34, 50, 58, 0.12),
+    0 2px 4px rgba(34, 50, 58, 0.08);
+}
+
+/* ── Gemeinsame Bausteine: cremefarbenes Papier, grüner Papierkreis ── */
+.legal-page--paper :is(
+  .offer-aside .legal-block,
+  .contact-aside .legal-block,
+  .service-list__item.legal-block,
+  .offer-more__card,
+  .page-back-btn,
+  .legal-page__nav a
+) {
+  isolation: isolate;
+  overflow: hidden;
+  background-color: var(--paper-color);
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--c-cream) 30%, transparent), color-mix(in srgb, var(--c-cream) 30%, transparent)),
+    var(--paper-texture);
+  background-blend-mode: normal, multiply;
+  background-size: auto, 360px 360px;
+  border: none;
+  outline: 1px solid var(--c-line);
+  box-shadow: var(--paper-shadow);
+}
+
+.legal-page--paper :is(
+  .offer-aside .legal-block,
+  .contact-aside .legal-block,
+  .service-list__item.legal-block,
+  .offer-more__card,
+  .page-back-btn
+)::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: var(--paper-cap);
+  background-image: var(--paper-texture);
+  background-blend-mode: multiply;
+  background-size: 360px 360px;
+  outline: 2px dashed rgba(255, 255, 255, 0.55);
+  box-shadow:
+    inset 5px 5px 15px 10px rgba(0, 0, 0, 0.12),
+    0 6px 12px rgba(34, 50, 58, 0.22);
+  transition: rotate 600ms var(--paper-spring);
+}
+
+/* Grüne Papier-Buttons mit gestrichelter Innenlinie */
+.legal-page--paper :is(.offer-cta:not(.error-actions__ghost), .contact-form .submit-button) {
+  border: none;
+  border-radius: 8px;
+  background-color: var(--paper-cap);
+  background-image: var(--paper-texture);
+  background-blend-mode: multiply;
+  background-size: 360px 360px;
+  outline: 1.5px dashed rgba(255, 255, 255, 0.55);
+  outline-offset: -5px;
+  box-shadow: 0 4px 10px rgba(34, 50, 58, 0.22);
+  color: var(--c-surface);
+  transition: translate 0.2s ease, box-shadow 0.2s ease;
+}
+
+.legal-page--paper :is(.offer-cta:not(.error-actions__ghost), .contact-form .submit-button):hover:not(:disabled) {
+  background-color: var(--paper-cap);
+  transform: none;
+  translate: 0 -2px;
+  box-shadow: 0 8px 16px rgba(34, 50, 58, 0.26);
+}
+
+.legal-page--paper :is(.offer-cta, .contact-form .submit-button):focus-visible {
+  outline: 2px solid var(--c-deep);
+  outline-offset: 3px;
+}
+
+/* Zweitrangige Buttons (404): Papier statt Umriss */
+.legal-page--paper .offer-cta.error-actions__ghost {
+  border: none;
+  border-radius: 8px;
+  background-color: var(--paper-color);
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--c-cream) 30%, transparent), color-mix(in srgb, var(--c-cream) 30%, transparent)),
+    var(--paper-texture);
+  background-blend-mode: normal, multiply;
+  background-size: auto, 360px 360px;
+  outline: 1px solid var(--c-line);
+  outline-offset: 4px;
+  box-shadow: 0 4px 10px rgba(34, 50, 58, 0.12);
+  color: var(--c-ink);
+  transition: translate 0.2s ease, box-shadow 0.2s ease;
+}
+
+.legal-page--paper .offer-cta.error-actions__ghost:hover {
+  background-color: var(--paper-color);
+  transform: none;
+  translate: 0 -2px;
+  box-shadow: 0 8px 16px rgba(34, 50, 58, 0.16);
+}
+
+/* ── Abstand zwischen Kopf und Inhalt ── */
+.legal-page--clean .legal-body {
+  padding-top: clamp(2.5rem, 6vw, 4rem);
+}
+
+/* Wasserzeichen-Zahl hinter dem Titel wirkt auf Unterseiten unruhig */
+.legal-hero--zone .zone-h__watermark-svg {
+  display: none;
+}
+
+/* ── Seitenleisten (Pakete, Projekte, Über mich, Kontakt) ── */
+.legal-page--paper :is(.offer-aside, .contact-aside) .legal-block {
+  --cap-h: 1.6rem;
+  position: relative;
+  padding: calc(var(--cap-h) + 1.4rem) 1.5rem 1.5rem;
+  border-radius: 10px;
+  outline-offset: 7px;
+  --pg-text: var(--c-on-sky);
+  --pg-text-strong: var(--c-ink);
+  --pg-heading: var(--c-ink);
+  --pg-link: var(--c-turf);
+  --pg-link-line: rgba(4, 114, 77, 0.4);
+  --pg-accent: var(--c-turf);
+  --pg-border: var(--c-line);
+  --tech-icon-bg: rgba(255, 255, 255, 0.55);
+}
+
+.legal-page--paper :is(.offer-aside, .contact-aside) .legal-block::before {
+  left: 50%;
+  bottom: calc(100% - var(--cap-h));
+  width: 300%;
+  outline-offset: -8px;
+  translate: -50% 0;
+}
+
+.legal-page--paper :is(.offer-aside, .contact-aside) .legal-block:hover::before {
+  rotate: 18deg;
+}
+
+/* Abstand für den Rahmen um die Karten */
+.legal-page--paper :is(.offer-aside, .contact-aside) {
+  gap: 2rem;
+}
+
+.legal-page--paper :is(.offer-layout, .contact-layout) {
+  gap: 2rem;
+}
+
+/* Paket-Zusammenfassung: Icon sitzt groß im grünen Kreis */
+.legal-page--paper .offer-aside .offer-summary {
+  --cap-h: 5.75rem;
+}
+
+.legal-page--paper .offer-summary .offer-summary__icon {
+  position: absolute;
+  inset: 0 0 auto;
+  width: auto;
+  height: var(--cap-h);
+  margin: 0;
+  padding-bottom: 0.3rem;
+  border: none;
+  background: none;
+  color: var(--c-surface);
+  filter: drop-shadow(3px 6px 4px rgba(0, 0, 0, 0.3));
+}
+
+.legal-page--paper .offer-summary .offer-summary__icon svg {
+  width: 34px;
+  height: 34px;
+}
+
+/* Über mich: Foto liegt über dem Kreis */
+.legal-page--paper .offer-aside .about-card {
+  --cap-h: 5rem;
+  padding-top: 1.5rem;
+}
+
+.legal-page--paper .about-card__photo {
+  position: relative;
+  display: block;
+  margin-inline: auto;
+  box-shadow: 0 8px 18px rgba(34, 50, 58, 0.25);
+}
+
+/* ── Leistungsübersicht: Karten wie auf der Startseite ── */
+.legal-page--paper .service-list {
+  gap: 2rem;
+  padding: 0.5rem;
+}
+
+.legal-page--paper .service-list__item.legal-block {
+  --cap-h: 5.5rem;
+  position: relative;
+  padding: calc(var(--cap-h) + 1.4rem) 1.5rem 1.25rem;
+  border-radius: 10px;
+  outline-offset: 7px;
+  --pg-text: var(--c-on-sky);
+}
+
+.legal-page--paper .service-list__item.legal-block::before {
+  left: 50%;
+  bottom: calc(100% - var(--cap-h));
+  width: 260%;
+  outline-offset: -10px;
+  translate: -50% 0;
+}
+
+.legal-page--paper .service-list__item.legal-block:hover::before,
+.legal-page--paper .service-list__item.legal-block:focus-within::before {
+  rotate: 24deg;
+}
+
+.legal-page--paper .service-list__item.legal-block:hover {
+  border: none;
+  box-shadow: var(--paper-shadow);
+}
+
+.service-list__cap {
+  position: absolute;
+  inset: 0 0 auto;
+  height: var(--cap-h);
+  display: grid;
+  place-items: center;
+  padding-bottom: 0.35rem;
+  color: var(--c-surface);
+  filter: drop-shadow(3px 6px 4px rgba(0, 0, 0, 0.3));
+}
+
+.legal-page--paper .service-list__chips li {
+  background: transparent;
+  border: 1px dashed rgba(27, 38, 44, 0.35);
+  color: var(--c-ink);
+}
+
+/* ── Paket- und Weiterlese-Karten: Kreis-Ausschnitt links mit Icon ── */
+.legal-page--paper .offer-more__grid {
+  gap: 1.75rem;
+  padding: 0.5rem;
+}
+
+.legal-page--paper .offer-more__card {
+  --cap-w: 4.6rem;
+  position: relative;
+  align-items: center;
+  padding: 1.15rem 1.25rem 1.15rem calc(var(--cap-w) + 1.1rem);
+  border-radius: 10px;
+  outline-offset: 6px;
+  color: var(--c-on-sky);
+  transition: translate 0.25s ease, box-shadow 0.25s ease;
+}
+
+.legal-page--paper .offer-more__card::before {
+  top: 50%;
+  right: calc(100% - var(--cap-w));
+  width: 14rem;
+  outline-offset: -7px;
+  translate: 0 -50%;
+}
+
+.legal-page--paper .offer-more__card:hover {
+  transform: none;
+  translate: 0 -2px;
+  box-shadow:
+    0 18px 34px rgba(34, 50, 58, 0.16),
+    0 2px 4px rgba(34, 50, 58, 0.08);
+}
+
+.legal-page--paper .offer-more__card:hover::before {
+  rotate: 30deg;
+}
+
+.legal-page--paper .offer-more__card .offer-summary__icon {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: calc(var(--cap-w) - 0.35rem);
+  height: auto;
+  margin: 0;
+  border: none;
+  background: none;
+  color: var(--c-surface);
+  filter: drop-shadow(2px 4px 3px rgba(0, 0, 0, 0.3));
+}
+
+.legal-page--paper .offer-more__card .offer-summary__icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.legal-page--paper .offer-more__card strong {
+  color: var(--c-ink);
+}
+
+/* ── Zurück-Button: Papier mit grünem Kreis links ── */
+.legal-page--paper .page-back-btn {
+  gap: 0.9rem;
+  min-height: 48px;
+  padding: 0 1.2rem 0 0;
+  border-radius: 10px;
+  outline-offset: 5px;
+  color: var(--c-ink);
+  transition: translate 0.2s ease, box-shadow 0.2s ease;
+}
+
+.legal-page--paper .page-back-btn::before {
+  top: 50%;
+  right: calc(100% - 2.9rem);
+  width: 11rem;
+  outline-offset: -6px;
+  translate: 0 -50%;
+}
+
+.legal-page--paper .page-back-btn > span[aria-hidden] {
+  display: grid;
+  place-items: center;
+  width: 2.9rem;
+  align-self: stretch;
+  color: var(--c-surface);
+  transition: translate 500ms var(--paper-spring);
+}
+
+.legal-page--paper .page-back-btn:hover {
+  color: var(--c-ink);
+  background-color: var(--paper-color);
+  translate: 0 -2px;
+}
+
+.legal-page--paper .page-back-btn:hover::before {
+  rotate: -30deg;
+}
+
+.legal-page--paper .page-back-btn:hover > span[aria-hidden] {
+  translate: -3px 0;
+}
+
+.legal-page--paper .page-back-btn:focus-visible {
+  outline: 2px solid var(--c-turf);
+  outline-offset: 5px;
+}
+
+/* ── Navigation am Ende der Rechtsseiten: kleine Papierzettel ── */
+.legal-page--paper .legal-page__nav {
+  gap: 1.1rem;
+}
+
+.legal-page--paper .legal-page__nav a {
+  border-radius: 6px;
+  outline-offset: 4px;
+  box-shadow: 0 4px 10px rgba(34, 50, 58, 0.1);
+  transition: translate 0.2s ease, color 0.2s ease;
+}
+
+.legal-page--paper .legal-page__nav a:hover {
+  color: var(--c-turf);
+  translate: 0 -1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .legal-page--paper :is(
+    .offer-aside .legal-block,
+    .contact-aside .legal-block,
+    .service-list__item.legal-block,
+    .offer-more__card,
+    .page-back-btn
+  )::before,
+  .legal-page--paper :is(.offer-more__card, .page-back-btn, .page-back-btn > span, .legal-page__nav a, .offer-cta, .submit-button) {
+    transition: none;
+  }
+}
