@@ -11,7 +11,7 @@ const navCta = { href: '/kontakt/', label: 'Projekt anfragen' };
 <header class="site-header">
   <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
   <a href="/" class="logo-link" aria-label="r³webdesign – zur Startseite">
-    <img class="logo-mark" src="/icon.svg" width="44" height="44" alt="" />
+    <img class="logo-mark" src="/logo-header.svg" width="156" height="40" alt="" />
   </a>
   <nav class="main-nav" aria-label="Hauptnavigation">
     <button
@@ -93,21 +93,13 @@ const navCta = { href: '/kontakt/', label: 'Projekt anfragen' };
 
   .logo-mark {
     display: block;
-    width: 44px;
-    height: 44px;
-    border-radius: 10px;
-    box-shadow:
-      0 1px 2px rgba(0, 0, 0, 0.35),
-      0 6px 18px rgba(0, 0, 0, 0.28);
-    transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.28s ease;
+    width: auto;
+    height: 40px;
+    transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
   .logo-link:hover .logo-mark {
     transform: translateY(-1px) scale(1.03);
-    box-shadow:
-      0 2px 4px rgba(0, 0, 0, 0.32),
-      0 10px 22px rgba(0, 0, 0, 0.32),
-      0 0 0 1px rgba(4, 114, 77, 0.15);
   }
 
   .logo-link:active .logo-mark {
