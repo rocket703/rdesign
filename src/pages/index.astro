@@ -17,6 +17,7 @@ import { responsiveImage } from '../lib/images';
 import CandyTapeDivider from '../components/CandyTapeDivider.astro';
 import GroundTapeDivider from '../components/GroundTapeDivider.astro';
 import CtaBand from '../components/CtaBand.astro';
+import SketchHero from '../components/SketchHero.astro';
 import { BIOME_META, EARTH_META } from '../data/portfolio-biomes';
 import '../styles/zone-header.css';
 import '../styles/home-world.css';
@@ -69,46 +70,13 @@ const featuredProjects = featuredSlugs
   title={SITE.defaultTitle}
   description={SITE.defaultDescription}
   jsonLd={homePageSchema(faqItems, Astro.site)}
+  headerVariant="paper"
 >
 <article class="p-world home-world">
+  <SketchHero />
+
   <!-- ═══ 01 TECHNICAL ═══ -->
   <div class="p-zone p-zone--tech">
-    <header class="p-tech-hero" id="intro">
-      <div class="hero-ambient" aria-hidden="true">
-        <div class="hero-grid"></div>
-        <div class="hero-spotlight"></div>
-      </div>
-
-      <div class="p-tech-hero__inner">
-        <div class="p-tech-hero__brand intro">
-          <div class="section-head hero-brand">
-            <div class="r3-logo glass-sign">
-              <span class="glass-sign__shine" aria-hidden="true"></span>
-              <span class="glass-sign__screw glass-sign__screw--tl" aria-hidden="true"></span>
-              <span class="glass-sign__screw glass-sign__screw--tr" aria-hidden="true"></span>
-              <span class="glass-sign__screw glass-sign__screw--bl" aria-hidden="true"></span>
-              <span class="glass-sign__screw glass-sign__screw--br" aria-hidden="true"></span>
-              <span class="r3-word">
-                <span class="r3-r">r</span>
-                <span class="r3-badge">3</span>
-                <span class="r3-rest">webdesign</span>
-              </span>
-              <h1 class="r3-logo__claim">Webdesign &amp; Webentwicklung in Magdeburg</h1>
-            </div>
-          </div>
-          <p class="p-tech-hero__value">
-            Klar&nbsp;gestaltet. Schnell&nbsp;geladen. <mark class="p-tech-hero__mark">Ohne&nbsp;Baukasten.</mark>
-          </p>
-          <p class="p-tech-hero__sub">Webseiten für Vereine, Events und lokale Unternehmen.</p>
-          <div class="p-tech-hero__actions">
-            <a href="/kontakt/" class="p-tech-hero__cta p-tech-hero__cta--primary">Projekt anfragen</a>
-            <a href="#projekte" class="p-tech-hero__cta p-tech-hero__cta--secondary">Projekte ansehen</a>
-          </div>
-        </div>
-
-      </div>
-    </header>
-
     <section class="tech-manifesto" id="technik" aria-labelledby="tech-manifesto-title">
       <div class="container tech-manifesto__inner">
         <header class="tech-manifesto__head zone-h zone-h--bar autoShow">

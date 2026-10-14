@@ -1,4 +1,13 @@
 ---
+import SketchFrame from './SketchFrame.astro';
+
+interface Props {
+  variant?: 'default' | 'paper';
+}
+
+const { variant = 'default' } = Astro.props;
+const paper = variant === 'paper';
+
 const navLinks = [
   { href: '/leistungen/', label: 'Leistungen' },
   { href: '/projekte/', label: 'Projekte' },
@@ -8,10 +17,10 @@ const navLinks = [
 
 const navCta = { href: '/kontakt/', label: 'Projekt anfragen' };
 ---
-<header class="site-header">
+<header class:list={['site-header', { 'site-header--paper': paper }]}>
   <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
   <a href="/" class="logo-link" aria-label="r³webdesign – zur Startseite">
-    <img class="logo-mark" src="/logo-header.svg" width="156" height="40" alt="" />
+    <img class="logo-mark" src={paper ? '/logo-header-dark.svg' : '/logo-header.svg'} width="156" height="40" alt="" />
   </a>
   <nav class="main-nav" aria-label="Hauptnavigation">
     <button
@@ -43,12 +52,22 @@ const navCta = { href: '/kontakt/', label: 'Projekt anfragen' };
       </ul>
       <a href={navCta.href} class="nav-cta-desktop nav-link--cta">
         {navCta.label}
+        {paper && <SketchFrame seed={37} />}
       </a>
     </div>
   </nav>
 </header>
 
 <script is:inline>
+  // Papier-Header: Füllung erst nach dem Losscrollen
+  (function () {
+    const header = document.querySelector('.site-header--paper');
+    if (!header) return;
+    const update = () => header.classList.toggle('is-scrolled', window.scrollY > 8);
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+  })();
+
   (function () {
     const burger = document.getElementById('burger-menu');
     const navList = document.getElementById('nav-list');

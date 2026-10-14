@@ -51,136 +51,8 @@
   pointer-events: none;
 }
 
-.p-world :is(.p-zone, .p-tech-hero) {
+.p-world .p-zone {
   scroll-margin-top: 5.5rem;
-}
-
-/* ── Tech hero: clean dark grid, no split panels ── */
-.p-tech-hero {
-  position: relative;
-  display: flex;
-  align-items: center;
-  min-height: clamp(26rem, 68vh, 38rem);
-  padding: clamp(5rem, 10vw, 7rem) 0 clamp(3rem, 8vw, 4.5rem);
-  background:
-    radial-gradient(ellipse 60% 50% at 20% 30%, rgba(4, 114, 77, 0.1), transparent 60%),
-    radial-gradient(ellipse 40% 35% at 85% 75%, rgba(184, 219, 217, 0.1), transparent 60%),
-    var(--c-bg);
-  overflow: hidden;
-  isolation: isolate;
-}
-
-.p-tech-hero__inner {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(2rem, 5vw, 3rem);
-  align-items: center;
-  width: min(1100px, 100%);
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-@media (max-width: 899px) {
-  .p-tech-hero__inner {
-    gap: clamp(1.5rem, 5vw, 2.25rem);
-  }
-}
-
-@media (max-width: 479px) {
-  .p-tech-hero__inner {
-    padding-inline: 1rem;
-  }
-
-  .p-tech-hero__brand,
-  .p-tech-hero__brand .section-head {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  /* Glasplatte ragt per ::before und Schrauben etwa 0,6rem + 4px über die Wortmarke hinaus –
-     deshalb schmaler, damit Ecken und Schrauben nicht am Bildschirmrand abgeschnitten werden */
-  .p-tech-hero__brand .r3-logo {
-    width: calc(100% - 1.6rem - 8px);
-    max-width: calc(100% - 1.6rem - 8px);
-  }
-}
-
-.p-tech-hero__brand {
-  text-align: center;
-}
-
-/* Altes .intro { overflow: hidden } schnitt Schatten und Schrauben der Glasplatte ab */
-.p-tech-hero__brand.intro {
-  overflow: visible;
-}
-
-.p-tech-hero__value {
-  max-width: 48ch;
-  margin: clamp(1rem, 2.5vw, 1.5rem) auto 0;
-  font-size: clamp(1.45rem, 3.4vw, 2.25rem);
-  font-weight: 800;
-  line-height: 1.2;
-  letter-spacing: -0.03em;
-  text-wrap: balance;
-  color: var(--c-ink);
-}
-
-/* Betonung: hellblauer Marker-Strich hinter „Ohne Baukasten.“ */
-.p-tech-hero__mark {
-  padding: 0 0.12em;
-  color: inherit;
-  background: linear-gradient(transparent 58%, var(--c-sky) 58%, var(--c-sky) 92%, transparent 92%);
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-}
-
-.p-tech-hero__sub {
-  max-width: 46ch;
-  margin: 0.85rem auto 0;
-  font-size: clamp(1rem, 1.8vw, 1.15rem);
-  font-weight: 400;
-  line-height: 1.55;
-  text-wrap: balance;
-  color: var(--c-slate);
-}
-
-.p-tech-hero__actions {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.75rem;
-  margin-top: 1.4rem;
-}
-
-.p-tech-hero__cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 2.75rem;
-  padding: 0.7rem 1.1rem;
-  border: 1px solid rgba(4, 114, 77, 0.45);
-  border-radius: 8px;
-  font-size: 0.82rem;
-  font-weight: 800;
-  text-decoration: none;
-  transition: transform 0.2s ease, background 0.2s ease;
-}
-
-.p-tech-hero__cta--primary {
-  color: #ffffff;
-  background: var(--c-turf);
-}
-
-.p-tech-hero__cta--secondary {
-  color: var(--c-green-ink);
-  background: transparent;
-  border-color: var(--c-green-ink);
-}
-
-.p-tech-hero__cta:hover {
-  transform: translateY(-2px);
 }
 
 .tech-manifesto {
@@ -432,16 +304,6 @@
   color: var(--c-green);
 }
 
-@media (max-width: 640px) {
-  .p-tech-hero__actions {
-    flex-direction: column;
-  }
-
-  .p-tech-hero__cta {
-    width: 100%;
-  }
-}
-
 /* ── Hero → Services: Lando-style slash transition ── */
 
 .p-back {
@@ -464,122 +326,6 @@
 
 .p-back:hover {
   color: var(--c-sky);
-}
-
-.p-tech-hero__path {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  margin: 0 0 1rem;
-  font-family: inherit;
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: var(--p-tech-muted);
-}
-
-.p-tech-hero__path .p-zone__prompt {
-  color: var(--p-tech-accent);
-}
-
-.p-tech-hero__title {
-  margin: 0 0 1rem;
-  font-size: clamp(2.25rem, 6.5vw, 4.25rem);
-  font-weight: 900;
-  letter-spacing: -0.045em;
-  line-height: 0.98;
-  color: #f8fafc;
-}
-
-.p-tech-hero__lead {
-  margin: 0 0 1.75rem;
-  max-width: 34ch;
-  font-size: clamp(0.95rem, 2vw, 1.08rem);
-  line-height: 1.65;
-  color: #94a3b8;
-}
-
-.p-tech-hero__stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.65rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.p-tech-hero__stats li {
-  font-family: inherit;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 0.4rem 0.75rem;
-  border-radius: 6px;
-  border: 1px solid rgba(4, 114, 77, 0.22);
-  background: rgba(4, 114, 77, 0.06);
-  color: var(--c-sky);
-}
-
-.p-tech-hero__light-inner {
-  max-width: 28rem;
-  width: 100%;
-}
-
-.p-tech-hero__eyebrow {
-  margin: 0 0 0.75rem;
-  font-family: inherit;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--c-turf);
-}
-
-.p-tech-hero__manifest {
-  margin: 0 0 1.35rem;
-  font-size: clamp(1rem, 2.2vw, 1.2rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.4;
-  color: #0f172a;
-}
-
-.p-tech-hero__nav {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.p-tech-hero__nav a {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.75rem 0.95rem;
-  border-radius: 8px;
-  text-decoration: none;
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  color: #0f172a;
-  background: rgba(15, 23, 42, 0.04);
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-}
-
-.p-tech-hero__nav a:hover {
-  transform: translateX(4px);
-  border-color: rgba(4, 114, 77, 0.45);
-  background: rgba(4, 114, 77, 0.08);
-  box-shadow: 0 4px 16px rgba(4, 114, 77, 0.12);
-}
-
-.p-tech-hero__nav a span:last-child {
-  font-family: inherit;
-  font-size: 0.75rem;
-  font-weight: 800;
-  color: var(--c-turf);
 }
 
 /* ── Zone cut: jagged agency seams (Lando-style) ── */
@@ -1550,12 +1296,6 @@
 
 /* Candy marquee strip */
 
-@media (prefers-reduced-motion: reduce) {
-
-  /* Duplikate existieren nur für die Endlos-Animation */
-
-}
-
 .p-zone--candy .p-zone__label {
   color: var(--p-candy-pop-2);
 }
@@ -1664,12 +1404,6 @@
   padding-bottom: clamp(2.5rem, 6vw, 3.5rem);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .p-tech-hero__nav a:hover {
-    transform: none;
-  }
-}
-
 /* ═══ Homepage: zone overrides for existing sections ═══ */
 .home-world .section-divider {
   display: none;
@@ -1681,26 +1415,6 @@
 
 .home-world .p-zone__desc--flush {
   margin-bottom: 0;
-}
-
-.home-world .p-tech-hero .hero-ambient {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-.home-world .p-tech-hero .hero-brand {
-  position: relative;
-  z-index: 2;
-  margin-bottom: clamp(1rem, 3vw, 1.75rem);
-  padding: 0;
-  min-height: auto;
-  width: 100%;
-}
-
-.home-world .p-zone--tech .p-tech-hero {
-  position: relative;
-  z-index: 1;
 }
 
 /* legacy overrides removed — candy uses .candy-about */

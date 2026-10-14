@@ -1,0 +1,11 @@
+---
+// Gekritzelter Bleistift-Rahmen um einen Button (Farbe über `color` bzw. --frame)
+import { sketchFrame } from '../lib/sketch';
+
+interface Props {
+  seed?: number;
+}
+
+const { seed = 1 } = Astro.props;
+---
+<svg class="sketch-frame" viewBox="0 0 200 52" preserveAspectRatio="none" aria-hidden="true" set:html={sketchFrame(seed)} />

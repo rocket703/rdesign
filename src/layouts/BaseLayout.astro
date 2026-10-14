@@ -13,6 +13,7 @@ interface Props {
   image?: string;
   noindex?: boolean;
   jsonLd?: Record<string, unknown>;
+  headerVariant?: 'default' | 'paper';
 }
 
 const {
@@ -21,6 +22,7 @@ const {
   image = SITE.defaultOgImage,
   noindex = false,
   jsonLd,
+  headerVariant = 'default',
 } = Astro.props;
 
 const site = Astro.site ?? new URL(SITE.url);
@@ -83,7 +85,7 @@ const jsonLdString = jsonLd ? JSON.stringify(jsonLd) : null;
   <script is:inline>document.documentElement.classList.add('js-enabled');</script>
   <a href="#main-content" class="skip-link">Zum Inhalt springen</a>
 
-  <Header />
+  <Header variant={headerVariant} />
 
   <main id="main-content">
     <slot />
@@ -128,6 +130,7 @@ const jsonLdString = jsonLd ? JSON.stringify(jsonLd) : null;
     --c-forest: #0b3d2e;      /* Deep Forest: dunkles Turf Green */
     --c-mist: #dfeeed;        /* Mist: helles Light Blue */
     --c-cream: #f1e3c2;       /* Cream: Papier-Highlight (Karten & Buttons) */
+    --c-sketch-paper: var(--c-bg); /* Skizzenpapier im Bleistift-Hero (und Header dazu) – gleich wie der Seitenhintergrund */
     /* Papier-Stil: zerknitterte Struktur (SVG-Lichtfilter) und federnde Drehung */
     /* Papierstruktur als fertig gerendertes Bild (vorher SVG-Filter feTurbulence + feDiffuseLighting,
        den der Browser bei jedem Zeichnen neu berechnen musste – ruckelte mobil) */

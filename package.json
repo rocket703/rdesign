@@ -13,6 +13,7 @@
     "@astrojs/sitemap": "^3.7.2",
     "@fontsource-variable/inter": "^5.2.8",
     "astro": "^6.1.9",
+    "roughjs": "^4.6.6",
     "simple-icons": "^16.34.0"
   }
 }
