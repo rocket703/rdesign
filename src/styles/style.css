@@ -1108,12 +1108,17 @@ body.nav-open .site-header--paper {
   vector-effect: non-scaling-stroke;
 }
 :hover > .sketch-frame { transform: rotate(-0.6deg) translate(1px, -1px); }
+/* gezeichnete Fläche (grüne Buttons): liegt hinter dem Text, Marker-Grün mit dunklerer Schraffur */
+.sketch-frame--filled { z-index: -1; }
+.sketch-frame path.f { fill: var(--sketch-fill, var(--c-turf)); stroke: none; }
+.sketch-frame path.h { stroke: var(--sketch-hatch, var(--c-forest)); stroke-width: 1; opacity: 0.28; }
 /* Karten und Icon-Kreise: Rahmen liegt fast bündig, bewegt sich beim Hover weniger */
 .sketch-frame--card,
 .sketch-frame--wide { left: -3px; top: -3px; width: calc(100% + 6px); height: calc(100% + 6px); }
 .sketch-frame--circle { left: -4px; top: -4px; width: calc(100% + 8px); height: calc(100% + 8px); }
 :hover > :is(.sketch-frame--card, .sketch-frame--wide) { transform: rotate(-0.25deg); }
-.site-header--paper .nav-cta-desktop { position: relative; border-radius: 3px; border-color: transparent; }
+.site-header--paper .nav-cta-desktop { position: relative; isolation: isolate; border-radius: 3px; border-color: transparent; background: transparent; }
+.site-header--paper .nav-cta-desktop:hover { background: transparent; border-color: transparent; }
 
 /* Buttons mit gekritzeltem Rahmen (Hero, Leistungskarten) */
 .sketch-btn {
@@ -1132,7 +1137,9 @@ body.nav-open .site-header--paper {
 .sketch-btn:hover { transform: translateY(-2px); }
 .sketch-btn:focus-visible { outline: 2px solid var(--c-forest); outline-offset: 6px; }
 .sketch-btn--primary {
-  background: var(--c-turf);
+  isolation: isolate;
+  /* Fläche zeichnet der SketchFrame mit (fill) */
+  background: transparent;
   color: #fff;
 }
 .sketch-btn--secondary {

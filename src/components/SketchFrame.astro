@@ -5,9 +5,11 @@ import { sketchFrame, frameShapes, type FrameShape } from '../lib/sketch';
 interface Props {
   seed?: number;
   shape?: FrameShape;
+  /** Fläche mitzeichnen (grüne Buttons): ausgemalt und schraffiert statt CSS-Hintergrund */
+  fill?: boolean;
 }
 
-const { seed = 1, shape = 'button' } = Astro.props;
+const { seed = 1, shape = 'button', fill = false } = Astro.props;
 const { w, h } = frameShapes[shape];
 ---
-<svg class:list={['sketch-frame', `sketch-frame--${shape}`]} viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" aria-hidden="true" set:html={sketchFrame(seed, shape)} />
+<svg class:list={['sketch-frame', `sketch-frame--${shape}`, fill && 'sketch-frame--filled']} viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" aria-hidden="true" set:html={sketchFrame(seed, shape, fill)} />

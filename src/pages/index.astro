@@ -73,7 +73,7 @@ const featuredProjects = featuredSlugs
           Drei klare Schritte vom ersten Gespräch bis nach dem Launch. Der erste kostet dich nur ein kurzes Gespräch –
           danach weißt du, was deine Webseite braucht, wie lange es dauert und was es kostet.
         </p>
-        <a href="/kontakt/" class="sketch-btn sketch-btn--primary">Erstgespräch anfragen<SketchFrame seed={131} /></a>
+        <a href="/kontakt/" class="sketch-btn sketch-btn--primary">Erstgespräch anfragen<SketchFrame seed={131} fill /></a>
         <p class="plan__note">Kostenlos · ca. 15 Minuten · Telefon, Video oder vor Ort</p>
       </header>
 
@@ -122,7 +122,7 @@ const featuredProjects = featuredSlugs
             <p class="service-index__text">{service.text}</p>
             <p class="service-index__tags">{service.chips.join(' · ')}</p>
             {service.href && (
-              <a class="service-index__link sketch-btn sketch-btn--primary" href={service.href}>Mehr erfahren <span aria-hidden="true">→</span><SketchFrame seed={110 + i * 3} /></a>
+              <a class="service-index__link sketch-btn sketch-btn--primary" href={service.href}>Mehr erfahren <span aria-hidden="true">→</span><SketchFrame seed={110 + i * 3} fill /></a>
             )}
           </li>
         ))}

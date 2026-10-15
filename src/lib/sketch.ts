@@ -268,22 +268,36 @@ export type SketchName = keyof typeof sketches;
 // dank non-scaling-stroke gleich. Die viewBox hat grob das Seitenverhältnis des
 // Elements, damit die Striche beim Strecken nicht verzerren ──
 type FrameGen = ReturnType<typeof rough.generator>;
+type FrameOptions = Parameters<FrameGen['rectangle']>[4];
 
 export const frameShapes = {
-  button: { w: 200, h: 52, draw: (g: FrameGen) => g.rectangle(6, 5, 188, 42) },
-  card: { w: 300, h: 480, draw: (g: FrameGen) => g.rectangle(6, 6, 288, 468) },
-  wide: { w: 1000, h: 170, draw: (g: FrameGen) => g.rectangle(6, 6, 988, 158) },
-  circle: { w: 80, h: 80, draw: (g: FrameGen) => g.circle(40, 40, 70) },
+  button: { w: 200, h: 52, draw: (g: FrameGen, o?: FrameOptions) => g.rectangle(6, 5, 188, 42, o) },
+  card: { w: 300, h: 480, draw: (g: FrameGen, o?: FrameOptions) => g.rectangle(6, 6, 288, 468, o) },
+  wide: { w: 1000, h: 170, draw: (g: FrameGen, o?: FrameOptions) => g.rectangle(6, 6, 988, 158, o) },
+  circle: { w: 80, h: 80, draw: (g: FrameGen, o?: FrameOptions) => g.circle(40, 40, 70, o) },
 } as const;
 
 export type FrameShape = keyof typeof frameShapes;
 
-export function sketchFrame(seed: number, shape: FrameShape = 'button') {
+const roundPath = (d: string) => d.replace(/-?\d+\.\d+/g, (n) => (+n).toFixed(1));
+
+/**
+ * `filled`: die Fläche wird mitgezeichnet – mit Marker ausgemalt (unregelmäßige Kanten)
+ * und dunkler schraffiert – statt eines CSS-Rechtecks mit Strichen darüber.
+ * Klassen: .f = Fläche, .h = Schraffur, ohne Klasse = Umriss (Farben in style.css)
+ */
+export function sketchFrame(seed: number, shape: FrameShape = 'button', filled = false) {
   const g = rough.generator({
     options: { roughness: 1.5, bowing: 2.2, maxRandomnessOffset: 2.5, seed },
   });
-  return g
-    .toPaths(frameShapes[shape].draw(g))
-    .map((p) => `<path d="${p.d.replace(/-?\d+\.\d+/g, (n) => (+n).toFixed(1))}"/>`)
+  const draw = frameShapes[shape].draw;
+  const layers: [string, ReturnType<typeof draw>][] = [];
+  if (filled) {
+    layers.push(['f', draw(g, { stroke: 'none', fill: '#000', fillStyle: 'solid', seed: seed + 3 })]);
+    layers.push(['h', draw(g, { stroke: 'none', fill: '#000', fillStyle: 'hachure', hachureGap: 4.5, hachureAngle: -41, fillWeight: 1, seed: seed + 5 })]);
+  }
+  layers.push(['', draw(g)]);
+  return layers
+    .flatMap(([cls, drawable]) => g.toPaths(drawable).map((p) => `<path${cls ? ` class="${cls}"` : ''} d="${roundPath(p.d)}"/>`))
     .join('');
 }

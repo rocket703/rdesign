@@ -40,11 +40,11 @@ export const services: Service[] = [
 
 /** „Außerdem möglich“: kurz und knapp, Details auf der jeweiligen Leistungsseite */
 export const moreServices: { title: string; text: string; href: string }[] = [
-  { title: 'Web-Apps & Dashboards', text: 'Login, Datenbank und Verwaltungsbereich.', href: '/leistungen/webentwicklung/' },
-  { title: 'Native Apps', text: 'iOS und Android aus einer Codebasis.', href: '/leistungen/app-entwicklung/' },
   { title: 'SEO-Check', text: 'Technik, Inhalte und Ladezeiten geprüft.', href: '/leistungen/seo-check/' },
   { title: 'Barrierefreiheits-Check', text: 'Prüfung nach WCAG 2.1 mit klaren Prioritäten.', href: '/leistungen/barrierefreiheit/' },
   { title: 'Business-E-Mail & DNS', text: 'Postfächer auf deiner Domain, sauber eingerichtet.', href: '/leistungen/business-email/' },
+  { title: 'Web-Apps & Dashboards', text: 'Login, Datenbank und Verwaltungsbereich.', href: '/leistungen/webentwicklung/' },
+  { title: 'Native Apps', text: 'iOS und Android aus einer Codebasis.', href: '/leistungen/app-entwicklung/' },
 ];
 
 // Strich-Icons für die Leistungskarten (24er Raster)
