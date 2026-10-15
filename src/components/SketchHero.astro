@@ -84,8 +84,19 @@ const corners = ['tl', 'tr', 'bl', 'br'] as const;
   }
 
   .sketch-hero__logo {
+    position: relative;
     margin: 0 0 clamp(2.5rem, 8vh, 5rem);
     line-height: 0;
+  }
+  /* Papier-Schleier hinter dem Umriss-Logo: Skizzenlinien laufen davor aus,
+     statt durch die Buchstaben zu schneiden */
+  .sketch-hero__logo::before {
+    content: '';
+    position: absolute;
+    inset: -30% -12%;
+    z-index: -1;
+    background: radial-gradient(closest-side, var(--c-sketch-paper) 62%, transparent);
+    pointer-events: none;
   }
   .sketch-hero__logo img {
     width: clamp(260px, 42vw, 480px);
