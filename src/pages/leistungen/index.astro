@@ -2,14 +2,19 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LegalPageShell from '../../components/LegalPageShell.astro';
 import OfferIcon from '../../components/OfferIcon.astro';
-import { packages, offerPath } from '../../data/offers';
-import { services, serviceIcons } from '../../data/services';
+import { offers, offerPath } from '../../data/offers';
+import { services, moreServices, serviceIcons } from '../../data/services';
 import { breadcrumbSchema, schemaGraph, webPageSchema, absoluteUrl } from '../../lib/seo';
 import '../../styles/offer.css';
 
 const pageTitle = 'Leistungen – Webdesign Magdeburg | r³webdesign';
 const pageDescription =
-  'Webseiten, Web-Apps, native Apps und Betreuung aus Magdeburg – plus feste Pakete für bestehende Seiten: SEO-Check, Relaunch und Barrierefreiheits-Check.';
+  'Neue Webseite, Relaunch und Betreuung aus Magdeburg – außerdem Web-Apps, native Apps, SEO-Check, Barrierefreiheits-Check und Business-E-Mail.';
+
+// „Außerdem möglich“ als Karten: gleiche Reihenfolge wie auf der Startseite, Texte aus den Angeboten
+const moreOffers = moreServices
+  .map((item) => offers.find((offer) => offerPath(offer) === item.href))
+  .filter((offer): offer is (typeof offers)[number] => Boolean(offer));
 ---
 
 <BaseLayout
@@ -34,19 +39,21 @@ const pageDescription =
   ])}
 >
   <LegalPageShell
+    sketch="cards"
     back={{ href: '/#leistungen', label: 'Zurück zu den Leistungen' }}
     wide
     legalNav={false}
     title="Leistungen"
-    lead="Webdesign und Webentwicklung aus Magdeburg – von der neuen Webseite bis zur Web-App, persönlich umgesetzt und betreut."
+    lead="Webdesign aus Magdeburg für Vereine, Events und lokale Unternehmen – neue Webseite, Relaunch und Betreuung, persönlich umgesetzt."
   >
     <section class="offer-section" aria-labelledby="services-title">
-      <h2 class="offer-section__title" id="services-title">Neue Webseite, Web-App oder App</h2>
+      <h2 class="offer-section__title" id="services-title">Webseite, Relaunch &amp; Betreuung</h2>
       <p class="offer-section__lead">
-        Du startest neu oder brauchst mehr als eine Visitenkarte? Ich begleite dein Projekt vom ersten Gespräch bis
-        nach dem Launch – mit einem festen Ansprechpartner und einem transparenten Festpreisangebot.
+        Du startest neu, deine Seite ist in die Jahre gekommen oder du willst dich nicht mehr selbst darum kümmern?
+        Ich begleite dein Projekt vom ersten Gespräch bis nach dem Launch – mit einem festen Ansprechpartner und
+        einem transparenten Festpreisangebot.
       </p>
-      <ul class="service-list">
+      <ul class="service-list service-list--three">
         {services.map((service) => (
           <li class="legal-block service-list__item autoShow">
             <div class="service-card__head">
@@ -80,14 +87,14 @@ const pageDescription =
       </ul>
     </section>
 
-    <section class="offer-section" aria-labelledby="packages-title">
-      <h2 class="offer-section__title" id="packages-title">Feste Pakete für bestehende Webseiten</h2>
+    <section class="offer-section" aria-labelledby="more-title">
+      <h2 class="offer-section__title" id="more-title">Außerdem möglich</h2>
       <p class="offer-section__lead">
-        Du hast schon eine Webseite? Diese vier Pakete sind einzeln buchbar – mit klarem Ergebnis und Festpreis.
+        Wenn es mehr sein darf als eine Webseite – oder du nur einen bestimmten Teil prüfen lassen willst.
       </p>
       <div class="plan-carousel" data-carousel>
       <div class="offer-more__grid offer-more__grid--four" data-carousel-track>
-        {packages.map((offer) => (
+        {moreOffers.map((offer) => (
           <a href={offerPath(offer)} class="offer-more__card">
             <span class="offer-summary__icon">
               <OfferIcon name={offer.icon} size={22} />
@@ -99,8 +106,8 @@ const pageDescription =
           </a>
         ))}
       </div>
-      <div class="carousel-dots carousel-dots--more" role="group" aria-label="Pakete: Karte wählen">
-        {packages.map((offer, index) => (
+      <div class="carousel-dots carousel-dots--more" role="group" aria-label="Weitere Leistungen: Karte wählen">
+        {moreOffers.map((offer, index) => (
           <button type="button" class="carousel-dots__dot" data-carousel-dot={index} aria-label={`${offer.title} anzeigen`} aria-current={index === 0 ? 'true' : undefined}></button>
         ))}
       </div>

@@ -44,6 +44,8 @@ type Gen = {
   line: (x1: number, y1: number, x2: number, y2: number) => Drawable;
   rectangle: (x: number, y: number, w: number, h: number) => Drawable;
   circle: (x: number, y: number, d: number) => Drawable;
+  polygon: (points: [number, number][]) => Drawable;
+  arc: (x: number, y: number, w: number, h: number, start: number, stop: number) => Drawable;
 };
 
 function sketch(seedBase: number, draw: (g: Gen) => Drawable[]) {
@@ -57,6 +59,8 @@ function sketch(seedBase: number, draw: (g: Gen) => Drawable[]) {
     line: (x1, y1, x2, y2) => g.line(x1, y1, x2, y2, { seed: ++seed }),
     rectangle: (x, y, w, h) => g.rectangle(x, y, w, h, { seed: ++seed }),
     circle: (x, y, d) => g.circle(x, y, d, { seed: ++seed }),
+    polygon: (points) => g.polygon(points, { seed: ++seed }),
+    arc: (x, y, w, h, start, stop) => g.arc(x, y, w, h, start, stop, false, { seed: ++seed }),
   });
   return shapes
     .flatMap((s) => g.toPaths(s))
@@ -73,13 +77,24 @@ const imageBox = (g: Gen, x: number, y: number, w: number, h: number) => [
   g.line(x + w, y, x, y + h),
 ];
 
-// oben links: Bildfläche mit Kreuz, Button, Textzeilen
+// oben links: Smartphone-Ansicht neben einer Karte mit Balkendiagramm, Textzeilen
 const cornerTL = () =>
   svgDoc(460, 420, sketch(10, (g) => [
-    ...imageBox(g, 10, 40, 330, 190),
-    g.rectangle(370, 46, 70, 18),
-    ...textLines(g, 10, 272, [300, 260, 330]),
-    ...textLines(g, 10, 352, [140, 120]),
+    // Smartphone: Gehäuse, Lautsprecher, Inhalt, Home-Button
+    g.rectangle(60, 20, 130, 290),
+    g.line(105, 38, 145, 38),
+    g.rectangle(74, 56, 102, 60),
+    ...textLines(g, 74, 138, [96, 76, 88], 16),
+    g.rectangle(74, 200, 62, 18),
+    g.circle(125, 288, 16),
+    // Karte mit Balkendiagramm
+    g.rectangle(215, 40, 225, 170),
+    g.line(235, 62, 325, 62),
+    g.rectangle(243, 130, 28, 60), g.rectangle(287, 90, 28, 100),
+    g.rectangle(331, 115, 28, 75), g.rectangle(375, 70, 28, 120),
+    g.line(231, 190, 424, 190),
+    ...textLines(g, 215, 246, [220, 180, 200]),
+    ...textLines(g, 60, 360, [370, 290]),
   ]));
 
 // oben rechts: Browserfenster mit Mini-Logo, Navigation, Teaser mit Kreisen
@@ -116,24 +131,159 @@ const cornerBR = () =>
     g.rectangle(30, 300, 110, 26), g.rectangle(160, 300, 110, 26),
   ]));
 
+// ── Motive für die Köpfe der Unterseiten: je eine Skizze passend zum Thema ──
+const MW = 420;
+const MH = 340;
+
+// Bild als Landschaft (Sonne + Berge) – das Kreuz-Motiv gibt es schon im Hero
+const landscape = (g: Gen, x: number, y: number, w: number, h: number) => [
+  g.rectangle(x, y, w, h),
+  g.circle(x + w * 0.74, y + h * 0.3, h * 0.24),
+  g.polygon([[x + 8, y + h - 8], [x + w * 0.36, y + h * 0.42], [x + w * 0.58, y + h * 0.72], [x + w * 0.72, y + h * 0.56], [x + w - 8, y + h - 8]]),
+];
+
+// Browserfenster mit Leiste und drei Punkten
+const browser = (g: Gen) => [
+  g.rectangle(10, 10, 400, 320),
+  g.line(10, 44, 410, 44),
+  g.circle(28, 27, 9), g.circle(44, 27, 9), g.circle(60, 27, 9),
+];
+
+const motif = (seed: number, draw: (g: Gen) => Drawable[]) => () => svgDoc(MW, MH, sketch(seed, draw));
+
+const motifs = {
+  // Projekte: Galerie
+  gallery: motif(200, (g) => [
+    ...browser(g),
+    ...landscape(g, 30, 64, 170, 110), ...landscape(g, 220, 64, 170, 110),
+    ...landscape(g, 30, 194, 170, 110),
+    ...textLines(g, 220, 204, [150, 120, 140, 90], 22),
+  ]),
+  // Webdesign, Projekt-Detail, Relaunch: Seitenlayout
+  browser: motif(220, (g) => [
+    ...browser(g),
+    ...textLines(g, 30, 80, [180, 130], 22),
+    g.rectangle(30, 136, 90, 24),
+    ...landscape(g, 230, 62, 160, 110),
+    g.rectangle(30, 196, 105, 112), g.rectangle(157, 196, 105, 112), g.rectangle(284, 196, 106, 112),
+    g.circle(82, 232, 30), g.circle(209, 232, 30), g.circle(337, 232, 30),
+    ...textLines(g, 48, 272, [70, 50], 16), ...textLines(g, 175, 272, [70, 50], 16), ...textLines(g, 302, 272, [70, 50], 16),
+  ]),
+  // Webentwicklung: Editor mit Code und </>
+  code: motif(240, (g) => [
+    ...browser(g),
+    g.line(30, 76, 150, 76), g.line(54, 98, 210, 98), g.line(78, 120, 190, 120), g.line(78, 142, 250, 142),
+    g.line(54, 164, 140, 164), g.line(30, 186, 90, 186), g.line(30, 216, 170, 216), g.line(54, 238, 230, 238),
+    g.line(54, 260, 160, 260), g.line(30, 282, 70, 282),
+    g.line(300, 236, 276, 262), g.line(276, 262, 300, 288),
+    g.line(318, 292, 336, 232),
+    g.line(354, 236, 378, 262), g.line(378, 262, 354, 288),
+  ]),
+  // App-Entwicklung: zwei Smartphones
+  phones: motif(260, (g) => [
+    g.rectangle(60, 10, 150, 310), g.line(115, 28, 155, 28),
+    ...landscape(g, 76, 46, 118, 80),
+    ...textLines(g, 76, 150, [110, 86, 100], 18),
+    g.rectangle(76, 220, 70, 22), g.circle(135, 296, 18),
+    g.rectangle(240, 50, 130, 270), g.line(285, 66, 325, 66),
+    g.rectangle(258, 190, 20, 50), g.rectangle(288, 160, 20, 80), g.rectangle(318, 175, 20, 65),
+    g.line(252, 240, 356, 240),
+    ...textLines(g, 258, 96, [96, 70], 18), g.circle(305, 296, 18),
+  ]),
+  // Hosting: Server-Rack
+  server: motif(280, (g) => [
+    ...[30, 115, 200].flatMap((y) => [
+      g.rectangle(60, y, 300, 70),
+      g.circle(92, y + 35, 14), g.circle(118, y + 35, 14),
+      g.line(200, y + 28, 330, y + 28), g.line(200, y + 44, 300, y + 44),
+    ]),
+    g.line(210, 270, 210, 312), g.line(130, 312, 290, 312),
+  ]),
+  // SEO-Check: Lupe über einem Diagramm
+  seo: motif(300, (g) => [
+    g.circle(150, 140, 190),
+    g.line(218, 208, 300, 290), g.line(228, 200, 310, 282), g.line(300, 290, 310, 282),
+    g.rectangle(98, 150, 22, 40), g.rectangle(130, 125, 22, 65), g.rectangle(162, 100, 22, 90),
+    g.line(90, 190, 210, 190),
+    g.line(300, 120, 335, 90), g.line(335, 90, 360, 106), g.line(360, 106, 405, 50),
+    g.line(390, 50, 405, 50), g.line(405, 50, 405, 65),
+  ]),
+  // Kontakt, Business-E-Mail: Brief mit Sprechblase
+  mail: motif(320, (g) => [
+    g.rectangle(30, 130, 290, 190),
+    g.line(30, 130, 175, 235), g.line(175, 235, 320, 130),
+    g.line(30, 320, 140, 220), g.line(320, 320, 210, 220),
+    g.rectangle(230, 16, 170, 90),
+    g.line(262, 106, 252, 138), g.line(252, 138, 292, 106),
+    ...textLines(g, 252, 46, [124, 90], 22),
+  ]),
+  // Über mich: Laptop und Kaffeetasse
+  desk: motif(340, (g) => [
+    g.rectangle(50, 30, 260, 180),
+    g.rectangle(66, 46, 228, 148),
+    ...textLines(g, 86, 74, [150, 120, 170], 20),
+    g.rectangle(86, 142, 70, 22),
+    g.polygon([[30, 214], [330, 214], [352, 246], [8, 246]]),
+    g.line(150, 230, 210, 230),
+    g.rectangle(352, 186, 46, 56),
+    g.arc(398, 214, 30, 32, -Math.PI / 2, Math.PI / 2),
+    g.line(366, 176, 372, 156), g.line(384, 176, 390, 152),
+    ...textLines(g, 30, 290, [300, 220], 20),
+  ]),
+  // Impressum, Datenschutz, 404: Dokument mit Schloss
+  doc: motif(360, (g) => [
+    g.polygon([[60, 14], [240, 14], [290, 64], [290, 326], [60, 326]]),
+    g.line(240, 14, 240, 64), g.line(240, 64, 290, 64),
+    ...textLines(g, 84, 60, [130], 22),
+    ...textLines(g, 84, 110, [180, 160, 175, 120, 170, 150, 90], 26),
+    g.arc(352, 214, 52, 64, Math.PI, Math.PI * 2),
+    g.rectangle(318, 212, 68, 58),
+    g.circle(352, 236, 12), g.line(352, 242, 352, 256),
+  ]),
+  // Leistungen: Karten mit Icons
+  cards: motif(380, (g) => [
+    ...[[20, 20], [220, 20], [20, 178], [220, 178]].flatMap(([x, y]) => [
+      g.rectangle(x, y, 180, 140),
+      g.circle(x + 34, y + 34, 36),
+      ...textLines(g, x + 18, y + 78, [120, 140, 90], 18),
+    ]),
+  ]),
+};
+
+export type MotifName = keyof typeof motifs;
+
 export const sketches = {
   'hero-logo': logo,
   'corner-tl': cornerTL,
   'corner-tr': cornerTR,
   'corner-bl': cornerBL,
   'corner-br': cornerBR,
+  ...Object.fromEntries(Object.entries(motifs).map(([k, v]) => [`motif-${k}`, v])) as Record<`motif-${MotifName}`, () => string>,
 } as const;
 
 export type SketchName = keyof typeof sketches;
 
-// ── Gekritzelter Rahmen für Buttons: wird per preserveAspectRatio="none" auf die
-// Button-Größe gestreckt, die Strichstärke bleibt dank non-scaling-stroke gleich ──
-export function sketchFrame(seed: number) {
+// ── Gekritzelte Rahmen für Buttons, Karten und Icon-Kreise: werden per
+// preserveAspectRatio="none" auf die Elementgröße gestreckt, die Strichstärke bleibt
+// dank non-scaling-stroke gleich. Die viewBox hat grob das Seitenverhältnis des
+// Elements, damit die Striche beim Strecken nicht verzerren ──
+type FrameGen = ReturnType<typeof rough.generator>;
+
+export const frameShapes = {
+  button: { w: 200, h: 52, draw: (g: FrameGen) => g.rectangle(6, 5, 188, 42) },
+  card: { w: 300, h: 480, draw: (g: FrameGen) => g.rectangle(6, 6, 288, 468) },
+  wide: { w: 1000, h: 170, draw: (g: FrameGen) => g.rectangle(6, 6, 988, 158) },
+  circle: { w: 80, h: 80, draw: (g: FrameGen) => g.circle(40, 40, 70) },
+} as const;
+
+export type FrameShape = keyof typeof frameShapes;
+
+export function sketchFrame(seed: number, shape: FrameShape = 'button') {
   const g = rough.generator({
     options: { roughness: 1.5, bowing: 2.2, maxRandomnessOffset: 2.5, seed },
   });
   return g
-    .toPaths(g.rectangle(6, 5, 188, 42))
+    .toPaths(frameShapes[shape].draw(g))
     .map((p) => `<path d="${p.d.replace(/-?\d+\.\d+/g, (n) => (+n).toFixed(1))}"/>`)
     .join('');
 }

@@ -1,6 +1,8 @@
 /* ====================== Design tokens ====================== */
 :root {
   --accent-lime: #b8dbd9; /* Highlight 2 (Gold) – Name historisch */
+  /* einheitliche Kartenbreite in allen mobilen Wischleisten */
+  --swipe-card: min(80vw, 21rem);
 }
 
 /* ====================== Reset & Basis ====================== */
@@ -109,7 +111,7 @@ textarea:focus-visible {
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
-  gap: 0.35rem;
+  gap: clamp(0.35rem, 1.2vw, 1.25rem);
   min-width: 0;
 }
 
@@ -122,7 +124,7 @@ textarea:focus-visible {
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: 0.15rem;
+  gap: clamp(0.15rem, 0.9vw, 0.9rem);
 }
 
 .main-nav .nav-list li {
@@ -1106,7 +1108,40 @@ body.nav-open .site-header--paper {
   vector-effect: non-scaling-stroke;
 }
 :hover > .sketch-frame { transform: rotate(-0.6deg) translate(1px, -1px); }
+/* Karten und Icon-Kreise: Rahmen liegt fast bündig, bewegt sich beim Hover weniger */
+.sketch-frame--card,
+.sketch-frame--wide { left: -3px; top: -3px; width: calc(100% + 6px); height: calc(100% + 6px); }
+.sketch-frame--circle { left: -4px; top: -4px; width: calc(100% + 8px); height: calc(100% + 8px); }
+:hover > :is(.sketch-frame--card, .sketch-frame--wide) { transform: rotate(-0.25deg); }
 .site-header--paper .nav-cta-desktop { position: relative; border-radius: 3px; border-color: transparent; }
+
+/* Buttons mit gekritzeltem Rahmen (Hero, Leistungskarten) */
+.sketch-btn {
+  --frame: var(--c-forest);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.8rem 1.25rem;
+  border-radius: 3px;
+  font-weight: 650;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+.sketch-btn:hover { transform: translateY(-2px); }
+.sketch-btn:focus-visible { outline: 2px solid var(--c-forest); outline-offset: 6px; }
+.sketch-btn--primary {
+  background: var(--c-turf);
+  color: #fff;
+}
+.sketch-btn--secondary {
+  --frame: var(--c-turf);
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--c-turf);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .sketch-frame { transition: none; }
+  .sketch-frame,
+  .sketch-btn { transition: none; }
 }

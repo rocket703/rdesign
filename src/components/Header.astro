@@ -7,6 +7,8 @@ interface Props {
 
 const { variant = 'default' } = Astro.props;
 const paper = variant === 'paper';
+// Startseite: nur das r3-Zeichen, der Schriftzug steht groß im Hero
+const markOnly = paper && Astro.url.pathname === '/';
 
 const navLinks = [
   { href: '/leistungen/', label: 'Leistungen' },
@@ -20,7 +22,9 @@ const navCta = { href: '/kontakt/', label: 'Projekt anfragen' };
 <header class:list={['site-header', { 'site-header--paper': paper }]}>
   <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
   <a href="/" class="logo-link" aria-label="r³webdesign – zur Startseite">
-    <img class="logo-mark" src={paper ? '/logo-header-dark.svg' : '/logo-header.svg'} width="156" height="40" alt="" />
+    {markOnly
+      ? <img class="logo-mark" src="/logo-mark-dark.svg" width="41" height="40" alt="" />
+      : <img class="logo-mark" src={paper ? '/logo-header-dark.svg' : '/logo-header.svg'} width="156" height="40" alt="" />}
   </a>
   <nav class="main-nav" aria-label="Hauptnavigation">
     <button

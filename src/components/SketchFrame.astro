@@ -1,11 +1,13 @@
 ---
-// Gekritzelter Bleistift-Rahmen um einen Button (Farbe über `color` bzw. --frame)
-import { sketchFrame } from '../lib/sketch';
+// Gekritzelter Bleistift-Rahmen um Buttons, Karten oder Icons (Farbe über `color` bzw. --frame)
+import { sketchFrame, frameShapes, type FrameShape } from '../lib/sketch';
 
 interface Props {
   seed?: number;
+  shape?: FrameShape;
 }
 
-const { seed = 1 } = Astro.props;
+const { seed = 1, shape = 'button' } = Astro.props;
+const { w, h } = frameShapes[shape];
 ---
-<svg class="sketch-frame" viewBox="0 0 200 52" preserveAspectRatio="none" aria-hidden="true" set:html={sketchFrame(seed)} />
+<svg class:list={['sketch-frame', `sketch-frame--${shape}`]} viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" aria-hidden="true" set:html={sketchFrame(seed, shape)} />

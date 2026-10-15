@@ -1,34 +1,22 @@
 ---
 // src/pages/index.astro
+// Startseite als Erzählung „Skizze → fertige Seite“: oben gezeichnet (Hero, Ablauf, Leistungen –
+// Idee und Planung), nach dem Übergang clean (Referenzen, Über mich, FAQ – das Ergebnis).
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import { getPublishedProjects, projectSlug } from '../lib/projects';
 import { faqItems } from '../data/faq';
-import ZoneCut from '../components/ZoneCut.astro';
-import { cutFillPath, CUT_VIEWBOX } from '../lib/zone-cut-paths';
-import ZoneHeader from '../components/ZoneHeader.astro';
-import ZoneWatermark from '../components/ZoneWatermark.astro';
 import StyleShowcase from '../components/StyleShowcase.astro';
-import OfferIcon from '../components/OfferIcon.astro';
-import OfferVisual from '../components/OfferVisual.astro';
-import { packages, offerPath } from '../data/offers';
-import { services, serviceIcons } from '../data/services';
+import { services, moreServices, serviceIcons } from '../data/services';
 import { responsiveImage } from '../lib/images';
-import CandyTapeDivider from '../components/CandyTapeDivider.astro';
-import GroundTapeDivider from '../components/GroundTapeDivider.astro';
 import CtaBand from '../components/CtaBand.astro';
 import SketchHero from '../components/SketchHero.astro';
-import { BIOME_META, EARTH_META } from '../data/portfolio-biomes';
-import '../styles/zone-header.css';
+import SketchFrame from '../components/SketchFrame.astro';
 import '../styles/home-world.css';
+import '../styles/home-story.css';
 import '../styles/carousel.css';
 
 import { homePageSchema, SITE } from '../lib/seo';
-
-// Hügel-Silhouette als Maske für die Earth-Zone: deren eigener Hintergrund
-// füllt den Hügel, darüber scheint die Clean-Zone durch – ohne Nahtkante.
-const earthMaskSvg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='${CUT_VIEWBOX}' preserveAspectRatio='none'><path d='${cutFillPath('cradle')}'/></svg>`;
-const earthMask = `url("data:image/svg+xml,${encodeURIComponent(earthMaskSvg)}")`;
 
 const steps = [
   {
@@ -50,20 +38,12 @@ const steps = [
 
 const portrait = responsiveImage(SITE.portrait, 320);
 
-// FAQ in zwei feste Spalten: Aufklappen verschiebt nur die eigene Spalte
-const faqHalf = Math.ceil(faqItems.length / 2);
-const faqColumns = [faqItems.slice(0, faqHalf), faqItems.slice(faqHalf)];
-
-// Bannerfarbe je Paket – aus der Palette
-const packageAccents = ['var(--c-turf)', 'var(--c-slate)', 'var(--c-deep)', 'var(--c-forest)'];
-
 const publishedProjects = await getPublishedProjects();
 
 const featuredSlugs = ['startplatzboerse', 'ohrelauf', 'radsportclub-magdeburg'];
 const featuredProjects = featuredSlugs
   .map((slug) => publishedProjects.find((project) => projectSlug(project) === slug))
   .filter((project): project is (typeof publishedProjects)[number] => Boolean(project));
-
 ---
 
 <BaseLayout
@@ -72,63 +52,158 @@ const featuredProjects = featuredSlugs
   jsonLd={homePageSchema(faqItems, Astro.site)}
   headerVariant="paper"
 >
-<article class="p-world home-world">
+<article class="home-world">
   <SketchHero />
 
-  <!-- ═══ 01 TECHNICAL ═══ -->
-  <div class="p-zone p-zone--tech">
-    <section class="tech-manifesto" id="technik" aria-labelledby="tech-manifesto-title">
-      <div class="container tech-manifesto__inner">
-        <header class="tech-manifesto__head zone-h zone-h--bar autoShow">
-          <ZoneWatermark num="01" />
-          <span class="tech-manifesto__kicker">Ablauf</span>
-          <p class="zone-h__title">Schritt<br />für Schritt</p>
-          <h2 class="zone-h__desc" id="tech-manifesto-title">
-            So läuft ein Webdesign-Projekt ab: drei klare Schritte vom ersten Gespräch bis nach dem Launch.
-          </h2>
-        </header>
-        <div class="tech-manifesto__start autoShow">
-          <p class="tech-manifesto__start-text">
-            Der erste Schritt kostet dich nur ein kurzes Gespräch. Danach weißt du, was deine Webseite braucht,
-            wie lange es dauert und was es kostet.
-          </p>
-          <a href="/kontakt/" class="tech-manifesto__start-btn">Erstgespräch anfragen</a>
-          <p class="tech-manifesto__start-note">Kostenlos · ca. 15 Minuten · Telefon, Video oder vor Ort</p>
-        </div>
-        <div class="tech-manifesto__glass">
-          <ol class="tech-manifesto__pipeline">
-            {steps.map((step, index) => (
-              <li class="tech-manifesto__step autoShow">
-                <span class="tech-manifesto__num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-                <div class="tech-manifesto__body">
-                  <h3>{step.title}</h3>
-                  <p>{step.text}</p>
-                  <p class="tech-manifesto__check"><span aria-hidden="true">✓</span> {step.check}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </div>
-    </section>
+  <!-- ═══ Skizze: Planung ═══ -->
 
-  </div>
+  <!-- Ablauf: gezeichnete Schritte auf mintfarbenem Rasterpapier -->
+  <section class="plan" id="ablauf" aria-labelledby="plan-title">
+    <svg class="pencil-rule pencil-rule--top" viewBox="0 0 1000 14" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 7 C 180 4, 360 9, 520 6 S 860 4, 1000 8" />
+      <path d="M0 10 C 220 8, 420 11, 600 9 S 880 8, 1000 10" />
+    </svg>
+    <div class="container plan__inner">
+      <header class="plan__head autoShow">
+        <p class="hand-note">Schritt für Schritt</p>
+        <h2 class="story-title" id="plan-title">
+          So läuft dein <span class="story-mark">Projekt<svg class="story-mark__line" viewBox="0 0 240 14" preserveAspectRatio="none" aria-hidden="true"><path d="M2 9 C 50 5, 120 4, 237 8" /><path d="M8 11.5 C 70 8, 150 8, 230 10" /></svg></span> ab
+        </h2>
+        <p class="story-lead">
+          Drei klare Schritte vom ersten Gespräch bis nach dem Launch. Der erste kostet dich nur ein kurzes Gespräch –
+          danach weißt du, was deine Webseite braucht, wie lange es dauert und was es kostet.
+        </p>
+        <a href="/kontakt/" class="sketch-btn sketch-btn--primary">Erstgespräch anfragen<SketchFrame seed={131} /></a>
+        <p class="plan__note">Kostenlos · ca. 15 Minuten · Telefon, Video oder vor Ort</p>
+      </header>
 
-  <CandyTapeDivider />
-
-  <!-- ═══ 02 SIGNATURE ═══ -->
-  <div class="p-zone p-zone--candy" id="candy">
-    <div class="p-zone__inner p-zone__inner--header">
-      <ZoneHeader
-        variant="candy"
-        num={BIOME_META.candy.num}
-        label={BIOME_META.candy.label}
-        title={BIOME_META.candy.title}
-        description={BIOME_META.candy.description}
-      />
+      <ol class="plan__steps">
+        <SketchFrame shape="card" seed={137} />
+        {steps.map((step, index) => (
+          <li class="plan__step autoShow">
+            <span class="plan__num" aria-hidden="true">{index + 1}<SketchFrame shape="circle" seed={141 + index * 4} /></span>
+            <div>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+              <p class="plan__check"><span aria-hidden="true">✓</span> {step.check}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
     </div>
+  </section>
 
-    <div class="candy-spacer" aria-hidden="true"></div>
+  <!-- Leistungen: drei Schwerpunkte als gezeichnete Karten, der Rest als „Außerdem möglich“ -->
+  <section id="leistungen" class="services-sketch" aria-labelledby="services-title">
+    <svg class="pencil-rule pencil-rule--top" viewBox="0 0 1000 14" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 6 C 200 9, 380 4, 560 7 S 860 9, 1000 5" />
+      <path d="M0 9 C 240 11, 440 7, 620 9 S 880 11, 1000 8" />
+    </svg>
+    <div class="container">
+      <header class="story-head story-head--center autoShow">
+        <p class="hand-note">Was ich für dich baue</p>
+        <h2 class="story-title" id="services-title">Webseite, Relaunch &amp; Betreuung</h2>
+        <p class="story-lead">
+          Für Vereine, Events und lokale Unternehmen: eine neue Webseite, ein Neustart für die alte –
+          und danach jemand, der sich kümmert.
+        </p>
+      </header>
+
+      <div class="home-carousel" data-carousel>
+      <ol class="service-index" data-carousel-track>
+        {services.map((service, i) => (
+          <li class="service-index__item autoShow">
+            <SketchFrame shape="card" seed={50 + i * 7} />
+            <span class="service-index__cap" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={serviceIcons[service.icon]} />
+              <SketchFrame shape="circle" seed={80 + i * 5} />
+            </span>
+            <h3 class="service-index__title">{service.title}</h3>
+            <p class="service-index__text">{service.text}</p>
+            <p class="service-index__tags">{service.chips.join(' · ')}</p>
+            {service.href && (
+              <a class="service-index__link sketch-btn sketch-btn--primary" href={service.href}>Mehr erfahren <span aria-hidden="true">→</span><SketchFrame seed={110 + i * 3} /></a>
+            )}
+          </li>
+        ))}
+      </ol>
+      <div class="carousel-dots carousel-dots--home" role="group" aria-label="Leistungen: Karte wählen">
+        {services.map((item, index) => (
+          <button type="button" class="carousel-dots__dot" data-carousel-dot={index} aria-label={`${item.title} anzeigen`} aria-current={index === 0 ? 'true' : undefined}></button>
+        ))}
+      </div>
+      </div>
+
+      <div class="services-more-list autoShow">
+        <SketchFrame shape="wide" seed={151} />
+        <SketchFrame shape="card" seed={153} />
+        <p class="hand-note services-more-list__title">Außerdem möglich:</p>
+        <ul>
+          {moreServices.map((item) => (
+            <li>
+              <a href={item.href}>
+                <strong>{item.title} <span aria-hidden="true">→</span></strong>
+                <span>{item.text}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <p class="services-more autoShow">
+        <a href="/leistungen/" class="sketch-btn sketch-btn--secondary services-cta">
+          Alle Leistungen im Überblick <span aria-hidden="true">→</span>
+          <SketchFrame seed={61} />
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══ Übergang: aus der Skizze wird die Seite ═══ -->
+  <section class="story-turn" aria-labelledby="turn-title">
+    <h2 class="story-turn__title" id="turn-title">
+      <span class="story-turn__sketch">Aus der Skizze</span>
+      <span class="story-turn__final">wird die Seite.</span>
+    </h2>
+    <p class="story-turn__lead">Was als ein paar Striche auf Papier beginnt, ist heute online – zum Beispiel hier:</p>
+  </section>
+
+  <!-- ═══ Fertig: Ergebnis ═══ -->
+  <div class="story-final">
+      <section id="projekte" class="section projects projects--clean">
+        <div class="clean-block-head autoShow">
+          <h2 class="clean-block-head__title">Referenzen aus Magdeburg &amp; Umgebung</h2>
+          <p class="clean-block-head__lead">
+            Drei Projekte – von der Vereins-Webseite bis zur Online-Plattform.
+          </p>
+        </div>
+        <div class="home-carousel" data-carousel>
+        <div class="card-grid card-grid--clean" data-carousel-track>
+        {featuredProjects.map((project, index) => (
+          <ProjectCard
+            category={project.data.category}
+            accent={index}
+            title={project.data.title}
+            description={project.data.subtitle}
+            image={project.data.image}
+            tags={project.data.techStack}
+            id={projectSlug(project)}
+            status={project.data.status}
+          />
+        ))}
+      </div>
+        <div class="carousel-dots carousel-dots--home" role="group" aria-label="Referenzen: Karte wählen">
+          {featuredProjects.map((item, index) => (
+            <button type="button" class="carousel-dots__dot" data-carousel-dot={index} aria-label={`${item.data.title} anzeigen`} aria-current={index === 0 ? 'true' : undefined}></button>
+          ))}
+        </div>
+        </div>
+      <p class="projects-more projects-more--clean autoShow">
+        <a href="/projekte/" class="projects-more__link">
+          Alle Projekte ansehen →
+        </a>
+      </p>
+    </section>
 
     <section class="candy-about" id="about" aria-labelledby="candy-about-title">
       <div class="container">
@@ -175,184 +250,35 @@ const featuredProjects = featuredSlugs
     </section>
 
     <StyleShowcase />
-  </div>
 
-  <ZoneCut variant="drop" fill="#f4f4f9" accent="#04724d" front="#f4f4f9" />
-
-  <!-- ═══ 03 CLEAN ═══ -->
-  <div class="p-zone p-zone--clean">
-    <div class="p-zone__inner p-zone__inner--header">
-      <ZoneHeader
-        variant="clean"
-        num={BIOME_META.clean.num}
-        label={BIOME_META.clean.label}
-        title={BIOME_META.clean.title}
-        description={BIOME_META.clean.description}
-      />
-    </div>
-
-    <section id="projekte" class="section projects projects--clean">
-      <div class="clean-block-head autoShow">
-        <h2 class="clean-block-head__title">Referenzen aus Magdeburg &amp; Umgebung</h2>
-        <p class="clean-block-head__lead">
-          Drei Projekte – von der Vereins-Webseite bis zur Online-Plattform.
-        </p>
-      </div>
-      <div class="home-carousel" data-carousel>
-      <div class="card-grid card-grid--clean" data-carousel-track>
-      {featuredProjects.map((project, index) => (
-        <ProjectCard
-          category={project.data.category}
-          accent={index}
-          title={project.data.title}
-          description={project.data.subtitle}
-          image={project.data.image}
-          tags={project.data.techStack}
-          id={projectSlug(project)}
-          status={project.data.status}
-        />
-      ))}
-    </div>
-      <div class="carousel-dots carousel-dots--home" role="group" aria-label="Referenzen: Karte wählen">
-        {featuredProjects.map((item, index) => (
-          <button type="button" class="carousel-dots__dot" data-carousel-dot={index} aria-label={`${item.data.title} anzeigen`} aria-current={index === 0 ? 'true' : undefined}></button>
-        ))}
-      </div>
-      </div>
-    <p class="projects-more projects-more--clean autoShow">
-      <a href="/projekte/" class="projects-more__link">
-        Alle Projekte ansehen →
-      </a>
-    </p>
-  </section>
-
-  <section id="leistungen" class="section services services--clean">
-    <div class="container">
-      <div class="clean-block-head autoShow">
-        <h2 class="clean-block-head__title">Webdesign, Web-Apps &amp; Apps</h2>
-        <p class="clean-block-head__lead">
-          Vom fokussierten Webauftritt bis zur langfristig betreuten Plattform – passend zum Ziel, nicht zum Trend.
-        </p>
-      </div>
-
-      <div class="home-carousel" data-carousel>
-      <ol class="service-index" data-carousel-track>
-        {services.map((service) => (
-          <li class="service-index__item autoShow">
-            <span class="service-index__cap" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={serviceIcons[service.icon]} />
-            </span>
-            <h3 class="service-index__title">{service.title}</h3>
-            <p class="service-index__text">{service.text}</p>
-            <p class="service-index__tags">{service.chips.join(' · ')}</p>
-            {service.href && (
-              <a class="service-index__link" href={service.href}>Mehr erfahren <span aria-hidden="true">→</span></a>
-            )}
-            {!service.href && <span class="service-index__link service-index__link--spacer" aria-hidden="true"></span>}
-          </li>
-        ))}
-      </ol>
-      <div class="carousel-dots carousel-dots--home" role="group" aria-label="Leistungen: Karte wählen">
-        {services.map((item, index) => (
-          <button type="button" class="carousel-dots__dot" data-carousel-dot={index} aria-label={`${item.title} anzeigen`} aria-current={index === 0 ? 'true' : undefined}></button>
-        ))}
-      </div>
-      </div>
-      <p class="services-more autoShow">
-        <a href="/leistungen/" class="services-cta">
-          <span class="services-cta__label">Alle Leistungen im Überblick</span>
-          <span class="services-cta__cap" aria-hidden="true">→</span>
-        </a>
-      </p>
-    </div>
-  </section>
-
-  <section class="quickstart" id="pakete" aria-labelledby="quickstart-title">
-    <div class="container">
-      <div class="clean-block-head autoShow">
-        <h2 class="clean-block-head__title" id="quickstart-title">Du hast schon eine Webseite?</h2>
-        <p class="clean-block-head__lead">
-          Vier feste Pakete für bestehende Seiten – mit klarem Ergebnis und Festpreis.
-        </p>
-      </div>
-      <div class="home-carousel" data-carousel>
-      <ul class="quickstart__grid" data-carousel-track>
-        {packages.map((offer, index) => (
-          <li class="autoShow">
-            <a href={offerPath(offer)} class="pkg-card" style={`--pkg: ${packageAccents[index % packageAccents.length]}`}>
-              <div class="pkg-card__banner">
-                <OfferVisual name={offer.icon} />
-              </div>
-              <span class="pkg-card__tab" aria-hidden="true">
-                <OfferIcon name={offer.icon} size={24} />
-              </span>
-              <div class="pkg-card__body">
-                <h3 class="pkg-card__title">{offer.title}</h3>
-                <p class="pkg-card__text">{offer.teaser}</p>
-              </div>
-              <div class="pkg-card__foot">
-                <span>{offer.facts.find((fact) => fact.label === 'Dauer')?.value}</span>
-                <span class="pkg-card__more">Mehr erfahren <span aria-hidden="true">→</span></span>
-              </div>
-            </a>
-          </li>
-        ))}
-      </ul>
-      <div class="carousel-dots carousel-dots--home carousel-dots--light" role="group" aria-label="Pakete: Karte wählen">
-        {packages.map((item, index) => (
-          <button type="button" class="carousel-dots__dot" data-carousel-dot={index} aria-label={`${item.title} anzeigen`} aria-current={index === 0 ? 'true' : undefined}></button>
-        ))}
-      </div>
-      </div>
-    </div>
-  </section>
-
-  </div>
-
-  <!-- ═══ 04 GROUNDED ═══ -->
-  <section class="p-zone p-zone--earth" id="abschluss" aria-labelledby="earth-title" style={`--earth-mask: ${earthMask}`}>
-    <div class="p-zone__inner">
-      <div>
-        <ZoneHeader
-          variant="earth"
-          num={EARTH_META.num}
-          label={EARTH_META.label}
-          title={EARTH_META.title}
-          description={EARTH_META.description}
-          titleId="earth-title"
-        />
-      </div>
-    </div>
-
-    <section id="faq" class="faq faq--earth" aria-labelledby="faq-title">
-      <div class="container">
-        <div class="earth-faq__head autoShow">
-          <h2 id="faq-title">Häufige Fragen zum Webdesign</h2>
-        </div>
-        <div class="faq-grid">
-          {faqColumns.map((column, col) => (
-            <div class="faq-col">
-          {column.map((item, i) => (
-            <details class="faq-item autoShow">
+    <!-- FAQ: ruhige Liste mit Einleitung links -->
+    <section id="faq" class="faq-list" aria-labelledby="faq-title">
+      <div class="container faq-list__inner">
+        <header class="faq-list__head autoShow">
+          <h2 class="faq-list__title" id="faq-title">Häufige Fragen zum Webdesign</h2>
+          <p class="faq-list__lead">
+            Die Antworten auf das, was Vereine und Unternehmen am häufigsten wissen wollen.
+            Deine Frage ist nicht dabei?
+          </p>
+          <a href="/kontakt/" class="faq-list__contact">Frag mich direkt <span aria-hidden="true">→</span></a>
+        </header>
+        <div class="faq-list__items">
+          {faqItems.map((item, i) => (
+            <details class="faq-item">
               <summary>
-                <span class="faq-item__num" aria-hidden="true">{String(col * faqColumns[0].length + i + 1).padStart(2, '0')}</span>
+                <span class="faq-item__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
                 <span class="faq-item__q">{item.question}</span>
                 <span class="faq-item__toggle" aria-hidden="true"></span>
               </summary>
               <div class="faq-item__answer"><p>{item.answer}</p></div>
             </details>
           ))}
-            </div>
-          ))}
         </div>
       </div>
     </section>
-
-  </section>
+  </div>
 
   <CtaBand />
-
-  <GroundTapeDivider />
 </article>
 </BaseLayout>
 
@@ -400,422 +326,6 @@ const featuredProjects = featuredSlugs
     });
   })();
 </script>
-
-<style>
-  /* =========================================
-     1. GLOBALE STRUKTUR & TYPOGRAFIE
-     ========================================= */
-
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1.5rem; /* Mobil-Rand garantiert */
-  }
-
-  /* Einheitliche Header für ALLE Sektionen — Basis in style.css (.section-head, .section-title) */
-  .section-head {
-    margin-bottom: 5rem;
-  }
-
-  /* =========================================
-     LEISTUNGEN
-     ========================================= */
-
-  .services {
-    background-color: #0b1120;
-    padding: clamp(5rem, 10vw, 8rem) 0;
-    color: #fff;
-  }
-
-  .services .section-head {
-    margin-bottom: clamp(2.5rem, 5vw, 4rem);
-  }
-
-  /* Bunte Top-Kante: Grün → ausblendend nach rechts (wie Tech-Stack-Karten) */
-
-  /* =========================================
-     2. DEV SHOWCASE SEKTION (Tech Stack)
-     ========================================= */
-
-  /* --- GRID LAYOUT --- */
-
-  /* DESKTOP LAYOUT: 3 kleine Karten links, Code rechts */
-  @media (min-width: 1024px) {
-
-    /* Links: Die 3 kleinen Karten stapeln sich */
-    .primary {
-      grid-column: 1 / 2;
-      grid-row: 1 / 2;
-    }
-
-    .secondary {
-      grid-column: 1 / 2;
-      grid-row: 2 / 3;
-    }
-
-    /* Rechts: Das Code-Fenster über die volle Höhe */
-
-  }
-
-  /* KARTEN DESIGN */
-
-  /* CODE WINDOW */
-
-  .red { background: #ff5f56; } 
-  .yellow { background: #ffbd2e; } 
-  .green { background: #27c93f; }
-
-  .filename { 
-    font-size: 0.8rem; 
-    color: #607b96; 
-    font-family: inherit; 
-  }
-  /* --- MOBILE ANPASSUNG FÜR DAS CODE-FENSTER --- */
-@media (max-width: 768px) {
-
-  .filename {
-    font-size: 0.75rem; /* Dateiname dezent verkleinert */
-  }
-
-}
-
-  /* --- TECH STACK WÜRFEL --- */
-
-  /* =========================================
-     3. PROJEKTE SEKTION
-     ========================================= */
-
-  .projects {
-    background-color: #0b1120;
-    padding: 8rem 0;
-    overflow: hidden;
-  }
-
-  .card-grid {
-    display: grid;
-    grid-template-columns: 1fr; /* Mobil: 1 Spalte */
-    gap: 3rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1.5rem; /* Rand mobil */
-  }
-
-  @media (min-width: 768px) {
-    .card-grid {
-      grid-template-columns: repeat(2, 1fr); /* Tablet: 2 Spalten */
-      padding: 0;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .card-grid {
-      grid-template-columns: repeat(3, 1fr); /* Desktop: 3 Spalten */
-    }
-  }
-
-  .projects-more {
-    margin: clamp(2.5rem, 5vw, 3.5rem) auto 0;
-    padding: 0 1.5rem;
-    text-align: center;
-  }
-
-  .projects-more__link {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    gap: 0.45rem;
-    /* Schrift, Farben und Hover kommen aus home-world.css (.projects-more--clean) */
-  }
-
-  /* =========================================
-     FAQ SEKTION
-     ========================================= */
-
-  /* FAQ als Pillen-Karten: Nummer links, runder Plus-Knopf rechts */
-  .faq-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    max-width: 1080px;
-    margin: 0 auto;
-    align-items: start;
-  }
-
-  /* Zwei feste Spalten (je 4 Fragen) */
-  .faq-col {
-    display: grid;
-    gap: 1rem;
-    align-content: start;
-  }
-
-  @media (min-width: 900px) {
-    .faq-grid {
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-    }
-
-    .faq-col {
-      gap: 1.1rem;
-    }
-  }
-
-  .faq-item {
-    --faq-accent: var(--c-turf);
-    position: relative;
-    padding: 7px;
-    border-radius: 2.4rem;
-    background: #ffffff;
-    box-shadow: 0 14px 30px rgba(34, 50, 58, 0.12);
-  }
-
-  .faq-item:nth-child(even) {
-    --faq-accent: var(--c-slate);
-  }
-
-  .faq-item summary {
-    position: relative;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    gap: clamp(0.65rem, 2vw, 1rem);
-    min-height: 4.25rem;
-    padding: 0.5rem 0.5rem 0.5rem clamp(0.9rem, 3vw, 1.25rem);
-    border-radius: 2.1rem;
-    border-bottom: 2px solid var(--faq-accent);
-    background:
-      linear-gradient(115deg, rgba(88, 111, 124, 0.12) 0 4.5rem, transparent 4.5rem),
-      linear-gradient(180deg, #ffffff 0%, var(--c-bg) 100%);
-    list-style: none;
-    cursor: pointer;
-  }
-
-  .faq-item summary::-webkit-details-marker {
-    display: none;
-  }
-
-  .faq-item summary:focus-visible {
-    outline: 2px solid var(--faq-accent);
-    outline-offset: 3px;
-  }
-
-  .faq-item__num {
-    font-size: 1.05rem;
-    font-weight: 900;
-    font-feature-settings: 'tnum';
-    color: var(--faq-accent);
-  }
-
-  .faq-item__q {
-    font-size: clamp(0.92rem, 2.4vw, 1rem);
-    font-weight: 700;
-    line-height: 1.35;
-    color: var(--c-ink);
-  }
-
-  /* Runder Knopf mit Plus, dreht beim Öffnen zum × */
-  .faq-item__toggle {
-    position: relative;
-    flex-shrink: 0;
-    width: 2.9rem;
-    height: 2.9rem;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.35), transparent 55%), var(--faq-accent);
-    box-shadow:
-      0 0 0 5px rgba(88, 111, 124, 0.12),
-      0 4px 10px rgba(34, 50, 58, 0.25);
-    transition: transform 0.3s ease;
-  }
-
-  .faq-item__toggle::before,
-  .faq-item__toggle::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 1rem;
-    height: 2px;
-    border-radius: 2px;
-    background: #ffffff;
-    transform: translate(-50%, -50%);
-  }
-
-  .faq-item__toggle::after {
-    transform: translate(-50%, -50%) rotate(90deg);
-  }
-
-  .faq-item[open]:not(.is-closing) .faq-item__toggle {
-    transform: rotate(135deg);
-  }
-
-  .faq-item summary:hover .faq-item__toggle {
-    box-shadow:
-      0 0 0 7px rgba(88, 111, 124, 0.16),
-      0 6px 14px rgba(34, 50, 58, 0.3);
-  }
-
-  /* Antwort: Höhe wird per Script animiert (siehe unten) */
-  .faq-item__answer {
-    overflow: hidden;
-  }
-
-  .faq-item__answer > p {
-    margin: 0;
-    padding: 1rem 1.4rem 1.2rem;
-    font-size: 0.98rem;
-    line-height: 1.65;
-    color: var(--c-slate);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .faq-item__toggle {
-      transition: none;
-    }
-  }
-
-  /* =========================================
-     ABOUT SEKTION
-     ========================================= */
-
-  .about {
-    background-color: #0b1120;
-    padding: clamp(5rem, 10vw, 8rem) 0;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .about .container {
-    position: relative;
-    z-index: 1;
-  }
-
-  /* Blur-Animation nicht auf rundes Bild (Mobile-Bug) */
-   /* =========================================
-     HERO SEKTION 
-     ========================================= */
-
-#intro {
-  position: relative;
-  min-height: clamp(32rem, 68vh, 42rem);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  padding: clamp(3.5rem, 8vh, 5rem) 1.25rem clamp(3rem, 7vh, 4.5rem);
-}
-
-/* --- Ambient Hintergrund (hell, mit grünem und goldenem Schimmer) --- */
-.hero-ambient {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-  background:
-    var(--c-bg);
-}
-
-.hero-grid {
-  position: absolute;
-  inset: -1px;
-  background-image:
-    linear-gradient(rgba(15, 23, 42, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
-  background-size: 44px 44px;
-  mask-image: radial-gradient(ellipse 75% 62% at 50% 46%, #000 15%, transparent 72%);
-  -webkit-mask-image: radial-gradient(ellipse 75% 62% at 50% 46%, #000 15%, transparent 72%);
-}
-
-@media (min-width: 769px) {
-  .hero-grid {
-    mask-image:
-      linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%),
-      radial-gradient(ellipse 62% 58% at 50% 46%, #000 18%, transparent 74%);
-    -webkit-mask-image:
-      linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%),
-      radial-gradient(ellipse 62% 58% at 50% 46%, #000 18%, transparent 74%);
-    mask-composite: intersect;
-    -webkit-mask-composite: source-in;
-  }
-
-}
-
-.hero-spotlight {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -46%);
-  width: min(92vw, 680px);
-  height: min(52vh, 400px);
-  border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(4, 114, 77, 0.1) 0%, transparent 68%);
-}
-
-#intro .section-head {
-  position: relative;
-  z-index: 2;
-}
-
-/* Hero brand: intro logo styles from style.css — no local overrides */
-
-@media (max-width: 768px) {
-  #intro {
-    min-height: auto;
-    padding: clamp(1.5rem, 6vw, 2.5rem) 0 clamp(2.5rem, 8vw, 3.5rem);
-  }
-
-  .hero-grid {
-    background-size: 32px 32px;
-    mask-image: radial-gradient(ellipse 88% 70% at 50% 44%, #000 10%, transparent 78%);
-    -webkit-mask-image: radial-gradient(ellipse 88% 70% at 50% 44%, #000 10%, transparent 78%);
-  }
-
-}
-/* Neue Kundenreise: Clean bündelt Beweise, Angebot und Ablauf. */
-.services--clean {
-  padding: clamp(3rem, 7vw, 5rem) 0;
-  color: #0f172a;
-  background: transparent;
-}
-
-.clean-block-head__kicker {
-  margin: 0 0 0.65rem;
-  font-family: inherit;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--c-turf);
-}
-
-.faq--earth {
-  position: relative;
-  z-index: 1;
-  padding: clamp(1.5rem, 4vw, 2.75rem) 0 clamp(4.5rem, 10vw, 7rem) !important;
-  background: transparent !important;
-}
-
-.earth-faq__head {
-  max-width: 720px;
-  margin: 0 auto clamp(1.75rem, 4vw, 2.5rem);
-  text-align: center;
-}
-
-.earth-faq__head > p {
-  margin: 0 0 0.6rem;
-  font-family: inherit;
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--c-green-ink);
-}
-
-.earth-faq__head h2 {
-  margin: 0;
-  font-size: clamp(1.55rem, 4vw, 2.4rem);
-  color: var(--c-ink);
-}
-
-</style>
 
 <script>
   import { initCarousels } from '../scripts/carousel';

@@ -34,6 +34,7 @@ const projectListItems: ProjectListItem[] = sortedProjects.map((project) => ({
   jsonLd={portfolioPageSchema(projectListItems, Astro.site)}
 >
   <LegalPageShell
+    sketch="gallery"
     back={{ href: '/#projekte', label: 'Zurück zu den Referenzen' }}
     xwide
     legalNav={false}
@@ -99,7 +100,8 @@ const projectListItems: ProjectListItem[] = sortedProjects.map((project) => ({
     }
 
     .portfolio-grid > :global(*) {
-      flex: 0 0 min(80%, 21rem);
+      flex: 0 0 var(--swipe-card);
+      min-width: 0;
       height: auto;
       align-self: stretch;
       scroll-snap-align: center;

@@ -1,51 +1,86 @@
 /* ═══ Seitenkopf der Unterseiten ═══
-   Gleicher Grund wie der Hero der Startseite (Ghost White, feines Raster, grüner Schimmer),
-   Pfad statt Zurück-Button, markiertes Schlüsselwort wie „Ohne Baukasten.“
+   Gleiches Rasterpapier wie der Bleistift-Hero der Startseite (läuft unter den hellen
+   Header), eine Skizze passend zum Inhalt, Pfad, markiertes Schlüsselwort
    und rechts ein Bereich, den jede Seite selbst füllen kann (Slot „hero“). */
 
 .sub-hero {
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  padding: clamp(2.25rem, 6vw, 4.5rem) 1.25rem clamp(2.75rem, 6vw, 4.5rem);
-  background: var(--c-bg);
+  /* unter den transparenten Header ziehen: Papier läuft bis an den oberen Rand */
+  margin-top: calc(-1 * var(--site-header-height));
+  padding: calc(var(--site-header-height) + clamp(2.25rem, 6vw, 4.5rem)) 1.25rem clamp(2.75rem, 6vw, 4.5rem);
+  background: var(--c-sketch-paper);
 }
 
-/* Raster und Schimmer wie #intro auf der Startseite */
+/* Rasterpapier wie .sketch-hero__paper auf der Startseite */
 .sub-hero__ambient {
   position: absolute;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background:
-    radial-gradient(ellipse 55% 70% at 85% 30%, rgba(4, 114, 77, 0.09), transparent 62%),
-    radial-gradient(ellipse 45% 60% at 10% 90%, rgba(184, 219, 217, 0.35), transparent 65%);
-}
-
-.sub-hero__ambient::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
   background-image:
-    linear-gradient(rgba(15, 23, 42, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
-  background-size: 44px 44px;
-  mask-image: radial-gradient(ellipse 70% 85% at 60% 40%, #000 20%, transparent 75%);
-  -webkit-mask-image: radial-gradient(ellipse 70% 85% at 60% 40%, #000 20%, transparent 75%);
+    repeating-linear-gradient(0deg, rgba(60, 68, 76, 0.09) 0 1px, transparent 1px 36px),
+    repeating-linear-gradient(90deg, rgba(60, 68, 76, 0.09) 0 1px, transparent 1px 36px);
+  background-position: center;
 }
 
-/* Dezenter Abschluss: schmales Warnband wie die Tape-Trenner der Startseite */
-.sub-hero::after {
-  content: '';
+/* Skizze: am Desktop unten rechts in der Ecke (unter dem Zurück-Button),
+   mobil klein und blass am rechten Rand */
+.sub-hero__sketch {
+  position: absolute;
+  right: -3%;
+  bottom: -8%;
+  width: clamp(240px, 23vw, 380px);
+  height: auto;
+  opacity: 0.75;
+  user-select: none;
+}
+
+/* mit eigenem rechten Bereich (Angebot, Kontakt): Skizze unten links in die Ecke */
+.sub-hero--aside .sub-hero__sketch {
+  top: auto;
+  right: auto;
+  bottom: -14%;
+  left: -3%;
+  width: clamp(200px, 19vw, 320px);
+  opacity: 0.5;
+  translate: none;
+}
+
+@media (max-width: 899px) {
+  .sub-hero__sketch,
+  .sub-hero--aside .sub-hero__sketch {
+    top: calc(var(--site-header-height) + 0.25rem);
+    right: -16%;
+    bottom: auto;
+    left: auto;
+    width: 38vw;
+    opacity: 0.3;
+    translate: none;
+  }
+}
+
+/* Abschluss: zwei gezeichnete Bleistiftstriche über die volle Breite */
+.sub-hero__rule {
   position: absolute;
   inset: auto 0 0;
-  height: 6px;
-  background: repeating-linear-gradient(
-    -55deg,
-    var(--c-deep) 0 14px,
-    var(--c-sky) 14px 28px
-  );
-  opacity: 0.85;
+  width: 100%;
+  height: 14px;
+  overflow: visible;
+}
+
+.sub-hero__rule path {
+  fill: none;
+  stroke: #1f2428;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.sub-hero__rule path + path {
+  stroke-width: 1;
+  opacity: 0.55;
 }
 
 .sub-hero__inner {
@@ -58,7 +93,7 @@
 }
 
 @media (min-width: 900px) {
-  .sub-hero__back {
+  .sub-hero .sub-hero__back {
     position: absolute;
     top: 2px;
     right: 0;
@@ -97,45 +132,22 @@
   margin-bottom: clamp(1rem, 2.5vw, 1.5rem);
 }
 
-/* Zurück-Button: schlanke weiße Pille – mobil über dem Pfad, am Desktop oben rechts */
-.sub-hero__back {
+/* Zurück-Button: kleiner Kritzel-Button (sketch-btn) – mobil über dem Pfad, am Desktop oben rechts */
+.sub-hero .sub-hero__back {
   justify-self: start;
-  margin-bottom: -1rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
+  margin-bottom: -0.5rem;
   min-height: 40px;
   padding: 0 1rem;
-  border: 1px solid rgba(88, 111, 124, 0.22);
-  border-radius: 999px;
   font-size: 0.88rem;
   font-weight: 700;
-  text-decoration: none;
-  color: var(--c-ink);
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow:
-    0 1px 2px rgba(34, 50, 58, 0.05),
-    0 8px 20px -10px rgba(34, 50, 58, 0.3);
-  transition: translate 0.2s ease, background 0.2s ease, color 0.2s ease;
 }
 
 .sub-hero__back span {
   transition: translate 0.2s ease;
 }
 
-.sub-hero__back:hover {
-  color: var(--c-surface);
-  background: var(--c-deep);
-  translate: 0 -1px;
-}
-
 .sub-hero__back:hover span {
   translate: -3px 0;
-}
-
-.sub-hero__back:focus-visible {
-  outline: 2px solid var(--c-turf);
-  outline-offset: 3px;
 }
 
 .sub-hero__crumbs ol {
@@ -145,8 +157,11 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: 0.88rem;
-  font-weight: 600;
+  /* Handschrift wie eine Notiz auf dem Skizzenpapier */
+  font-family: 'Architects Daughter', 'Inter Variable', system-ui, sans-serif;
+  font-size: 1.02rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
 }
 
 .sub-hero__crumbs li {
@@ -219,12 +234,42 @@
   overflow-wrap: break-word;
 }
 
-.sub-hero__title mark {
-  padding: 0 0.1em;
-  color: inherit;
-  background: linear-gradient(transparent 58%, var(--c-sky) 58%, var(--c-sky) 92%, transparent 92%);
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
+.sub-hero__mark {
+  position: relative;
+  white-space: nowrap;
+}
+
+/* gezeichnete Unterstreichung wie bei „Ohne Baukasten.“ im Hero der Startseite */
+.sub-hero__underline {
+  position: absolute;
+  left: -2%;
+  bottom: -0.16em;
+  width: 104%;
+  height: 0.3em;
+  overflow: visible;
+  clip-path: inset(-50% 100% -50% 0);
+  animation: sub-hero-draw 0.8s 0.4s ease-out forwards;
+}
+
+.sub-hero__underline path {
+  fill: none;
+  stroke: #1f2428;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.sub-hero__underline path + path {
+  stroke-width: 1;
+  opacity: 0.55;
+}
+
+@keyframes sub-hero-draw {
+  to { clip-path: inset(-50% -2% -50% 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sub-hero__underline { animation: none; clip-path: none; }
 }
 
 .sub-hero__lead {
@@ -240,21 +285,6 @@
 }
 
 /* ═══ Inhalte für den rechten Bereich ═══ */
-
-/* ── Erster Bildschirm (fold): Kerninfos ohne Scrollen ── */
-@media (min-width: 900px) and (min-height: 620px) {
-  .sub-hero--fold {
-    display: grid;
-    align-content: center;
-    min-height: calc(100svh - var(--site-header-height));
-    padding-block: clamp(2rem, 5vh, 3.5rem);
-  }
-
-  .sub-hero--fold .sub-hero__inner {
-    width: 100%;
-    align-items: center;
-  }
-}
 
 /* Angebot links: die wichtigsten Punkte und die Anfrage */
 .hero-offer {
@@ -300,10 +330,6 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 0.75rem 1.5rem;
-}
-
-.hero-actions .offer-cta {
-  padding-inline: 1.6rem;
 }
 
 .hero-actions__more {

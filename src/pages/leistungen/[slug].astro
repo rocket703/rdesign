@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LegalPageShell from '../../components/LegalPageShell.astro';
+import SketchFrame from '../../components/SketchFrame.astro';
 import OfferIcon from '../../components/OfferIcon.astro';
 import OfferVisual from '../../components/OfferVisual.astro';
 import { offers, offerPath, packages, type Offer } from '../../data/offers';
@@ -13,6 +14,7 @@ import {
   webPageSchema,
 } from '../../lib/seo';
 import '../../styles/offer.css';
+import type { MotifName } from '../../lib/sketch';
 
 export function getStaticPaths() {
   return offers.map((offer) => ({ params: { slug: offer.slug }, props: { offer } }));
@@ -24,6 +26,18 @@ const otherOffers = offers.filter((other) => other.slug !== offer.slug && other.
 const contactHref = `/kontakt/?thema=${offer.slug}`;
 // letztes Wort des Titels wird markiert, z. B. „Webdesign Magdeburg“ → „Magdeburg“
 const titleMark = offer.title.split(' ').pop();
+
+// Skizze im Seitenkopf passend zur Leistung
+const motifFor: Record<string, MotifName> = {
+  'webdesign-magdeburg': 'browser',
+  webentwicklung: 'code',
+  'app-entwicklung': 'phones',
+  'hosting-betreuung': 'server',
+  'seo-check': 'seo',
+  relaunch: 'browser',
+  barrierefreiheit: 'cards',
+  'business-email': 'mail',
+};
 // Banner-Farben wie bei den Paketkarten der Startseite
 const packageAccents = ['var(--c-turf)', 'var(--c-slate)', 'var(--c-deep)', 'var(--c-forest)'];
 // Wartungsstufen: Farben wie bei den Projektkarten
@@ -64,11 +78,11 @@ const keyPoints = offer.deliverables.slice(0, 3);
   ])}
 >
   <LegalPageShell
-    back={offer.kind === 'service' ? { href: '/leistungen/', label: 'Alle Leistungen' } : { href: '/#pakete', label: 'Zurück zu den Paketen' }}
+    sketch={motifFor[offer.slug] ?? 'browser'}
+    back={{ href: '/leistungen/', label: 'Alle Leistungen' }}
     wide
     legalNav={false}
     crumbs={[{ label: 'Leistungen', href: '/leistungen/' }]}
-    fold
     title={offer.title}
     mark={titleMark}
     lead={offer.lead}
@@ -84,7 +98,7 @@ const keyPoints = offer.deliverables.slice(0, 3);
         ))}
       </ul>
       <div class="hero-actions">
-        <a href={contactHref} class="offer-cta">Projekt anfragen</a>
+        <a href={contactHref} class="sketch-btn sketch-btn--primary">Projekt anfragen <span aria-hidden="true">→</span><SketchFrame seed={47} /></a>
         <a href="#details" class="hero-actions__more">Alle Details <span aria-hidden="true">↓</span></a>
       </div>
       <p class="hero-actions__note">Kostenlos &amp; unverbindlich – Antwort meist innerhalb von 24 h.</p>
@@ -164,6 +178,7 @@ const keyPoints = offer.deliverables.slice(0, 3);
               <button type="button" class="carousel-dots__dot" data-carousel-dot={index} aria-label={`${plan.name} anzeigen`} aria-current={index === 0 ? 'true' : undefined}></button>
             ))}
           </div>
+          <p class="stage-note">Alle Stufen: {priceText}</p>
           </div>
         ) : (
           <div class="plan-carousel" data-carousel>
@@ -178,7 +193,7 @@ const keyPoints = offer.deliverables.slice(0, 3);
                       <span class="plan-card__mark" aria-hidden="true">✓</span>
                       <span>
                         {feature.includes(': ') ? (
-                          <Fragment><strong>{feature.split(': ')[0]}:</strong> {feature.split(': ').slice(1).join(': ')}</Fragment>
+                          <Fragment><strong>{feature.split(': ')[0]}<span class="plan-card__detail">:</span></strong><span class="plan-card__detail"> {feature.split(': ').slice(1).join(': ')}</span></Fragment>
                         ) : (
                           feature
                         )}
@@ -191,6 +206,11 @@ const keyPoints = offer.deliverables.slice(0, 3);
                     <span class="plan-card__variants-label">wählbar:</span>
                     {plan.variants.map((variant) => <span class="plan-card__variant">{variant}</span>)}
                   </p>
+                )}
+                {plan.features.some((feature) => feature.includes(': ')) && (
+                  <button type="button" class="plan-card__toggle" aria-expanded="false" data-plan-toggle>
+                    Details anzeigen
+                  </button>
                 )}
                 <div class="plan-card__foot">
                   <span class="plan-card__price">{priceText}</span>
@@ -329,4 +349,19 @@ const keyPoints = offer.deliverables.slice(0, 3);
 <script>
   import { initCarousels } from '../../scripts/carousel';
   initCarousels();
+
+  // Paketkarten mobil: Erklärungen zu den Stichworten auf- und zuklappen –
+  // immer alle Karten einer Gruppe, damit sie gleich hoch bleiben
+  document.querySelectorAll<HTMLButtonElement>('[data-plan-toggle]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const group = button.closest('.plan-carousel');
+      if (!group) return;
+      const open = button.getAttribute('aria-expanded') !== 'true';
+      group.querySelectorAll('.plan-card').forEach((card) => card.classList.toggle('is-open', open));
+      group.querySelectorAll<HTMLButtonElement>('[data-plan-toggle]').forEach((other) => {
+        other.setAttribute('aria-expanded', String(open));
+        other.textContent = open ? 'Details ausblenden' : 'Details anzeigen';
+      });
+    });
+  });
 </script>

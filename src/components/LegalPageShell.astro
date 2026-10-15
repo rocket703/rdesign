@@ -1,5 +1,7 @@
 ---
 import CtaBand from './CtaBand.astro';
+import SketchFrame from './SketchFrame.astro';
+import type { MotifName } from '../lib/sketch';
 import '../styles/legal.css';
 import '../styles/cards.css';
 import '../styles/sub-hero.css';
@@ -10,7 +12,7 @@ type Crumb = { label: string; href: string };
 interface Props {
   title: string;
   lead: string;
-  /** Teil des Titels, der wie „Ohne Baukasten.“ auf der Startseite markiert wird */
+  /** Teil des Titels, der wie „Ohne Baukasten.“ auf der Startseite gezeichnet unterstrichen wird */
   mark?: string;
   /** Pfad über dem Titel – „Start“ steht automatisch vorne, die aktuelle Seite hinten */
   crumbs?: Crumb[];
@@ -18,8 +20,6 @@ interface Props {
   crumbLabel?: string;
   /** kleiner Hinweis neben dem Pfad, z. B. „In Arbeit“ */
   status?: string;
-  /** Kopf füllt am Desktop die erste Bildschirmhöhe (alle Kerninfos ohne Scrollen) */
-  fold?: boolean;
   /** Zurück-Button vor dem Pfad: Ziel und Beschriftung */
   back?: { href: string; label: string };
   wide?: boolean;
@@ -30,6 +30,8 @@ interface Props {
   theme?: Theme;
   /** nachtblauer Abschluss-Aufruf am Seitenende (Standard: an, außer auf Rechtsseiten) */
   cta?: boolean;
+  /** Bleistift-Skizze im Kopf, passend zum Inhalt der Seite */
+  sketch?: MotifName;
 }
 
 const {
@@ -39,13 +41,13 @@ const {
   crumbs = [],
   crumbLabel = title,
   status,
-  fold = false,
   back = { href: '/', label: 'Zur Startseite' },
   wide = false,
   xwide = false,
   legalNav = true,
   theme = 'clean',
   cta = !legalNav,
+  sketch,
 } = Astro.props;
 
 const trail: Crumb[] = [{ label: 'Start', href: '/' }, ...crumbs];
@@ -54,11 +56,14 @@ const hasAside = Astro.slots.has('hero');
 ---
 
 <div class:list={['legal-page', `legal-page--${theme}`, wide && 'legal-page--wide', xwide && 'legal-page--xwide']}>
-  <section class:list={['sub-hero', hasAside && 'sub-hero--aside', fold && 'sub-hero--fold']}>
-    <div class="sub-hero__ambient" aria-hidden="true"></div>
+  <section class:list={['sub-hero', hasAside && 'sub-hero--aside']}>
+    <div class="sub-hero__ambient" aria-hidden="true">
+      {sketch && <img class="sub-hero__sketch" src={`/sketch/motif-${sketch}.svg`} alt="" decoding="async" />}
+    </div>
     <div class="sub-hero__inner">
-      <a href={back.href} class="sub-hero__back" data-page-back>
+      <a href={back.href} class="sub-hero__back sketch-btn sketch-btn--secondary" data-page-back>
         <span aria-hidden="true">←</span> {back.label}
+        <SketchFrame seed={29} />
       </a>
       <div class="sub-hero__main autoShow">
         <div class="sub-hero__top">
@@ -77,7 +82,10 @@ const hasAside = Astro.slots.has('hero');
         <h1 class="sub-hero__title">
           {markAt >= 0 ? (
             <Fragment>
-              {title.slice(0, markAt)}<mark>{mark}</mark>{title.slice(markAt + mark!.length)}
+              {title.slice(0, markAt)}<span class="sub-hero__mark">{mark}<svg class="sub-hero__underline" viewBox="0 0 240 14" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M2 9 C 50 5, 120 4, 237 8" />
+                  <path d="M8 11.5 C 70 8, 150 8, 230 10" />
+                </svg></span>{title.slice(markAt + mark!.length)}
             </Fragment>
           ) : (
             title
@@ -92,6 +100,11 @@ const hasAside = Astro.slots.has('hero');
         </div>
       )}
     </div>
+    <!-- gezeichneter Abschluss statt Linie: zwei leicht versetzte Bleistiftstriche -->
+    <svg class="sub-hero__rule" viewBox="0 0 1000 14" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 7 C 180 4, 360 9, 520 6 S 860 4, 1000 8" />
+      <path d="M0 10 C 220 8, 420 11, 600 9 S 880 8, 1000 10" />
+    </svg>
   </section>
 
   <section class="legal-body">

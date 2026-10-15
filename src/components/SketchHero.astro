@@ -19,12 +19,12 @@ const corners = ['tl', 'tr', 'bl', 'br'] as const;
     </h1>
 
     <p class="sketch-hero__value">
-      Klar&nbsp;gestaltet. Schnell&nbsp;geladen. <span class="sketch-hero__mark">Ohne&nbsp;Baukasten.<svg class="sketch-hero__underline" viewBox="0 0 240 14" preserveAspectRatio="none" aria-hidden="true">
+      <span class="sketch-hero__line">Klar&nbsp;gestaltet.</span> <span class="sketch-hero__line">Schnell&nbsp;geladen.</span> <span class="sketch-hero__mark">Ohne&nbsp;Baukasten.<svg class="sketch-hero__underline" viewBox="0 0 240 14" preserveAspectRatio="none" aria-hidden="true">
           <path d="M2 9 C 50 5, 120 4, 237 8" />
           <path d="M8 11.5 C 70 8, 150 8, 230 10" />
         </svg></span>
     </p>
-    <p class="sketch-hero__sub">Webseiten für Vereine, Events und lokale Unternehmen.</p>
+    <p class="sketch-hero__sub">Webseiten für Vereine, Events und lokale Unternehmen in Magdeburg und Umgebung.</p>
 
     <div class="sketch-hero__actions">
       <a href="/kontakt/" class="sketch-btn sketch-btn--primary">Projekt anfragen<SketchFrame seed={11} /></a>
@@ -57,7 +57,7 @@ const corners = ['tl', 'tr', 'bl', 'br'] as const;
     z-index: -1;
     pointer-events: none;
     background-image:
-      radial-gradient(ellipse 42% 38% at 50% 48%, rgba(255, 255, 255, 0.75), transparent 75%),
+      radial-gradient(ellipse 42% 38% at 50% 48%, rgba(255, 255, 255, 0.35), transparent 75%),
       repeating-linear-gradient(0deg, rgba(60, 68, 76, 0.09) 0 1px, transparent 1px 36px),
       repeating-linear-gradient(90deg, rgba(60, 68, 76, 0.09) 0 1px, transparent 1px 36px);
     background-position: center;
@@ -70,7 +70,7 @@ const corners = ['tl', 'tr', 'bl', 'br'] as const;
     opacity: 0.75;
     user-select: none;
   }
-  .sketch-hero__corner--tl { top: 3%;  left: -4%; }
+  .sketch-hero__corner--tl { top: 6%;  left: -1%; }
   .sketch-hero__corner--tr { top: 9%; right: -3%; }
   .sketch-hero__corner--bl { bottom: -6%; left: -6%; }
   .sketch-hero__corner--br { bottom: -4%; right: -5%; }
@@ -84,23 +84,18 @@ const corners = ['tl', 'tr', 'bl', 'br'] as const;
   }
 
   .sketch-hero__logo {
-    position: relative;
     margin: 0 0 clamp(2.5rem, 8vh, 5rem);
     line-height: 0;
-  }
-  /* Papier-Schleier hinter dem Umriss-Logo: Skizzenlinien laufen davor aus,
-     statt durch die Buchstaben zu schneiden */
-  .sketch-hero__logo::before {
-    content: '';
-    position: absolute;
-    inset: -30% -12%;
-    z-index: -1;
-    background: radial-gradient(closest-side, var(--c-sketch-paper) 62%, transparent);
-    pointer-events: none;
   }
   .sketch-hero__logo img {
     width: clamp(260px, 42vw, 480px);
     height: auto;
+    /* schmaler Papier-Rand direkt an den Umrisslinien: Skizzenstriche brechen
+       kurz vor den Buchstaben ab, statt durch sie zu schneiden */
+    filter:
+      drop-shadow(0 0 1px var(--c-sketch-paper))
+      drop-shadow(0 0 1.5px var(--c-sketch-paper))
+      drop-shadow(0 0 2px var(--c-sketch-paper));
     animation: sketch-in 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
   }
 
@@ -146,6 +141,7 @@ const corners = ['tl', 'tr', 'bl', 'br'] as const;
     margin: 0 0 2rem;
     font-size: clamp(1rem, 1.4vw, 1.15rem);
     color: #3d4449;
+    text-wrap: balance;
   }
 
   .sketch-hero__actions {
@@ -153,31 +149,6 @@ const corners = ['tl', 'tr', 'bl', 'br'] as const;
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
-  }
-
-  /* Buttons mit gekritzeltem Bleistift-Rahmen (SketchFrame) */
-  .sketch-btn {
-    --frame: var(--c-forest);
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    padding: 0.8rem 1.25rem;
-    border-radius: 3px;
-    font-weight: 650;
-    font-size: 0.95rem;
-    text-decoration: none;
-    transition: transform 0.2s ease;
-  }
-  .sketch-btn:hover { transform: translateY(-2px); }
-
-  .sketch-btn--primary {
-    background: var(--c-turf);
-    color: #fff;
-  }
-  .sketch-btn--secondary {
-    --frame: var(--c-turf);
-    background: rgba(255, 255, 255, 0.55);
-    color: var(--c-turf);
   }
 
   @keyframes sketch-in {
@@ -195,6 +166,10 @@ const corners = ['tl', 'tr', 'bl', 'br'] as const;
     .sketch-hero__corner--bl { bottom: -3%; left: -16%; }
     .sketch-hero__corner--br { bottom: -2%; right: -18%; }
     .sketch-hero__logo { margin-bottom: 2.5rem; }
+    /* jeder Satz eine eigene Zeile – nicht je nach Gerät mal zwei, mal drei */
+    .sketch-hero__line { display: block; }
+    /* 15 px: Unterzeile bleibt ab 360 px Breite zweizeilig */
+    .sketch-hero__sub { font-size: 0.9375rem; }
     .sketch-hero__logo img { width: min(84vw, 360px); }
     .sketch-hero__actions { flex-direction: column; align-items: stretch; width: min(100%, 18rem); }
     .sketch-btn { justify-content: center; }
@@ -203,6 +178,5 @@ const corners = ['tl', 'tr', 'bl', 'br'] as const;
   @media (prefers-reduced-motion: reduce) {
     .sketch-hero__logo img { animation: none; }
     .sketch-hero__underline { animation: none; clip-path: none; }
-    .sketch-btn { transition: none; }
   }
 </style>

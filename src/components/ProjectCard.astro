@@ -24,7 +24,7 @@ const media = responsiveImage(image, 800);
 const accents = ['var(--c-turf)', 'var(--c-slate)', 'var(--c-deep)'];
 const color = accents[accent % accents.length];
 // mobil zeigt die Karte nur die ersten Technik-Icons in einer Reihe, der Rest als „+N“
-const TECH_MOBILE = 5;
+const TECH_MOBILE = 4;
 const techMore = tags.length - TECH_MOBILE;
 ---
 
@@ -219,7 +219,7 @@ const techMore = tags.length - TECH_MOBILE;
       overflow: hidden;
     }
 
-    .project-card :global(.project-card__tech .tech-icons__item:nth-child(n + 6)) {
+    .project-card :global(.project-card__tech .tech-icons__item:nth-child(n + 5)) {
       display: none;
     }
 

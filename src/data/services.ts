@@ -1,10 +1,12 @@
-// Kernleistungen – genutzt auf der Startseite und auf /leistungen/
+// Leistungen – genutzt auf der Startseite und auf /leistungen/.
+// Im Vordergrund stehen Webseite, Relaunch und Betreuung („core“);
+// Web-Apps, Apps und die Prüf-Pakete laufen als „Außerdem möglich“ mit.
 export type Service = {
   title: string;
   text: string;
   chips: string[];
-  /** Symbol im grünen Kreis der Startseiten-Karte */
-  icon: 'web' | 'dashboard' | 'mobile' | 'care';
+  /** Symbol im gezeichneten Kreis der Startseiten-Karte */
+  icon: 'web' | 'refresh' | 'care';
   /** eigene Leistungsseite */
   href?: string;
   /** passendes Referenzprojekt (Slug unter /projekte/) */
@@ -13,7 +15,7 @@ export type Service = {
 
 export const services: Service[] = [
   {
-    title: 'Webseiten & Landingpages',
+    title: 'Neue Webseite',
     icon: 'web',
     text: 'Individuelles Design, saubere Inhalte, SEO und schnelle Ladezeiten ohne austauschbare Schablone.',
     chips: ['Individuell', 'SEO', 'Barrierefrei'],
@@ -21,34 +23,33 @@ export const services: Service[] = [
     reference: { title: 'Radsportclub Magdeburg', slug: 'radsportclub-magdeburg' },
   },
   {
-    title: 'Web-Apps & Dashboards',
-    icon: 'dashboard',
-    text: 'Login, Datenbank und Admin-Bereiche – Systeme, die mit deinem Arbeitsalltag mitwachsen.',
-    chips: ['Login', 'Datenbank', 'Admin'],
-    href: '/leistungen/webentwicklung/',
-    reference: { title: 'Startplatzbörse', slug: 'startplatzboerse' },
-  },
-  {
-    title: 'Native Apps',
-    icon: 'mobile',
-    text: 'Eine Codebasis für iOS und Android mit React Native und Expo – vom ersten Prototyp bis zum Store-Release.',
-    chips: ['iOS', 'Android', 'App Stores'],
-    href: '/leistungen/app-entwicklung/',
-    reference: { title: 'Startplatzbörse (App)', slug: 'startplatzboerse' },
+    title: 'Relaunch',
+    icon: 'refresh',
+    text: 'Deine bestehende Seite modern, schnell und mobil – ohne dass Inhalte oder Google-Rankings verloren gehen.',
+    chips: ['Redesign', 'Umzug', 'SEO'],
+    href: '/leistungen/relaunch/',
   },
   {
     title: 'Hosting & Betreuung',
     icon: 'care',
-    text: 'Globales Cloud-Hosting oder deutscher Server, Updates, Backups und kleine Änderungen – auch nach dem Launch bleibt der Kontakt direkt.',
+    text: 'Hosting, Updates, Backups und kleine Änderungen – auch nach dem Launch bleibt der Kontakt direkt.',
     chips: ['Hosting', 'Backups', 'Wartung'],
     href: '/leistungen/hosting-betreuung/',
   },
 ];
 
+/** „Außerdem möglich“: kurz und knapp, Details auf der jeweiligen Leistungsseite */
+export const moreServices: { title: string; text: string; href: string }[] = [
+  { title: 'Web-Apps & Dashboards', text: 'Login, Datenbank und Verwaltungsbereich.', href: '/leistungen/webentwicklung/' },
+  { title: 'Native Apps', text: 'iOS und Android aus einer Codebasis.', href: '/leistungen/app-entwicklung/' },
+  { title: 'SEO-Check', text: 'Technik, Inhalte und Ladezeiten geprüft.', href: '/leistungen/seo-check/' },
+  { title: 'Barrierefreiheits-Check', text: 'Prüfung nach WCAG 2.1 mit klaren Prioritäten.', href: '/leistungen/barrierefreiheit/' },
+  { title: 'Business-E-Mail & DNS', text: 'Postfächer auf deiner Domain, sauber eingerichtet.', href: '/leistungen/business-email/' },
+];
+
 // Strich-Icons für die Leistungskarten (24er Raster)
 export const serviceIcons: Record<Service['icon'], string> = {
   web: '<rect x="3" y="4" width="18" height="13" rx="1.5"/><path d="M3 8h18M8 21h8M12 17v4"/><circle cx="5.6" cy="6" r=".4"/>',
-  dashboard: '<rect x="3" y="3" width="7.5" height="9" rx="1"/><rect x="13.5" y="3" width="7.5" height="5" rx="1"/><rect x="13.5" y="11" width="7.5" height="10" rx="1"/><rect x="3" y="15" width="7.5" height="6" rx="1"/>',
-  mobile: '<rect x="6.5" y="2.5" width="11" height="19" rx="2.2"/><path d="M10.5 18.5h3"/>',
+  refresh: '<path d="M20 11a8 8 0 0 0-14.3-4.9L4 8"/><path d="M4 3.5V8h4.5"/><path d="M4 13a8 8 0 0 0 14.3 4.9L20 16"/><path d="M20 20.5V16h-4.5"/>',
   care: '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.2L3.5 17.3a1.8 1.8 0 0 0 2.6 2.6l5.8-5.8a4 4 0 0 0 5.2-5.4l-2.5 2.5-2.3-.4-.4-2.3z"/>',
 };
