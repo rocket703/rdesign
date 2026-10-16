@@ -18,6 +18,13 @@ tasks:
   - "GitHub Pages Hosting für kostenlose, sichere und blitzschnelle Auslieferung."
   - "SEO‑Optimierung (Meta‑Tags, semantische Struktur, Open Graph)."
   - "Bild‑Optimierung (WebP‑Format) für maximale Ladegeschwindigkeit."
+theme:
+  bg: "#ffffff"
+  text: "#121212"
+  muted: "#53565c"
+  accent: "#0a2e64"
+  accentText: "#ffffff"
+  button: { bg: "#0a2e64", text: "#ffffff", border: "2px solid #0a2e64", radius: "999px", transform: "uppercase", weight: 850, tracking: "0.035em" }
 ---
 Für den **Radsportclub Magdeburg** wurde eine moderne statische Vereinswebsite entwickelt, die den Verein professionell im Netz präsentiert. Das schlanke HTML/CSS/JavaScript‑Stack sorgt für blitzschnelle Ladezeiten und höchste Zuverlässigkeit – ganz ohne CMS oder serverseitige Abhängigkeiten.
 

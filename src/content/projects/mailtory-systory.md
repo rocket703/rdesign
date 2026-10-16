@@ -16,6 +16,13 @@ tasks:
   - "Komplettes Redesign des Frontends durch r³webdesign, abgestimmt mit dem Betreiber."
   - "Neues Design für Vereinsverwaltung, E-Mail und Messenger als zusammenhängende Plattform."
   - "Launch geplant für das 1. Quartal 2027."
+theme:
+  bg: "#0c0e17"
+  text: "#e2e8f0"
+  muted: "#8b949e"
+  accent: "#6366f1"
+  accentText: "#ffffff"
+  button: { bg: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%)", text: "#ffffff", radius: "100px", weight: 600, shadow: "0 4px 20px rgba(99, 102, 241, 0.35)" }
 ---
 
 **Das Projekt:**

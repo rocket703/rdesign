@@ -15,6 +15,14 @@ tasks:
   - "SEO (Meta‑Tags, semantische Struktur, Open Graph)."
   - "Performance‑Tuning."
   - "Barrierefreiheit."
+# Farben der aktuellen Live-Seite (Screenshot); nach dem Redesign: Creme #f3f0e8, Gold-Button #c9a227
+theme:
+  bg: "#e3ebe4"
+  text: "#1f2d24"
+  muted: "#55625a"
+  accent: "#115c2b"
+  accentText: "#ffffff"
+  button: { bg: "#115c2b", text: "#ffffff", radius: "6px", weight: 700 }
 ---
 
 Für **Atelier Haarkunst**, einen modernen Friseursalon, wurde eine WordPress-Website mit selbstgecodeten Komponenten erstellt: dynamische Preis-Module, Touch-optimierte Service-Navigation, responsive Bildergalerie und vollständiger lokaler SEO-Optimierung.

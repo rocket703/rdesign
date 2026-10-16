@@ -20,6 +20,13 @@ tasks:
   - "Bild‑Optimierung (WebP‑Format) für maximale Ladegeschwindigkeit."
   - "SEO‑Optimierung (Meta‑Tags, strukturierte Daten, Open Graph)."
   - "GitHub Pages Hosting für kostenlose, sichere und blitzschnelle Auslieferung."
+theme:
+  bg: "#ffffff"
+  text: "#050a14"
+  muted: "#5f6670"
+  accent: "#002366"
+  accentText: "#ffffff"
+  button: { bg: "#002366", text: "#ffffff", border: "2px solid #002366", radius: "12px", weight: 900 }
 ---
 
 Mit dem **Wolmirstedter Ohrelauf**, einem regionalen Spendenlauf, verbindet mich eine lange Geschichte: 2020/2021 habe ich die damalige WordPress‑Seite betreut. Diese wurde später eingestellt, danach lief der Auftritt eine Zeit lang über Google Sites. Mit dem Redesign ist nun eine **moderne statische Website** entstanden, die die Google‑Sites‑Lösung komplett ersetzt. Die neue Webseite setzt auf ein schlankes HTML/CSS/JavaScript‑Stack und wird statisch über GitHub gehostet – das Ergebnis: blitzschnelle Ladezeiten, höchste Zuverlässigkeit und null Abhängigkeiten von CMS‑Systemen.

@@ -19,6 +19,13 @@ tasks:
   - "Entwicklung eines interaktiven User-Dashboards zur Verwaltung von Inseraten."
   - "Integration eines On-Plattform Chatsystems für die direkte Kommunikation zwischen Nutzern."
   - "Kontinuierliche Erweiterung der Kernfunktionen."
+theme:
+  bg: "#262c2f"
+  text: "#ffffff"
+  muted: "#a3adb2"
+  accent: "#00bcd4"
+  accentText: "#041016"
+  button: { bg: "#00bcd4", text: "#041016", radius: "14px", weight: 800, tracking: "-0.02em", shadow: "0 8px 18px rgba(0, 188, 212, 0.22)" }
 ---
 
 Die Startplatzbörse ist eine maßgeschneiderte Fullstack-Plattform für den sicheren und unkomplizierten Handel von Startplätzen im Ausdauersport (Laufen, Radsport, Triathlon & Hyrox). Ziel ist ein reibungsloser Ablauf vom Login bis zum erfolgreichen Ticket-Transfer – komplett ohne Umwege über externe Messenger, unübersichtliche Social-Media-Gruppen oder undurchsichtige Prozesse.

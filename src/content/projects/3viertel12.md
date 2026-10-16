@@ -16,6 +16,13 @@ tasks:
   - "Strukturierung der Setlist- und Media-Bereiche für optimale UX."
   - "Hosting und Deployment über GitHub Pages."
   - "Mobile-First Optimierung für Fans, die von unterwegs auf Konzert-Infos zugreifen."
+theme:
+  bg: "#0a0606"
+  text: "#ffffff"
+  muted: "#9a9a9a"
+  accent: "#cc0000"
+  accentText: "#ffffff"
+  button: { bg: "#cc0000", text: "#ffffff", radius: "0", transform: "uppercase", weight: 800, tracking: "0.06em", clip: "polygon(5% 0, 100% 0, 95% 100%, 0 100%)" }
 ---
 
 Für die Band **3/4zwööölwe** (3viertel12) wird aktuell ein neuer digitaler Stützpunkt geschaffen. Die Website spiegelt den ehrlichen Charakter der Deutsch-Rock-Formation wider und verzichtet auf unnötigen Ballast – stattdessen stehen die Musik und das Band-Gefühl im Vordergrund.

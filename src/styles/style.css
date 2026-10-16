@@ -1,8 +1,9 @@
 /* ====================== Design tokens ====================== */
 :root {
   --accent-lime: #b8dbd9; /* Highlight 2 (Gold) – Name historisch */
-  /* einheitliche Kartenbreite in allen mobilen Wischleisten */
-  --swipe-card: min(80vw, 21rem);
+  /* einheitliche Kartenbreite in allen mobilen Wischleisten – so breit wie die Projektkarte (340 px),
+     auf schmalen Handys mit 24 px Rand links und rechts */
+  --swipe-card: min(340px, calc(100vw - 48px));
 }
 
 /* ====================== Reset & Basis ====================== */

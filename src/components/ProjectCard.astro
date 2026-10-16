@@ -1,40 +1,74 @@
 ---
 // src/components/ProjectCard.astro
+// Projektkarte „Plakat“: feste Maße (340 × 470 px), überall gleich – Startseite, Projekte-Seite, Handy.
+// Screenshot randlos oben, darunter großer Titel; Farben, Band und Button im Stil der Projektseite.
+// Die Werte kommen aus `theme` im Projekt (src/content/projects/*.md).
+import type { CollectionEntry } from 'astro:content';
 import { responsiveImage } from '../lib/images';
-import TechIcons from './TechIcons.astro';
 import { isInProgress } from '../lib/project-status';
+
+type Theme = NonNullable<CollectionEntry<'projects'>['data']['theme']>;
 
 interface Props {
   title: string;
   description: string;
   image: string;
-  tags: string[];
   id: string;
+  /** Adresse der Projektseite – unten in der Karte als Domain */
+  url?: string;
   headingLevel?: 2 | 3;
   status?: string;
   /** Projektart für das Band (z. B. „Vereinsseite“) */
   category?: string;
-  /** Position in der Liste – bestimmt die Kartenfarbe */
-  accent?: number;
+  /** Farben und Button-Stil der Projektseite */
+  theme?: Theme;
 }
 
-const { title, description, image, tags, id, headingLevel = 3, status = 'online', category, accent = 0 } = Astro.props;
+const { title, description, image, id, url, headingLevel = 3, status = 'online', category, theme } = Astro.props;
 const inProgress = isInProgress(status);
 const media = responsiveImage(image, 800);
-const accents = ['var(--c-turf)', 'var(--c-slate)', 'var(--c-deep)'];
-const color = accents[accent % accents.length];
-// mobil zeigt die Karte nur die ersten Technik-Icons in einer Reihe, der Rest als „+N“
-const TECH_MOBILE = 4;
-const techMore = tags.length - TECH_MOBILE;
+
+let domain = '';
+try {
+  domain = url ? new URL(url).hostname.replace(/^www\./, '') : '';
+} catch {
+  domain = '';
+}
+
+// ohne eigenes Theme: dunkle Karte in den Farben von r³webdesign
+const t: Theme = theme ?? {
+  bg: '#1a262c',
+  text: '#ffffff',
+  muted: '#c3ccd0',
+  accent: '#04724d',
+  accentText: '#ffffff',
+  button: { bg: '#04724d', text: '#ffffff', border: 'none', radius: '8px', transform: 'none', weight: 700, tracking: 'normal', shadow: 'none', clip: 'none' },
+};
+const vars = [
+  `--pc-bg: ${t.bg}`,
+  `--pc-text: ${t.text}`,
+  `--pc-muted: ${t.muted}`,
+  `--pc-accent: ${t.accent}`,
+  `--pc-accent-text: ${t.accentText}`,
+  `--pc-btn-bg: ${t.button.bg}`,
+  `--pc-btn-text: ${t.button.text}`,
+  `--pc-btn-border: ${t.button.border}`,
+  `--pc-btn-radius: ${t.button.radius}`,
+  `--pc-btn-transform: ${t.button.transform}`,
+  `--pc-btn-weight: ${t.button.weight}`,
+  `--pc-btn-tracking: ${t.button.tracking}`,
+  `--pc-btn-shadow: ${t.button.shadow}`,
+  `--pc-btn-clip: ${t.button.clip}`,
+].join('; ');
 ---
 
-<a class="project-card autoShow" href={`/projekte/${id}/`} style={`--card: ${color}`}>
+<a class="project-card autoShow" href={`/projekte/${id}/`} style={vars}>
   <div class="project-card__media">
     {inProgress && <span class="status-badge-wip status-badge-wip--card">In Arbeit</span>}
     <img
       src={media.src}
       srcset={media.srcset}
-      sizes="(max-width: 699px) calc(100vw - 3rem), (max-width: 1100px) 50vw, 380px"
+      sizes="340px"
       width={media.width ?? 800}
       height={media.height ?? 450}
       alt={`Vorschau von ${title}`}
@@ -48,52 +82,51 @@ const techMore = tags.length - TECH_MOBILE;
       ? <h2 class="project-card__title">{title}</h2>
       : <h3 class="project-card__title">{title}</h3>}
     <p class="project-card__text">{description}</p>
-    <div class="project-card__techrow">
-      <TechIcons tags={tags} class="project-card__tech" />
-      {techMore > 0 && <span class="project-card__more" aria-hidden="true">+{techMore}</span>}
+    <div class="project-card__foot">
+      {domain && <span class="project-card__domain">{domain}</span>}
+      <span class="project-card__cta">Ansehen <span aria-hidden="true">→</span></span>
     </div>
   </div>
-  <span class="project-card__cta">Projekt ansehen <span aria-hidden="true">→</span></span>
 </a>
 
 <style>
-  /* Karte mit asymmetrischen Ecken und Bändern, die über den Rand ragen */
+  /* feste Maße: Breite aus dem Raster bzw. der Wischleiste (höchstens 340 px), Höhe immer 470 px */
   .project-card {
-    --card: var(--c-turf);
-    --r-big: 56px;
-    --r-small: 10px;
     position: relative;
     display: flex;
     flex-direction: column;
-    height: 100%;
-    border-radius: var(--r-big) var(--r-small) var(--r-big) var(--r-small);
+    width: 100%;
+    max-width: 340px;
+    height: 470px;
+    border-radius: 8px;
     text-decoration: none;
-    color: var(--c-ink);
-    background: #ffffff;
+    color: var(--pc-text);
+    background: var(--pc-bg);
     box-shadow:
-      10px 12px 0 -2px rgba(34, 50, 58, 0.08),
-      0 18px 36px -16px rgba(34, 50, 58, 0.35);
+      0 0 0 1px rgba(27, 38, 44, 0.1),
+      0 26px 40px -24px rgba(27, 38, 44, 0.55);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
   .project-card:hover {
     transform: translateY(-5px);
     box-shadow:
-      12px 16px 0 -2px rgba(34, 50, 58, 0.1),
-      0 26px 44px -18px rgba(34, 50, 58, 0.45);
+      0 0 0 1px rgba(27, 38, 44, 0.1),
+      0 32px 48px -24px rgba(27, 38, 44, 0.6);
   }
 
   .project-card:focus-visible {
-    outline: 3px solid var(--card);
+    outline: 3px solid var(--pc-accent);
     outline-offset: 6px;
   }
 
+  /* Screenshot randlos über die obere Hälfte, unten in die Kartenfarbe auslaufend */
   .project-card__media {
     position: relative;
+    flex: none;
+    height: 255px;
     overflow: hidden;
-    aspect-ratio: 16 / 10;
-    border-radius: var(--r-big) var(--r-small) 0 0;
-    background: var(--c-bg);
+    border-radius: 8px 8px 0 0;
   }
 
   .project-card__media img {
@@ -105,21 +138,29 @@ const techMore = tags.length - TECH_MOBILE;
     transition: transform 0.5s cubic-bezier(0.2, 1, 0.3, 1);
   }
 
+  .project-card__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 55%, var(--pc-bg) 100%);
+  }
+
   .project-card:hover .project-card__media img {
     transform: scale(1.04);
   }
 
-  /* Band rechts mit umgeknickter Ecke */
+  /* Band oben rechts mit umgeknickter Ecke */
   .project-card__tag {
-    position: relative;
-    align-self: flex-end;
-    margin: -1rem -18px 0 0;
-    padding: 0.4rem 1rem;
-    font-size: 0.8rem;
+    position: absolute;
+    top: 18px;
+    right: -14px;
+    z-index: 2;
+    padding: 6px 14px;
+    font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.02em;
-    color: #ffffff;
-    background: var(--card);
+    color: var(--pc-accent-text);
+    background: var(--pc-accent);
   }
 
   .project-card__tag::after {
@@ -127,131 +168,84 @@ const techMore = tags.length - TECH_MOBILE;
     position: absolute;
     top: 100%;
     right: 0;
-    border-top: 12px solid var(--card);
-    border-right: 18px solid transparent;
-    filter: brightness(0.65);
+    border-top: 10px solid var(--pc-accent);
+    border-right: 14px solid transparent;
+    filter: brightness(0.6);
   }
 
   .project-card__body {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex: 1;
     flex-direction: column;
-    padding: 1.1rem 1.4rem 1rem;
+    min-height: 0;
+    padding: 4px 22px 20px;
   }
 
   .project-card__title {
-    margin: 0 0 0.5rem;
-    font-size: 1.25rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1.25;
-    color: var(--card);
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    color: var(--pc-text);
+    text-wrap: balance;
   }
 
   .project-card__text {
-    flex: 1;
-    margin: 0 0 1rem;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: var(--c-slate);
+    margin: 10px 0 14px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--pc-muted);
   }
 
-  .project-card__techrow {
-    margin-top: 0.85rem;
+  /* Adresse und Button unten in einer Zeile */
+  .project-card__foot {
     display: flex;
-    align-items: flex-start;
-    gap: 0.5rem;
-    padding-top: 0.9rem;
-    border-top: 1px solid var(--c-line);
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid color-mix(in srgb, var(--pc-text) 16%, transparent);
   }
 
-  .project-card :global(.project-card__tech) {
-    --tech-icon-bg: transparent;
-    --tech-icon-border: var(--c-line);
-    --tech-icon-color: var(--c-slate);
+  .project-card__domain {
     min-width: 0;
+    overflow: hidden;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--pc-muted);
   }
 
-  .project-card__more {
-    display: none;
-    place-items: center;
-    flex: none;
-    min-width: 2.5rem;
-    height: 2.5rem;
-    padding: 0 0.5rem;
-    border-radius: 9px;
-    font-size: 0.8rem;
-    font-weight: 800;
-    color: var(--c-slate);
-    border: 1px dashed var(--c-line);
-  }
-
-  /* Mobil (Wischleisten): Karte kompakter, damit sie ganz auf den Bildschirm passt –
-     flacheres Vorschaubild, Text max. 3 Zeilen, Technik in einer Reihe */
-  @media (max-width: 819px) {
-    .project-card__media {
-      aspect-ratio: 16 / 9;
-    }
-
-    .project-card__body {
-      padding: 1rem 1.25rem 0.75rem;
-    }
-
-    .project-card__title {
-      font-size: 1.15rem;
-    }
-
-    .project-card__text {
-      /* nicht strecken, sonst greift die 3-Zeilen-Begrenzung nicht; Rest füllt der Platz darunter */
-      flex: none;
-      margin-bottom: auto;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 3;
-      line-clamp: 3;
-      overflow: hidden;
-      font-size: 0.92rem;
-      line-height: 1.55;
-    }
-
-    .project-card :global(.project-card__tech) {
-      flex-wrap: nowrap;
-      overflow: hidden;
-    }
-
-    .project-card :global(.project-card__tech .tech-icons__item:nth-child(n + 5)) {
-      display: none;
-    }
-
-    .project-card__more {
-      display: grid;
-    }
-
-    .project-card__cta {
-      margin: 0.25rem 0 1.5rem -18px;
-    }
-  }
-
-  /* Band unten links mit umgeknickter Ecke */
+  /* Button im Stil der Projektseite (Farbe, Rundung, Rahmen, Schreibweise) */
   .project-card__cta {
-    position: relative;
-    align-self: flex-start;
-    margin: 0.5rem 0 2.25rem -18px;
-    padding: 0.6rem 1.25rem;
-    font-size: 0.92rem;
-    font-weight: 800;
-    color: #ffffff;
-    background: var(--card);
-  }
-
-  .project-card__cta::before {
-    content: '';
-    position: absolute;
-    bottom: 100%;
-    left: 0;
-    border-bottom: 12px solid var(--card);
-    border-left: 18px solid transparent;
-    filter: brightness(0.65);
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 44px;
+    margin-left: auto;
+    padding: 0 20px;
+    border: var(--pc-btn-border);
+    border-radius: var(--pc-btn-radius);
+    clip-path: var(--pc-btn-clip);
+    font-size: 0.875rem;
+    font-weight: var(--pc-btn-weight);
+    letter-spacing: var(--pc-btn-tracking);
+    text-transform: var(--pc-btn-transform);
+    color: var(--pc-btn-text);
+    background: var(--pc-btn-bg);
+    box-shadow: var(--pc-btn-shadow);
   }
 
   .project-card__cta span {

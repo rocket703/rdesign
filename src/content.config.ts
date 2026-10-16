@@ -21,6 +21,27 @@ const projects = defineCollection({
     relatedOffer: z.string().optional(),
     /** Projektart für das Band auf der Projektkarte (z. B. „Vereinsseite“) */
     category: z.string().optional(),
+    /** Farben und Button-Stil der Projektseite – die Projektkarte wird eine kleine Version davon */
+    theme: z
+      .object({
+        bg: z.string(),
+        text: z.string(),
+        muted: z.string(),
+        accent: z.string(),
+        accentText: z.string().default('#ffffff'),
+        button: z.object({
+          bg: z.string(),
+          text: z.string(),
+          border: z.string().default('none'),
+          radius: z.string().default('8px'),
+          transform: z.string().default('none'),
+          weight: z.number().default(700),
+          tracking: z.string().default('normal'),
+          shadow: z.string().default('none'),
+          clip: z.string().default('none'),
+        }),
+      })
+      .optional(),
   }),
 });
 

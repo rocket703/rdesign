@@ -182,11 +182,11 @@ const featuredProjects = featuredSlugs
         {featuredProjects.map((project, index) => (
           <ProjectCard
             category={project.data.category}
-            accent={index}
+            theme={project.data.theme}
             title={project.data.title}
             description={project.data.subtitle}
             image={project.data.image}
-            tags={project.data.techStack}
+            url={project.data.customerUrl}
             id={projectSlug(project)}
             status={project.data.status}
           />

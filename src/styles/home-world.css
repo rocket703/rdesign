@@ -487,9 +487,6 @@
   .home-world .projects--clean .card-grid--clean > * {
     flex: 0 0 var(--swipe-card);
     min-width: 0;
-    /* height: 100% der Karte verhindert sonst das Strecken – alle Karten gleich hoch */
-    height: auto;
-    align-self: stretch;
     scroll-snap-align: center;
   }
 
