@@ -40,7 +40,7 @@ const portrait = responsiveImage(SITE.portrait, 320);
 
 const publishedProjects = await getPublishedProjects();
 
-const featuredSlugs = ['startplatzboerse', 'ohrelauf', 'radsportclub-magdeburg'];
+const featuredSlugs = ['startplatzboerse', 'ohrelauf', 'atelier-haarkunst'];
 const featuredProjects = featuredSlugs
   .map((slug) => publishedProjects.find((project) => projectSlug(project) === slug))
   .filter((project): project is (typeof publishedProjects)[number] => Boolean(project));
@@ -174,7 +174,7 @@ const featuredProjects = featuredSlugs
         <div class="clean-block-head autoShow">
           <h2 class="clean-block-head__title">Referenzen aus Magdeburg &amp; Umgebung</h2>
           <p class="clean-block-head__lead">
-            Drei Projekte – von der Vereins-Webseite bis zur Online-Plattform.
+            Drei Projekte – von der Friseur-Webseite bis zur Online-Plattform.
           </p>
         </div>
         <div class="home-carousel" data-carousel>

@@ -346,13 +346,19 @@
 /* Referenzen: Raster der Karten (mobil Wischleiste, siehe home-world.css) */
 .card-grid {
   display: grid;
-  /* Projektkarten haben feste Maße: Spalten genau so breit, mittig */
+  /* Projektkarten haben feste Maße: Spalten genau so breit, am Desktop mittig
+     (nicht in der Handy-Wischleiste – dort würde die Reihe links aus dem Bild geschoben) */
   grid-template-columns: repeat(auto-fit, 340px);
-  justify-content: center;
   gap: 2.5rem 2rem;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .card-grid {
+    justify-content: center;
+  }
 }
 
 .projects-more {

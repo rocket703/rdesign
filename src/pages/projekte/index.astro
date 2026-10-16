@@ -70,12 +70,18 @@ const projectListItems: ProjectListItem[] = sortedProjects.map((project) => ({
 </BaseLayout>
 
 <style>
-  /* Projektkarten haben feste Maße (340 × 470 px): Spalten genau so breit, mittig */
+  /* Projektkarten haben feste Maße (340 × 470 px): Spalten genau so breit,
+     am Desktop mittig – nicht in der Handy-Wischleiste, sonst rutscht die Reihe links aus dem Bild */
   .portfolio-grid {
     grid-template-columns: repeat(auto-fit, 340px);
-    justify-content: center;
     margin-top: 0;
     gap: 2.5rem 2rem;
+  }
+
+  @media (min-width: 820px) {
+    .portfolio-grid {
+      justify-content: center;
+    }
   }
 
   .portfolio-carousel {
