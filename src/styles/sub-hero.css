@@ -325,21 +325,28 @@
   background: var(--c-turf);
 }
 
+/* beide Buttons mittig unter dem Text – auf jeder Bildschirmbreite */
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.75rem 1.5rem;
+  justify-content: center;
+  gap: 1rem 1.25rem;
 }
 
-.hero-actions__more {
-  display: inline-flex;
-  align-items: center;
+/* beide Buttons gleich hoch, damit sie auf einer Linie stehen */
+.hero-actions .sketch-btn {
+  min-height: 48px;
+  padding-block: 0;
+}
+
+/* zweiter Button: gezeichneter Rahmen ohne Füllung */
+.hero-actions .hero-actions__more {
+  --frame: var(--c-turf);
   gap: 0.4rem;
-  min-height: 44px;
   font-weight: 700;
-  text-decoration: none;
   color: var(--c-turf);
+  background: transparent;
 }
 
 .hero-actions__more span {
@@ -354,12 +361,6 @@
   outline: 2px solid var(--c-turf);
   outline-offset: 3px;
   border-radius: 4px;
-}
-
-.hero-actions__note {
-  margin: -0.5rem 0 0;
-  font-size: 0.82rem;
-  color: var(--c-slate);
 }
 
 /* Angebot rechts: Produktkarte mit Streifen-Banner wie die Paketkarten der Startseite */
@@ -388,6 +389,31 @@
   background:
     repeating-linear-gradient(-55deg, rgba(255, 255, 255, 0) 0 46px, rgba(255, 255, 255, 0.08) 46px 92px),
     var(--pkg);
+}
+
+.hero-product__banner--sketch {
+  min-height: 0;
+  aspect-ratio: 5 / 3;
+  padding: 1rem 1.5rem;
+  background-color: var(--c-sky);
+  background-image:
+    repeating-linear-gradient(0deg, rgba(31, 60, 64, 0.1) 0 1px, transparent 1px 28px),
+    repeating-linear-gradient(90deg, rgba(31, 60, 64, 0.1) 0 1px, transparent 1px 28px);
+  background-position: center;
+}
+
+.hero-product__banner--sketch {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Skizze füllt den Kopf mit etwas Rand, ohne über die Kante zu ragen */
+.hero-product__banner--sketch img {
+  position: absolute;
+  inset: 0.9rem 1.25rem;
+  width: calc(100% - 2.5rem);
+  height: calc(100% - 1.8rem);
+  object-fit: contain;
 }
 
 .hero-product__banner .offer-visual {

@@ -1,5 +1,12 @@
 ---
+import fs from 'node:fs';
+import path from 'node:path';
+
 const currentYear = new Date().getFullYear();
+// Wortmarke (r³ + webdesign) als Umriss fürs große Wasserzeichen unten
+const wordmarkPath = fs
+  .readFileSync(path.join(process.cwd(), 'public', 'logo-header.svg'), 'utf8')
+  .match(/ d="([^"]+)"/)![1];
 ---
 
 <footer class="site-footer">
@@ -32,23 +39,23 @@ const currentYear = new Date().getFullYear();
   </div>
 
   <div class="footer-visual-bottom" aria-hidden="true">
-    <div class="huge-outline-text">
-      r<span class="wm-sup">3</span>webdesign
-    </div>
+    <!-- r³ und „webdesign“ gleich hoch: derselbe Pfad zweimal, einmal aufs Zeichen, einmal auf die
+         Schrift zugeschnitten und hochskaliert (Schrift im Original: x 125.45–389.88, y 30.01–75.96) -->
+    <svg class="footer-wordmark" viewBox="-2 -2 705 104" aria-hidden="true">
+      <defs>
+        <clipPath id="wm-mark" clipPathUnits="userSpaceOnUse"><rect x="-5" y="-5" width="115" height="110" /></clipPath>
+        <clipPath id="wm-text" clipPathUnits="userSpaceOnUse"><rect x="115" y="-5" width="290" height="110" /></clipPath>
+      </defs>
+      <path d={wordmarkPath} clip-path="url(#wm-mark)" />
+      <g transform="translate(125.4 0) scale(2.1764) translate(-125.45 -30.01)">
+        <path d={wordmarkPath} clip-path="url(#wm-text)" />
+      </g>
+    </svg>
   </div>
 </footer>
 
 <style>
   .site-footer {
-    /* Sichtbar: 50 % Schrifthöhe; leicht nach oben versetzt */
-    --footer-watermark-size: clamp(3.25rem, 18vw, 14rem);
-    --footer-watermark-lh: 0.85;
-    --footer-peek-visible: 0.5;
-    --footer-superscript-pad: calc(var(--footer-watermark-size) * 0.11);
-    --footer-text-top: calc(var(--footer-superscript-pad) - var(--footer-watermark-size) * 0.055);
-    --footer-peek-h: calc(
-      var(--footer-watermark-size) * var(--footer-watermark-lh) * var(--footer-peek-visible) + var(--footer-superscript-pad)
-    );
     position: relative;
     background-color: var(--c-deep);
     width: 100%;
@@ -210,45 +217,36 @@ const currentYear = new Date().getFullYear();
   .footer-visual-bottom {
     flex-shrink: 0;
     width: 100%;
-    height: var(--footer-peek-h);
+    /* Höhe der Wortmarke = Breite × 104 / 705; davon gut die Hälfte sichtbar */
+    height: calc(min(92vw, 1100px) * 0.1475 * 0.55);
     position: relative;
     overflow: hidden;
     isolation: isolate;
     line-height: 0;
   }
 
-  .huge-outline-text {
+  /* Wortmarke als Umriss, r³ und Schrift gleich hoch – gut die Hälfte schaut heraus */
+  .footer-wordmark {
+    --wm-w: min(92vw, 1100px);
     position: absolute;
+    top: 0;
     left: 50%;
-    top: var(--footer-text-top);
-    margin: 0;
-    padding: 0;
-    font-family: 'Inter', system-ui, sans-serif;
-    font-size: var(--footer-watermark-size);
-    font-weight: 900;
-    line-height: var(--footer-watermark-lh);
-    color: transparent;
-    -webkit-text-stroke: 1.5px rgba(184, 219, 217, 0.14);
-    white-space: nowrap;
+    width: var(--wm-w);
+    height: auto;
+    overflow: visible;
+    translate: -50% 0;
     pointer-events: none;
-    user-select: none;
-    transform: translateX(-50%);
   }
 
-  .wm-sup {
-    font-size: 0.52em;
-    vertical-align: super;
-    line-height: 0;
-    -webkit-text-stroke: inherit;
+  .footer-wordmark path {
+    fill: none;
+    stroke: rgba(184, 219, 217, 0.16);
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
   }
 
   @media (max-width: 1023px) {
-    .site-footer {
-      --footer-watermark-size: clamp(3.25rem, 20vw, 6rem);
-      --footer-superscript-pad: calc(var(--footer-watermark-size) * 0.06);
-      --footer-text-top: calc(var(--footer-watermark-size) * -0.045);
-    }
-
     .footer-grid {
       grid-template-columns: 1fr;
       gap: 2rem;
@@ -295,12 +293,6 @@ const currentYear = new Date().getFullYear();
       padding: 6px 10px;
     }
 
-    .site-footer {
-      --footer-watermark-size: 3.25rem;
-      --footer-superscript-pad: calc(var(--footer-watermark-size) * 0.05);
-      --footer-text-top: calc(var(--footer-watermark-size) * -0.055);
-    }
-
     .footer-body {
       padding-bottom: 1.5rem;
     }
@@ -309,16 +301,6 @@ const currentYear = new Date().getFullYear();
       gap: 1.5rem;
     }
 
-    .huge-outline-text {
-      -webkit-text-stroke-width: 1px;
-    }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .huge-outline-text {
-      transform: translateX(-50%);
-      transition: none;
-    }
-
-  }
 </style>

@@ -9,8 +9,6 @@ export type Service = {
   icon: 'web' | 'refresh' | 'care';
   /** eigene Leistungsseite */
   href?: string;
-  /** passendes Referenzprojekt (Slug unter /projekte/) */
-  reference?: { title: string; slug: string };
 };
 
 export const services: Service[] = [
@@ -20,7 +18,6 @@ export const services: Service[] = [
     text: 'Individuelles Design, saubere Inhalte, SEO und schnelle Ladezeiten ohne austauschbare Schablone.',
     chips: ['Individuell', 'SEO', 'Barrierefrei'],
     href: '/leistungen/webdesign-magdeburg/',
-    reference: { title: 'Radsportclub Magdeburg', slug: 'radsportclub-magdeburg' },
   },
   {
     title: 'Relaunch',

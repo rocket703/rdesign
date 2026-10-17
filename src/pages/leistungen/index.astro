@@ -3,7 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import LegalPageShell from '../../components/LegalPageShell.astro';
 import OfferIcon from '../../components/OfferIcon.astro';
 import { offers, offerPath } from '../../data/offers';
-import { services, moreServices, serviceIcons } from '../../data/services';
+import { services, moreServices } from '../../data/services';
 import { breadcrumbSchema, schemaGraph, webPageSchema, absoluteUrl } from '../../lib/seo';
 import '../../styles/offer.css';
 
@@ -12,6 +12,9 @@ const pageDescription =
   'Neue Webseite, Relaunch und Betreuung aus Magdeburg – außerdem Web-Apps, native Apps, SEO-Check, Barrierefreiheits-Check und Business-E-Mail.';
 
 // „Außerdem möglich“ als Karten: gleiche Reihenfolge wie auf der Startseite, Texte aus den Angeboten
+// Bleistift-Skizze je Schwerpunkt – dieselbe steht oben auf der jeweiligen Leistungsseite
+const motifFor = { web: 'browser', refresh: 'gallery', care: 'server' } as const;
+
 const moreOffers = moreServices
   .map((item) => offers.find((offer) => offerPath(offer) === item.href))
   .filter((offer): offer is (typeof offers)[number] => Boolean(offer));
@@ -46,77 +49,301 @@ const moreOffers = moreServices
     title="Leistungen"
     lead="Webdesign aus Magdeburg für Vereine, Events und lokale Unternehmen – neue Webseite, Relaunch und Betreuung, persönlich umgesetzt."
   >
-    <section class="offer-section" aria-labelledby="services-title">
-      <h2 class="offer-section__title" id="services-title">Webseite, Relaunch &amp; Betreuung</h2>
-      <p class="offer-section__lead">
-        Du startest neu, deine Seite ist in die Jahre gekommen oder du willst dich nicht mehr selbst darum kümmern?
-        Ich begleite dein Projekt vom ersten Gespräch bis nach dem Launch – mit einem festen Ansprechpartner und
-        einem transparenten Festpreisangebot.
-      </p>
-      <ul class="service-list service-list--three">
+    <!-- Drei Schwerpunkte als Zeilen im Zickzack, je mit Bleistift-Skizze -->
+    <section class="svc" aria-labelledby="services-title">
+      <header class="svc__head">
+        <h2 class="svc__title" id="services-title">Webseite, Relaunch &amp; Betreuung</h2>
+        <p class="svc__lead">
+          Du startest neu, deine Seite ist in die Jahre gekommen oder du willst dich nicht mehr selbst darum kümmern?
+          Ich begleite dein Projekt vom ersten Gespräch bis nach dem Launch – mit einem festen Ansprechpartner und
+          einem transparenten Festpreisangebot.
+        </p>
+      </header>
+
+      <ol class="svc__rows">
         {services.map((service) => (
-          <li class="legal-block service-list__item autoShow">
-            <div class="service-card__head">
-              <span class="service-list__cap" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={serviceIcons[service.icon]} />
+          <li class="svc-row autoShow">
+            <a class="svc-row__art" href={service.href ?? '/kontakt/'} tabindex="-1" aria-hidden="true">
+              <img src={`/sketch/motif-${motifFor[service.icon]}.svg`} alt="" width="420" height="340" loading="lazy" decoding="async" />
+            </a>
+            <div class="svc-row__body">
+              <p class="svc-row__tags">{service.chips.join(' · ')}</p>
+              <h3 class="svc-row__title">{service.title}</h3>
+              <p class="svc-row__text">{service.text}</p>
+              <div class="svc-row__links">
+                <a class="svc-row__more" href={service.href ?? '/kontakt/'}>
+                  Mehr erfahren<span class="sr-only"> über {service.title}</span>
+                  <span class="svc-row__arrow" aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <!-- Außerdem möglich: schlanke Linkliste statt Kartenraster -->
+    <section class="more" aria-labelledby="more-title">
+      <header class="svc__head">
+        <h2 class="svc__title" id="more-title">Außerdem möglich</h2>
+        <p class="svc__lead">
+          Wenn es mehr sein darf als eine Webseite – oder du nur einen bestimmten Teil prüfen lassen willst.
+        </p>
+      </header>
+      <ul class="more__list">
+        {moreOffers.map((offer) => (
+          <li>
+            <a class="more__item" href={offerPath(offer)}>
+              <span class="more__icon" aria-hidden="true"><OfferIcon name={offer.icon} size={22} /></span>
+              <span class="more__text">
+                <strong>{offer.title}</strong>
+                <span>{offer.teaser}</span>
               </span>
-              <h3 class="legal-block__title">{service.title}</h3>
-            </div>
-            <p class="service-list__text">{service.text}</p>
-            <ul class="service-list__chips" aria-label="Schwerpunkte">
-              {service.chips.map((chip) => <li>{chip}</li>)}
-            </ul>
-            <div class="service-card__foot">
-              {service.href ? (
-                <a class="service-card__link" href={service.href}>
-                  Mehr erfahren<span class="sr-only"> über {service.title}</span> <span aria-hidden="true">→</span>
-                </a>
-              ) : (
-                <a class="service-card__link" href="/kontakt/">
-                  Projekt anfragen <span aria-hidden="true">→</span>
-                </a>
-              )}
-              {service.reference && (
-                <a class="service-card__ref" href={`/projekte/${service.reference.slug}/`}>
-                  Referenz: {service.reference.title}
-                </a>
-              )}
-            </div>
+              <span class="more__arrow" aria-hidden="true">→</span>
+            </a>
           </li>
         ))}
       </ul>
     </section>
-
-    <section class="offer-section" aria-labelledby="more-title">
-      <h2 class="offer-section__title" id="more-title">Außerdem möglich</h2>
-      <p class="offer-section__lead">
-        Wenn es mehr sein darf als eine Webseite – oder du nur einen bestimmten Teil prüfen lassen willst.
-      </p>
-      <div class="plan-carousel" data-carousel>
-      <div class="offer-more__grid offer-more__grid--four" data-carousel-track>
-        {moreOffers.map((offer) => (
-          <a href={offerPath(offer)} class="offer-more__card">
-            <span class="offer-summary__icon">
-              <OfferIcon name={offer.icon} size={22} />
-            </span>
-            <span>
-              <strong>{offer.title}</strong>
-              <span>{offer.teaser}</span>
-            </span>
-          </a>
-        ))}
-      </div>
-      <div class="carousel-dots carousel-dots--more" role="group" aria-label="Weitere Leistungen: Karte wählen">
-        {moreOffers.map((offer, index) => (
-          <button type="button" class="carousel-dots__dot" data-carousel-dot={index} aria-label={`${offer.title} anzeigen`} aria-current={index === 0 ? 'true' : undefined}></button>
-        ))}
-      </div>
-      </div>
-    </section>
   </LegalPageShell>
 </BaseLayout>
 
-<script>
-  import { initCarousels } from '../../scripts/carousel';
-  initCarousels();
-</script>
+
+<style>
+  /* ── Schwerpunkte: Zeilen im Zickzack mit Skizze, ohne Karten ── */
+  .svc__head {
+    max-width: 44rem;
+    margin-bottom: clamp(2rem, 5vw, 3rem);
+  }
+
+  .svc__title {
+    margin: 0;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: var(--c-ink);
+    text-wrap: balance;
+  }
+
+  .svc__lead {
+    margin: 0.8rem 0 0;
+    font-size: 1.04rem;
+    line-height: 1.7;
+    color: var(--c-on-sky);
+  }
+
+  .svc__rows {
+    display: grid;
+    gap: clamp(3rem, 7vw, 5rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .svc-row {
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 820px) {
+    .svc-row {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: clamp(2.5rem, 5vw, 4.5rem);
+    }
+
+    /* jede zweite Zeile spiegelt: Skizze rechts, gleich breit wie links */
+    .svc-row:nth-child(even) {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    }
+
+    .svc-row:nth-child(even) .svc-row__art {
+      order: 2;
+    }
+  }
+
+  /* Skizze auf mintfarbenem Rasterpapier */
+  .svc-row__art {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 5 / 4;
+    padding: clamp(1.25rem, 4vw, 2.25rem);
+    border-radius: 24px;
+    background-color: var(--c-sky);
+    background-image:
+      repeating-linear-gradient(0deg, rgba(31, 60, 64, 0.1) 0 1px, transparent 1px 28px),
+      repeating-linear-gradient(90deg, rgba(31, 60, 64, 0.1) 0 1px, transparent 1px 28px);
+    background-position: center;
+  }
+
+  .svc-row__art img {
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.4s ease;
+  }
+
+  .svc-row:hover .svc-row__art img {
+    transform: rotate(-1.5deg) scale(1.03);
+  }
+
+  .svc-row__body {
+    min-width: 0;
+  }
+
+  .svc-row__tags {
+    margin: 0 0 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--c-turf);
+  }
+
+  .svc-row__title {
+    margin: 0;
+    font-size: clamp(1.9rem, 4vw, 2.8rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    color: var(--c-ink);
+  }
+
+  .svc-row__text {
+    max-width: 34rem;
+    margin: 0.9rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--c-on-sky);
+  }
+
+  .svc-row__links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .svc-row__more {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    font-weight: 800;
+    text-decoration: none;
+    color: var(--c-ink);
+  }
+
+  .svc-row__arrow {
+    margin-left: 0.75rem;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    color: #ffffff;
+    background: var(--c-turf);
+    transition: transform 0.25s ease, background 0.25s ease;
+  }
+
+  .svc-row__more:hover .svc-row__arrow {
+    transform: translateX(4px);
+    background: var(--c-forest);
+  }
+
+  .svc-row__more:focus-visible {
+    outline: 2px solid var(--c-turf);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+
+  /* ── Außerdem möglich: Linkliste in zwei Spalten ── */
+  .more {
+    margin-top: clamp(4rem, 9vw, 6rem);
+  }
+
+  .more__list {
+    display: grid;
+    gap: 0.25rem 2.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 820px) {
+    .more__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .more__item {
+    display: grid;
+    grid-template-columns: 2.75rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0.75rem;
+    margin-inline: -0.75rem;
+    border-radius: 14px;
+    text-decoration: none;
+    transition: background 0.2s ease;
+  }
+
+  .more__item:hover {
+    background: rgba(184, 219, 217, 0.45);
+  }
+
+  .more__item:focus-visible {
+    outline: 2px solid var(--c-turf);
+    outline-offset: 2px;
+  }
+
+  .more__icon {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    color: var(--c-turf);
+    background: var(--c-sky);
+    --icon-fill: rgba(4, 114, 77, 0.18);
+  }
+
+  .more__text {
+    display: grid;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+
+  .more__text strong {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--c-ink);
+  }
+
+  .more__text span {
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: var(--c-slate);
+  }
+
+  .more__arrow {
+    font-weight: 800;
+    color: var(--c-turf);
+    transition: transform 0.2s ease;
+  }
+
+  .more__item:hover .more__arrow {
+    transform: translateX(4px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .svc-row__art img,
+    .svc-row__arrow,
+    .more__item,
+    .more__arrow {
+      transition: none;
+    }
+  }
+</style>

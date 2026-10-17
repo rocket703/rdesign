@@ -10,15 +10,6 @@
       1292
     ]
   },
-  "/images/IMG_1907.webp": {
-    "width": 1621,
-    "height": 2162,
-    "base": "/images/responsive/IMG_1907",
-    "variants": [
-      320,
-      640
-    ]
-  },
   "/images/cafe-latte.webp": {
     "width": 1200,
     "height": 1200,
@@ -27,6 +18,23 @@
       480,
       800,
       1200
+    ]
+  },
+  "/images/dustin-rose-avatar.webp": {
+    "width": 640,
+    "height": 640,
+    "base": "/images/responsive/dustin-rose-avatar",
+    "variants": [
+      160
+    ]
+  },
+  "/images/dustin-rose.webp": {
+    "width": 1142,
+    "height": 1428,
+    "base": "/images/responsive/dustin-rose",
+    "variants": [
+      320,
+      640
     ]
   },
   "/images/laptop-mockup.webp": {

@@ -339,9 +339,6 @@
   background: var(--c-bg);
 }
 
-.story-final .candy-about {
-  padding-block: clamp(3.5rem, 8vw, 5.5rem) clamp(1rem, 3vw, 2rem);
-}
 
 /* Referenzen: Raster der Karten (mobil Wischleiste, siehe home-world.css) */
 .card-grid {

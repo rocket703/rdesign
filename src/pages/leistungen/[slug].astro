@@ -3,8 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import LegalPageShell from '../../components/LegalPageShell.astro';
 import SketchFrame from '../../components/SketchFrame.astro';
 import OfferIcon from '../../components/OfferIcon.astro';
-import OfferVisual from '../../components/OfferVisual.astro';
-import { offers, offerPath, packages, type Offer } from '../../data/offers';
+import { offers, offerPath, type Offer } from '../../data/offers';
 import {
   breadcrumbSchema,
   canonicalUrl,
@@ -24,25 +23,45 @@ const { offer } = Astro.props as { offer: Offer };
 const pathname = offerPath(offer);
 const otherOffers = offers.filter((other) => other.slug !== offer.slug && other.kind === offer.kind);
 const contactHref = `/kontakt/?thema=${offer.slug}`;
+
+// rechte Seite der Abschluss-Karte: Referenzprojekt (mit Screenshot) oder Technik-Partner
+const side = offer.reference
+  ? {
+      label: 'Referenz',
+      title: offer.reference.title,
+      text: offer.reference.text,
+      href: offer.reference.href,
+      linkLabel: 'Zum Projekt',
+      external: false,
+      image: `/og/${offer.reference.href.split('/').filter(Boolean).pop()}.jpg`,
+    }
+  : offer.partner
+    ? {
+        label: 'Technik-Partner',
+        title: offer.partner.name,
+        text: offer.partner.text,
+        href: offer.partner.href,
+        linkLabel: offer.partner.linkLabel,
+        external: true,
+        image: undefined,
+      }
+    : undefined;
 // letztes Wort des Titels wird markiert, z. B. „Webdesign Magdeburg“ → „Magdeburg“
 const titleMark = offer.title.split(' ').pop();
 
-// Skizze im Seitenkopf passend zur Leistung
+// Skizze in der Karte im Seitenkopf – dieselbe wie auf der Übersicht /leistungen/
 const motifFor: Record<string, MotifName> = {
   'webdesign-magdeburg': 'browser',
   webentwicklung: 'code',
   'app-entwicklung': 'phones',
   'hosting-betreuung': 'server',
   'seo-check': 'seo',
-  relaunch: 'browser',
+  relaunch: 'gallery',
   barrierefreiheit: 'cards',
   'business-email': 'mail',
 };
-// Banner-Farben wie bei den Paketkarten der Startseite
-const packageAccents = ['var(--c-turf)', 'var(--c-slate)', 'var(--c-deep)', 'var(--c-forest)'];
 // Wartungsstufen: Farben wie bei den Projektkarten
 const stageAccents = ['var(--c-turf)', 'var(--c-slate)', 'var(--c-deep)'];
-const bannerAccent = offer.kind === 'package' ? packageAccents[packages.indexOf(offer) % packageAccents.length] : 'var(--c-turf)';
 const priceText = offer.price ?? 'Festpreis auf Anfrage';
 // die ersten drei Punkte aus „Das bekommst du“ stehen schon im Kopf – bei „Stichwort: Text“ nur das Stichwort
 const keyPoints = offer.deliverables.slice(0, 3);
@@ -78,7 +97,6 @@ const keyPoints = offer.deliverables.slice(0, 3);
   ])}
 >
   <LegalPageShell
-    sketch={motifFor[offer.slug] ?? 'browser'}
     back={{ href: '/leistungen/', label: 'Alle Leistungen' }}
     wide
     legalNav={false}
@@ -99,21 +117,15 @@ const keyPoints = offer.deliverables.slice(0, 3);
       </ul>
       <div class="hero-actions">
         <a href={contactHref} class="sketch-btn sketch-btn--primary">Projekt anfragen <span aria-hidden="true">→</span><SketchFrame seed={47} fill /></a>
-        <a href="#details" class="hero-actions__more">Alle Details <span aria-hidden="true">↓</span></a>
+        <a href="#details" class="sketch-btn hero-actions__more">Alle Details <span aria-hidden="true">↓</span><SketchFrame seed={53} /></a>
       </div>
-      <p class="hero-actions__note">Kostenlos &amp; unverbindlich – Antwort meist innerhalb von 24 h.</p>
     </div>
 
     <!-- … Eckdaten und Preis rechts -->
-    <article slot="hero" class="hero-product" style={`--pkg: ${bannerAccent}`}>
-      <div class="hero-product__banner" aria-hidden="true">
-        {offer.kind === 'package' ? (
-          <OfferVisual name={offer.icon} />
-        ) : (
-          <span class="hero-product__icon">
-            <OfferIcon name={offer.icon} size={40} />
-          </span>
-        )}
+    <article slot="hero" class="hero-product">
+      <!-- Skizze wie auf der Leistungsübersicht, auf mintfarbenem Rasterpapier -->
+      <div class="hero-product__banner hero-product__banner--sketch" aria-hidden="true">
+        <img src={`/sketch/motif-${motifFor[offer.slug] ?? 'browser'}.svg`} alt="" width="420" height="340" decoding="async" />
       </div>
       <div class="hero-product__body">
         <h2 class="hero-product__title">{offer.headings.summary}</h2>
@@ -286,62 +298,51 @@ const keyPoints = offer.deliverables.slice(0, 3);
       </article>
     </div>
 
-    <!-- Abschluss: Anfrage und Referenz nebeneinander statt Seitenspalte -->
-    <div class:list={['offer-aside', 'offer-closing', !offer.reference && !offer.partner && 'offer-closing--single']}>
-      <article class="legal-block offer-summary offer-cta-card autoShow">
-        <div class="offer-cta-card__text">
-          <h2 class="legal-block__title">Interesse an {offer.title}?</h2>
-          <p class="offer-cta-card__price">{priceText}</p>
-        </div>
-        <div class="offer-cta-card__action">
-          <a href={contactHref} class="offer-cta">Projekt anfragen</a>
-          <p class="offer-summary__note">Kostenlos &amp; unverbindlich – Antwort meist innerhalb von 24 h.</p>
-        </div>
-      </article>
-
-      {offer.reference && (
-        <a href={offer.reference.href} class="legal-block offer-reference autoShow">
-          <span class="offer-reference__label">Referenz</span>
-          <strong>{offer.reference.title}</strong>
-          <span>{offer.reference.text}</span>
-          <span class="offer-reference__more">Zum Projekt →</span>
-        </a>
-      )}
-
-      {offer.partner && (
-        <a href={offer.partner.href} target="_blank" rel="noopener" class="legal-block offer-reference autoShow">
-          <span class="offer-reference__label">Technik-Partner</span>
-          <strong>{offer.partner.name}</strong>
-          <span>{offer.partner.text}</span>
-          <span class="offer-reference__more">{offer.partner.linkLabel} <span aria-hidden="true">↗</span><span class="sr-only"> (öffnet in neuem Tab)</span></span>
-        </a>
-      )}
-    </div>
-
-    <nav class="offer-more autoShow" aria-label={offer.kind === 'service' ? 'Weitere Leistungen' : 'Weitere Pakete'}>
-      <p class="offer-more__title">{offer.kind === 'service' ? 'Weitere Leistungen' : 'Weitere Pakete'}</p>
-      <div class="plan-carousel" data-carousel>
-      <div class="offer-more__grid" data-carousel-track>
-        {otherOffers.map((other) => (
-          <a href={offerPath(other)} class="offer-more__card">
-            <span class="offer-summary__icon">
-              <OfferIcon name={other.icon} size={22} />
-            </span>
-            <span>
-              <strong>{other.title}</strong>
-              <span>{other.teaser}</span>
+    <!-- Abschluss als geteilte Karte wie die Profilkarte: 60 % Anfrage, 40 % Referenz bzw. Partner -->
+    <article class:list={['close-card autoShow', !side && 'close-card--single']}>
+      <div class="close-card__ask">
+        <p class="close-card__kicker">Projekt anfragen</p>
+        <h2 class="close-card__title">Interesse an {offer.title}?</h2>
+        <p class="close-card__price">{priceText}</p>
+        <a href={contactHref} class="sketch-btn sketch-btn--primary close-card__cta">Projekt anfragen <span aria-hidden="true">→</span><SketchFrame seed={59} fill /></a>
+      </div>
+      {side && (
+        <Fragment>
+          <span class="close-card__badge" aria-hidden="true"><img src="/logo-mark.svg" alt="" width="40" height="39" /></span>
+          <a
+            class="close-card__side"
+            href={side.href}
+            target={side.external ? '_blank' : undefined}
+            rel={side.external ? 'noopener' : undefined}
+            style={side.image ? `--side-img: url('${side.image}')` : undefined}
+          >
+            <span class="close-card__kicker close-card__kicker--light">{side.label}</span>
+            <strong class="close-card__side-title">{side.title}</strong>
+            <span class="close-card__side-text">{side.text}</span>
+            <span class="close-card__side-more">
+              {side.linkLabel} <span aria-hidden="true">{side.external ? '↗' : '→'}</span>
+              {side.external && <span class="sr-only"> (öffnet in neuem Tab)</span>}
             </span>
           </a>
-        ))}
-      </div>
-      {otherOffers.length > 1 && (
-        <div class="carousel-dots carousel-dots--more" role="group" aria-label={`${offer.kind === 'service' ? 'Weitere Leistungen' : 'Weitere Pakete'}: Karte wählen`}>
-          {otherOffers.map((other, index) => (
-            <button type="button" class="carousel-dots__dot" data-carousel-dot={index} aria-label={`${other.title} anzeigen`} aria-current={index === 0 ? 'true' : undefined}></button>
-          ))}
-        </div>
+        </Fragment>
       )}
-      </div>
+    </article>
+
+    <!-- Weitere Leistungen bzw. Pakete: drei nebeneinander, ohne Kästen -->
+    <nav class="next-offers autoShow" aria-labelledby="next-offers-title">
+      <h2 class="next-offers__title" id="next-offers-title">{offer.kind === 'service' ? 'Weitere Leistungen' : 'Weitere Pakete'}</h2>
+      <ul class="next-offers__list">
+        {otherOffers.map((other) => (
+          <li>
+            <a href={offerPath(other)} class="next-offer">
+              <span class="next-offer__icon" aria-hidden="true"><OfferIcon name={other.icon} size={24} /></span>
+              <strong class="next-offer__name">{other.title}</strong>
+              <span class="next-offer__text">{other.teaser}</span>
+              <span class="next-offer__more">Ansehen <span aria-hidden="true">→</span></span>
+            </a>
+          </li>
+        ))}
+      </ul>
     </nav>
   </LegalPageShell>
 </BaseLayout>
@@ -365,3 +366,270 @@ const keyPoints = offer.deliverables.slice(0, 3);
     });
   });
 </script>
+
+<style>
+  /* ── Abschluss-Karte: geteilt wie die Profilkarte auf /ueber-mich/ ── */
+  .close-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    min-height: 17rem;
+    margin-top: clamp(3rem, 7vw, 4.5rem);
+    border-radius: 32px 16px 16px 32px;
+    background: var(--c-surface);
+    box-shadow: 0 30px 60px -30px rgba(27, 38, 44, 0.45), 0 0 0 1px rgba(27, 38, 44, 0.06);
+  }
+
+  .close-card--single {
+    grid-template-columns: minmax(0, 1fr);
+    border-radius: 32px;
+  }
+
+  .close-card__ask {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: clamp(1.75rem, 4vw, 2.75rem) clamp(1.75rem, 5vw, 4rem) clamp(1.75rem, 4vw, 2.5rem) clamp(1.5rem, 4vw, 2.75rem);
+  }
+
+  .close-card__kicker {
+    margin: 0 0 0.6rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-turf);
+  }
+
+  .close-card__kicker--light {
+    color: #7fd1ad;
+  }
+
+  .close-card__title {
+    margin: 0;
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: var(--c-ink);
+    text-wrap: balance;
+  }
+
+  .close-card__price {
+    margin: 0.6rem 0 0;
+    font-weight: 700;
+    color: var(--c-slate);
+  }
+
+  .close-card__cta {
+    margin-top: auto;
+    min-height: 48px;
+    padding-block: 0;
+  }
+
+  .close-card__ask .close-card__cta {
+    margin-top: 1.75rem;
+  }
+
+  /* Kreis mit dem r³-Zeichen auf der Trennkante */
+  .close-card__badge {
+    position: absolute;
+    top: 50%;
+    left: 60%;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 4.75rem;
+    height: 4.75rem;
+    border: 5px solid var(--c-surface);
+    border-radius: 50%;
+    background: linear-gradient(140deg, #36a873 0%, var(--c-turf) 55%, var(--c-forest) 100%);
+    box-shadow: 0 10px 22px -10px rgba(4, 114, 77, 0.6);
+    translate: -50% -50%;
+  }
+
+  .close-card__badge img {
+    width: 2.1rem;
+    height: auto;
+  }
+
+  /* rechte Seite: Screenshot der Referenz unter dunklem Verlauf */
+  .close-card__side {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: clamp(1.5rem, 4vw, 2.25rem) clamp(1.5rem, 4vw, 2.25rem) clamp(1.5rem, 4vw, 2rem) clamp(2.75rem, 5vw, 3.5rem);
+    border-radius: 0 16px 16px 0;
+    text-decoration: none;
+    color: #c3d1d6;
+    background:
+      linear-gradient(180deg, rgba(27, 38, 44, 0.25) 0%, rgba(27, 38, 44, 0.9) 38%, rgba(27, 38, 44, 0.97) 100%),
+      var(--side-img, none) center top / cover no-repeat,
+      var(--c-deep);
+    transition: filter 0.25s ease;
+  }
+
+  .close-card__side:hover {
+    filter: brightness(1.08);
+  }
+
+  .close-card__side:focus-visible {
+    outline: 3px solid var(--c-turf);
+    outline-offset: 4px;
+  }
+
+  .close-card__side-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+  }
+
+  .close-card__side-text {
+    margin-top: 0.4rem;
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  .close-card__side-more {
+    margin-top: 1rem;
+    font-weight: 800;
+    color: #ffffff;
+  }
+
+  @media (max-width: 759px) {
+    .close-card {
+      grid-template-columns: minmax(0, 1fr);
+      border-radius: 28px;
+    }
+
+    .close-card__side {
+      min-height: 15rem;
+      padding: 3.5rem 1.5rem 1.5rem;
+      border-radius: 0 0 28px 28px;
+    }
+
+    /* Handy: Kreis sitzt auf der Kante zwischen Anfrage und Referenz */
+    .close-card__badge {
+      position: relative;
+      top: auto;
+      left: auto;
+      width: 4.25rem;
+      height: 4.25rem;
+      /* Kreismitte = Oberkante der Referenz */
+      margin: -2.125rem 0 -2.125rem 1.5rem;
+      translate: none;
+    }
+
+    .close-card__ask {
+      padding-bottom: 3.25rem;
+    }
+  }
+
+  /* ── Weitere Leistungen: drei nebeneinander ── */
+  .next-offers {
+    margin-top: clamp(3.5rem, 8vw, 5rem);
+  }
+
+  .next-offers__title {
+    margin: 0 0 1.5rem;
+    font-size: clamp(1.4rem, 2.6vw, 1.8rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: var(--c-ink);
+  }
+
+  .next-offers__list {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 760px) {
+    .next-offers__list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.25rem;
+    }
+  }
+
+  .next-offer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1.4rem 1.4rem 1.25rem;
+    border-radius: 22px;
+    text-decoration: none;
+    background: rgba(184, 219, 217, 0.35);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .next-offer:hover {
+    background: rgba(184, 219, 217, 0.65);
+    transform: translateY(-3px);
+  }
+
+  .next-offer:focus-visible {
+    outline: 2px solid var(--c-turf);
+    outline-offset: 3px;
+  }
+
+  .next-offer__icon {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    color: #ffffff;
+    background: linear-gradient(140deg, #36a873 0%, var(--c-turf) 55%, var(--c-forest) 100%);
+    --icon-fill: rgba(255, 255, 255, 0.22);
+  }
+
+  .next-offer__name {
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--c-ink);
+  }
+
+  .next-offer__text {
+    margin: 0.4rem 0 1rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--c-on-sky);
+  }
+
+  .next-offer__more {
+    margin-top: auto;
+    font-weight: 800;
+    color: var(--c-turf);
+  }
+
+  .next-offer__more span {
+    display: inline-block;
+    transition: transform 0.2s ease;
+  }
+
+  .next-offer:hover .next-offer__more span {
+    transform: translateX(4px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .close-card__side,
+    .next-offer,
+    .next-offer__more span {
+      transition: none;
+    }
+
+    .next-offer:hover {
+      transform: none;
+    }
+  }
+</style>

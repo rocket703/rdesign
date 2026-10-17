@@ -51,7 +51,8 @@ const liveHost = (() => {
 <BaseLayout
   title={pageTitle}
   description={pageDescription}
-  image={project.data.image}
+  image={`/og/${slug}.jpg`}
+  imageAlt={`Vorschau der Webseite ${project.data.title}`}
   jsonLd={schemaGraph([
     webPageSchema({
       name: pageTitle,

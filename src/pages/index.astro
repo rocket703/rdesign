@@ -74,7 +74,7 @@ const featuredProjects = featuredSlugs
           danach weißt du, was deine Webseite braucht, wie lange es dauert und was es kostet.
         </p>
         <a href="/kontakt/" class="sketch-btn sketch-btn--primary">Erstgespräch anfragen<SketchFrame seed={131} fill /></a>
-        <p class="plan__note">Kostenlos · ca. 15 Minuten · Telefon, Video oder vor Ort</p>
+        <p class="plan__note">Kostenlos · ca. 30 Minuten · Telefon, Video oder vor Ort</p>
       </header>
 
       <ol class="plan__steps">
@@ -205,47 +205,42 @@ const featuredProjects = featuredSlugs
       </p>
     </section>
 
-    <section class="candy-about" id="about" aria-labelledby="candy-about-title">
-      <div class="container">
-        <div class="candy-about__inner">
-          <figure class="about-photo autoShow">
-            <div class="about-photo__frame">
-              <span class="about-photo__img">
-              <img
-                src={portrait.src}
-                srcset={portrait.srcset}
-                sizes="(max-width: 899px) min(78vw, 320px), 320px"
-                alt="Dustin Rose – Webentwickler in Magdeburg"
-                width="320"
-                height="400"
-                loading="lazy"
-                decoding="async"
-              />
-              </span>
-            </div>
-            <figcaption class="about-photo__caption">
-              <strong>Dustin Rose</strong>
-              <span>Webentwicklung · Magdeburg</span>
-            </figcaption>
-          </figure>
+    <!-- Über mich (fertiger Teil, clean): Foto vor einem Mint-Kreis, Namensschild, ruhiger Text -->
+    <section class="about-me" id="about" aria-labelledby="about-me-title">
+      <div class="container about-me__inner">
+        <figure class="about-me__photo autoShow">
+          <span class="about-me__circle" aria-hidden="true"></span>
+          <span class="about-me__print">
+            <img
+              src={portrait.src}
+              srcset={portrait.srcset}
+              sizes="(max-width: 899px) min(70vw, 300px), 300px"
+              alt="Dustin Rose – Webentwickler in Magdeburg"
+              width={portrait.width}
+              height={portrait.height}
+              loading="lazy"
+              decoding="async"
+            />
+          </span>
+          <figcaption class="about-me__caption">
+            <strong>Dustin Rose</strong>
+            <span>Webentwicklung · Magdeburg</span>
+          </figcaption>
+        </figure>
 
-          <article class="candy-about__card autoShow">
-            <h2 class="candy-about__title" id="candy-about-title">
-              Hi, ich bin <span class="candy-about__name">Dustin</span>.
-            </h2>
-            <p class="candy-about__role">Webentwickler &amp; Webdesigner</p>
-            <div class="candy-about__text">
-              <p>Ich verbinde Gestaltung, Technik und schnelle Ladezeiten – ohne Baukasten und ohne unnötige Umwege.</p>
-              <p>Von der ersten Idee bis zum Launch bekommst du einen direkten Ansprechpartner und nachvollziehbare Entscheidungen.</p>
-            </div>
-            <ul class="candy-about__bubbles" aria-label="Schwerpunkte">
-              <li>Performance</li>
-              <li>Barrierefrei</li>
-              <li>Alles aus einer Hand</li>
-            </ul>
-            <a href="/ueber-mich/" class="candy-about__more">Mehr über mich →</a>
-          </article>
-        </div>
+        <article class="about-me__text autoShow">
+          <p class="about-me__kicker">Wer hinter r³webdesign steckt</p>
+          <h2 class="story-title" id="about-me-title">Hi, ich bin <span class="about-me__name">Dustin</span>.</h2>
+          <p class="about-me__role">Webentwickler &amp; Webdesigner</p>
+          <p>Ich verbinde Gestaltung, Technik und schnelle Ladezeiten – ohne Baukasten und ohne unnötige Umwege.</p>
+          <p>Von der ersten Idee bis zum Launch bekommst du einen direkten Ansprechpartner und nachvollziehbare Entscheidungen.</p>
+          <ul class="about-me__points" aria-label="Schwerpunkte">
+            <li>Performance</li>
+            <li>Barrierefrei</li>
+            <li>Alles aus einer Hand</li>
+          </ul>
+          <a href="/ueber-mich/" class="about-me__more">Mehr über mich <span aria-hidden="true">→</span></a>
+        </article>
       </div>
     </section>
 

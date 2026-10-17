@@ -12,10 +12,10 @@ const pageDescription =
 const portrait = responsiveImage(SITE.portrait, 320);
 
 const skills = [
-  { title: 'Gestaltung & UX', items: ['Individuelles Webdesign', 'Responsive Design', 'Barrierefreiheit (WCAG)'] },
-  { title: 'Entwicklung', items: ['HTML, CSS, JavaScript, TypeScript', 'Astro, React Native / Expo', 'Supabase, PostgreSQL, Edge Functions'] },
-  { title: 'Sichtbarkeit', items: ['Technisches SEO', 'Strukturierte Daten (Schema.org)', 'Performance & Core Web Vitals'] },
-  { title: 'Betrieb & Sicherheit', items: ['Linux-Server, Docker, Proxmox', 'Monitoring mit Prometheus & Grafana', 'Backups, Updates, CI mit GitHub Actions'] },
+  { title: 'Gestaltung', items: ['Webdesign', 'Responsive Design', 'Barrierefreiheit', 'UX'] },
+  { title: 'Entwicklung', items: ['HTML & CSS', 'JavaScript', 'TypeScript', 'Astro', 'React Native', 'Supabase', 'PostgreSQL'] },
+  { title: 'Sichtbarkeit', items: ['Technisches SEO', 'Strukturierte Daten', 'Ladezeiten', 'Core Web Vitals'] },
+  { title: 'Betrieb', items: ['Linux-Server', 'Docker', 'Proxmox', 'Monitoring', 'Backups', 'GitHub Actions'] },
 ];
 ---
 
@@ -51,147 +51,148 @@ const skills = [
     crumbLabel="Über mich"
     lead="Ich bin Dustin Rose – Webentwickler und Webdesigner aus Magdeburg. Unter r³webdesign entwickle ich Webseiten und Web-Apps, bei denen Gestaltung, Technik und Ladezeit zusammenpassen."
   >
-    <!-- Steckbrief direkt unter dem Kopf: Foto links, Angaben rechts -->
+    <!-- Profilkarte: Foto füllt die linke Seite, r³-Zeichen im Kreis auf der Kante, rechts Name und Kontaktwege -->
     <div class="offer-aside about-intro">
-        <article class="legal-block about-card autoShow">
+      <article class="profile-card autoShow">
+        <div class="profile-card__photo">
           <img
-            class="about-card__photo"
             src={portrait.src}
             srcset={portrait.srcset}
-            sizes="(max-width: 699px) 70vw, 260px"
+            sizes="(max-width: 699px) 92vw, 300px"
             width={portrait.width}
             height={portrait.height}
             alt="Dustin Rose, Webentwickler in Magdeburg"
             loading="eager"
             decoding="async"
           />
-          <div class="about-card__info">
-          <h2 class="legal-block__title">Dustin Rose</h2>
-          <dl class="offer-facts">
-            <div class="offer-facts__row"><dt>Rolle</dt><dd>Webentwickler &amp; Webdesigner</dd></div>
-            <div class="offer-facts__row"><dt>Erfahrung</dt><dd>seit 5 Jahren im Web</dd></div>
-            <div class="offer-facts__row"><dt>Standort</dt><dd>Magdeburg · remote</dd></div>
-            <div class="offer-facts__row">
-              <dt>Zertifikat</dt>
-              <dd>
-                <a href={SITE.certificate.url} target="_blank" rel="noopener" class="legal-link">Responsive Web Design ↗</a><br />
-                freeCodeCamp
-              </dd>
-            </div>
-          </dl>
-          <!-- Profile als Icons, daneben die Anfrage – alles in einer Reihe -->
-          <div class="about-card__actions">
-            <a href={SITE.profiles.linkedin} rel="me noopener" target="_blank" class="about-card__icon" aria-label="LinkedIn (öffnet in neuem Tab)" title="LinkedIn">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="3" y="3" width="18" height="18" rx="3.5" />
-                <path d="M8 10.5v6M8 7.5v.01M11.5 16.5v-6M11.5 13a2.5 2.5 0 0 1 5 0v3.5" />
-              </svg>
-            </a>
-            <a href={SITE.profiles.github} rel="me noopener" target="_blank" class="about-card__icon" aria-label="GitHub (öffnet in neuem Tab)" title="GitHub">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d={siGithub.path} /></svg>
-            </a>
-            <a href="/kontakt/" class="offer-cta">Projekt anfragen</a>
-          </div>
-          </div>
-        </article>
+        </div>
+        <span class="profile-card__badge" aria-hidden="true"><img src="/logo-mark.svg" alt="" width="44" height="43" /></span>
+        <div class="profile-card__body">
+          <p class="profile-card__role">Webentwickler &amp; Webdesigner</p>
+          <h2 class="profile-card__name">Dustin Rose</h2>
+          <p class="profile-card__text">
+            Seit 5 Jahren baue ich Webseiten und Web-Apps – von Magdeburg aus, vor Ort in der Region und remote
+            deutschlandweit.
+          </p>
+          <ul class="profile-card__links">
+            <li>
+              <a href={SITE.profiles.linkedin} rel="me noopener" target="_blank" aria-label="LinkedIn (öffnet in neuem Tab)">
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="3" width="18" height="18" rx="3.5" />
+                  <path d="M8 10.5v6M8 7.5v.01M11.5 16.5v-6M11.5 13a2.5 2.5 0 0 1 5 0v3.5" />
+                </svg>
+                <span>LinkedIn</span>
+              </a>
+            </li>
+            <li>
+              <a href={SITE.profiles.github} rel="me noopener" target="_blank" aria-label="GitHub (öffnet in neuem Tab)">
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d={siGithub.path} /></svg>
+                <span>GitHub</span>
+              </a>
+            </li>
+            <li>
+              <a href="/kontakt/">
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <path d="m3.5 6.5 8.5 6.5 8.5-6.5" />
+                </svg>
+                <span>Anfragen</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </article>
     </div>
 
-    <div class="offer-main offer-main--full">
-        <article class="legal-block autoShow">
-          <h2 class="legal-block__title">Wie ich zum Webdesign gekommen bin</h2>
-          <div class="legal-block__body">
-            <p>
-              Angefangen hat alles 2020 mit dem Wolmirstedter Ohrelauf: Ich habe die damalige WordPress-Seite des
-              Spendenlaufs betreut – und schnell gemerkt, wie viel Zeit Plugins, Updates und langsame Ladezeiten kosten.
-              Seitdem beschäftige ich mich intensiv mit Webdesign und Webentwicklung. Die WordPress-Seite wurde später
-              eingestellt, zwischenzeitlich lief der Ohrelauf über Google Sites – heute hat er wieder eine eigene Webseite,
-              die ich komplett neu und ohne WordPress entwickelt habe: schneller, mobil optimiert und einfach zu betreiben.
-            </p>
-            <p>
-              Meine Grundlagen habe ich unter anderem mit dem Zertifikat
-              <a class="legal-link" href={SITE.certificate.url} target="_blank" rel="noopener">Responsive Web Design</a>
-              von freeCodeCamp gelegt. Den Großteil meines Wissens habe ich mir aber in echten Projekten erarbeitet: vom
-              schlanken Vereinsauftritt bis zur kompletten Plattform mit Datenbank, Benutzerkonten und App.
-            </p>
-          </div>
-        </article>
+    <!-- Fließtext: Überschrift links, Text rechts – ohne Trennstriche und Karten -->
+    <div class="about-prose">
+      <section class="about-sec autoShow" aria-labelledby="anfang-title">
+        <h2 class="about-sec__title" id="anfang-title">Wie alles anfing</h2>
+        <div class="about-sec__body">
+          <p class="about-sec__lead">
+            Angefangen hat alles 2020 mit dem Wolmirstedter Ohrelauf. Ich habe die WordPress-Seite des Spendenlaufs
+            übernommen – und schnell gemerkt, wie viel Zeit Plugins, Updates und langsame Ladezeiten kosten.
+          </p>
+          <p>
+            Seitdem lässt mich das Thema nicht mehr los. Die Grundlagen habe ich mir unter anderem mit dem Zertifikat
+            <a class="legal-link" href={SITE.certificate.url} target="_blank" rel="noopener">Responsive Web Design</a>
+            von freeCodeCamp erarbeitet, den Großteil aber in echten Projekten. Der Ohrelauf hat heute übrigens wieder
+            eine eigene Webseite: komplett neu von mir gebaut, ohne WordPress, schnell und für das Smartphone gemacht.
+          </p>
+        </div>
+      </section>
 
-        <article class="legal-block autoShow">
-          <h2 class="legal-block__title">Vom Elektroniker zum Webentwickler</h2>
-          <div class="legal-block__body">
-            <p>
-              Beruflich komme ich aus der Technik: Als gelernter Elektroniker war ich rund zehn Jahre in der Industrie
-              tätig – in Instandhaltung, Störungsbeseitigung und technischer Dokumentation. Danach habe ich als
-              Selbstständiger im Finanzdienstleistungsbereich gearbeitet und Kunden persönlich beraten.
-            </p>
-            <p>
-              Beides prägt meine Arbeit bis heute: Fehler systematisch eingrenzen, sauber dokumentieren, zuverlässig
-              liefern – und Technik so erklären, dass sie auch ohne Fachwissen verständlich ist.
-            </p>
-          </div>
-        </article>
+      <section class="about-sec autoShow" aria-labelledby="praegung-title">
+        <h2 class="about-sec__title" id="praegung-title">Projekte, die mich geprägt haben</h2>
+        <div class="about-sec__body">
+          <p>
+            Mein größtes Projekt ist die <a class="legal-link" href="/projekte/startplatzboerse/">Startplatzbörse</a>,
+            eine Plattform für den Handel mit Startplätzen bei Lauf-, Rad- und Triathlon-Events – als Webseite und als
+            App für iOS und Android. Von der Datenbank über Anmeldung und Benutzerkonten bis zu den App-Updates liegt
+            alles in meiner Hand.
+          </p>
+          <p>
+            Daneben sind Webseiten für Vereine und lokale Unternehmen entstanden, etwa für den
+            <a class="legal-link" href="/projekte/ohrelauf/">Wolmirstedter Ohrelauf</a>, den
+            <a class="legal-link" href="/projekte/radsportclub-magdeburg/">Radsportclub Magdeburg</a> und das
+            <a class="legal-link" href="/projekte/atelier-haarkunst/">Atelier Haarkunst</a>. Dort zählt vor allem,
+            dass die Seite auf dem Handy schnell lädt, einfach zu bedienen ist und bei Google gefunden wird.
+          </p>
+        </div>
+      </section>
 
-        <article class="legal-block autoShow">
-          <h2 class="legal-block__title">Projekte, die mich geprägt haben</h2>
-          <div class="legal-block__body">
-            <p>
-              Das umfangreichste Projekt ist <a class="legal-link" href="/projekte/startplatzboerse/">Startplatzbörse</a>:
-              eine Community-Plattform für den Handel mit Startplätzen bei Lauf-, Rad- und Triathlon-Events – als
-              Webseite und als Mobile App. Ich betreue sie eigenverantwortlich: von der Datenbank mit Zugriffsregeln über
-              Anmeldung und Benutzerkonten, serverseitige Funktionen und automatische Tests bis zu Deployment und App-Updates.
-            </p>
-            <p>
-              Daneben sind verschiedene Webseiten für Vereine und lokale Projekte entstanden, etwa für den
-              <a class="legal-link" href="/projekte/ohrelauf/">Wolmirstedter Ohrelauf</a> und den
-              <a class="legal-link" href="/projekte/radsportclub-magdeburg/">Radsportclub Magdeburg</a>. Bei diesen
-              Projekten stehen schnelle Ladezeiten, eine einfache Bedienung auf dem Smartphone und gute Auffindbarkeit
-              bei Google im Mittelpunkt.
-            </p>
-          </div>
-        </article>
+      <!-- Zitat als typografisches Motiv: Schriftgrößen im Wechsel, leicht schräg, schlichter Rahmen -->
+      <figure class="about-quote autoShow">
+        <blockquote class="about-quote__text">
+          <p>
+            <span class="q-line q-small">Eine Webseite ist mit dem</span>
+            <span class="q-line q-big"><span class="q-initial">L</span>aunch</span>
+            <span class="q-line q-mid"><em>nicht</em> fertig.</span>
+            <span class="q-line q-small q-rule">Sie muss zuverlässig laufen&nbsp;–</span>
+            <span class="q-line q-caps">jeden Tag.</span>
+          </p>
+        </blockquote>
+        <figcaption class="about-quote__by"><img src="/logo-wordmark-even-dark.svg" width="140" height="20" alt="r³webdesign" /></figcaption>
+      </figure>
 
-        <article class="legal-block autoShow">
-          <h2 class="legal-block__title">Betrieb, Monitoring und Sicherheit</h2>
-          <div class="legal-block__body">
-            <p>
-              Eine Webseite ist mit dem Launch nicht fertig – sie muss zuverlässig laufen. In meiner eigenen
-              Server-Umgebung betreibe ich über ein Dutzend Dienste auf Linux: virtualisiert mit Proxmox, in getrennten
-              Containern, abgesichert per VPN und zentral verschlüsselt.
-            </p>
-            <p>
-              Dazu gehören Monitoring mit Prometheus und Grafana, eine Übersicht über anstehende Updates, gespiegelte
-              Datenträger, regelmäßige Snapshots und Backups sowie eine lückenlose Dokumentation. Diese Erfahrung fließt
-              direkt in die <a class="legal-link" href="/leistungen/">Betreuung</a> deiner Webseite ein: Updates,
-              Sicherheit und Backups behalte ich im Blick, damit du dich um dein Geschäft kümmern kannst.
-            </p>
-          </div>
-        </article>
+      <section class="about-sec autoShow" aria-labelledby="betrieb-title">
+        <h2 class="about-sec__title" id="betrieb-title">Auch nach dem Launch</h2>
+        <div class="about-sec__body">
+          <p>
+            Deshalb betreibe ich meine eigenen Server: über ein Dutzend Dienste auf Linux, sauber voneinander getrennt,
+            abgesichert und mit regelmäßigen Backups. Ich sehe, wenn etwas hakt, bevor es jemand bemerkt.
+          </p>
+          <p>
+            Diese Erfahrung steckt in der <a class="legal-link" href="/leistungen/hosting-betreuung/">Betreuung</a>
+            deiner Webseite: Updates, Sicherheit und Backups behalte ich im Blick, damit du dich um dein Geschäft oder
+            deinen Verein kümmern kannst.
+          </p>
+        </div>
+      </section>
 
-        <article class="legal-block autoShow">
-          <h2 class="legal-block__title">Was ich mitbringe</h2>
-          <ul class="service-list">
-            {skills.map((group) => (
-              <li class="service-list__item">
-                <h3 class="about-skill__title">{group.title}</h3>
-                <ul class="legal-list">
-                  {group.items.map((item) => <li>{item}</li>)}
-                </ul>
-              </li>
-            ))}
-          </ul>
-        </article>
+      <section class="about-sec autoShow" aria-labelledby="arbeit-title">
+        <h2 class="about-sec__title" id="arbeit-title">Wie ich arbeite</h2>
+        <div class="about-sec__body">
+          <p>
+            Bei mir hast du einen festen Ansprechpartner – vom ersten Gespräch über Konzept und Umsetzung bis zur
+            Betreuung danach. Ich nutze keine Baukästen, sondern baue jede Seite individuell: Sie lädt schnell, sieht gut
+            aus und gehört am Ende dir. Wie ein Projekt konkret abläuft, steht unter
+            <a class="legal-link" href="/leistungen/">Leistungen</a>.
+          </p>
+        </div>
+      </section>
 
-        <article class="legal-block autoShow">
-          <h2 class="legal-block__title">Wie ich arbeite</h2>
-          <div class="legal-block__body">
-            <p>
-              Bei mir hast du einen festen Ansprechpartner – vom ersten Gespräch über Konzept und Umsetzung bis zur
-              Betreuung nach dem Launch. Ich setze keine Baukästen ein, sondern entwickle jede Seite individuell, damit
-              sie schnell lädt, gut aussieht und dir gehört. Wie das konkret abläuft, findest du unter
-              <a class="legal-link" href="/leistungen/">Leistungen</a>.
-            </p>
-          </div>
-        </article>
+      <section class="about-sec autoShow" aria-labelledby="tools-title">
+        <h2 class="about-sec__title" id="tools-title">Womit ich arbeite</h2>
+        <dl class="about-tools">
+          {skills.map((group) => (
+            <div>
+              <dt>{group.title}</dt>
+              <dd>{group.items.join(' · ')}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
     </div>
   </LegalPageShell>
 </BaseLayout>
@@ -203,120 +204,369 @@ const skills = [
     margin-bottom: clamp(0.5rem, 2vw, 1rem);
   }
 
-  .about-card {
+  /* Profilkarte: Foto links über die volle Höhe, r³-Kreis auf der Kante, Inhalt rechts */
+  .profile-card {
+    position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1.5rem;
-    align-items: center;
-  }
-
-  .about-card :global(.offer-facts dd) {
-    min-width: 0;
-    overflow-wrap: anywhere;
-  }
-
-  .about-card__photo {
-    width: 100%;
-    max-width: 16rem;
-    height: auto;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    max-width: 46rem;
+    min-height: 22rem;
     margin-inline: auto;
-    border-radius: 14px;
+    overflow: visible;
+    border-radius: 16px 32px 32px 16px;
+    background: var(--c-surface);
+    box-shadow: 0 30px 60px -30px rgba(27, 38, 44, 0.45), 0 0 0 1px rgba(27, 38, 44, 0.06);
   }
 
-  .about-card__info {
-    display: grid;
-    gap: 0.25rem;
-    min-width: 0;
+  .profile-card__photo {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px 0 0 16px;
   }
 
-  @media (min-width: 700px) {
-    .about-card {
-      grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
-      gap: 2.25rem;
-    }
-
-    .about-card__photo {
-      margin: 0;
-    }
+  .profile-card__photo img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 15%;
   }
 
-  .about-card__actions {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    gap: 0.75rem;
-    margin-top: 1rem;
-  }
-
-  .about-card__icon {
+  /* Kreis mit dem r³-Zeichen: sitzt mittig auf der Kante zwischen Foto und Inhalt */
+  .profile-card__badge {
+    position: absolute;
+    top: 2rem;
+    left: 40%;
+    z-index: 2;
     display: grid;
     place-items: center;
-    width: 48px;
-    height: 48px;
-    border: 1px solid var(--c-line);
-    border-radius: 12px;
-    color: var(--c-ink);
-    background: var(--c-surface);
-    transition: color 0.2s ease, border-color 0.2s ease, translate 0.2s ease;
+    width: 5.75rem;
+    height: 5.75rem;
+    border: 6px solid var(--c-surface);
+    border-radius: 50%;
+    background: linear-gradient(140deg, #36a873 0%, var(--c-turf) 55%, var(--c-forest) 100%);
+    box-shadow: 0 10px 22px -10px rgba(4, 114, 77, 0.6);
+    translate: -50% 0;
   }
 
-  .about-card__icon:hover {
+  .profile-card__badge img {
+    width: 2.6rem;
+    height: auto;
+  }
+
+  .profile-card__body {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 2.25rem 2.25rem 1.75rem 4.25rem;
+  }
+
+  .profile-card__role {
+    align-self: flex-end;
+    margin: 0 0 2.25rem;
+    font-size: 0.85rem;
+    font-weight: 800;
     color: var(--c-turf);
-    border-color: rgba(4, 114, 77, 0.45);
+  }
+
+  .profile-card__name {
+    margin: 0;
+    font-size: clamp(1.8rem, 3.4vw, 2.4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--c-ink);
+  }
+
+  .profile-card__text {
+    margin: 0.75rem 0 0;
+    max-width: 28rem;
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: var(--c-on-sky);
+  }
+
+  /* Kontaktwege als Icon-Reihe wie im Vorbild */
+  .profile-card__links {
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+    margin: auto 0 0;
+    padding: 1.5rem 0 0;
+    list-style: none;
+  }
+
+  .profile-card__links a {
+    display: grid;
+    justify-items: center;
+    gap: 0.3rem;
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--c-turf);
+    transition: color 0.2s ease, translate 0.2s ease;
+  }
+
+  .profile-card__links a span {
+    color: var(--c-slate);
+  }
+
+  .profile-card__links a:hover {
+    color: var(--c-forest);
     translate: 0 -2px;
   }
 
-  .about-card__icon:focus-visible {
+  .profile-card__links a:focus-visible {
     outline: 2px solid var(--c-turf);
-    outline-offset: 3px;
+    outline-offset: 4px;
+    border-radius: 6px;
   }
 
-  .about-card__actions .offer-cta {
-    flex: 0 1 auto;
-    min-width: 0;
-    padding-inline: 1.5rem;
-    white-space: nowrap;
-  }
-
-  .about-card__icon {
-    flex: none;
-  }
-
-  /* schmale Handys: Button füllt den Rest der Reihe, alles etwas kompakter */
-  @media (max-width: 479px) {
-    .about-card__actions {
-      gap: 0.5rem;
+  /* Handy: Foto oben, Kreis auf der Unterkante des Fotos */
+  @media (max-width: 699px) {
+    .profile-card {
+      grid-template-columns: minmax(0, 1fr);
+      border-radius: 16px 16px 28px 28px;
     }
 
-    .about-card__icon {
-      width: 44px;
-      height: 44px;
+    .profile-card__photo {
+      height: 18rem;
+      border-radius: 16px 16px 0 0;
     }
 
-    .about-card__actions .offer-cta {
-      flex: 1 1 auto;
-      gap: 0.35rem;
-      padding-inline: 0.75rem;
-      font-size: 0.92rem;
+    .profile-card__badge {
+      top: calc(18rem - 2.875rem);
+      left: 1.5rem;
+      width: 5rem;
+      height: 5rem;
+      translate: 0 0;
     }
-  }
 
-  @media (max-width: 379px) {
-    .about-card__actions .offer-cta::after {
-      display: none;
+    .profile-card__badge img {
+      width: 2.2rem;
+    }
+
+    .profile-card__body {
+      padding: 1rem 1.5rem 1.5rem;
+    }
+
+    .profile-card__role {
+      margin-bottom: 1.25rem;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .about-card__icon {
+    .profile-card__links a {
       transition: none;
     }
   }
 
-  .about-skill__title {
-    margin: 0 0 0.5rem;
-    font-size: 1rem;
+  /* ── Fließtext unter der Profilkarte: Überschrift links, Text rechts, viel Luft, keine Linien ── */
+  .about-prose {
+    display: grid;
+    gap: clamp(3rem, 7vw, 4.5rem);
+    max-width: 62rem;
+    margin: clamp(3.5rem, 8vw, 5.5rem) auto 0;
+  }
+
+  .about-sec {
+    display: grid;
+    gap: 0.9rem 3rem;
+  }
+
+  @media (min-width: 860px) {
+    .about-sec {
+      grid-template-columns: 16rem minmax(0, 1fr);
+    }
+  }
+
+  .about-sec__title {
+    margin: 0;
+    font-size: clamp(1.4rem, 2.4vw, 1.7rem);
     font-weight: 800;
-    color: var(--pg-heading);
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    color: var(--c-ink);
+    text-wrap: balance;
+  }
+
+  .about-sec__body {
+    display: grid;
+    gap: 1rem;
+    max-width: 40rem;
+  }
+
+  .about-sec__body p {
+    margin: 0;
+    font-size: 1.04rem;
+    line-height: 1.75;
+    color: var(--c-on-sky);
+  }
+
+  .about-sec__body .about-sec__lead {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: var(--c-ink);
+  }
+
+  /* Zitat: Schriftgrößen im Wechsel, leicht schräg gesetzt, in einem schlichten Rahmen */
+  .about-quote {
+    position: relative;
+    justify-self: center;
+    width: min(100%, 40rem);
+    margin: 0;
+    padding: clamp(2.25rem, 6vw, 3.5rem) clamp(1.5rem, 6vw, 4rem) clamp(1.75rem, 5vw, 2.75rem);
+    border: 1.5px solid var(--c-ink);
+    border-radius: 4px;
+    text-align: center;
+  }
+
+  /* große Anführungszeichen sitzen auf dem Rahmen */
+  .about-quote::before,
+  .about-quote::after {
+    position: absolute;
+    height: 0.5em;
+    padding: 0 0.12em;
+    overflow: hidden;
+    font-size: clamp(4rem, 12vw, 6.5rem);
+    font-weight: 900;
+    line-height: 0.95;
+    color: var(--c-turf);
+    background: var(--c-bg);
+  }
+
+  .about-quote::before {
+    content: '“';
+    top: -0.25em;
+    left: clamp(1rem, 5vw, 2.5rem);
+  }
+
+  .about-quote::after {
+    content: '”';
+    right: clamp(1rem, 5vw, 2.5rem);
+    bottom: -0.25em;
+  }
+
+  .about-quote__text {
+    margin: 0;
+  }
+
+  .about-quote__text p {
+    display: grid;
+    justify-items: center;
+    margin: 0;
+    color: var(--c-ink);
+    rotate: -3deg;
+  }
+
+  .q-line {
+    display: block;
+    line-height: 1.05;
+  }
+
+  .q-small {
+    font-size: clamp(0.9rem, 3.4vw, 1.25rem);
+    font-weight: 500;
+    letter-spacing: clamp(0.02em, 0.6vw, 0.06em);
+    white-space: nowrap;
+    color: var(--c-slate);
+  }
+
+  .q-big {
+    font-size: clamp(3.2rem, 11vw, 5.25rem);
+    font-weight: 900;
+    letter-spacing: -0.045em;
+    color: var(--c-turf);
+  }
+
+  .q-initial {
+    font-size: 1.25em;
+  }
+
+  .q-mid {
+    margin-top: 0.15rem;
+    font-size: clamp(1.6rem, 5vw, 2.3rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+
+  .q-mid em {
+    font-weight: 800;
+    font-style: normal;
+    color: var(--c-turf);
+  }
+
+  /* gepunktete Linien wie im Vorbild */
+  .q-rule {
+    margin-top: 1rem;
+    padding: 0.5rem 0.75rem 0;
+    border-top: 2px dotted rgba(88, 111, 124, 0.45);
+  }
+
+  .q-caps {
+    margin-top: 0.25rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 2px dotted rgba(88, 111, 124, 0.45);
+    font-size: clamp(2.3rem, 8vw, 3.75rem);
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  .about-quote__by {
+    margin-top: 1.25rem;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--c-slate);
+    text-align: right;
+    padding-right: clamp(0.5rem, 6vw, 4rem);
+    rotate: -3deg;
+  }
+
+  /* Wortmarke klein als Autor */
+  .about-quote__by img {
+    display: inline-block;
+    width: auto;
+    height: 1.2rem;
+    opacity: 0.85;
+  }
+
+  /* Werkzeuge als ruhige Textzeilen */
+  .about-tools {
+    display: grid;
+    gap: 0.9rem;
+    max-width: 40rem;
+    margin: 0;
+  }
+
+  .about-tools div {
+    display: grid;
+    gap: 0.15rem;
+  }
+
+  @media (min-width: 560px) {
+    .about-tools div {
+      grid-template-columns: 8.5rem minmax(0, 1fr);
+      gap: 1rem;
+    }
+  }
+
+  .about-tools dt {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    line-height: 1.9;
+    text-transform: uppercase;
+    color: var(--c-turf);
+  }
+
+  .about-tools dd {
+    margin: 0;
+    line-height: 1.6;
+    color: var(--c-on-sky);
   }
 </style>

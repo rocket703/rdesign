@@ -11,6 +11,8 @@ interface Props {
   title: string;
   description: string;
   image?: string;
+  /** Beschreibung des Vorschaubilds beim Teilen */
+  imageAlt?: string;
   noindex?: boolean;
   jsonLd?: Record<string, unknown>;
   headerVariant?: 'default' | 'paper';
@@ -20,6 +22,7 @@ const {
   title,
   description,
   image = SITE.defaultOgImage,
+  imageAlt = `${SITE.name} – Webdesign aus Magdeburg`,
   noindex = false,
   jsonLd,
   headerVariant = 'paper',
@@ -28,8 +31,10 @@ const {
 const site = Astro.site ?? new URL(SITE.url);
 const canonicalURL = new URL(Astro.url.pathname, site);
 const ogImageURL = new URL(image, site);
-const ogImageWidth = image === SITE.defaultOgImage ? 1200 : undefined;
-const ogImageHeight = image === SITE.defaultOgImage ? 630 : undefined;
+// Standardbild und Projekt-Vorschauen (public/og/) haben immer 1200 × 630
+const ogSized = image === SITE.defaultOgImage || image.startsWith('/og/');
+const ogImageWidth = ogSized ? 1200 : undefined;
+const ogImageHeight = ogSized ? 630 : undefined;
 const robots = noindex ? 'noindex, nofollow' : 'index,follow,max-image-preview:large';
 const jsonLdString = jsonLd ? JSON.stringify(jsonLd) : null;
 ---
@@ -57,7 +62,7 @@ const jsonLdString = jsonLd ? JSON.stringify(jsonLd) : null;
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonicalURL} />
   <meta property="og:image" content={ogImageURL} />
-  <meta property="og:image:alt" content={`${SITE.name} – Webdesign Magdeburg`} />
+  <meta property="og:image:alt" content={imageAlt} />
   {ogImageWidth && ogImageHeight && (
     <>
       <meta property="og:image:width" content={String(ogImageWidth)} />

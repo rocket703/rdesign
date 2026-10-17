@@ -23,9 +23,9 @@ export const SITE = {
   geo: { latitude: 52.0924474, longitude: 11.6247054 },
   // Einzugsgebiet für Vor-Ort-Termine; remote deutschlandweit
   serviceArea: ['Magdeburg', 'Halle (Saale)', 'Burg', 'Schönebeck (Elbe)', 'Wolmirstedt', 'Barleben'],
-  defaultOgImage: '/og-default.webp',
+  defaultOgImage: '/og-default.jpg',
   logo: '/icon-512.png',
-  portrait: '/images/IMG_1907.webp',
+  portrait: '/images/dustin-rose.webp',
   defaultTitle: 'Webdesign Magdeburg & Webentwicklung | r³webdesign',
   defaultDescription:
     'Webdesign und Webentwicklung in Magdeburg: schnelle Homepages, moderne Web-Apps und SEO-starke Umsetzung mit Astro, TypeScript und klarer UX.',

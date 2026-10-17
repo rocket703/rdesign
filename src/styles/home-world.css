@@ -1,248 +1,205 @@
 /* ═══ Startseite: Über mich, Referenzen, Leistungskarten, Wischleisten ═══
    Aufbau und Skizzen-Sektionen: home-story.css */
 
-/* ── Candy about (no terminal / code UI) ── */
-/* Platzhalter: gleicher Abstand wie das frühere Laufband */
-.candy-spacer {
-  height: 49px;
-  margin-bottom: 40px;
+/* ── Über mich (fertiger Teil der Startseite, ohne Bleistift): Foto vor einem Mint-Kreis ── */
+.about-me {
+  padding-block: clamp(3.5rem, 8vw, 5.5rem) clamp(1rem, 3vw, 2rem);
 }
 
-@media (max-width: 767px) {
-  .candy-spacer {
-    height: 45px;
-    margin-bottom: 24px;
-  }
-}
-
-/* Porträt: ruhiges Foto mit versetzter Light-Blue-Fläche, passend zur hellen Sektion */
-.about-photo {
-  position: relative;
-  width: min(300px, 74vw);
-  margin: 0 auto;
-}
-
-.about-photo__frame {
-  position: relative;
-  aspect-ratio: 4 / 5;
-}
-
-/* versetzte Fläche hinter dem Foto */
-.about-photo__frame::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  border-radius: 18px;
-  background: var(--c-sky);
-  transform: translate(18px, 18px);
-}
-
-/* grüner Akzentwinkel oben links */
-.about-photo__frame::after {
-  content: '';
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  z-index: 2;
-  width: 64px;
-  height: 64px;
-  border-top: 4px solid var(--c-turf);
-  border-left: 4px solid var(--c-turf);
-  border-top-left-radius: 22px;
-  pointer-events: none;
-}
-
-.about-photo__img {
-  position: relative;
-  z-index: 1;
-  display: block;
-  height: 100%;
-  overflow: hidden;
-  border-radius: 18px;
-  box-shadow: 0 24px 48px -18px rgba(34, 50, 58, 0.45);
-}
-
-/* Ausschnitt aufs Gesicht */
-.about-photo__img img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% 50%;
-  transform: scale(1.35);
-  transform-origin: 50% 72%;
-}
-
-.about-photo__caption {
-  position: relative;
-  z-index: 3;
+.about-me__inner {
   display: grid;
-  gap: 0.1rem;
-  width: max-content;
-  max-width: 100%;
-  margin: -1.6rem 0 0 auto;
-  padding: 0.65rem 0.95rem;
-  border-radius: 10px;
-  background: var(--c-deep);
-  box-shadow: 0 12px 24px -10px rgba(34, 50, 58, 0.5);
-}
-
-.about-photo__caption strong {
-  font-size: 0.95rem;
-  font-weight: 800;
-  color: #f4f4f9;
-}
-
-.about-photo__caption span {
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--c-sky);
-}
-
-.candy-about {
-  padding: 0 0 clamp(4rem, 10vw, 6rem);
-  position: relative;
-  z-index: 1;
-}
-
-.candy-about__inner {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(2rem, 5vw, 3.5rem);
+  gap: clamp(2.5rem, 6vw, 4.5rem);
   align-items: center;
-  max-width: 1000px;
-  margin: 0 auto;
+  max-width: 1040px;
 }
 
 @media (min-width: 900px) {
-  .candy-about__inner {
-    grid-template-columns: 0.9fr 1.1fr;
+  .about-me__inner {
+    grid-template-columns: 400px minmax(0, 1fr);
   }
 }
 
-.candy-about__card {
-  /* keine Box: Text direkt auf dem Hintergrund, eingeleitet von einer kräftigen Linie */
-  padding: 1.5rem 0 0;
-  border-top: 2px solid var(--c-ink);
+.about-me__photo {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  margin: 0;
+  padding-bottom: 1.5rem;
 }
 
-.candy-about__tag {
-  display: inline-block;
-  margin: 0 0 1rem;
-  padding: 0.35rem 0.85rem;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--c-dark);
-  background: var(--c-gold);
+/* großer Mint-Kreis hinter dem Foto, dazu ein kleiner grüner Kreis als Akzent */
+.about-me__circle {
+  position: absolute;
+  top: 6%;
+  left: 50%;
+  z-index: 0;
+  width: min(370px, 90vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--c-sky);
+  translate: -50% 0;
 }
 
-.candy-about__more {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  min-height: 48px;
-  margin-top: 1rem;
-  padding: 0 1.5rem;
-  border-radius: 12px;
-  font-weight: 800;
-  text-decoration: none;
-  color: #ffffff;
+.about-me__circle::after {
+  content: '';
+  position: absolute;
+  top: 6%;
+  right: 4%;
+  width: 18%;
+  aspect-ratio: 1;
+  border-radius: 50%;
   background: var(--c-turf);
-  box-shadow: 0 8px 20px -8px rgba(4, 114, 77, 0.6);
-  transition: background 0.2s ease, translate 0.2s ease, box-shadow 0.2s ease;
 }
 
-.candy-about__more:hover {
-  background: var(--c-turf-hover);
-  translate: 0 -2px;
-  box-shadow: 0 12px 24px -8px rgba(4, 114, 77, 0.65);
+.about-me__print {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: min(290px, 68vw);
+  overflow: hidden;
+  border-radius: 18px;
+  box-shadow: 0 26px 44px -22px rgba(27, 38, 44, 0.55);
 }
 
-.candy-about__more:focus-visible {
-  outline: 2px solid var(--c-deep);
-  outline-offset: 3px;
+.about-me__print img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .candy-about__more {
-    transition: none;
-  }
+.about-me__photo:hover .about-me__print img {
+  transform: scale(1.03);
 }
 
-.candy-about__title {
-  margin: 0 0 0.5rem;
-  font-size: clamp(1.65rem, 4vw, 2.35rem);
+/* Namensschild unten rechts am Foto */
+.about-me__caption {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  z-index: 2;
+  display: grid;
+  gap: 0.1rem;
+  padding: 0.7rem 1.1rem;
+  border-radius: 10px;
+  background: var(--c-deep);
+  color: #ffffff;
+  box-shadow: 0 14px 28px -14px rgba(27, 38, 44, 0.7);
+  translate: -10% 0;
+}
+
+.about-me__caption strong {
+  font-size: 1rem;
   font-weight: 800;
-  letter-spacing: -0.03em;
-  color: var(--c-ink);
 }
 
-.candy-about__name {
-  color: var(--c-green-ink);
+.about-me__caption span {
+  font-size: 0.8rem;
+  white-space: nowrap;
+  color: #c3d1d6;
 }
 
-.candy-about__role {
-  margin: 0 0 1.25rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--c-muted);
+.about-me__text {
+  min-width: 0;
+  max-width: 34rem;
 }
 
-.candy-about__text p {
-  margin: 0 0 1rem;
+.about-me__kicker {
+  margin: 0 0 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-slate);
+}
+
+.about-me__name {
+  color: var(--c-turf);
+}
+
+.about-me__role {
+  margin: 0.75rem 0 1.1rem;
+  font-weight: 700;
+  color: var(--c-slate);
+}
+
+.about-me__text > p:not([class]) {
+  margin: 0 0 0.9rem;
   line-height: 1.65;
-  color: var(--c-muted);
+  color: var(--c-on-sky);
 }
 
-.candy-about__text p:last-child {
-  margin-bottom: 0;
-}
-
-.candy-about__bubbles {
+/* Schwerpunkte mit Häkchen */
+.about-me__points {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.55rem;
-  margin: 1.5rem 0 0;
+  gap: 0.5rem 1.5rem;
+  margin: 1.25rem 0 1.9rem;
   padding: 0;
   list-style: none;
 }
 
-.candy-about__bubbles li {
-  padding: 0.45rem 1rem;
-  border-radius: 999px;
-  font-size: 0.82rem;
+.about-me__points li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   font-weight: 700;
-  color: var(--c-black);
-  background: var(--c-sky);
-  border: none;
+  color: var(--c-ink);
 }
 
-/* Handy: „Mehr über mich“ mittig unter dem Text */
-@media (max-width: 767px) {
-  .candy-about__more {
-    display: flex;
-    width: fit-content;
+.about-me__points li::before {
+  content: '✓';
+  display: grid;
+  place-items: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #ffffff;
+  background: var(--c-turf);
+}
+
+.about-me__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 48px;
+  padding: 0 1.4rem;
+  border-radius: 10px;
+  font-weight: 800;
+  text-decoration: none;
+  color: #ffffff;
+  background: var(--c-turf);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.about-me__more:hover {
+  background: var(--c-turf-hover);
+  transform: translateY(-2px);
+}
+
+.about-me__more:focus-visible {
+  outline: 2px solid var(--c-turf);
+  outline-offset: 3px;
+}
+
+@media (max-width: 899px) {
+  .about-me__text {
     margin-inline: auto;
   }
 }
 
-/* Handy: alle drei Schwerpunkte in einer Reihe statt 2 + 1 */
-@media (max-width: 559px) {
-  .candy-about__bubbles {
-    flex-wrap: nowrap;
-    gap: 0.4rem;
+@media (prefers-reduced-motion: reduce) {
+  .about-me__print img,
+  .about-me__more {
+    transition: none;
   }
 
-  .candy-about__bubbles li {
-    flex: 0 1 auto;
-    min-width: 0;
-    padding: 0.4rem 0.7rem;
-    font-size: clamp(0.68rem, 3.1vw, 0.78rem);
-    white-space: nowrap;
+  .about-me__more:hover {
+    transform: none;
   }
 }
 
