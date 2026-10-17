@@ -29,8 +29,8 @@ export const services: Service[] = [
   {
     title: 'Hosting & Betreuung',
     icon: 'care',
-    text: 'Hosting, Updates, Backups und kleine Änderungen – auch nach dem Launch bleibt der Kontakt direkt.',
-    chips: ['Hosting', 'Backups', 'Wartung'],
+    text: 'Hosting auf eigenen Servern in Deutschland, Updates, Backups und kleine Änderungen – auch nach dem Launch bleibt der Kontakt direkt.',
+    chips: ['Server in Deutschland', 'Backups', 'Wartung'],
     href: '/leistungen/hosting-betreuung/',
   },
 ];

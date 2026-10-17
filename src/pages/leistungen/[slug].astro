@@ -13,6 +13,7 @@ import {
   webPageSchema,
 } from '../../lib/seo';
 import '../../styles/offer.css';
+import '../../styles/faq.css';
 import type { MotifName } from '../../lib/sketch';
 
 export function getStaticPaths() {
@@ -24,8 +25,33 @@ const pathname = offerPath(offer);
 const otherOffers = offers.filter((other) => other.slug !== offer.slug && other.kind === offer.kind);
 const contactHref = `/kontakt/?thema=${offer.slug}`;
 
-// rechte Seite der Abschluss-Karte: Referenzprojekt (mit Screenshot) oder Technik-Partner
-const side = offer.reference
+// letztes Wort des Titels wird markiert, z. B. „Webdesign Magdeburg“ → „Magdeburg“
+const titleMark = offer.title.split(' ').pop();
+
+// Skizze in der Karte im Seitenkopf – dieselbe wie auf der Übersicht /leistungen/
+const motifFor: Record<string, MotifName> = {
+  'webdesign-magdeburg': 'browser',
+  webentwicklung: 'code',
+  'app-entwicklung': 'phones',
+  'hosting-betreuung': 'server',
+  'seo-check': 'seo',
+  relaunch: 'gallery',
+  barrierefreiheit: 'cards',
+  'business-email': 'mail',
+};
+
+// rechte Seite der Abschluss-Karte: Referenzprojekt (mit Screenshot), Technik-Partner –
+// oder die Skizze der Leistung, damit die Karte ohne beides nicht leer wirkt
+type Side = {
+  label: string;
+  title: string;
+  text: string;
+  href: string;
+  linkLabel: string;
+  external: boolean;
+  image?: string;
+};
+const side: Side | undefined = offer.reference
   ? {
       label: 'Referenz',
       title: offer.reference.title,
@@ -43,25 +69,9 @@ const side = offer.reference
         href: offer.partner.href,
         linkLabel: offer.partner.linkLabel,
         external: true,
-        image: undefined,
       }
     : undefined;
-// letztes Wort des Titels wird markiert, z. B. „Webdesign Magdeburg“ → „Magdeburg“
-const titleMark = offer.title.split(' ').pop();
-
-// Skizze in der Karte im Seitenkopf – dieselbe wie auf der Übersicht /leistungen/
-const motifFor: Record<string, MotifName> = {
-  'webdesign-magdeburg': 'browser',
-  webentwicklung: 'code',
-  'app-entwicklung': 'phones',
-  'hosting-betreuung': 'server',
-  'seo-check': 'seo',
-  relaunch: 'gallery',
-  barrierefreiheit: 'cards',
-  'business-email': 'mail',
-};
-// Wartungsstufen: Farben wie bei den Projektkarten
-const stageAccents = ['var(--c-turf)', 'var(--c-slate)', 'var(--c-deep)'];
+const sideSketch = motifFor[offer.slug] ?? 'browser';
 const priceText = offer.price ?? 'Festpreis auf Anfrage';
 // die ersten drei Punkte aus „Das bekommst du“ stehen schon im Kopf – bei „Stichwort: Text“ nur das Stichwort
 const keyPoints = offer.deliverables.slice(0, 3);
@@ -150,96 +160,63 @@ const keyPoints = offer.deliverables.slice(0, 3);
       <section class="legal-block offer-plans autoShow" aria-labelledby={`plans-${group.heading}`}>
         <h2 class="legal-block__title" id={`plans-${group.heading}`}>{group.heading}</h2>
         <p class="offer-plans__intro">{group.intro}</p>
-        {group.look === 'stages' ? (
-          <div class="plan-carousel" data-carousel>
-          <ul class="stage-grid" data-carousel-track>
+        <div class="plan-carousel" data-carousel>
+          <ul class:list={['tier-grid', `tier-grid--${group.plans.length}`]} data-carousel-track>
             {group.plans.map((plan, index) => (
-              <li>
-                <a
-                  href={`${contactHref}&paket=${encodeURIComponent(plan.name)}`}
-                  class="stage-card"
-                  style={`--card: ${stageAccents[index % stageAccents.length]}`}
-                >
-                  <div class="stage-card__media" aria-hidden="true">
-                    <span class="stage-card__icon"><OfferIcon name={offer.icon} size={30} /></span>
-                    <span class="stage-card__meter">
-                      {group.plans.map((_, level) => <i class:list={[level <= index && 'is-on']}></i>)}
+              <li class="tier plan-card">
+                {group.look === 'stages' ? (
+                  <!-- Stufe links, rechts so viele Server übereinander wie die Stufe hoch ist -->
+                  <div class="tier__head tier__head--stage">
+                    <span class="tier__level">Stufe {index + 1}</span>
+                    <span class="tier__servers" aria-hidden="true">
+                      {Array.from({ length: index + 1 }, () => (
+                        <svg viewBox="0 0 40 12" width="40" height="12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                          <rect x="1" y="1" width="38" height="10" rx="2.5" />
+                          <circle cx="7" cy="6" r="1.2" fill="currentColor" stroke="none" />
+                          <circle cx="11.5" cy="6" r="1.2" fill="currentColor" stroke="none" />
+                          <path d="M20 6h14" />
+                        </svg>
+                      ))}
                     </span>
                   </div>
-                  <span class="stage-card__tag">Stufe {index + 1}</span>
-                  <div class="stage-card__body">
-                    <h3 class="stage-card__title">{plan.name}</h3>
-                    <p class="stage-card__text">{plan.tagline}</p>
-                    <ul class="stage-card__features">
-                      {plan.features.map((feature) => (
-                        <li>
-                          <span class="stage-card__mark" aria-hidden="true">✓</span>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                    <p class="stage-card__price">{priceText}</p>
+                ) : (
+                  <div class="tier__head">
+                    <span class="tier__icon" aria-hidden="true"><OfferIcon name={offer.icon} size={24} /></span>
                   </div>
-                  <span class="stage-card__cta">Anfragen <span aria-hidden="true">→</span></span>
-                </a>
-              </li>
-            ))}
-          </ul>
-          <div class="carousel-dots carousel-dots--stages" role="group" aria-label={`${group.heading}: Karte wählen`}>
-            {group.plans.map((plan, index) => (
-              <button type="button" class="carousel-dots__dot" data-carousel-dot={index} aria-label={`${plan.name} anzeigen`} aria-current={index === 0 ? 'true' : undefined}></button>
-            ))}
-          </div>
-          <p class="stage-note">Alle Stufen: {priceText}</p>
-          </div>
-        ) : (
-          <div class="plan-carousel" data-carousel>
-          <ul class:list={['plan-grid', `plan-grid--${group.plans.length}`]} data-carousel-track>
-            {group.plans.map((plan) => (
-              <li class="plan-card">
-                <h3 class="plan-card__name">{plan.name}</h3>
-                <p class="plan-card__tagline">{plan.tagline}</p>
-                <ul class="plan-card__features">
+                )}
+                <h3 class="tier__name">{plan.name}</h3>
+                <p class="tier__tagline">{plan.tagline}</p>
+                <ul class="tier__features">
                   {plan.features.map((feature) => (
                     <li>
-                      <span class="plan-card__mark" aria-hidden="true">✓</span>
-                      <span>
-                        {feature.includes(': ') ? (
-                          <Fragment><strong>{feature.split(': ')[0]}<span class="plan-card__detail">:</span></strong><span class="plan-card__detail"> {feature.split(': ').slice(1).join(': ')}</span></Fragment>
-                        ) : (
-                          feature
-                        )}
-                      </span>
+                      {feature.includes(': ') ? (
+                        <Fragment><strong>{feature.split(': ')[0]}<span class="plan-card__detail">:</span></strong><span class="plan-card__detail"> {feature.split(': ').slice(1).join(': ')}</span></Fragment>
+                      ) : (
+                        feature
+                      )}
                     </li>
                   ))}
                 </ul>
-                {plan.variants && (
-                  <p class="plan-card__variants">
-                    <span class="plan-card__variants-label">wählbar:</span>
-                    {plan.variants.map((variant) => <span class="plan-card__variant">{variant}</span>)}
-                  </p>
-                )}
+                {plan.variants && <p class="tier__variants">wählbar: {plan.variants.join(' · ')}</p>}
                 {plan.features.some((feature) => feature.includes(': ')) && (
                   <button type="button" class="plan-card__toggle" aria-expanded="false" data-plan-toggle>
                     Details anzeigen
                   </button>
                 )}
-                <div class="plan-card__foot">
-                  <span class="plan-card__price">{priceText}</span>
-                  <a href={`${contactHref}&paket=${encodeURIComponent(plan.name)}`} class="plan-card__cta">
-                    Anfragen <span aria-hidden="true">→</span>
-                  </a>
-                </div>
+                <a href={`${contactHref}&paket=${encodeURIComponent(plan.name)}`} class="tier__cta">
+                  Anfragen<span class="sr-only">: {plan.name}</span>
+                  <span class="tier__arrow" aria-hidden="true">→</span>
+                </a>
               </li>
             ))}
           </ul>
-          <div class="carousel-dots carousel-dots--plans" role="group" aria-label={`${group.heading}: Karte wählen`}>
+          <div class="carousel-dots carousel-dots--tiers" role="group" aria-label={`${group.heading}: Karte wählen`}>
             {group.plans.map((plan, index) => (
               <button type="button" class="carousel-dots__dot" data-carousel-dot={index} aria-label={`${plan.name} anzeigen`} aria-current={index === 0 ? 'true' : undefined}></button>
             ))}
           </div>
-          </div>
-        )}
+          <p class="tier-note">{group.look === 'stages' ? 'Alle Stufen' : 'Alle Varianten'}: {priceText}</p>
+        </div>
       </section>
     ))}
 
@@ -287,11 +264,15 @@ const keyPoints = offer.deliverables.slice(0, 3);
 
       <article class="legal-block autoShow">
         <h2 class="legal-block__title">{offer.headings.faq}</h2>
-        <div class="offer-faq">
-          {offer.faq.map((item) => (
-            <details class="offer-faq__item">
-              <summary>{item.question}</summary>
-              <p>{item.answer}</p>
+        <div class="faq-list__items">
+          {offer.faq.map((item, i) => (
+            <details class="faq-item">
+              <summary>
+                <span class="faq-item__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                <span class="faq-item__q">{item.question}</span>
+                <span class="faq-item__toggle" aria-hidden="true"></span>
+              </summary>
+              <div class="faq-item__answer"><p>{item.answer}</p></div>
             </details>
           ))}
         </div>
@@ -299,16 +280,15 @@ const keyPoints = offer.deliverables.slice(0, 3);
     </div>
 
     <!-- Abschluss als geteilte Karte wie die Profilkarte: 60 % Anfrage, 40 % Referenz bzw. Partner -->
-    <article class:list={['close-card autoShow', !side && 'close-card--single']}>
+    <article class="close-card autoShow">
       <div class="close-card__ask">
         <p class="close-card__kicker">Projekt anfragen</p>
         <h2 class="close-card__title">Interesse an {offer.title}?</h2>
         <p class="close-card__price">{priceText}</p>
         <a href={contactHref} class="sketch-btn sketch-btn--primary close-card__cta">Projekt anfragen <span aria-hidden="true">→</span><SketchFrame seed={59} fill /></a>
       </div>
-      {side && (
-        <Fragment>
-          <span class="close-card__badge" aria-hidden="true"><img src="/logo-mark.svg" alt="" width="40" height="39" /></span>
+      <span class="close-card__badge" aria-hidden="true"><img src="/logo-mark.svg" alt="" width="40" height="39" /></span>
+      {side ? (
           <a
             class="close-card__side"
             href={side.href}
@@ -324,7 +304,10 @@ const keyPoints = offer.deliverables.slice(0, 3);
               {side.external && <span class="sr-only"> (öffnet in neuem Tab)</span>}
             </span>
           </a>
-        </Fragment>
+      ) : (
+        <div class="close-card__side close-card__side--sketch" aria-hidden="true">
+          <img src={`/sketch/motif-${sideSketch}.svg`} alt="" width="420" height="340" loading="lazy" decoding="async" />
+        </div>
       )}
     </article>
 
@@ -349,7 +332,9 @@ const keyPoints = offer.deliverables.slice(0, 3);
 
 <script>
   import { initCarousels } from '../../scripts/carousel';
+  import { initFaq } from '../../scripts/faq';
   initCarousels();
+  initFaq();
 
   // Paketkarten mobil: Erklärungen zu den Stichworten auf- und zuklappen –
   // immer alle Karten einer Gruppe, damit sie gleich hoch bleiben
@@ -378,11 +363,6 @@ const keyPoints = offer.deliverables.slice(0, 3);
     border-radius: 32px 16px 16px 32px;
     background: var(--c-surface);
     box-shadow: 0 30px 60px -30px rgba(27, 38, 44, 0.45), 0 0 0 1px rgba(27, 38, 44, 0.06);
-  }
-
-  .close-card--single {
-    grid-template-columns: minmax(0, 1fr);
-    border-radius: 32px;
   }
 
   .close-card__ask {
@@ -463,13 +443,32 @@ const keyPoints = offer.deliverables.slice(0, 3);
     text-decoration: none;
     color: #c3d1d6;
     background:
-      linear-gradient(180deg, rgba(27, 38, 44, 0.25) 0%, rgba(27, 38, 44, 0.9) 38%, rgba(27, 38, 44, 0.97) 100%),
+      /* Screenshot nur oben als Andeutung, hinter dem Text eine ruhige, fast deckende Fläche (Lesbarkeit) */
+      linear-gradient(180deg, rgba(27, 38, 44, 0.5) 0%, rgba(27, 38, 44, 0.97) 22%, rgb(27, 38, 44) 100%),
       var(--side-img, none) center top / cover no-repeat,
       var(--c-deep);
     transition: filter 0.25s ease;
   }
 
-  .close-card__side:hover {
+  /* ohne Referenz: Skizze der Leistung auf mintfarbenem Rasterpapier */
+  .close-card__side--sketch {
+    display: grid;
+    place-items: center;
+    padding: 1.5rem 1.75rem 1.5rem 3rem;
+    background-color: var(--c-sky);
+    background-image:
+      repeating-linear-gradient(0deg, rgba(31, 60, 64, 0.1) 0 1px, transparent 1px 28px),
+      repeating-linear-gradient(90deg, rgba(31, 60, 64, 0.1) 0 1px, transparent 1px 28px);
+    background-position: center;
+  }
+
+  .close-card__side--sketch img {
+    width: 100%;
+    max-width: 18rem;
+    height: auto;
+  }
+
+  .close-card__side:not(.close-card__side--sketch):hover {
     filter: brightness(1.08);
   }
 
@@ -609,7 +608,8 @@ const keyPoints = offer.deliverables.slice(0, 3);
   .next-offer__more {
     margin-top: auto;
     font-weight: 800;
-    color: var(--c-turf);
+    /* dunkleres Grün auf der Mint-Fläche: Kontrast deutlich über 4,5 : 1 */
+    color: var(--c-forest);
   }
 
   .next-offer__more span {

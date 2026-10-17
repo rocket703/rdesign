@@ -36,7 +36,7 @@ export type OfferPlan = {
   /** für wen der Tarif gedacht ist */
   tagline: string;
   features: string[];
-  /** wählbare Varianten, z. B. Globales Cloud-Hosting (CDN) oder Hosting auf deutschem Server */
+  /** wählbare Varianten eines Pakets */
   variants?: string[];
 };
 
@@ -357,10 +357,10 @@ export const offers: Offer[] = [
     slug: 'hosting-betreuung',
     title: 'Hosting & Betreuung',
     icon: 'server',
-    teaser: 'Globales Cloud-Hosting oder Hosting auf deutschem Server, dazu Wartung, Backups und kleine Änderungen – in drei Stufen buchbar.',
+    teaser: 'Hosting auf meinen eigenen Servern in Deutschland, dazu Wartung, Backups und kleine Änderungen – in drei Stufen buchbar.',
     seoTitle: 'Hosting & Wartung für Webseiten – Magdeburg | r³webdesign',
     seoDesc:
-      'Globales Cloud-Hosting oder Hosting auf deutschem Server, Wartung, Backups, Updates und kleine Änderungen für deine Webseite – Betreuung aus Magdeburg in drei Stufen.',
+      'Hosting auf eigenen Servern in Deutschland, Wartung, Backups, Updates und kleine Änderungen für deine Webseite – alle Daten bleiben in Deutschland, Betreuung aus Magdeburg in drei Stufen.',
     lead: 'Deine Webseite ist online – und soll es auch bleiben. Ich kümmere mich um Hosting, Updates, Backups und kleine Änderungen, damit du dich um dein Tagesgeschäft kümmern kannst.',
     headings: {
       intro: 'Betrieb und Pflege deiner Webseite aus einer Hand',
@@ -375,39 +375,10 @@ export const offers: Offer[] = [
     ],
     plans: [
       {
-        heading: 'Hosting: global in der Cloud oder auf deutschem Server',
-        intro:
-          'Wo deine Webseite liegt, hängt von deinem Projekt und deinen Anforderungen an den Datenschutz ab. Ich berate dich, richte alles ein und betreue es anschließend.',
-        plans: [
-          {
-            name: 'High-Performance Edge-Cloud',
-            tagline: 'Maximale Ladegeschwindigkeit und globale Ausfallsicherheit durch moderne Edge-Architektur.',
-            features: [
-              'Globales CDN-Netzwerk: Blitzschnelle Auslieferung der Website nah am Besucher für minimale Ladezeiten (Core Web Vitals)',
-              'Enterprise-Infrastruktur: Gehostet auf führenden, weltweit verteilten Cloud-Plattformen',
-              'Maximale Skalierbarkeit: Hohe Stabilität und Schutz vor Überlastung – auch bei starken Traffic-Spitzen',
-              'Full-Managed Setup: Inklusive Domain-Konfiguration, DNS-Management und automatischer SSL-Verschlüsselung',
-              'DSGVO-Begleitung: Fachgerechte Einbindung in deine Datenschutzerklärung – inklusive aller nötigen Angaben zum Anbieter',
-            ],
-          },
-          {
-            name: 'Managed vServer (Deutschland)',
-            tagline: 'Volle Datenhoheit und DSGVO-konformes Hosting auf einem eigenen Server in deutschen Rechenzentren.',
-            features: [
-              'Standort Deutschland: Speicherung und Verarbeitung ausschließlich in professionellen deutschen Rechenzentren',
-              'DSGVO-konform: Auftragsverarbeitungsvertrag (AVV) direkt mit deutschem Infrastruktur-Partner',
-              'Datenbank- & App-Ready: Die ideale Basis für dynamische Web-Systeme, Mitgliederbereiche, Formulare & Praxis-Websites',
-              'Integrierte Absicherung: Inklusive Domain-Einrichtung, SSL-Zertifikat, Firewall und automatisierten Backups',
-              'Eigene Ressourcen: Virtueller Server mit fest zugeteilter Leistung statt geteiltem Webspace – für gleichbleibend hohe Geschwindigkeit',
-            ],
-          },
-        ],
-      },
-      {
         heading: 'Wartung in drei Stufen',
         look: 'stages',
         intro:
-          'Je nach Größe deines Projekts brauchst du mehr oder weniger Betreuung. Jede Stufe kannst du mit globalem Cloud-Hosting (CDN) oder mit Hosting auf deutschem Server kombinieren.',
+          'Je nach Größe deines Projekts brauchst du mehr oder weniger Betreuung. Das Hosting auf meinen Servern in Deutschland ist in jeder Stufe enthalten.',
         plans: [
           {
             name: 'Klein',
@@ -447,6 +418,13 @@ export const offers: Offer[] = [
     ],
     sections: [
       {
+        heading: 'Deine Daten bleiben in Deutschland',
+        paragraphs: [
+          'Alle Webseiten, die ich betreue, laufen auf meinen eigenen Servern in Deutschland. Inhalte, Formulareingaben, Datenbanken und Backups verlassen Deutschland nicht – es gibt keine Weitergabe an große Cloud-Anbieter in den USA oder anderswo.',
+          'Für dich heißt das: klare Verhältnisse beim Datenschutz, ein Vertrag zur Auftragsverarbeitung direkt mit mir und ein Ansprechpartner, der genau weiß, wo deine Daten liegen. Die Server sind abgesichert, werden laufend überwacht und regelmäßig gesichert.',
+        ],
+      },
+      {
         heading: 'Backups und Sicherheit',
         paragraphs: [
           'Ich sichere deine Webseite regelmäßig – je nach Stufe wöchentlich oder täglich, bei Web-Apps inklusive Datenbank. Die Sicherungen liegen getrennt vom eigentlichen Hosting, damit im Ernstfall nichts verloren geht. Bei der Stufe „Aufwendig“ prüfe ich außerdem regelmäßig, ob sich ein Backup wirklich wiederherstellen lässt.',
@@ -462,12 +440,12 @@ export const offers: Offer[] = [
       {
         heading: 'Übernahme bestehender Webseiten',
         paragraphs: [
-          'Du hast schon eine Webseite, aber niemanden mehr, der sich darum kümmert? Ich schaue mir Technik und Hosting an, sage dir ehrlich, ob sich die Betreuung lohnt oder ein Relaunch sinnvoller ist, und ziehe die Seite auf Wunsch zu einem passenden Hosting um.',
+          'Du hast schon eine Webseite, aber niemanden mehr, der sich darum kümmert? Ich schaue mir Technik und Hosting an, sage dir ehrlich, ob sich die Betreuung lohnt oder ein Relaunch sinnvoller ist, und ziehe die Seite auf Wunsch auf meine Server in Deutschland um.',
         ],
       },
     ],
     deliverables: [
-      'Einrichtung von Hosting, Domain, DNS und SSL-Zertifikat',
+      'Hosting auf eigenen Servern in Deutschland, inklusive Domain, DNS und SSL-Zertifikat',
       'Updates und regelmäßige Sicherheitsprüfung',
       'Regelmäßige Backups, bei Bedarf mit Datenbank',
       'Überwachung der Erreichbarkeit',
@@ -481,16 +459,16 @@ export const offers: Offer[] = [
       'Alle, deren bisherige Webseite niemand mehr betreut',
     ],
     facts: [
-      { label: 'Hosting', value: 'globale Cloud (CDN) oder deutscher Server' },
+      { label: 'Hosting', value: 'eigene Server in Deutschland' },
       { label: 'Wartung', value: 'in drei Stufen buchbar' },
       { label: 'Ergebnis', value: 'sichere, aktuelle Webseite ohne eigenen Aufwand' },
     ],
     price: 'Preis auf Anfrage',
     faq: [
       {
-        question: 'Welches Hosting ist das richtige für mich?',
+        question: 'Wo liegt meine Webseite?',
         answer:
-          'Für schnelle, statische Webseiten ohne personenbezogene Daten ist globales Cloud-Hosting (CDN) oft die einfachste und schnellste Lösung. Verarbeitet deine Seite Formulare, Mitgliederdaten oder andere sensible Informationen, empfehle ich Hosting auf deutschem Server. Im Erstgespräch finden wir gemeinsam die passende Variante.',
+          'Auf meinen eigenen Servern in Deutschland. Das gilt für alle Webseiten, die ich betreue – egal ob kleine Vereinsseite oder Web-App mit Datenbank. Deine Inhalte, Formulareingaben und Backups bleiben ausschließlich in Deutschland.',
       },
       {
         question: 'Kann ich Hosting und Wartung getrennt buchen?',

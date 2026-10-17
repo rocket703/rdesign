@@ -237,20 +237,6 @@
   }
 }
 
-/* —— Kontaktseite —— */
-.contact-layout {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem;
-}
-
-@media (min-width: 900px) {
-  .contact-layout {
-    grid-template-columns: 1.35fr 0.85fr;
-    align-items: start;
-  }
-}
-
 .legal-block--form .legal-block__title {
   margin-bottom: 1.25rem;
   padding-bottom: 1rem;
@@ -421,21 +407,6 @@
   opacity: 0.65;
   cursor: not-allowed;
   transform: none;
-}
-
-.contact-aside {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-
-.contact-aside .legal-block__title {
-  font-size: 1.05rem;
-  margin-bottom: 0.65rem;
-}
-
-.contact-aside .legal-block__body p {
-  margin: 0;
 }
 
 @keyframes contactShake {
@@ -644,11 +615,10 @@
     var(--pg-hero-bg);
 }
 
-/* ═══ Redaktioneller Stil: Linien statt Karten ═══ */
+/* ═══ Redaktioneller Stil wie auf /ueber-mich/: Überschrift links, Text rechts, keine Trennstriche ═══ */
 .legal-page--clean .legal-block {
-  padding: 1.75rem 0 0.5rem;
+  padding: 0;
   border: none;
-  border-top: 1px solid var(--c-line);
   border-radius: 0;
   background: transparent;
   box-shadow: none;
@@ -660,26 +630,71 @@
 }
 
 .legal-page--clean .legal-block:hover {
-  border-color: var(--c-line);
   box-shadow: none;
 }
 
-/* Erster Abschnitt jeder Spalte mit kräftiger Linie */
-.legal-page--clean .legal-page__container > .legal-block:first-child,
-.legal-page--clean .offer-main > .legal-block:first-child,
-.legal-page--clean .contact-layout > .legal-block:first-child {
-  border-top: 2px solid var(--c-ink);
+/* Rechtsseiten etwas breiter, damit Überschrift links und Text rechts Platz haben */
+.legal-page--clean:not(.legal-page--wide, .legal-page--xwide) {
+  --legal-max: 960px;
+}
+
+/* Kontaktangaben im Impressum linksbündig wie der übrige Text */
+.legal-page--clean .legal-block--contact {
+  text-align: left;
+}
+
+/* mehr Luft zwischen den Abschnitten statt Linien */
+.legal-page--clean .legal-page__container,
+.legal-page--clean .offer-main--full {
+  gap: clamp(2.75rem, 6vw, 4rem);
+}
+
+/* Textabschnitte (nicht die Paket-Bereiche, Formulare oder Seitenleisten) zweispaltig */
+.legal-page--clean :is(.legal-page__container, .offer-main) > .legal-block:not(.offer-plans, .legal-block--form) {
+  display: grid;
+  gap: 0.9rem 3rem;
+  align-content: start;
+}
+
+@media (min-width: 860px) {
+  .legal-page--clean :is(.legal-page__container, .offer-main) > .legal-block:not(.offer-plans, .legal-block--form) {
+    grid-template-columns: 16rem minmax(0, 1fr);
+  }
+
+  .legal-page--clean :is(.legal-page__container, .offer-main) > .legal-block:not(.offer-plans, .legal-block--form) > * {
+    grid-column: 2;
+  }
+
+  .legal-page--clean :is(.legal-page__container, .offer-main) > .legal-block:not(.offer-plans, .legal-block--form) > .legal-block__title {
+    grid-column: 1;
+    grid-row: 1 / span 6;
+    align-self: start;
+  }
 }
 
 .legal-page--clean .legal-block__title {
-  font-size: clamp(1.2rem, 2.4vw, 1.45rem);
+  margin: 0;
+  font-size: clamp(1.4rem, 2.4vw, 1.7rem);
   font-weight: 800;
-  letter-spacing: -0.02em;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: var(--c-ink);
+  text-wrap: balance;
+}
+
+.legal-page--clean .legal-block__body {
+  max-width: 40rem;
+}
+
+.legal-page--clean .legal-block__body p,
+.legal-page--clean .legal-block > :is(.legal-list, .offer-checklist) li {
+  font-size: 1.04rem;
+  line-height: 1.75;
+  color: var(--c-on-sky);
 }
 
 /* Faktenboxen und Seitenleisten: flache Light-Blue-Flächen */
-.legal-page--clean .offer-aside .legal-block,
-.legal-page--clean .contact-aside .legal-block {
+.legal-page--clean .offer-aside .legal-block{
   padding: 1.5rem;
   border: none;
   border-radius: 6px;
@@ -694,12 +709,7 @@
   --pg-icon-border: transparent;
 }
 
-.legal-page--clean .offer-aside .offer-facts dt,
-.legal-page--clean .contact-aside .legal-block__body {
-  color: var(--c-ink);
-}
-
-.legal-page--clean .offer-aside .offer-summary__note {
+.legal-page--clean .offer-aside .offer-facts dt{
   color: var(--c-ink);
 }
 
@@ -715,9 +725,27 @@
   color: var(--c-on-sky);
 }
 
+.legal-page--clean .legal-page__nav {
+  gap: 0.25rem 1.5rem;
+  padding-top: 0.5rem;
+}
+
+/* Links unter Rechtsseiten: schlichte Textlinks statt Pillen */
 .legal-page--clean .legal-page__nav a {
-  color: var(--c-ink);
+  padding: 0;
+  min-height: 44px;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--c-slate);
   background: transparent;
+}
+
+.legal-page--clean .legal-page__nav a:hover {
+  color: var(--c-turf);
 }
 
 /* Zurück-Button oben rechts im Kopf der Unterseiten */

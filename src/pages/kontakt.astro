@@ -23,6 +23,7 @@ const pageDescription =
   <LegalPageShell
     sketch="mail"
     cta={false}
+    legalNav={false}
     wide
     title="Projekt anfragen"
     mark="anfragen"
@@ -38,9 +39,10 @@ const pageDescription =
       </div>
     </div>
 
-    <div class="contact-layout">
-      <article class="legal-block legal-block--form autoShow">
-        <h2 class="legal-block__title">Nachricht schreiben</h2>
+    <!-- Eine geteilte Karte wie die Profilkarte: links das Formular, rechts die direkten Wege -->
+    <article class="contact-card autoShow">
+      <div class="contact-card__form legal-block--form">
+        <h2 class="contact-card__title">Nachricht schreiben</h2>
 
         <form
           data-contact-email={SITE.email}
@@ -123,40 +125,42 @@ const pageDescription =
             </p>
           </div>
         </form>
-      </article>
+      </div>
 
-      <aside class="contact-aside">
-        <article class="legal-block autoShow">
-          <h2 class="legal-block__title">Direkt erreichen</h2>
-          <div class="legal-block__body">
-            <p>
-              E-Mail: <a href={`mailto:${SITE.email}`} class="legal-link">{SITE.email}</a><br />
-              Antwort in der Regel innerhalb von 24 Stunden.
-            </p>
-          </div>
-        </article>
+      <span class="contact-card__badge" aria-hidden="true"><img src="/logo-mark.svg" alt="" width="36" height="35" /></span>
 
-        <article class="legal-block autoShow">
-          <h2 class="legal-block__title">Kostenloses Erstgespräch</h2>
-          <div class="legal-block__body">
-            <p>
-              In rund 15 Minuten klären wir, was du brauchst und welche Lösung passt – per Telefon, Video oder
-              persönlich in Magdeburg. Unverbindlich und mit transparentem Festpreisangebot danach.
-            </p>
-          </div>
-        </article>
-
-        <article class="legal-block autoShow">
-          <h2 class="legal-block__title">Standort &amp; Einzugsgebiet</h2>
-          <div class="legal-block__body">
-            <p>
-              {SITE.streetAddress}, {SITE.postalCode} {SITE.city}<br />
-              Termine vor Ort in {SITE.serviceArea.join(', ')} – remote deutschlandweit.
-            </p>
-          </div>
-        </article>
+      <aside class="contact-card__info" aria-label="Direkt erreichen">
+        <ul class="contact-ways">
+          <li>
+            <span class="contact-ways__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3.5 6.5 8.5 6.5 8.5-6.5" /></svg>
+            </span>
+            <div>
+              <h3>Direkt erreichen</h3>
+              <p><a href={`mailto:${SITE.email}`}>{SITE.email}</a><br />Antwort meist innerhalb von 24 Stunden.</p>
+            </div>
+          </li>
+          <li>
+            <span class="contact-ways__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z" /></svg>
+            </span>
+            <div>
+              <h3>Kostenloses Erstgespräch</h3>
+              <p>In rund 15 Minuten klären wir, was du brauchst – per Telefon, Video oder persönlich in Magdeburg.</p>
+            </div>
+          </li>
+          <li>
+            <span class="contact-ways__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" /><circle cx="12" cy="10" r="2.3" /></svg>
+            </span>
+            <div>
+              <h3>Standort &amp; Einzugsgebiet</h3>
+              <p>{SITE.streetAddress}, {SITE.postalCode} {SITE.city}<br />Vor Ort in {SITE.serviceArea.join(', ')} – remote deutschlandweit.</p>
+            </div>
+          </li>
+        </ul>
       </aside>
-    </div>
+    </article>
   </LegalPageShell>
 
   <div
@@ -395,6 +399,172 @@ const pageDescription =
 </script>
 
 <style>
+  /* ── Geteilte Kontakt-Karte: Formular links, Kontaktwege rechts (wie die Profilkarte) ── */
+  .contact-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    border-radius: 32px 16px 16px 32px;
+    background: var(--c-surface);
+    box-shadow: 0 30px 60px -30px rgba(27, 38, 44, 0.45), 0 0 0 1px rgba(27, 38, 44, 0.06);
+  }
+
+  .contact-card__form {
+    min-width: 0;
+    padding: clamp(1.75rem, 4vw, 2.75rem) clamp(1.75rem, 5vw, 3.5rem) clamp(1.75rem, 4vw, 2.5rem) clamp(1.5rem, 4vw, 2.75rem);
+  }
+
+  .contact-card__title {
+    margin: 0 0 1.5rem;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--c-ink);
+  }
+
+  .contact-card__badge {
+    position: absolute;
+    top: 2.25rem;
+    left: 60%;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 4.5rem;
+    height: 4.5rem;
+    border: 5px solid var(--c-surface);
+    border-radius: 50%;
+    background: linear-gradient(140deg, #36a873 0%, var(--c-turf) 55%, var(--c-forest) 100%);
+    box-shadow: 0 10px 22px -10px rgba(4, 114, 77, 0.6);
+    translate: -50% 0;
+  }
+
+  .contact-card__badge img {
+    width: 2rem;
+    height: auto;
+  }
+
+  .contact-card__info {
+    padding: clamp(5.5rem, 9vw, 6.5rem) clamp(1.5rem, 4vw, 2.25rem) clamp(1.75rem, 4vw, 2.5rem) clamp(2.25rem, 4vw, 3rem);
+    border-radius: 0 16px 16px 0;
+    color: #c3d1d6;
+    background:
+      radial-gradient(ellipse 80% 60% at 100% 0%, rgba(4, 114, 77, 0.45), transparent 60%),
+      var(--c-deep);
+  }
+
+  .contact-ways {
+    display: grid;
+    gap: 1.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .contact-ways li {
+    display: grid;
+    grid-template-columns: 2.75rem minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .contact-ways__icon {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    color: #7fd1ad;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .contact-ways h3 {
+    margin: 0.2rem 0 0.3rem;
+    font-size: 1.02rem;
+    font-weight: 800;
+    color: #ffffff;
+  }
+
+  .contact-ways p {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  .contact-ways a {
+    font-weight: 700;
+    color: #ffffff;
+    text-decoration: underline;
+    text-decoration-color: rgba(127, 209, 173, 0.6);
+    text-underline-offset: 3px;
+    overflow-wrap: anywhere;
+  }
+
+  .contact-ways a:focus-visible {
+    outline: 2px solid #7fd1ad;
+    outline-offset: 2px;
+  }
+
+  /* Formularfelder: ruhige, gefüllte Flächen */
+  .contact-card :global(.contact-form .form-input),
+  .contact-card :global(.contact-form .form-textarea) {
+    border: 1.5px solid transparent;
+    border-radius: 14px;
+    color: var(--c-ink);
+    background: var(--c-bg);
+  }
+
+  .contact-card :global(.contact-form .form-input:focus),
+  .contact-card :global(.contact-form .form-textarea:focus) {
+    border-color: var(--c-turf);
+    background: #ffffff;
+  }
+
+  .contact-card :global(.contact-form .submit-button) {
+    align-self: flex-start;
+    width: auto;
+    min-height: 50px;
+    padding: 0 1.75rem;
+    border: none;
+    border-radius: 12px;
+    color: #ffffff;
+    background: var(--c-turf);
+    box-shadow: 0 12px 24px -14px rgba(4, 114, 77, 0.8);
+  }
+
+  .contact-card :global(.contact-form .submit-button:hover:not(:disabled)) {
+    background: var(--c-forest);
+  }
+
+  @media (max-width: 859px) {
+    .contact-card {
+      grid-template-columns: minmax(0, 1fr);
+      border-radius: 28px;
+    }
+
+    .contact-card :global(.contact-form .submit-button) {
+      align-self: stretch;
+    }
+
+    /* Handy: Kreis auf der Kante zwischen Formular und Kontaktwegen */
+    .contact-card__badge {
+      position: relative;
+      top: auto;
+      left: auto;
+      width: 4.25rem;
+      height: 4.25rem;
+      margin: -2.125rem 0 -2.125rem 1.5rem;
+      translate: none;
+    }
+
+    .contact-card__form {
+      padding-bottom: 3.25rem;
+    }
+
+    .contact-card__info {
+      padding: 3.5rem 1.5rem 1.75rem;
+      border-radius: 0 0 28px 28px;
+    }
+  }
+
   /* Ripple und Ladekreis entstehen bzw. wechseln per Skript – daher :global, sonst greift der Stil nicht */
   .submit-button :global(.btn-ripple) {
     position: absolute;

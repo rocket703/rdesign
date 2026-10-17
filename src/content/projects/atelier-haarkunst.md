@@ -1,6 +1,6 @@
 ---
 title: "Atelier Haarkunst"
-subtitle: "Dynamische Wordpress‑Website mit Mobile‑First‑Ansatz, starker On‑Page‑SEO und hohem Fokus auf Performance."
+subtitle: "WordPress-Website mit eigenen Komponenten für Preise, Services und Galerie – Mobile First, schnell und lokal gut gefunden."
 customerUrl: "https://www.atelier-haarkunst.de"
 image: "/images/projekt-1.webp"
 techStack: ["HTML5", "CSS3", "JavaScript", "CMS‑Integration", "SEO"]
@@ -25,4 +25,12 @@ theme:
   button: { bg: "#115c2b", text: "#ffffff", radius: "6px", weight: 700 }
 ---
 
-Für **Atelier Haarkunst**, einen modernen Friseursalon, wurde eine WordPress-Website mit selbstgecodeten Komponenten erstellt: dynamische Preis-Module, Touch-optimierte Service-Navigation, responsive Bildergalerie und vollständiger lokaler SEO-Optimierung.
+Für **Atelier Haarkunst**, einen modernen Friseursalon im Süden von Magdeburg, ist eine WordPress-Website entstanden, die mehr kann als eine Standard-Vorlage: Die wichtigsten Bereiche habe ich als eigene, selbstgecodete Komponenten gebaut – schlank, schnell und genau auf den Salon zugeschnitten.
+
+**Kernpunkte des Projekts:**
+
+Herzstück ist die **Preisliste**: Statt einer starren Tabelle gibt es dynamische Preis-Module, die das Team im WordPress-Backend selbst pflegen kann. Die **Service-Navigation** ist für das Smartphone optimiert – große Touch-Flächen, kurze Wege, damit Kundinnen und Kunden schnell finden, was sie suchen. Eine responsive **Bildergalerie** zeigt den Salon und die Arbeiten auf jedem Bildschirm in guter Qualität, ohne die Ladezeit auszubremsen.
+
+Weil die meisten Kundinnen und Kunden aus der Umgebung kommen, lag ein Schwerpunkt auf **lokaler Sichtbarkeit**: saubere Seitenstruktur, aussagekräftige Seitentitel und Beschreibungen, Open-Graph-Daten fürs Teilen und eine durchgehend semantische Auszeichnung. Dazu kommen ein konsequenter Mobile-First-Aufbau, optimierte Bilder und eine barrierearme Umsetzung mit gut lesbaren Kontrasten.
+
+Das Ergebnis: eine Webseite, die zum Stil des Salons passt, auf dem Handy genauso gut funktioniert wie am Desktop und die das Team im Alltag selbst aktuell halten kann. Ein Redesign der Seite ist bereits in Arbeit.

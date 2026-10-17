@@ -1,0 +1,126 @@
+/* ═══ FAQ-Liste: ruhige Liste mit Nummer, Frage und Plus, das sich zum × dreht ═══
+   Genutzt auf der Startseite und den Leistungsseiten; Auf-/Zuklappen: src/scripts/faq.ts */
+
+.faq-list__items {
+  border-top: 1px solid var(--c-line);
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--c-line);
+}
+
+.faq-item summary {
+  display: grid;
+  grid-template-columns: 2.25rem 1fr 2rem;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 4rem;
+  padding: 1.1rem 0;
+  list-style: none;
+  cursor: pointer;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary:focus-visible {
+  outline: 2px solid var(--c-turf);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.faq-item__num {
+  align-self: start;
+  padding-top: 0.2rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  font-feature-settings: 'tnum';
+  color: var(--c-slate);
+}
+
+.faq-item__q {
+  font-size: clamp(1rem, 1.6vw, 1.08rem);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--c-ink);
+  transition: color 0.2s ease;
+}
+
+.faq-item summary:hover .faq-item__q,
+.faq-item[open]:not(.is-closing) .faq-item__q {
+  color: var(--c-turf);
+}
+
+/* Kreis mit Plus, dreht beim Öffnen zum × */
+.faq-item__toggle {
+  position: relative;
+  justify-self: end;
+  width: 2rem;
+  height: 2rem;
+  border: 1.5px solid var(--c-line);
+  border-radius: 50%;
+  transition: transform 0.3s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.faq-item__toggle::before,
+.faq-item__toggle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.75rem;
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--c-ink);
+  transform: translate(-50%, -50%);
+}
+
+.faq-item__toggle::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.faq-item summary:hover .faq-item__toggle {
+  border-color: var(--c-turf);
+}
+
+.faq-item[open]:not(.is-closing) .faq-item__toggle {
+  transform: rotate(45deg);
+  border-color: var(--c-turf);
+  background: var(--c-turf);
+}
+
+.faq-item[open]:not(.is-closing) .faq-item__toggle::before,
+.faq-item[open]:not(.is-closing) .faq-item__toggle::after {
+  background: #ffffff;
+}
+
+/* Antwort: Höhe wird per Script animiert (siehe index.astro) */
+.faq-item__answer {
+  overflow: hidden;
+}
+
+.faq-item__answer > p {
+  max-width: 62ch;
+  margin: 0;
+  padding: 0 2.75rem 1.4rem 3rem;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  color: var(--c-slate);
+}
+
+@media (max-width: 599px) {
+  .faq-item summary {
+    grid-template-columns: 1.75rem 1fr 2rem;
+  }
+
+  .faq-item__answer > p {
+    padding: 0 0 1.25rem 2.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-item__toggle {
+    transition: none;
+  }
+}

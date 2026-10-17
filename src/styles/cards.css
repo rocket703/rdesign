@@ -26,12 +26,7 @@
 }
 
 /* ── Gemeinsame Kartenfläche ── */
-.legal-page--clean :is(
-  .offer-aside .legal-block,
-  .contact-aside .legal-block,
-  .service-list__item.legal-block,
-  .offer-more__card
-) {
+.legal-page--clean .offer-aside .legal-block {
   overflow: hidden;
   border: 1px solid var(--card-border);
   border-radius: var(--card-radius);
@@ -43,8 +38,7 @@
     border-color 0.3s ease;
 }
 
-.legal-page--clean :is(.offer-aside, .contact-aside) .legal-block,
-.legal-page--clean .service-list__item.legal-block {
+.legal-page--clean .offer-aside .legal-block {
   padding: 1.75rem;
   --pg-text: var(--c-slate);
   --pg-text-strong: var(--c-ink);
@@ -61,29 +55,27 @@
 }
 
 @media (max-width: 479px) {
-  .legal-page--clean :is(.offer-aside, .contact-aside) .legal-block,
-  .legal-page--clean .service-list__item.legal-block {
+  .legal-page--clean .offer-aside .legal-block {
     padding: 1.25rem;
   }
 }
 
 /* Karten ohne eigenen Link bleiben beim Hovern ruhig */
-.legal-page--clean :is(.offer-aside, .contact-aside) .legal-block:hover,
-.legal-page--clean .service-list__item.legal-block:hover {
+.legal-page--clean .offer-aside .legal-block:hover {
   border-color: var(--card-border);
   box-shadow: var(--card-shadow);
 }
 
-.legal-page--clean :is(.offer-aside, .contact-aside) :is(.offer-facts dt, .offer-summary__note, .legal-block__body) {
+.legal-page--clean :is(.offer-aside, .contact-aside) :is(.offer-facts dt, .legal-block__body) {
   color: var(--c-slate);
 }
 
-.legal-page--clean :is(.offer-aside, .contact-aside, .offer-layout, .contact-layout) {
+.legal-page--clean :is(.offer-aside, .offer-layout) {
   gap: 1.5rem;
 }
 
 /* ── Icon-Kachel: grüner Verlauf, wie ein App-Symbol ── */
-.legal-page--clean .offer-summary .offer-summary__icon,
+
 .legal-page--clean .service-list__cap {
   display: inline-grid;
   place-items: center;
@@ -102,110 +94,15 @@
   height: 26px;
 }
 
-/* Zusammenfassung: feiner Light-Blue-Schimmer oben rechts */
-.legal-page--clean .offer-summary {
-  background:
-    radial-gradient(120% 60% at 100% 0%, rgba(184, 219, 217, 0.45), transparent 60%),
-    var(--c-surface);
-}
-
 /* ── Leistungsübersicht: Icon + Titel in einer Zeile, einheitliche Fußzeile, ganze Karte klickbar ── */
 .legal-page--clean .service-list {
   gap: 1.5rem;
-}
-
-.legal-page--clean .service-list__item.legal-block {
-  position: relative;
-  display: flex;
-  flex-direction: column;
 }
 
 .legal-page--clean .service-list__item:has(.service-card__link):hover {
   border-color: var(--card-border-hover);
   box-shadow: var(--card-shadow-hover);
   translate: 0 -3px;
-}
-
-.service-card__head {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 0.9rem;
-}
-
-.legal-page--clean .service-card__head .service-list__cap {
-  flex: none;
-  width: 2.9rem;
-  height: 2.9rem;
-  margin: 0;
-  border-radius: 12px;
-}
-
-.legal-page--clean .service-card__head .service-list__cap svg {
-  width: 22px;
-  height: 22px;
-}
-
-.legal-page--clean .service-card__head .legal-block__title {
-  margin: 0;
-  font-size: 1.2rem;
-}
-
-.service-card__foot {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem 1rem;
-  margin-top: 1.25rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--c-line);
-}
-
-.service-card__link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  min-height: 44px;
-  font-weight: 700;
-  text-decoration: none;
-  color: var(--c-turf);
-}
-
-/* ganze Karte als Klickfläche */
-.service-card__link::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-}
-
-.service-card__link:focus-visible {
-  outline: none;
-}
-
-.service-card__link:focus-visible::after {
-  outline: 2px solid var(--c-turf);
-  outline-offset: 3px;
-  border-radius: var(--card-radius);
-}
-
-.service-card__ref {
-  position: relative;
-  z-index: 1;
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--c-slate);
-  text-decoration: underline;
-  text-decoration-color: rgba(88, 111, 124, 0.35);
-  text-underline-offset: 3px;
-}
-
-.service-card__ref:hover {
-  color: var(--c-turf);
 }
 
 .legal-page--clean .service-list__chips li {
@@ -276,107 +173,13 @@
   outline-offset: 3px;
 }
 
-/* ── Verlinkte Karten: heben sich an ── */
-.legal-page--clean .offer-aside .offer-reference:hover {
-  border-color: var(--card-border-hover);
-  box-shadow: var(--card-shadow-hover);
-  translate: 0 -3px;
-}
-
-.legal-page--clean .offer-reference__more {
-  transition: translate 0.2s ease;
-}
-
-.legal-page--clean .offer-reference:hover .offer-reference__more {
-  translate: 3px 0;
-}
-
-/* Weitere Leistungen / Pakete */
-.legal-page--clean .offer-more__grid {
-  gap: 1.25rem;
-}
-
-.legal-page--clean .offer-more__card {
-  position: relative;
-  align-items: flex-start;
-  padding: 1.35rem 3rem 1.35rem 1.35rem;
-  color: var(--c-slate);
-}
-
-.legal-page--clean .offer-more__card::after {
-  content: '→';
-  position: absolute;
-  top: 1.35rem;
-  right: 1.35rem;
-  font-weight: 700;
-  color: var(--c-turf);
-  opacity: 0.5;
-  transition: translate 0.2s ease, opacity 0.2s ease;
-}
-
-.legal-page--clean .offer-more__card .offer-summary__icon {
-  border: none;
-  border-radius: 12px;
-  color: var(--c-turf);
-  background: rgba(4, 114, 77, 0.1);
-  transition: background 0.3s ease, color 0.3s ease;
-}
-
-.legal-page--clean .offer-more__card strong {
-  color: var(--c-ink);
-}
-
-.legal-page--clean .offer-more__card:hover {
-  border-color: var(--card-border-hover);
-  box-shadow: var(--card-shadow-hover);
-  transform: none;
-  translate: 0 -3px;
-}
-
-.legal-page--clean .offer-more__card:hover::after {
-  opacity: 1;
-  translate: 3px 0;
-}
-
-.legal-page--clean .offer-more__card:hover .offer-summary__icon {
-  color: var(--c-surface);
-  background: var(--c-turf);
-}
-
-.legal-page--clean .offer-more__card:focus-visible {
-  outline: 2px solid var(--c-turf);
-  outline-offset: 3px;
-}
-
-/* ── Navigation am Ende der Rechtsseiten: kleine Pillen ── */
-.legal-page--clean .legal-page__nav {
-  gap: 0.75rem;
-}
-
-.legal-page--clean .legal-page__nav a {
-  border: 1px solid var(--card-border);
-  border-radius: 999px;
-  background: var(--c-surface);
-  box-shadow: var(--card-shadow);
-  transition: translate 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-}
-
-.legal-page--clean .legal-page__nav a:hover {
-  color: var(--c-turf);
-  border-color: var(--card-border-hover);
-  translate: 0 -1px;
-}
+/* Navigation am Ende der Rechtsseiten: schlichte Textlinks (Stil in legal.css) */
 
 @media (prefers-reduced-motion: reduce) {
   .legal-page--clean :is(
     .offer-aside .legal-block,
-    .contact-aside .legal-block,
-    .service-list__item.legal-block,
-    .offer-more__card,
-    .offer-more__card::after,
     .offer-cta,
     .offer-cta::after,
-    .offer-reference__more,
     .submit-button,
     .legal-page__nav a
   ) {

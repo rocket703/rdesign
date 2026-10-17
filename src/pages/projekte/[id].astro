@@ -4,6 +4,7 @@ import { render } from 'astro:content';
 import { getPublishedProjects, projectSlug } from '../../lib/projects';
 import DeviceShowcase from '../../components/DeviceShowcase.astro';
 import LegalPageShell from '../../components/LegalPageShell.astro';
+import SketchFrame from '../../components/SketchFrame.astro';
 import TechIcons from '../../components/TechIcons.astro';
 import '../../styles/offer.css';
 import { isInProgress, statusLabel } from '../../lib/project-status';
@@ -115,9 +116,12 @@ const liveHost = (() => {
         {project.data.mobileNote && <p class="project-showcase__note">{project.data.mobileNote}</p>}
       </div>
 
-      <aside class="offer-aside project-specs">
-        <article class="legal-block autoShow">
-          <h2 class="legal-block__title">Eckdaten</h2>
+      <!-- Eckdaten als Karte im Stil der Profil- und Abschluss-Karte -->
+      <aside class="project-specs autoShow">
+        <div class="project-specs__head">
+          <span class="project-specs__badge" aria-hidden="true"><img src="/logo-mark.svg" alt="" width="26" height="25" /></span>
+          <h2 class="project-specs__title">Eckdaten</h2>
+        </div>
           <dl class="offer-facts">
             <div class="offer-facts__row">
               <dt>Status</dt>
@@ -137,15 +141,16 @@ const liveHost = (() => {
           {project.data.techStack?.length ? (
             <TechIcons tags={project.data.techStack} class="project-tech" />
           ) : null}
-          <a href="/kontakt/" class="offer-cta">Projekt anfragen</a>
-          <a href={related.href} class="service-list__ref">
-            Passende Leistung: {related.label} →
+          <a href="/kontakt/" class="sketch-btn sketch-btn--primary project-specs__cta">Projekt anfragen <span aria-hidden="true">→</span><SketchFrame seed={67} fill /></a>
+          <a href={related.href} class="project-specs__related">
+            <span>Passende Leistung</span>
+            <strong>{related.label}</strong>
+            <span class="project-specs__arrow" aria-hidden="true">→</span>
           </a>
-        </article>
       </aside>
     </div>
 
-    <!-- Darunter: Beschreibung mittig -->
+    <!-- Darunter: Beschreibung, Überschrift links und Text rechts wie auf den anderen Unterseiten -->
     <article class="legal-block project-about autoShow">
       <h2 class="legal-block__title">Über das Projekt</h2>
       <div class="legal-block__body project-prose">
@@ -178,12 +183,95 @@ const liveHost = (() => {
       grid-template-columns: minmax(0, 1.65fr) minmax(17rem, 0.85fr);
     }
 
-    /* Eckdaten bleiben neben der Vorschau stehen statt mitzuscrollen */
-    .project-top .project-specs {
-      position: static;
-      grid-column: auto;
-      grid-row: auto;
-    }
+  }
+
+  .project-specs {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1.5rem 1.4rem;
+    border-radius: 24px;
+    background: var(--c-surface);
+    box-shadow: 0 0 0 1px rgba(27, 38, 44, 0.06), 0 26px 48px -28px rgba(27, 38, 44, 0.45);
+  }
+
+  .project-specs__head {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .project-specs__badge {
+    display: grid;
+    place-items: center;
+    width: 2.9rem;
+    height: 2.9rem;
+    border-radius: 50%;
+    background: linear-gradient(140deg, #36a873 0%, var(--c-turf) 55%, var(--c-forest) 100%);
+  }
+
+  .project-specs__title {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--c-ink);
+  }
+
+  .project-specs__cta {
+    align-self: flex-start;
+    margin-top: 0.5rem;
+    min-height: 48px;
+    padding-block: 0;
+  }
+
+  .project-specs__related {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0 0.75rem;
+    margin-top: 1.25rem;
+    padding: 0.85rem 1rem;
+    border-radius: 14px;
+    text-decoration: none;
+    background: rgba(184, 219, 217, 0.4);
+    transition: background 0.2s ease;
+  }
+
+  .project-specs__related:hover {
+    background: rgba(184, 219, 217, 0.7);
+  }
+
+  .project-specs__related:focus-visible {
+    outline: 2px solid var(--c-turf);
+    outline-offset: 2px;
+  }
+
+  .project-specs__related span:first-child {
+    grid-column: 1;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-turf);
+  }
+
+  .project-specs__related strong {
+    grid-column: 1;
+    font-weight: 800;
+    color: var(--c-ink);
+  }
+
+  .project-specs__arrow {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    color: #ffffff;
+    background: var(--c-turf);
   }
 
   .project-showcase {
@@ -191,13 +279,7 @@ const liveHost = (() => {
   }
 
   .project-about {
-    width: 100%;
-    max-width: 68ch;
-    margin: clamp(1rem, 3vw, 2rem) auto 0;
-  }
-
-  .project-about .legal-block__title {
-    text-align: center;
+    margin-top: clamp(1.5rem, 4vw, 2.5rem);
   }
 
   .project-showcase__link {
@@ -228,6 +310,9 @@ const liveHost = (() => {
 
   .project-prose :global(p) {
     margin: 0 0 1rem;
+    font-size: 1.04rem;
+    line-height: 1.75;
+    color: var(--c-on-sky);
   }
 
   :global(.project-tech) {
