@@ -10,6 +10,28 @@
       1292
     ]
   },
+  "/images/alcartron-hifi-mobile.webp": {
+    "width": 1170,
+    "height": 2220,
+    "base": "/images/responsive/alcartron-hifi-mobile",
+    "variants": [
+      480,
+      800,
+      1170
+    ]
+  },
+  "/images/alcartron-hifi.webp": {
+    "width": 2880,
+    "height": 1620,
+    "base": "/images/responsive/alcartron-hifi",
+    "variants": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
   "/images/cafe-latte.webp": {
     "width": 1200,
     "height": 1200,

@@ -14,7 +14,6 @@ import SketchHero from '../components/SketchHero.astro';
 import SketchFrame from '../components/SketchFrame.astro';
 import '../styles/home-world.css';
 import '../styles/home-story.css';
-import '../styles/faq.css';
 import '../styles/carousel.css';
 
 import { homePageSchema, SITE } from '../lib/seo';
@@ -105,8 +104,7 @@ const featuredProjects = featuredSlugs
         <p class="hand-note">Was ich für dich baue</p>
         <h2 class="story-title" id="services-title">Webseite, Relaunch &amp; Betreuung</h2>
         <p class="story-lead">
-          Für Vereine, Events und lokale Unternehmen: eine neue Webseite, ein Neustart für die alte –
-          und danach jemand, der sich kümmert.
+         Für Vereine, Events und lokale Unternehmen: neue Webseiten, frischer Wind für bestehende Seiten und jemand, der sich kümmert.
         </p>
       </header>
 
@@ -206,11 +204,11 @@ const featuredProjects = featuredSlugs
       </p>
     </section>
 
-    <!-- Über mich (fertiger Teil, clean): Foto vor einem Mint-Kreis, Namensschild, ruhiger Text -->
+    <!-- Über mich: Foto wie ein eingeklebtes Bild vor einem Mint-Kreis, Text mit gezeichneter Unterstreichung -->
     <section class="about-me" id="about" aria-labelledby="about-me-title">
       <div class="container about-me__inner">
         <figure class="about-me__photo autoShow">
-          <span class="about-me__circle" aria-hidden="true"></span>
+          <span class="about-me__circle" aria-hidden="true"><SketchFrame shape="circle" seed={211} /></span>
           <span class="about-me__print">
             <img
               src={portrait.src}
@@ -222,16 +220,20 @@ const featuredProjects = featuredSlugs
               loading="lazy"
               decoding="async"
             />
+            <SketchFrame shape="card" seed={217} />
+            <span class="about-me__tape" aria-hidden="true"></span>
           </span>
           <figcaption class="about-me__caption">
-            <strong>Dustin Rose</strong>
-            <span>Webentwicklung · Magdeburg</span>
+            <svg viewBox="0 0 60 40" aria-hidden="true"><path d="M4 34 C 16 30, 34 22, 50 8" /><path d="M40 8 L 51 7 L 49 18" /></svg>
+            Das bin ich – Dustin aus Magdeburg
           </figcaption>
         </figure>
 
         <article class="about-me__text autoShow">
-          <p class="about-me__kicker">Wer hinter r³webdesign steckt</p>
-          <h2 class="story-title" id="about-me-title">Hi, ich bin <span class="about-me__name">Dustin</span>.</h2>
+          <p class="hand-note">Wer hinter r³webdesign steckt</p>
+          <h2 class="story-title" id="about-me-title">
+            Hi, ich bin <span class="story-mark">Dustin<svg class="story-mark__line" viewBox="0 0 240 14" preserveAspectRatio="none" aria-hidden="true"><path d="M2 9 C 50 5, 120 4, 237 8" /><path d="M8 11.5 C 70 8, 150 8, 230 10" /></svg></span>.
+          </h2>
           <p class="about-me__role">Webentwickler &amp; Webdesigner</p>
           <p>Ich verbinde Gestaltung, Technik und schnelle Ladezeiten – ohne Baukasten und ohne unnötige Umwege.</p>
           <p>Von der ersten Idee bis zum Launch bekommst du einen direkten Ansprechpartner und nachvollziehbare Entscheidungen.</p>
@@ -240,7 +242,7 @@ const featuredProjects = featuredSlugs
             <li>Barrierefrei</li>
             <li>Alles aus einer Hand</li>
           </ul>
-          <a href="/ueber-mich/" class="about-me__more">Mehr über mich <span aria-hidden="true">→</span></a>
+          <a href="/ueber-mich/" class="sketch-btn sketch-btn--primary">Mehr über mich <span aria-hidden="true">→</span><SketchFrame seed={223} fill /></a>
         </article>
       </div>
     </section>
@@ -279,8 +281,48 @@ const featuredProjects = featuredSlugs
 </BaseLayout>
 
 <script>
-  import { initFaq } from '../scripts/faq';
-  initFaq();
+  // FAQ: gleichmäßiges Auf- und Zuklappen, immer nur eine Frage offen
+  (() => {
+    const items = [...document.querySelectorAll<HTMLDetailsElement>('.faq-item')];
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const DURATION = 280;
+
+    const animate = (item: HTMLDetailsElement, open: boolean) => {
+      const answer = item.querySelector<HTMLElement>('.faq-item__answer');
+      if (!answer || reduced) {
+        item.open = open;
+        return;
+      }
+      item.getAnimations({ subtree: true }).forEach((a) => a.cancel());
+      if (open) item.open = true;
+      const full = answer.scrollHeight;
+      const from = open ? 0 : full;
+      const to = open ? full : 0;
+      const animation = answer.animate(
+        [
+          { height: `${from}px`, opacity: open ? 0 : 1 },
+          { height: `${to}px`, opacity: open ? 1 : 0 },
+        ],
+        { duration: DURATION, easing: 'cubic-bezier(0.25, 0.8, 0.25, 1)' },
+      );
+      if (!open) item.classList.add('is-closing');
+      animation.onfinish = () => {
+        if (!open) {
+          item.open = false;
+          item.classList.remove('is-closing');
+        }
+      };
+    };
+
+    items.forEach((item) => {
+      item.querySelector('summary')?.addEventListener('click', (event) => {
+        event.preventDefault();
+        const willOpen = !item.open || item.classList.contains('is-closing');
+        if (willOpen) items.filter((other) => other !== item && other.open).forEach((other) => animate(other, false));
+        animate(item, willOpen);
+      });
+    });
+  })();
 </script>
 
 <script>
