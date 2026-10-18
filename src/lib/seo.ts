@@ -295,6 +295,8 @@ export function creativeWorkSchema({
     description,
     url: canonicalUrl(pathname, site),
     image: absoluteUrl(image, site),
+    // Urheber: r³webdesign als Unternehmen, umgesetzt von Dustin Rose
+    author: { '@id': `${absoluteUrl('/', site)}#service` },
     creator: { '@id': `${absoluteUrl('/', site)}#person` },
     inLanguage: SITE.language,
     ...(liveUrl && liveUrl !== '#'
