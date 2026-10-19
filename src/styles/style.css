@@ -23,12 +23,32 @@ body {
   max-width: 100%;
 }
 
-/* Skip-Link */
+/* Skip-Link: erstes Element der Seite, sichtbar sobald er per Tastatur fokussiert wird */
 .skip-link {
-  position: absolute; left: -9999px; top: 0; z-index: 10000;
-  background: var(--c-turf); color: #0b1220; padding: .6rem .9rem; border-radius: .5rem;
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 10000;
+  padding: 0.75rem 1.1rem;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  text-decoration: none;
+  /* Weiß auf Grün: Kontrast 6,2 : 1 (vorher dunkle Schrift mit nur 3,2 : 1) */
+  color: #ffffff;
+  background: var(--c-turf);
+  box-shadow: 0 8px 20px rgba(27, 38, 44, 0.3);
+  transform: translateY(-200%);
+  transition: transform 0.15s ease;
 }
-.skip-link:focus { left: .75rem; top: .75rem; }
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: none;
+  outline: 3px solid var(--c-forest);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .skip-link { transition: none; }
+}
 
 .sr-only {
   position: absolute;
@@ -1155,3 +1175,6 @@ body.nav-open .site-header--paper {
   .sketch-frame,
   .sketch-btn { transition: none; }
 }
+
+/* Sprungziel des Skip-Links: Fokus ohne Rahmen um den ganzen Inhalt */
+#main-content:focus { outline: none; }

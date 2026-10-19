@@ -6,6 +6,7 @@ import { SITE } from '../lib/seo';
 import '../styles/fonts.css';
 import interFont from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 import '../styles/style.css';
+import { lastModified } from '../lib/last-modified.mjs';
 
 interface Props {
   title: string;
@@ -36,7 +37,23 @@ const ogSized = image === SITE.defaultOgImage || image.startsWith('/og/');
 const ogImageWidth = ogSized ? 1200 : undefined;
 const ogImageHeight = ogSized ? 630 : undefined;
 const robots = noindex ? 'noindex, nofollow' : 'index,follow,max-image-preview:large';
-const jsonLdString = jsonLd ? JSON.stringify(jsonLd) : null;
+// Aktualitäts-Signal: letzte Änderung der Quelldateien dieser Seite (aus der Git-Historie)
+const modified = lastModified(Astro.url.pathname);
+
+// dateModified in den WebPage-Knoten der strukturierten Daten schreiben
+const withModified = (data: Record<string, unknown> | undefined) => {
+  if (!data || !modified) return data;
+  // WebPage, CollectionPage, ContactPage, FAQPage … (Typ endet auf „Page“)
+  const isPage = (node: Record<string, unknown>) =>
+    [node['@type']].flat().some((type) => typeof type === 'string' && type.endsWith('Page'));
+  const graph = data['@graph'];
+  if (Array.isArray(graph)) {
+    return { ...data, '@graph': graph.map((node) => (isPage(node) ? { ...node, dateModified: modified } : node)) };
+  }
+  return isPage(data) ? { ...data, dateModified: modified } : data;
+};
+
+const jsonLdString = jsonLd ? JSON.stringify(withModified(jsonLd)) : null;
 ---
 <!DOCTYPE html>
 <html lang="de">
@@ -56,6 +73,8 @@ const jsonLdString = jsonLd ? JSON.stringify(jsonLd) : null;
   <link rel="preload" href={interFont} as="font" type="font/woff2" crossorigin />
 
   <meta property="og:type" content="website" />
+  {modified && <meta property="og:updated_time" content={modified} />}
+  {modified && <meta property="article:modified_time" content={modified} />}
   <meta property="og:site_name" content={SITE.name} />
   <meta property="og:locale" content={SITE.locale} />
   <meta property="og:title" content={title} />
@@ -92,7 +111,7 @@ const jsonLdString = jsonLd ? JSON.stringify(jsonLd) : null;
 
   <Header variant={headerVariant} />
 
-  <main id="main-content">
+  <main id="main-content" tabindex="-1">
     <slot />
   </main>
 
