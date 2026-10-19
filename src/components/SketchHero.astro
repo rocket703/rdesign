@@ -3,12 +3,18 @@
 // Die Skizzen kommen als statische SVGs aus src/pages/sketch/[name].svg.ts.
 import SketchFrame from './SketchFrame.astro';
 
-const corners = ['tl', 'tr', 'bl', 'br'] as const;
+// Maße entsprechen dem viewBox der jeweiligen Skizze – verhindert Layout Shift.
+const corners = [
+  { c: 'tl', w: 460, h: 420 },
+  { c: 'tr', w: 480, h: 440 },
+  { c: 'bl', w: 460, h: 400 },
+  { c: 'br', w: 460, h: 400 },
+] as const;
 ---
 <header class="sketch-hero" id="intro">
   <div class="sketch-hero__paper" aria-hidden="true">
-    {corners.map((c) => (
-      <img class={`sketch-hero__corner sketch-hero__corner--${c}`} src={`/sketch/corner-${c}.svg`} alt="" decoding="async" />
+    {corners.map(({ c, w, h }) => (
+      <img class={`sketch-hero__corner sketch-hero__corner--${c}`} src={`/sketch/corner-${c}.svg`} width={w} height={h} alt="" decoding="async" />
     ))}
   </div>
 
