@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy to Server
  
 on:
   # Erst nur manuell starten (Actions -> Deploy -> Run workflow).
@@ -12,6 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # volle Historie: Sitemap-lastmod kommt aus git log
+          fetch-depth: 0
  
       - uses: actions/setup-node@v4
         with:
@@ -40,5 +43,3 @@ jobs:
           HOST=deploy@$SSH_HOST
           rsync -az dist/ "$HOST:$BASE/releases/$REL/"
           ssh "$HOST" "ln -sfn $BASE/releases/$REL $BASE/current.tmp && mv -Tf $BASE/current.tmp $BASE/current && cd $BASE/releases && ls -1t | tail -n +6 | xargs -r rm -rf"
- 
-Claude hat die Antwort abgeschlossen
