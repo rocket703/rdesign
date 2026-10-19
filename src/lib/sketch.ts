@@ -1,6 +1,6 @@
 // Bleistift-Skizzen für den Hero: werden beim Build als statische SVG-Dateien erzeugt
 // (siehe src/pages/sketch/[name].svg.ts). Als <img> eingebunden rastert der Browser sie
-// einmal – die SVG-Filter für Wackeln und Graphit-Körnung kosten beim Scrollen nichts.
+// einmal – der SVG-Filter für die Graphit-Körnung kostet beim Scrollen nichts.
 import fs from 'node:fs';
 import path from 'node:path';
 import rough from 'roughjs';
@@ -12,17 +12,17 @@ const readPath = (file: string) => {
   return svg.match(/ d="([^"]+)"/)![1];
 };
 
-// Wackeln (niedrige Frequenz) + Körnung (hohe Frequenz, stanzt Lücken in den Strich)
-const pencilFilter = (wobble: number, grain: number) => `
+// Körnung (hohe Frequenz, stanzt Lücken in den Strich). Kein feDisplacementMap fürs Wackeln:
+// Firefox rechnet ihn grob gerastert, die Striche werden dort treppig und zittrig.
+// Das Wackeln kommt schon von Rough.js bzw. der doppelt nachgezogenen Logo-Linie.
+const pencilFilter = (grain: number) => `
 <filter id="pencil" x="-5%" y="-5%" width="110%" height="110%">
-  <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="4" result="w"/>
-  <feDisplacementMap in="SourceGraphic" in2="w" scale="${wobble}" xChannelSelector="R" yChannelSelector="G" result="s"/>
   <feTurbulence type="fractalNoise" baseFrequency="${grain}" numOctaves="1" seed="9" result="g"/>
   <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.3 1.45" result="m"/>
-  <feComposite in="s" in2="m" operator="in"/>
+  <feComposite in="SourceGraphic" in2="m" operator="in"/>
 </filter>`;
 
-const svgDoc = (w: number, h: number, body: string, filter = pencilFilter(1.2, 0.9)) =>
+const svgDoc = (w: number, h: number, body: string, filter = pencilFilter(0.9)) =>
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">` +
   `<defs>${filter}</defs><g filter="url(#pencil)">${body}</g></svg>`;
 
@@ -35,7 +35,7 @@ function logo() {
     `<path d="${d}" stroke-width="0.55" opacity="0.6" transform="translate(0.7 0.5) rotate(0.15)"/>` +
     `</g>`;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 398 108" width="398" height="108">` +
-    `<defs>${pencilFilter(1.1, 0.9)}</defs><g filter="url(#pencil)">${body}</g></svg>`;
+    `<defs>${pencilFilter(0.9)}</defs><g filter="url(#pencil)">${body}</g></svg>`;
 }
 
 // ── Wireframe-Skizzen mit Rough.js ──

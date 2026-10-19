@@ -71,7 +71,9 @@ const corners = [
 
   .sketch-hero__corner {
     position: absolute;
-    width: clamp(220px, 30vw, 460px);
+    /* auch an der Höhe begrenzt: auf flachen Bildschirmen (Laptop mit 125 % Skalierung)
+       ragen die Skizzen sonst in Überschrift und Unterzeile */
+    width: clamp(220px, min(30vw, 46vh), 460px);
     height: auto;
     opacity: 0.75;
     user-select: none;

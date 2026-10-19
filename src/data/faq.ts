@@ -17,7 +17,7 @@ export const faqItems: FaqItem[] = [
   {
     question: 'Machst du nur Design oder auch Entwicklung und SEO?',
     answer:
-      'Beides. Von der Gestaltung über die Programmierung bis zur Suchmaschinenoptimierung, kurzen Ladezeiten und der Veröffentlichung. Ziel ist eine Seite, die nicht nur gut aussieht, sondern auch gefunden wird.',
+      'Beides. Von der Gestaltung über die Programmierung bis zum technischen SEO, kurzen Ladezeiten und der Veröffentlichung. Für einen ausführlichen SEO-Check arbeite ich mit der spezialisierten SEO-Agentur SEORG zusammen – dein Ansprechpartner bleibe ich. Ziel ist eine Seite, die nicht nur gut aussieht, sondern auch gefunden wird.',
   },
   {
     question: 'Kann ich meine Webseite später selbst pflegen?',

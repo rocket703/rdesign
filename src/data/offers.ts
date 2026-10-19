@@ -24,8 +24,8 @@ export type Offer = {
   /** Ab Januar 2027 eintragen, z. B. 'ab 290 €' – bis dahin „Festpreis auf Anfrage“ */
   price?: string;
   reference?: { title: string; text: string; href: string };
-  /** Technik-Partner mit externem Link, z. B. die E-Mail-Plattform hinter einem Paket */
-  partner?: { name: string; text: string; href: string; linkLabel: string };
+  /** Partner hinter einem Paket, z. B. die E-Mail-Plattform – Link optional, `label` Standard „Technik-Partner“ */
+  partner?: { name: string; text: string; label?: string; href?: string; linkLabel?: string };
   /** buchbare Tarife, z. B. Hosting- und Wartungspakete – als Karten auf der Leistungsseite */
   plans?: OfferPlanGroup[];
   faq: FaqItem[];
@@ -503,13 +503,13 @@ export const offers: Offer[] = [
       faq: 'Häufige Fragen zum SEO-Check',
       summary: 'SEO-Check auf einen Blick',
     },
-    lead: 'Warum wird deine Webseite nicht gefunden? Ich prüfe Technik, Inhalte und Performance – und du bekommst eine klare Liste, was sich wirklich lohnt.',
+    lead: 'Warum wird deine Webseite nicht gefunden? Gemeinsam mit meinem Partner, der SEO-Agentur SEORG, prüfe ich Technik, Inhalte und Performance – und du bekommst eine klare Liste, was sich wirklich lohnt.',
     sections: [
       {
         heading: 'So läuft der SEO-Check ab',
         paragraphs: [
-          'Nach deiner Anfrage schickst du mir die Adresse deiner Webseite und – falls vorhanden – einen Lesezugang zur Google Search Console. Ich prüfe die Seite dann mit professionellen Werkzeugen und von Hand: Technik, Inhalte, Ladezeiten und lokale Sichtbarkeit.',
-          'Die Ergebnisse fasse ich in einem verständlichen Bericht zusammen. Jeder Punkt enthält, was das Problem ist, warum es wichtig ist und wie es behoben wird – sortiert nach Aufwand und Wirkung. In einer Besprechung per Video gehen wir die wichtigsten Punkte gemeinsam durch, und du kannst alle Fragen stellen.',
+          'Nach deiner Anfrage schickst du mir die Adresse deiner Webseite und – falls vorhanden – einen Lesezugang zur Google Search Console. Die eigentliche Prüfung übernimmt mein Partner, die SEORG Online Marketing GmbH: eine spezialisierte SEO-Agentur, die Webseiten mit professionellen Werkzeugen und von Hand auf Technik, Inhalte, Ladezeiten und lokale Sichtbarkeit untersucht.',
+          'Du hast dabei nur einen Ansprechpartner: mich. Ich stimme mich mit SEORG ab, sehe mir die Ergebnisse an und ergänze, was aus Sicht der Webentwicklung wichtig ist. Daraus entsteht ein verständlicher Bericht – jeder Punkt enthält, was das Problem ist, warum es wichtig ist und wie es behoben wird, sortiert nach Aufwand und Wirkung. In einer Besprechung per Video gehen wir die wichtigsten Punkte gemeinsam durch, und du kannst alle Fragen stellen.',
         ],
       },
       {
@@ -534,6 +534,7 @@ export const offers: Offer[] = [
     ],
     intro: [
       'Viele Webseiten verschenken Sichtbarkeit durch Kleinigkeiten: fehlende Seitentitel, zu große Bilder, eine unklare Struktur. Der SEO-Check zeigt dir genau, wo deine Seite steht und welche Schritte den größten Effekt haben – verständlich erklärt, ohne Fachchinesisch.',
+      'Damit du die Erfahrung einer spezialisierten Agentur bekommst, führe ich den Check zusammen mit meinem Partner SEORG durch. Während eine gute Webseite das Fundament legt, sorgt Suchmaschinenoptimierung dafür, dass die richtigen Kunden sie auch finden – genau darauf ist SEORG spezialisiert.',
     ],
     deliverables: [
       'Technische Prüfung: Indexierung, Sitemap, Weiterleitungen und Duplikate',
@@ -551,9 +552,22 @@ export const offers: Offer[] = [
     facts: [
       { label: 'Dauer', value: 'ca. 1 Woche' },
       { label: 'Ergebnis', value: 'Bericht + Besprechung' },
+      { label: 'Prüfung', value: 'mit SEO-Partner SEORG' },
       { label: 'Umsetzung', value: 'auf Wunsch direkt durch mich' },
     ],
+    partner: {
+      label: 'SEO-Partner',
+      name: 'SEORG Online Marketing GmbH',
+      text: 'Spezialisierte SEO-Agentur für technische SEO, Inhalte und lokale Sichtbarkeit – führt die Prüfung durch, du sprichst weiter nur mit mir.',
+      href: 'https://seo-org.de/',
+      linkLabel: 'seo-org.de',
+    },
     faq: [
+      {
+        question: 'Wer führt den SEO-Check durch?',
+        answer:
+          'Die Prüfung übernimmt mein Partner, die SEO-Agentur SEORG Online Marketing GmbH. Dein Ansprechpartner bleibe ich: Ich nehme deine Anfrage auf, stimme mich mit SEORG ab und bespreche die Ergebnisse mit dir.',
+      },
       {
         question: 'Kann ich den SEO-Check auch einzeln buchen?',
         answer:
@@ -572,7 +586,7 @@ export const offers: Offer[] = [
       {
         question: 'Brauchst du Zugang zu meiner Webseite?',
         answer:
-          'Für den Großteil der Prüfung nicht – sie läuft von außen. Hast du Zugriff auf die Google Search Console, kann ich zusätzlich echte Suchdaten auswerten.',
+          'Für den Großteil der Prüfung nicht – sie läuft von außen. Hast du Zugriff auf die Google Search Console, können wir zusätzlich echte Suchdaten auswerten. Den Lesezugang gibst du dafür auch meinem Partner SEORG und kannst ihn nach dem Check jederzeit wieder entfernen.',
       },
       {
         question: 'Setzt du die Maßnahmen auch um?',

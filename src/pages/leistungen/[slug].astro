@@ -46,7 +46,8 @@ type Side = {
   label: string;
   title: string;
   text: string;
-  href: string;
+  /** ohne Link: Karte als Kasten statt als Link */
+  href?: string;
   linkLabel: string;
   external: boolean;
   image?: string;
@@ -63,11 +64,11 @@ const side: Side | undefined = offer.reference
     }
   : offer.partner
     ? {
-        label: 'Technik-Partner',
+        label: offer.partner.label ?? 'Technik-Partner',
         title: offer.partner.name,
         text: offer.partner.text,
         href: offer.partner.href,
-        linkLabel: offer.partner.linkLabel,
+        linkLabel: offer.partner.linkLabel ?? '',
         external: true,
       }
     : undefined;
@@ -288,7 +289,13 @@ const keyPoints = offer.deliverables.slice(0, 3);
         <a href={contactHref} class="sketch-btn sketch-btn--primary close-card__cta">Projekt anfragen <span aria-hidden="true">→</span><SketchFrame seed={59} fill /></a>
       </div>
       <span class="close-card__badge" aria-hidden="true"><img src="/logo-mark.svg" alt="" width="40" height="39" /></span>
-      {side ? (
+      {side && !side.href ? (
+          <div class="close-card__side close-card__side--static">
+            <span class="close-card__kicker close-card__kicker--light">{side.label}</span>
+            <strong class="close-card__side-title">{side.title}</strong>
+            <span class="close-card__side-text">{side.text}</span>
+          </div>
+      ) : side ? (
           <a
             class="close-card__side"
             href={side.href}
@@ -468,7 +475,7 @@ const keyPoints = offer.deliverables.slice(0, 3);
     height: auto;
   }
 
-  .close-card__side:not(.close-card__side--sketch):hover {
+  .close-card__side:not(.close-card__side--sketch, .close-card__side--static):hover {
     filter: brightness(1.08);
   }
 
