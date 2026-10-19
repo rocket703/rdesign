@@ -14,6 +14,7 @@ import SketchHero from '../components/SketchHero.astro';
 import SketchFrame from '../components/SketchFrame.astro';
 import '../styles/home-world.css';
 import '../styles/home-story.css';
+import '../styles/faq.css';
 import '../styles/carousel.css';
 
 import { homePageSchema, SITE } from '../lib/seo';
@@ -204,11 +205,11 @@ const featuredProjects = featuredSlugs
       </p>
     </section>
 
-    <!-- Über mich: Foto wie ein eingeklebtes Bild vor einem Mint-Kreis, Text mit gezeichneter Unterstreichung -->
+    <!-- Über mich (fertiger Teil, clean): Foto vor einem Mint-Kreis, Namensschild, ruhiger Text -->
     <section class="about-me" id="about" aria-labelledby="about-me-title">
       <div class="container about-me__inner">
         <figure class="about-me__photo autoShow">
-          <span class="about-me__circle" aria-hidden="true"><SketchFrame shape="circle" seed={211} /></span>
+          <span class="about-me__circle" aria-hidden="true"></span>
           <span class="about-me__print">
             <img
               src={portrait.src}
@@ -220,20 +221,16 @@ const featuredProjects = featuredSlugs
               loading="lazy"
               decoding="async"
             />
-            <SketchFrame shape="card" seed={217} />
-            <span class="about-me__tape" aria-hidden="true"></span>
           </span>
           <figcaption class="about-me__caption">
-            <svg viewBox="0 0 60 40" aria-hidden="true"><path d="M4 34 C 16 30, 34 22, 50 8" /><path d="M40 8 L 51 7 L 49 18" /></svg>
-            Das bin ich – Dustin aus Magdeburg
+            <strong>Dustin Rose</strong>
+            <span>Webentwicklung · Magdeburg</span>
           </figcaption>
         </figure>
 
         <article class="about-me__text autoShow">
-          <p class="hand-note">Wer hinter r³webdesign steckt</p>
-          <h2 class="story-title" id="about-me-title">
-            Hi, ich bin <span class="story-mark">Dustin<svg class="story-mark__line" viewBox="0 0 240 14" preserveAspectRatio="none" aria-hidden="true"><path d="M2 9 C 50 5, 120 4, 237 8" /><path d="M8 11.5 C 70 8, 150 8, 230 10" /></svg></span>.
-          </h2>
+          <p class="about-me__kicker">Wer hinter r³webdesign steckt</p>
+          <h2 class="story-title" id="about-me-title">Hi, ich bin <span class="about-me__name">Dustin</span>.</h2>
           <p class="about-me__role">Webentwickler &amp; Webdesigner</p>
           <p>Ich verbinde Gestaltung, Technik und schnelle Ladezeiten – ohne Baukasten und ohne unnötige Umwege.</p>
           <p>Von der ersten Idee bis zum Launch bekommst du einen direkten Ansprechpartner und nachvollziehbare Entscheidungen.</p>
@@ -242,7 +239,7 @@ const featuredProjects = featuredSlugs
             <li>Barrierefrei</li>
             <li>Alles aus einer Hand</li>
           </ul>
-          <a href="/ueber-mich/" class="sketch-btn sketch-btn--primary">Mehr über mich <span aria-hidden="true">→</span><SketchFrame seed={223} fill /></a>
+          <a href="/ueber-mich/" class="about-me__more">Mehr über mich <span aria-hidden="true">→</span></a>
         </article>
       </div>
     </section>
