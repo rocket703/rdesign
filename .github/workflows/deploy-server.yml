@@ -1,12 +1,16 @@
 name: Deploy to Server
  
 on:
-  # Erst nur manuell starten (Actions -> Deploy -> Run workflow).
-  # Wenn alles klappt, die zwei auskommentierten Zeilen aktivieren.
+  push:
+    branches: [main]
+  # zusätzlich von Hand startbar (Actions -> Deploy to Server -> Run workflow)
   workflow_dispatch:
-  # push:
-  #   branches: [main]
- 
+
+# nie zwei Deployments gleichzeitig: schnelle Pushes laufen nacheinander durch
+concurrency:
+  group: deploy-server
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
