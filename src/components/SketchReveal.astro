@@ -19,7 +19,7 @@ const arrow = '<svg class="reveal-note__arrow" viewBox="0 0 44 18" aria-hidden="
       <span class="story-turn__final">wird die Seite.</span>
     </h2>
     <p class="story-turn__lead">
-      <span class="reveal__text-drag">Zieh den Regler: links die Skizze, rechts die fertige Seite von Alcartron HiFi.</span>
+      <span class="reveal__text-drag">Wisch zur Seite: links die Skizze, rechts die fertige Seite von Alcartron HiFi.</span>
       <span class="reveal__text-scroll">Scroll weiter und sieh zu, wie aus der Skizze die fertige Seite von Alcartron HiFi wird.</span>
     </p>
 
@@ -66,12 +66,47 @@ const arrow = '<svg class="reveal-note__arrow" viewBox="0 0 44 18" aria-hidden="
 </section>
 
 <script>
+  // Regler: Wischen bzw. Ziehen auf der ganzen Fläche verschiebt die Trennlinie. Senkrechtes
+  // Wischen bleibt normales Scrollen (touch-action: pan-y), das Range-Feld ist nur noch für
+  // Tastatur und Screenreader da
+  const scrollMode = () =>
+    CSS.supports('animation-timeline: view()') &&
+    matchMedia('(min-width: 768px) and (prefers-reduced-motion: no-preference)').matches;
+
   document.querySelectorAll<HTMLElement>('[data-reveal]').forEach((root) => {
     const range = root.querySelector<HTMLInputElement>('[data-reveal-range]');
-    if (!range) return;
-    const update = () => root.style.setProperty('--pos', `${range.value}%`);
-    range.addEventListener('input', update);
-    update();
+    const screen = root.querySelector<HTMLElement>('.reveal__screen');
+    if (!range || !screen) return;
+
+    let pos = 50;
+    const set = (value: number) => {
+      pos = Math.min(100, Math.max(0, value));
+      range.value = String(Math.round(pos));
+      root.style.setProperty('--pos', `${pos}%`);
+    };
+    range.addEventListener('input', () => set(Number(range.value)));
+
+    let drag: { x: number; pos: number; left: number; width: number; mouse: boolean } | null = null;
+    screen.addEventListener('pointerdown', (e) => {
+      if (scrollMode()) return;
+      const r = screen.getBoundingClientRect();
+      drag = { x: e.clientX, pos, left: r.left, width: r.width, mouse: e.pointerType === 'mouse' };
+      // Maus: Linie springt an die Klickstelle; Finger: nur relative Bewegung, kein Sprung beim Antippen
+      if (drag.mouse) {
+        e.preventDefault();
+        screen.setPointerCapture(e.pointerId);
+        set(((e.clientX - r.left) / r.width) * 100);
+      }
+    });
+    screen.addEventListener('pointermove', (e) => {
+      if (!drag) return;
+      set(drag.mouse
+        ? ((e.clientX - drag.left) / drag.width) * 100
+        : drag.pos + ((e.clientX - drag.x) / drag.width) * 100);
+    });
+    const end = () => { drag = null; };
+    screen.addEventListener('pointerup', end);
+    screen.addEventListener('pointercancel', end);
   });
 </script>
 
@@ -213,16 +248,25 @@ const arrow = '<svg class="reveal-note__arrow" viewBox="0 0 44 18" aria-hidden="
   .reveal-note--stamp { left: 67%; top: 73%; }
   .reveal-note--stamp :global(svg) { transform: rotate(-25deg); }
 
-  /* Regler: unsichtbares Range-Feld über der ganzen Fläche, sichtbar ist nur der Griff */
+  /* Regler: gezogen wird auf der ganzen Fläche (Skript), das Range-Feld ist unsichtbar
+     und nur für Tastatur und Screenreader da */
+  .reveal__screen {
+    touch-action: pan-y;
+    cursor: ew-resize;
+    user-select: none;
+  }
+
+  .reveal__screen img {
+    -webkit-user-drag: none;
+  }
+
   .reveal__range {
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
+    width: 1px;
+    height: 1px;
     margin: 0;
     opacity: 0;
-    cursor: ew-resize;
-    touch-action: pan-y;
+    clip-path: inset(50%);
   }
 
   .reveal__handle {
@@ -340,6 +384,10 @@ const arrow = '<svg class="reveal-note__arrow" viewBox="0 0 44 18" aria-hidden="
         justify-content: center;
         padding: 4.5rem 1.5rem 1rem;
         box-sizing: border-box;
+      }
+
+      .reveal__screen {
+        cursor: auto;
       }
 
       .reveal__text-drag,
