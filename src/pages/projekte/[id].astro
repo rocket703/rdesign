@@ -101,7 +101,21 @@ const liveHost = (() => {
     <!-- Oben: Vorschau links, Eckdaten fest daneben -->
     <div class="project-top">
       <div class="project-showcase" role="group" aria-label="Projektvorschau">
-        <a href={projectLink} target="_blank" rel="noopener noreferrer" class="project-showcase__link">
+        {liveHost ? (
+          <a href={projectLink} target="_blank" rel="noopener noreferrer" class="project-showcase__link">
+            <DeviceShowcase
+              desktop={project.data.image}
+              mobile={project.data.imageMobile}
+              title={project.data.title}
+              sizes="(max-width: 900px) calc(100vw - 2.5rem), 680px"
+              priority
+            />
+            <span class="project-showcase__hint">
+              Webseite ansehen <span aria-hidden="true">↗</span>
+            </span>
+          </a>
+        ) : (
+          <!-- ohne öffentliche Adresse (z. B. noch im Aufbau): Vorschau ohne Link -->
           <DeviceShowcase
             desktop={project.data.image}
             mobile={project.data.imageMobile}
@@ -109,10 +123,7 @@ const liveHost = (() => {
             sizes="(max-width: 900px) calc(100vw - 2.5rem), 680px"
             priority
           />
-          <span class="project-showcase__hint">
-            Webseite ansehen <span aria-hidden="true">↗</span>
-          </span>
-        </a>
+        )}
         {project.data.mobileNote && <p class="project-showcase__note">{project.data.mobileNote}</p>}
       </div>
 
@@ -220,7 +231,7 @@ const liveHost = (() => {
 
   .project-specs__cta {
     align-self: flex-start;
-    margin-top: 0.5rem;
+    margin-top: 1.1rem;
     min-height: 48px;
     padding-block: 0;
   }
@@ -313,6 +324,45 @@ const liveHost = (() => {
     font-size: 1.04rem;
     line-height: 1.75;
     color: var(--c-on-sky);
+  }
+
+  /* Zwischenüberschriften: Ausgangslage, Umsetzung, Nutzen */
+  .project-prose :global(h3) {
+    margin: 2rem 0 0.6rem;
+    font-size: 1.2rem;
+    line-height: 1.3;
+    color: var(--pg-text-strong);
+  }
+
+  .project-prose :global(h3:first-child) {
+    margin-top: 0;
+  }
+
+  .project-prose :global(ul) {
+    margin: 0 0 1rem;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .project-prose :global(li) {
+    position: relative;
+    padding-left: 1.6rem;
+    font-size: 1.04rem;
+    line-height: 1.65;
+    color: var(--c-on-sky);
+  }
+
+  .project-prose :global(li)::before {
+    content: '';
+    position: absolute;
+    left: 0.2rem;
+    top: 0.55em;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--c-turf);
   }
 
   :global(.project-tech) {

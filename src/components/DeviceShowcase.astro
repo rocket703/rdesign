@@ -74,25 +74,10 @@ const mobileMedia = mobile ? responsiveImage(mobile, 800) : null;
     width: 100%;
     aspect-ratio: 16 / 9;
     border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(11, 17, 32, 0.9);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.06),
-      0 18px 40px rgba(0, 0, 0, 0.35);
-    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.35s ease;
-  }
-
-  .device-showcase__frame::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #b8dbd9 0%, var(--c-turf) 40%, transparent 100%);
-    opacity: 0.75;
-    z-index: 1;
-    pointer-events: none;
+    /* ohne Rand: die Vorschau schwebt nur über ihrem Schatten */
+    background: var(--c-surface);
+    box-shadow: 0 26px 48px -24px rgba(27, 38, 44, 0.45);
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
   .device-showcase__frame img,
@@ -126,7 +111,6 @@ const mobileMedia = mobile ? responsiveImage(mobile, 800) : null;
 
   :global(a:hover) > .device-showcase .device-showcase__frame {
     transform: translateY(-6px);
-    border-color: rgba(4, 114, 77, 0.25);
   }
 
   :global(a:hover) > .device-showcase .device-showcase__frame img {

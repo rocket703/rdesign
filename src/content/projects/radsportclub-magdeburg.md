@@ -1,13 +1,14 @@
 ---
 title: "Radsportclub Magdeburg"
-subtitle: "Moderne statische Vereinswebsite mit Mobile‑First‑Design, integriertem Kontaktformular via Web3Forms und E‑Mail‑Marketing über Mailtory."
+subtitle: "Vereinswebseite für einen Magdeburger Rennrad- und Gravel-Verein – mit Terminkalender, Neuigkeiten und direktem Weg zur Mitgliedschaft."
 customerUrl: "https://www.radsportclub-magdeburg.de"
 image: "/images/radsportclub-magdeburg.webp"
 techStack: ["HTML5", "CSS3", "JavaScript", "GitHub Pages", "Web3Forms", "Mailtory"]
 seoTitle: "Radsportclub Magdeburg – Vereinswebseite | r³webdesign"
-seoDesc: "Case Study: Moderne, schnelle Vereinswebseite für den Radsportclub Magdeburg mit Kontaktformular und E‑Mail‑Marketing."
+seoDesc: "Referenz: Vereinswebseite für den Radsportclub Magdeburg e.V. – Termine, Aktuelles, Mitglied werden und Kontaktformular, schnell und fürs Handy gebaut."
 status: "online"
 category: "Vereinsseite"
+relatedOffer: "webdesign-magdeburg"
 biome: "technical"
 tasks:
   - "Konzeption & UI/UX‑Design mit Fokus auf klare Vereinspräsentation."
@@ -15,7 +16,6 @@ tasks:
   - "Mobile‑First‑Design mit responsiven Layouts für alle Geräte."
   - "Integration von Web3Forms für ein datenschutzkonformes Kontaktformular ohne Backend."
   - "Anbindung von Mailtory als E‑Mail‑Marketing‑Lösung für Vereinsnewsletter."
-  - "GitHub Pages Hosting für kostenlose, sichere und blitzschnelle Auslieferung."
   - "SEO‑Optimierung (Meta‑Tags, semantische Struktur, Open Graph)."
   - "Bild‑Optimierung (WebP‑Format) für maximale Ladegeschwindigkeit."
 theme:
@@ -26,12 +26,21 @@ theme:
   accentText: "#ffffff"
   button: { bg: "#0a2e64", text: "#ffffff", border: "2px solid #0a2e64", radius: "999px", transform: "uppercase", weight: 850, tracking: "0.035em" }
 ---
-Für den **Radsportclub Magdeburg** wurde eine moderne statische Vereinswebsite entwickelt, die den Verein professionell im Netz präsentiert. Das schlanke HTML/CSS/JavaScript‑Stack sorgt für blitzschnelle Ladezeiten und höchste Zuverlässigkeit – ganz ohne CMS oder serverseitige Abhängigkeiten.
 
-**Kernpunkte des Projekts:**
+### Ausgangslage
 
-Das Design folgt konsequent dem Mobile‑First‑Ansatz und bietet Vereinsmitgliedern sowie Interessierten eine intuitive Navigation auf allen Endgeräten. Für die Kontaktaufnahme wurde **Web3Forms** integriert – ein moderner Formulardienst, der vollständig ohne eigenes Backend auskommt und DSGVO‑konform arbeitet. Die Vereinskommunikation wird durch **Mailtory** als E‑Mail‑Marketing‑Plattform ergänzt, über die Newsletter und Mitgliederinformationen professionell versendet werden können.
+Der **Radsportclub Magdeburg e.V.** ist ein Verein für Rennrad und Gravel: gemeinsame Ausfahrten, funktionelles Training und Veranstaltungen wie die Winter-Alley-Cat. Die Webseite sollte vor allem eins leisten: Wer sich für den Verein interessiert, soll schnell sehen, wann die nächste Ausfahrt ist, was gerade passiert und wie man dazukommt.
 
-Sämtliche Bilder wurden im WebP‑Format optimiert, die SEO von Grund auf strukturiert – mit aussagekräftigen Meta‑Tags, Open‑Graph‑Integration und semantisch korrektem Markup. Die komplette Seite wird über GitHub Pages gehostet: kostenlos, schnell und zuverlässig.
+### Was ich gebaut habe
 
-Das Resultat: eine schlanke, moderne Vereinspräsenz, die genauso performant ist wie sie aussieht – mit optimaler UX für Desktop, Tablet und Smartphone.
+Auf der Startseite stehen die zwei wichtigsten Wege ganz oben: **Mitglied werden** und **Termine ansehen**. Darunter folgen die aktuellen Neuigkeiten, ein Kalender mit den nächsten Ausfahrten und Terminen, der Verein mit Philosophie und Geschichte, die Partner und ein Bereich für Dokumente. Wer eine Frage hat, schreibt über das Kontaktformular direkt an den Verein.
+
+Für Newsletter und Mitgliederinfos ist der Verein an **Mailtory** angebunden, einen deutschen E-Mail-Dienst für Vereine.
+
+### Was der Verein davon hat
+
+- **Neue Mitglieder finden sofort den Einstieg:** Termine und „Mitglied werden“ sind auf dem Handy mit einem Tipp erreichbar.
+- **Alles an einem Ort:** Termine, Neuigkeiten, Dokumente und Kontakt sind auf einer Seite gebündelt.
+- **Kein Pflegeaufwand für Technik:** Die Seite kommt ohne WordPress und Plugins aus. Es gibt keine Updates, um die sich der Vorstand kümmern muss, und kaum Angriffsfläche.
+- **Schnell, auch unterwegs:** Optimierte Bilder und schlanker Code sorgen dafür, dass die Seite auch mit schwachem Netz am Straßenrand zügig lädt.
+- **Gut auffindbar:** Klare Seitentitel und Beschreibungen helfen, dass der Verein bei der Suche nach Radsport in Magdeburg gefunden wird.

@@ -31,16 +31,21 @@ theme:
   button: { bg: "#d14d28", text: "#ffffff", radius: "999px", weight: 600, shadow: "0 6px 18px rgba(209, 77, 40, 0.3)" }
 ---
 
-Für **Alcartron HiFi**, einen HiFi-Fachhändler in Schmitten im Taunus, ist eine Website entstanden, die sich genauso anfühlt wie ein Besuch im Studio: persönlich, warm und ohne Verkaufsdruck. Seit 2003 berät Inhaber Freddy Allen seine Kundinnen und Kunden zu Lautsprechern, Verstärkern und Plattenspielern – die Seite sollte genau diese Haltung zeigen und gleichzeitig den aktuellen Bestand übersichtlich präsentieren.
+### Ausgangslage
 
-**Kernpunkte des Projekts:**
+**Alcartron HiFi** ist ein HiFi-Fachhändler in Schmitten im Taunus. Seit 2003 berät Inhaber Freddy Allen seine Kundinnen und Kunden zu Lautsprechern, Verstärkern und Plattenspielern – persönlich, ehrlich und ohne Verkaufsdruck. Die Website sollte sich genauso anfühlen wie ein Besuch im Studio und gleichzeitig den aktuellen Bestand übersichtlich zeigen.
+
+### Was ich gebaut habe
 
 Herzstück ist der **Produktkatalog**: Jedes Gerät hat eine eigene Seite mit Fotos, technischen Daten und Beschreibung, die Übersicht lässt sich nach Kategorien filtern – von Lautsprechern über Verstärker und Streamer bis zu Kabeln. Direkt auf der Produktseite gibt es eine **Kaufanfrage**, die Produkt, Preis und gewünschte Übergabe gleich mitschickt. Wer erst hören möchte, vereinbart über ein eigenes Formular einen **Hörtermin** im Studio.
 
-Damit der Inhaber unabhängig bleibt, habe ich ein schlankes **Redaktionssystem** eingebunden. Neue Geräte, Preise oder Fotos trägt er selbst in einer übersichtlichen Oberfläche ein – ohne Datenbank und ohne eigenes Passwortsystem, das gepflegt werden müsste. Jede Änderung ist nach ein bis zwei Minuten live, die Fotos werden dabei automatisch verkleinert und ins WebP-Format umgewandelt.
+Damit der Inhaber unabhängig bleibt, habe ich ein schlankes **Redaktionssystem** eingebunden. Neue Geräte, Preise und Fotos trägt er selbst in einer übersichtlichen Oberfläche ein. Jede Änderung ist nach ein bis zwei Minuten online, die Fotos werden dabei automatisch verkleinert.
 
-Auch bei Google soll der Laden gefunden werden: **Strukturierte Daten** beschreiben Händler, Einzugsgebiet, Marken und Produkte, dazu kommen eine Sitemap und klare Seitentitel. Die Schriften werden von der eigenen Domain geladen, es gibt also keine Verbindung der Besucher zu Google, und die Seite sendet gehärtete Sicherheits-Header.
+### Was Freddy davon hat
 
-Betrieben wird die Seite auf meinem **eigenen Server in Deutschland**: Inhalte, Anfragen und Backups bleiben vollständig in Deutschland, und es gibt einen Ansprechpartner für Technik, Updates und Änderungen.
-
-Das Ergebnis: eine schnelle, gut zu pflegende Website, die zum Charakter des Fachhandels passt – auf dem Smartphone genauso wie am großen Bildschirm.
+- **Selbst pflegen, ohne auf mich zu warten:** Ein neues Gerät ist in wenigen Minuten online – ohne Datenbank und ohne Passwortsystem, das gepflegt werden muss.
+- **Anfragen, mit denen man arbeiten kann:** Jede Kaufanfrage kommt mit Produkt, Preis und Übergabewunsch an. Das spart Rückfragen.
+- **Mehr Besuche im Studio:** Interessenten fragen den Hörtermin direkt auf der Seite an, auch abends und am Wochenende.
+- **Bei Google gut beschrieben:** Händler, Einzugsgebiet, Marken und Produkte sind für Suchmaschinen sauber ausgezeichnet.
+- **Datenschutz ohne Kompromisse:** Schriften kommen von der eigenen Domain, Besucher werden nicht an Google weitergereicht.
+- **Ein Ansprechpartner, Server in Deutschland:** Die Seite läuft auf meinem eigenen Server. Inhalte, Anfragen und Backups bleiben in Deutschland, und für Technik, Updates und Änderungen gibt es genau einen Ansprechpartner.

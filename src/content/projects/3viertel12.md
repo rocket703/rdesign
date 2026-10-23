@@ -1,20 +1,19 @@
 ---
 title: "3/4zwööölwe"
-subtitle: "Authentischer Web-Auftritt für die Deutsch-Rockband aus der Region – energetisch, laut und pur."
-customerUrl: "https://rocket703.github.io/3viertel12/"
+subtitle: "Webseite für eine Deutsch-Rock-Band aus der Region – dunkel, laut und mit Platz für Konzerte, Fotos und Musik."
 image: "/images/3viertel12.webp"
 techStack: ["Astro", "HTML5", "CSS3", "JavaScript", "GitHub Pages"]
 seoTitle: "3/4zwööölwe (3viertel12) – Band-Website | r³webdesign"
-seoDesc: "Case Study: Entwicklung einer modernen Band-Website für 3viertel12. Schnelle Performance und Rock'n'Roll-Design via Astro."
+seoDesc: "Referenz: Band-Webseite für 3/4zwööölwe (3viertel12) – dunkles Konzert-Design, Galerie für Live-Fotos, Tour-Kalender und Player in Arbeit."
 status: "in arbeit"
 category: "Band-Website"
+relatedOffer: "webdesign-magdeburg"
 biome: "candy"
 tasks:
   - "Konzeption eines rohen, authentischen Designs passend zum Rock-Genre."
   - "Entwicklung einer performanten statischen Seite mit Astro."
   - "Implementierung einer responsiven Galerie für Live-Fotos und Band-Aufnahmen."
   - "Strukturierung der Setlist- und Media-Bereiche für optimale UX."
-  - "Hosting und Deployment über GitHub Pages."
   - "Mobile-First Optimierung für Fans, die von unterwegs auf Konzert-Infos zugreifen."
 theme:
   bg: "#0a0606"
@@ -25,12 +24,18 @@ theme:
   button: { bg: "#cc0000", text: "#ffffff", radius: "0", transform: "uppercase", weight: 800, tracking: "0.06em", clip: "polygon(5% 0, 100% 0, 95% 100%, 0 100%)" }
 ---
 
-Für die Band **3/4zwööölwe** (3viertel12) wird aktuell ein neuer digitaler Stützpunkt geschaffen. Die Website spiegelt den ehrlichen Charakter der Deutsch-Rock-Formation wider und verzichtet auf unnötigen Ballast – stattdessen stehen die Musik und das Band-Gefühl im Vordergrund.
+### Ausgangslage
 
-**Der aktuelle Fokus:**
-Da sich die Seite derzeit noch **in Arbeit** befindet, liegt der Schwerpunkt auf einer soliden technischen Basis mit Astro. Ziel ist es, eine extrem schnelle Ladezeit zu erreichen, damit Audio-Snippets und hochauflösende Live-Bilder ohne Verzögerung geladen werden. 
+**3/4zwööölwe** (3viertel12) ist eine Deutsch-Rock-Band aus der Region. Fans wollen vor allem drei Dinge wissen: Wann spielen die nächsten Konzerte, wie klingt die Band, und wie sieht es live aus? Die Webseite soll genau das zeigen – ehrlich, laut und ohne Schnickschnack.
 
-**Design & Technik:**
-Das Design ist bewusst dunkel und kontrastreich gehalten, um die Atmosphäre eines Rock-Konzerts einzufangen. Durch die Nutzung von GitHub Pages als Hosting-Plattform ist die Seite nicht nur sicher, sondern auch optimal für die Band skalierbar. In den kommenden Phasen werden interaktive Elemente wie ein Tour-Kalender und ein integrierter Player ergänzt.
+### Woran ich gerade arbeite
 
-Das Projekt zeigt, wie moderne Web-Technologien (Astro) genutzt werden können, um auch im kreativen Musik-Sektor maximale Performance und Eigenständigkeit zu garantieren.
+Das Design ist bewusst dunkel und kontrastreich, damit die Seite nach Konzertabend aussieht und nicht nach Firmenauftritt. Live-Fotos und Bandaufnahmen kommen in eine Galerie, die auf jedem Bildschirm gut aussieht. Setlist und Medien bekommen eigene, übersichtliche Bereiche.
+
+Als Nächstes folgen ein **Tour-Kalender** und ein **eingebauter Player**, damit Fans direkt auf der Seite reinhören können.
+
+### Was die Band davon hat
+
+- **Eine eigene Adresse für alles:** Konzerte, Fotos und Musik an einem Ort statt verstreut über Social Media.
+- **Fürs Handy gemacht:** Die meisten Fans schauen unterwegs nach dem nächsten Gig.
+- **Schnell trotz vieler Bilder:** Fotos werden optimiert, damit auch große Live-Bilder ohne Warten laden.

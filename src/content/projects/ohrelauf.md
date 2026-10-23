@@ -1,13 +1,13 @@
 ---
 title: "Wolmirstedter Ohrelauf"
-subtitle: "Moderne statische Website mit Mobile‑First‑Design, integrierter Event‑Anmeldung und hoher Performance."
+subtitle: "Webseite für einen Spendenlauf in Wolmirstedt – mit Countdown, Streckenübersicht, Ergebnissen und Team-Anmeldung direkt auf der Seite."
 customerUrl: "https://ohrelauf.de"
 image: "/images/ohrelauf.webp"
 imageMobile: "/images/ohrelauf-mobile.webp"
-mobileNote: "Mobile First: Auf dem Smartphone startet die Seite mit einem eigenen Intro-Vorhang zum Wischen – ein Erlebnis, das es so nur mobil gibt."
+mobileNote: "Mobile First: Desktop und Handy haben zwei eigene Einstiege. Auf dem Smartphone startet die Seite mit einem Vorhang, den man nach oben wegwischt – ein Erlebnis, das es so nur mobil gibt."
 techStack: ["HTML5", "CSS3", "JavaScript", "GitHub Pages", "Static Site"]
 seoTitle: "Ohrelauf Wolmirstedt – Event-Website | r³webdesign"
-seoDesc: "Case Study: Moderne, schnelle Webseite für den Spendenlauf Ohrelauf in Wolmirstedt – mit Online-Anmeldung und Mobile-First-Intro."
+seoDesc: "Referenz: Neue Webseite für den Wolmirstedter Ohrelauf – Team-Anmeldung online, Strecken, Ergebnisse und ein Intro fürs Smartphone. Ersetzt die alte Google-Sites-Seite."
 status: "online"
 category: "Event-Website"
 biome: "candy"
@@ -19,7 +19,6 @@ tasks:
   - "Integriertes Anmeldeformular mit Validierung und Datenschutz."
   - "Bild‑Optimierung (WebP‑Format) für maximale Ladegeschwindigkeit."
   - "SEO‑Optimierung (Meta‑Tags, strukturierte Daten, Open Graph)."
-  - "GitHub Pages Hosting für kostenlose, sichere und blitzschnelle Auslieferung."
 theme:
   bg: "#ffffff"
   text: "#050a14"
@@ -29,11 +28,22 @@ theme:
   button: { bg: "#002366", text: "#ffffff", border: "2px solid #002366", radius: "12px", weight: 900 }
 ---
 
-Mit dem **Wolmirstedter Ohrelauf**, einem regionalen Spendenlauf, verbindet mich eine lange Geschichte: 2020/2021 habe ich die damalige WordPress‑Seite betreut. Diese wurde später eingestellt, danach lief der Auftritt eine Zeit lang über Google Sites. Mit dem Redesign ist nun eine **moderne statische Website** entstanden, die die Google‑Sites‑Lösung komplett ersetzt. Die neue Webseite setzt auf ein schlankes HTML/CSS/JavaScript‑Stack und wird statisch über GitHub gehostet – das Ergebnis: blitzschnelle Ladezeiten, höchste Zuverlässigkeit und null Abhängigkeiten von CMS‑Systemen.
+### Ausgangslage
 
-**Kernpunkte des Umbaus:**
-Das Design folgt konsequent dem Mobile‑First‑Ansatz mit intuitiven Touch‑Interfaces für die Streckenauswahl und ein benutzerfreundliches Anmeldeformular. Sämtliche Bilder wurden in das moderne WebP‑Format konvertiert, wodurch sich die Dateigröße drastisch reduzierte. Die SEO wurde von Grund auf neu strukturiert – mit aussagekräftigen Meta‑Tags, Open‑Graph‑Integration und semantisch korrektem Markup.
+Mit dem **Wolmirstedter Ohrelauf** verbindet mich eine lange Geschichte: 2020/2021 habe ich die damalige WordPress-Seite betreut. Später wurde sie eingestellt, und der Lauf war eine Zeit lang nur mit einer einfachen Google-Sites-Seite im Netz. Jedes Jahr melden sich Bambinis, Schüler und Mixed-Staffeln an. Dafür sollte wieder eine eigene Webseite her, die Lust auf den Lauf macht und mit der die Anmeldung in wenigen Minuten erledigt ist.
 
-Das Anmeldeformular wurde als funktionale Lösung implementiert und kann problemlos mit einem Backend‑Service verbunden werden. Die komplette Seite wird über GitHub Pages gehostet, was nicht nur kostenlos, sondern auch unschlagbar schnell und zuverlässig ist – ideal für Event‑Websites mit Spitzenlast bei Anmeldungen.
+### Was ich gebaut habe
 
-Das Resultat: eine Website, die genauso schnell und modern wirkt wie sie ist – mit optimaler UX für Desktop, Tablet und Smartphone.
+Die neue Seite zählt die Tage bis zum Start herunter und führt durch alles, was Teilnehmende wissen müssen: Ort und Anfahrt zur Schloßdomäne Wolmirstedt, Zeitplan, Vorbereitungstraining und die drei Strecken – Bambini-Lauf, Schüler-Lauf und Mixed-Staffel. Die Ergebnisse des Vorjahres und die bereits angemeldeten Teams stehen direkt auf der Seite.
+
+Herzstück ist die **Team-Anmeldung**: Ansprechpartner, Teamname, Gruppe und die Läuferinnen und Läufer werden in einem Formular erfasst und auf Vollständigkeit geprüft, bevor es abgeschickt wird.
+
+Gestaltet habe ich die Seite **Mobile First** – zuerst fürs Smartphone, dann für den großen Bildschirm. Der Einstieg ist deshalb zweimal entstanden: Am Desktop begrüßt ein klassischer Hero-Bereich, auf dem Handy startet die Seite mit einem **eigenen Vorhang**, den man mit dem Daumen nach oben wegwischt. Zwei getrennte Entwicklungen statt einer verkleinerten Desktop-Ansicht – damit sich der Start auf jedem Gerät richtig anfühlt.
+
+### Was der Lauf davon hat
+
+- **Anmelden in wenigen Minuten:** Teams melden sich direkt online an, rund um die Uhr und ohne E-Mail-Hin-und-Her.
+- **Weniger Fragen ans Orga-Team:** Strecken, Zeitplan, Training und Ergebnisse stehen übersichtlich an einem Ort.
+- **Fürs Handy gemacht:** Die meisten schauen unterwegs nach, deshalb ist jede Ansicht zuerst fürs Smartphone gestaltet.
+- **Hält dem Ansturm stand:** Die Seite braucht keine Datenbank und bleibt auch kurz vor Anmeldeschluss schnell.
+- **Ein eigener Auftritt:** Keine Baukasten-Vorlage mehr, sondern eine Seite, die zum Lauf und zur Region passt.

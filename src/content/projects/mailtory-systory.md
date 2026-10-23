@@ -25,23 +25,24 @@ theme:
   button: { bg: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%)", text: "#ffffff", radius: "100px", weight: 600, shadow: "0 4px 20px rgba(99, 102, 241, 0.35)" }
 ---
 
-**Das Projekt:**
-Gemeinsam mit dem Betreiber habe ich vereinbart, das Frontend von Mailtory und Systory komplett neu zu gestalten. Das Redesign kommt von mir, Dustin Rose von r³webdesign, und ist für das erste Quartal 2027 geplant. Die Plattform selbst – Funktionen, Technik und Infrastruktur – bleibt die Grundlage, auf der das neue Design aufsetzt.
+### Das Projekt
 
-**Die Plattform:**
-**Systory** ist eine Plattform für Vereine und kleine Organisationen. Sie bündelt Vereinsverwaltung, E-Mail, Kommunikation und Dokumente an einem Ort. **Mailtory** ist der dazugehörige E-Mail- und Domain-Dienst, **Chattory** der integrierte Messenger.
+Gemeinsam mit dem Betreiber habe ich vereinbart, das Frontend von **Mailtory und Systory** komplett neu zu gestalten. Das Redesign kommt von mir und ist für das erste Quartal 2027 geplant. Funktionen, Technik und Infrastruktur der Plattform bleiben die Grundlage, auf der das neue Design aufsetzt.
 
-**Funktionen:**
-Vereine verwalten in Systory Mitglieder und Gruppen, legen Dokumente im Dokumentensafe ab, erstellen Formulare und bearbeiten Anfragen über Tickets – bis hin zum Vereinsnachweis für die Gemeinnützigkeit. Mailtory liefert E-Mail-Hosting mit eigenen Domains, Postfächern und Aliasen, inklusive DNS-Verwaltung mit DKIM, SPF, DMARC und MTA-STS. In Chattory chatten Vereine in Gruppen, teilen Anhänge und Sprachnachrichten und telefonieren per Audio und Video. Über ein Add-on-System schalten Vereine einzelne Module frei, mit eigenen Plänen und Abrechnung; ein Admin-Bereich bündelt Support, DNS, Domains und Monitoring.
+### Die Plattform
 
-**Technik:**
-Das Backend ist in **PHP ohne Framework** geschrieben – mit eigenen Seiten, Bibliotheken und eigenem Routing – und speichert in **PostgreSQL**. Das Frontend wird serverseitig gerendert, mit eigenem CSS und Vanilla-JavaScript für eine AJAX-Navigation ohne SPA-Framework, im Hell- und Dunkelmodus. Dazu kommt eine **Mobile App mit React Native und Expo** (TypeScript), teils mit nativen Android-Modulen für Ende-zu-Ende-Verschlüsselung und SIP-Telefonie. Chattory gibt es zusätzlich als eigenständigen Web-Client, der sich per OIDC über Systory als eigenen Identity Provider anmeldet.
+**Systory** ist eine Plattform für Vereine und kleine Organisationen. Sie bündelt Vereinsverwaltung, E-Mail, Kommunikation und Dokumente an einem Ort. **Mailtory** ist der dazugehörige E-Mail- und Domain-Dienst, **Chattory** der eingebaute Messenger.
 
-**Infrastruktur:**
-Für Echtzeit sorgen LiveKit (Anrufe), coturn und Matrix (Benachrichtigungen und Alarme). Der Mail-Stack läuft mit Postfix, Dovecot und Rspamd auf mehreren Servern, DNS mit PowerDNS samt DNSSEC. Dazu kommen nginx, WireGuard, CrowdSec und fail2ban, Backups mit Restic, Speicher über S3 und Cron-Jobs für Hintergrundaufgaben. Entwickelt wird auf einem eigenen Forgejo mit CI-Runnern und Android-Builds.
+Vereine verwalten in Systory Mitglieder und Gruppen, legen Dokumente im Dokumentensafe ab, erstellen Formulare und bearbeiten Anfragen – bis hin zum Vereinsnachweis für die Gemeinnützigkeit. Mailtory liefert Postfächer mit der eigenen Vereinsdomain. In Chattory schreiben Vereine in Gruppen, teilen Dateien und Sprachnachrichten und telefonieren per Audio und Video. Einzelne Module schalten Vereine nach Bedarf frei.
 
-**Umfang:**
-Rund 340 Seiten, 160 Bibliotheksdateien, 77 Cron-Jobs und etwa 950.000 Zeilen PHP. 54 aktive Add-ons stehen zur Auswahl; aktuell nutzen 165 Vereine mit 272 Nutzern und 220 Domains die Plattform.
+Dahinter steckt eine große, eigenständig entwickelte Plattform: rund 340 Seiten, eine eigene Mobile App, Mail- und Chat-Server auf mehreren Rechnern. Aktuell nutzen **165 Vereine mit 272 Nutzern und 220 Domains** die Plattform.
 
-**Ausblick: Launch im 1. Quartal 2027**
-Die Screenshots auf dieser Seite zeigen den aktuellen Stand vor dem Redesign. Nach dem Launch ergänze ich die Referenz um das neue Design.
+### Was das Redesign für die Vereine bringen soll
+
+- **Einfacheres Design:** Weniger auf einmal, klarere Seiten – damit Vereine schneller finden, was sie brauchen.
+- **Bessere Bedienung:** Kürzere, verständlichere Wege für die Aufgaben, die Vereinsvorstände jede Woche erledigen.
+- **Aus einem Guss:** Mailtory und Systory bekommen ein gemeinsames, einheitliches Design und fühlen sich an wie eine Anwendung statt wie zwei.
+
+### Ausblick
+
+Die Screenshots auf dieser Seite zeigen den aktuellen Stand vor dem Redesign. Nach dem Launch im 1. Quartal 2027 ergänze ich hier das neue Design.

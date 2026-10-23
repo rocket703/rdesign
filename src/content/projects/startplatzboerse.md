@@ -1,15 +1,16 @@
 ---
 title: "Startplatzboerse.com"
-subtitle: "Fullstack-Plattform für den Zweitmarkt von Startplätzen – sicher, schnell und skalierbar."
+subtitle: "Marktplatz für Startplätze bei Läufen, Radrennen, Triathlon und Hyrox – mit Login ohne Passwort, eigenem Dashboard und Chat zwischen Käufer und Verkäufer."
 customerUrl: "https://startplatzboerse.com/"
 image: "/images/startplatzboerse.webp"
 imageMobile: "/images/startplatzboerse-mobile.webp"
 mobileNote: "Mobil optimiert: Auf dem Smartphone werden die beiden Hauptaktionen zu großen, daumenfreundlichen Buttons, und die Kennzahlen rücken in eine kompakte Leiste."
 techStack: ["Astro", "Supabase", "PostgreSQL", "Resend", "Vercel", "Tailwind CSS"]
 seoTitle: "Startplatzbörse – Fullstack Web-App | r³webdesign"
-seoDesc: "Case Study: Entwicklung einer Handelsplattform für Startplätze mit OTP-Login, Dashboard und Messaging."
+seoDesc: "Referenz: Startplatzbörse – selbst entwickelte Web-App zum Weitergeben von Startplätzen, mit Login per Code, Dashboard für Inserate und Chat."
 status: "Online"
 category: "Online-Plattform"
+relatedOffer: "webentwicklung"
 biome: "technical"
 tasks:
   - "Entwicklung einer hochperformanten Fullstack-Applikation auf Basis von Astro."
@@ -28,16 +29,23 @@ theme:
   button: { bg: "#00bcd4", text: "#041016", radius: "14px", weight: 800, tracking: "-0.02em", shadow: "0 8px 18px rgba(0, 188, 212, 0.22)" }
 ---
 
-Die Startplatzbörse ist eine maßgeschneiderte Fullstack-Plattform für den sicheren und unkomplizierten Handel von Startplätzen im Ausdauersport (Laufen, Radsport, Triathlon & Hyrox). Ziel ist ein reibungsloser Ablauf vom Login bis zum erfolgreichen Ticket-Transfer – komplett ohne Umwege über externe Messenger, unübersichtliche Social-Media-Gruppen oder undurchsichtige Prozesse.
+### Ausgangslage
 
-**Sicherheit und Nutzerführung:**
-Die Plattform setzt auf ein modernes, passwortloses OTP-System (One-Time-Password). Die Authentifizierung erfolgt nahtlos über Supabase Auth, während der deutsche E-Mail-Anbieter Mailtory die zuverlässige und blitzschnelle Zustellung der magic Login-Links übernimmt. Das sorgt für maximale Sicherheit, höchste Zustellraten und 100 % DSGVO-Konformität bei minimaler Reibung im Onboarding-Prozess.
+Wer für einen Lauf, ein Radrennen, einen Triathlon oder Hyrox angemeldet ist und dann doch nicht starten kann, sucht einen Nachfolger für seinen Startplatz. Bisher passiert das meist in unübersichtlichen Facebook-Gruppen und Messenger-Chats – ohne Überblick, ohne Schutz und oft mit viel Hin und Her.
 
-**Features & Interaktion:**
-Nach dem Login erhalten Nutzer Zugriff auf ein persönliches Dashboard, in dem sie Inserate erstellen, bearbeiten und den Status ihrer Angebote verwalten. Ein zentrales Kernfeature ist das integrierte Messaging-System: Über On-Plattform-Chatnachrichten klären Käufer und Verkäufer alle Details zum Ticket-Transfer direkt in der App. Das schafft Vertrauen, erhöht die Verweildauer und schützt die Privatsphäre beider Parteien.
+### Was ich gebaut habe
 
-**Infrastruktur & Performance:**
-Das Projekt nutzt die globale Edge-Infrastruktur von Vercel für minimale Ladezeiten und eine exzellente Performance auf allen Endgeräten. Im Hintergrund garantiert eine robuste PostgreSQL-Datenbank auf Supabase die sichere Datenhaltung. Die gesamte Architektur ist extrem stabil im Betrieb, für hohe Zugriffszahlen skaliert und für zukünftige Erweiterungen vorbereitet.
+Die **Startplatzbörse** ist ein Marktplatz genau dafür. Die Anmeldung läuft **ohne Passwort**: Man gibt seine E-Mail-Adresse ein und bekommt einen Code zugeschickt. Im eigenen **Dashboard** erstellen Nutzer Inserate, bearbeiten sie und sehen jederzeit, wie der Stand ist. Käufer und Verkäufer klären alle Details im **Chat direkt auf der Plattform** – die private Handynummer muss niemand herausgeben.
 
-**Zukunft & Weiterentwicklung:**
-Ab Q1 ist eine gezielte Erweiterung der Plattform geplant: Die Integration eines sicheren On-Plattform-Bezahlsystems. Damit wird künftig nicht nur die Kommunikation, sondern auch die finanzielle Abwicklung direkt und geschützt über die Anwendung laufen, was das Vertrauen der Nutzer weiter stärkt und den gesamten Prozess noch nahtloser gestaltet.
+Die Plattform habe ich komplett allein entwickelt – Design, Oberfläche, Datenbank, Login und Chat, alles aus einer Hand. Die Login-Mails verschickt der deutsche Dienst Mailtory.
+
+### Was die Nutzer davon haben
+
+- **Einfacher Einstieg:** Kein Passwort, das man sich merken muss – E-Mail eingeben, Code eintippen, fertig.
+- **Übersicht statt Gruppen-Chaos:** Alle Angebote an einem Ort statt in zig Gruppen.
+- **Privatsphäre:** Die Abstimmung läuft im Chat der Plattform, nicht über private Nummern.
+- **Schnell auf jedem Gerät:** Auf dem Smartphone werden die Hauptaktionen zu großen Buttons, die Seite lädt zügig.
+
+### Wie es weitergeht
+
+Als Nächstes kommt ein **Bezahlsystem direkt auf der Plattform**. Dann laufen nicht nur die Absprachen, sondern auch die Zahlung geschützt über die Startplatzbörse.
