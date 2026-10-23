@@ -252,12 +252,66 @@ const motifs = {
 
 export type MotifName = keyof typeof motifs;
 
+// ── Übergang auf der Startseite: Skizze der Alcartron-Startseite, Element für Element
+// deckungsgleich mit dem Screenshot darunter (Maße = halbe Screenshot-Pixel) ──
+const thickLine = (g: Gen, x: number, y: number, w: number, h: number) =>
+  textLines(g, x, y, Array.from({ length: Math.round(h / 7) }, (_, i) => w - (i % 2) * 6), 7);
+
+const vinylLogo = (g: Gen, cx: number, cy: number, d: number) => [
+  g.circle(cx, cy, d), g.circle(cx, cy, d * 0.3),
+  g.arc(cx, cy, d * 1.5, d * 1.5, Math.PI * 0.7, Math.PI * 1.3),
+  g.arc(cx, cy, d * 1.5, d * 1.5, -Math.PI * 0.3, Math.PI * 0.3),
+];
+
+const alcartronDesktop = () =>
+  svgDoc(1440, 810, sketch(400, (g) => [
+    // Kopf: Logo, Navigation, Telefon, Termin-Button
+    ...vinylLogo(g, 176, 30, 32),
+    g.line(218, 24, 332, 24), g.line(256, 39, 300, 39),
+    g.line(569, 31, 634, 31), g.line(662, 31, 733, 31), g.line(762, 31, 835, 31), g.line(864, 31, 929, 31),
+    g.circle(966, 30, 12), g.line(980, 30, 1080, 30),
+    g.rectangle(1111, 13, 179, 36), g.line(1140, 31, 1260, 31),
+    g.line(0, 63, 1440, 63),
+    // Überschrift, Text, zwei Buttons
+    ...thickLine(g, 151, 198, 410, 42),
+    ...thickLine(g, 151, 278, 385, 42),
+    ...textLines(g, 151, 358, [517, 511, 54], 30),
+    g.rectangle(150, 464, 209, 52), g.line(176, 490, 332, 490),
+    g.rectangle(372, 464, 236, 52), g.line(398, 490, 582, 490),
+    // Foto mit Stempel
+    ...imageBox(g, 765, 152, 525, 420),
+    g.circle(1238, 517, 168), g.circle(1238, 517, 128), g.circle(1238, 524, 44),
+    // Vorteile: drei Icons mit Titel
+    g.line(0, 652, 1440, 652),
+    ...[151, 541, 932].flatMap((x, i) => [
+      g.rectangle(x, 718, 49, 49),
+      g.line(x, 792, x + [337, 199, 277][i], 792),
+    ]),
+  ]));
+
+const alcartronMobile = () =>
+  svgDoc(390, 740, sketch(440, (g) => [
+    ...vinylLogo(g, 40, 33, 34),
+    g.line(76, 27, 172, 27), g.line(110, 40, 140, 40),
+    g.line(350, 25, 374, 25), g.line(350, 33, 374, 33), g.line(350, 41, 374, 41),
+    g.line(0, 67, 390, 67),
+    ...thickLine(g, 17, 128, 266, 28),
+    ...thickLine(g, 17, 174, 248, 28),
+    ...textLines(g, 17, 242, [350, 330, 293], 26),
+    g.rectangle(17, 336, 208, 51), g.line(40, 362, 200, 362),
+    g.rectangle(17, 400, 235, 53), g.line(40, 427, 228, 427),
+    ...imageBox(g, 17, 502, 357, 250),
+    g.circle(307, 725, 120),
+  ]));
+
 export const sketches = {
   'hero-logo': logo,
   'corner-tl': cornerTL,
   'corner-tr': cornerTR,
   'corner-bl': cornerBL,
   'corner-br': cornerBR,
+  'alcartron-desktop': alcartronDesktop,
+  'alcartron-mobile': alcartronMobile,
   ...Object.fromEntries(Object.entries(motifs).map(([k, v]) => [`motif-${k}`, v])) as Record<`motif-${MotifName}`, () => string>,
 } as const;
 

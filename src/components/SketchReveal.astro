@@ -1,0 +1,410 @@
+---
+// src/components/SketchReveal.astro – Übergang der Startseite: aus der Bleistift-Skizze wird die
+// echte Alcartron-Seite. Desktop mit Unterstützung für scroll-gesteuerte Animationen: Abschnitt
+// bleibt stehen, die fertige Seite „druckt“ sich beim Scrollen von oben über die Skizze.
+// Sonst (Handy, Firefox, reduzierte Bewegung): Vorher/Nachher-Regler zum Ziehen.
+import { responsiveImage } from '../lib/images';
+
+const desktop = responsiveImage('/images/alcartron-hifi.webp', 1200);
+const mobile = responsiveImage('/images/alcartron-hifi-mobile.webp', 800);
+
+// Pfeil nach rechts, per CSS je Notiz gedreht
+const arrow = '<svg class="reveal-note__arrow" viewBox="0 0 44 18" aria-hidden="true"><path d="M2 13 C 14 3, 28 3, 41 9"/><path d="M33 3.5 L41 9 L32.5 13.5"/></svg>';
+---
+
+<section class="story-turn reveal" aria-labelledby="turn-title" data-reveal>
+  <div class="reveal__stage">
+    <h2 class="story-turn__title" id="turn-title">
+      <span class="story-turn__sketch">Aus der Skizze</span>
+      <span class="story-turn__final">wird die Seite.</span>
+    </h2>
+    <p class="story-turn__lead">
+      <span class="reveal__text-drag">Zieh den Regler: links die Skizze, rechts die fertige Seite von Alcartron HiFi.</span>
+      <span class="reveal__text-scroll">Scroll weiter und sieh zu, wie aus der Skizze die fertige Seite von Alcartron HiFi wird.</span>
+    </p>
+
+    <div class="reveal__frame">
+      <div class="reveal__bar" aria-hidden="true">
+        <span class="reveal__dots"><i></i><i></i><i></i></span>
+        <span class="reveal__url">alcartron-hifi.de</span>
+      </div>
+      <div class="reveal__screen">
+        <div class="reveal__sketch">
+          <picture>
+            <source media="(max-width: 767px)" srcset="/sketch/alcartron-mobile.svg" width="390" height="740" />
+            <img src="/sketch/alcartron-desktop.svg" width="1440" height="810" alt="Bleistift-Skizze der Startseite von Alcartron HiFi" loading="lazy" decoding="async" />
+          </picture>
+          <div class="reveal-notes reveal-notes--desktop" aria-hidden="true">
+            <span class="reveal-note reveal-note--logo"><Fragment set:html={arrow} />Logo &amp; Menü</span>
+            <span class="reveal-note reveal-note--title"><Fragment set:html={arrow} />große Überschrift</span>
+            <span class="reveal-note reveal-note--photo">HiFi-Foto</span>
+            <span class="reveal-note reveal-note--button"><Fragment set:html={arrow} />klarer Button</span>
+            <span class="reveal-note reveal-note--stamp">Freddy-Stempel<Fragment set:html={arrow} /></span>
+          </div>
+          <div class="reveal-notes reveal-notes--mobile" aria-hidden="true">
+            <span class="reveal-note reveal-note--m-title">große Überschrift<Fragment set:html={arrow} /></span>
+            <span class="reveal-note reveal-note--m-button"><Fragment set:html={arrow} />Button</span>
+            <span class="reveal-note reveal-note--m-photo">HiFi-Foto</span>
+          </div>
+        </div>
+        <div class="reveal__real">
+          <picture>
+            <source media="(max-width: 767px)" srcset={mobile.srcset} sizes="86vw" width={mobile.width} height={mobile.height} />
+            <img src={desktop.src} srcset={desktop.srcset} sizes="min(1000px, 92vw)" width={desktop.width} height={desktop.height} alt="Fertige Startseite von Alcartron HiFi" loading="lazy" decoding="async" />
+          </picture>
+        </div>
+        <span class="reveal__scan" aria-hidden="true"></span>
+        <span class="reveal__handle" aria-hidden="true"><span class="reveal__knob"></span></span>
+        <input class="reveal__range" type="range" min="0" max="100" value="50" aria-label="Skizze und fertige Seite vergleichen" data-reveal-range />
+      </div>
+    </div>
+
+    <p class="reveal__caption">
+      Alcartron HiFi, Magdeburg · <a href="/projekte/alcartron-hifi/">Zum Projekt <span aria-hidden="true">→</span></a>
+    </p>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-reveal]').forEach((root) => {
+    const range = root.querySelector<HTMLInputElement>('[data-reveal-range]');
+    if (!range) return;
+    const update = () => root.style.setProperty('--pos', `${range.value}%`);
+    range.addEventListener('input', update);
+    update();
+  });
+</script>
+
+<style>
+  /* ── Grundfassung: Vorher/Nachher-Regler ── */
+  .reveal {
+    --pos: 50%;
+  }
+
+  .reveal__stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .reveal__text-scroll {
+    display: none;
+  }
+
+  .reveal__frame {
+    width: min(1000px, 92vw);
+    margin-top: clamp(1.5rem, 3vw, 2.25rem);
+    border-radius: 12px;
+    background: #fff;
+    box-shadow:
+      0 1px 2px rgba(27, 38, 44, 0.08),
+      0 18px 50px -12px rgba(27, 38, 44, 0.28);
+    overflow: hidden;
+    text-align: left;
+  }
+
+  .reveal__bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    height: 2.1rem;
+    padding: 0 0.85rem;
+    background: #eceef2;
+    border-bottom: 1px solid rgba(27, 38, 44, 0.08);
+  }
+
+  .reveal__dots {
+    display: flex;
+    gap: 0.35rem;
+  }
+
+  .reveal__dots i {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: #c9cdd3;
+  }
+
+  .reveal__url {
+    flex: 1;
+    max-width: 22rem;
+    margin: 0 auto;
+    padding: 0.2rem 0.75rem;
+    border-radius: 999px;
+    background: #fff;
+    font-size: 0.75rem;
+    color: var(--c-slate);
+    text-align: center;
+  }
+
+  .reveal__screen {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    container-type: inline-size;
+    overflow: hidden;
+  }
+
+  .reveal__sketch,
+  .reveal__real {
+    position: absolute;
+    inset: 0;
+  }
+
+  .reveal__sketch {
+    background-color: #fcfcfa;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(60, 68, 76, 0.07) 0 1px, transparent 1px 24px),
+      repeating-linear-gradient(90deg, rgba(60, 68, 76, 0.07) 0 1px, transparent 1px 24px);
+  }
+
+  .reveal__sketch img,
+  .reveal__real img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  .reveal__real {
+    clip-path: inset(0 0 0 var(--pos));
+  }
+
+  /* Handschrift-Notizen auf der Skizze: werden von der fertigen Seite überdeckt */
+  .reveal-note {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+    font-family: 'Architects Daughter', 'Inter Variable', system-ui, sans-serif;
+    font-size: 1.75cqi;
+    line-height: 1;
+    color: var(--c-turf);
+    white-space: nowrap;
+  }
+
+  .reveal-note :global(.reveal-note__arrow) {
+    width: 2.6em;
+    height: 1.1em;
+    flex: none;
+    overflow: visible;
+  }
+
+  .reveal-note :global(.reveal-note__arrow path) {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .reveal-notes--mobile {
+    display: none;
+  }
+
+  /* Positionen in Prozent der Skizze (1440 × 810) */
+  .reveal-note--logo { left: 10%; top: 11%; flex-direction: column; align-items: flex-start; }
+  .reveal-note--logo :global(svg) { transform: rotate(-120deg); margin-left: 0.4em; }
+  .reveal-note--title { left: 38%; top: 36%; }
+  .reveal-note--title :global(svg) { transform: scaleX(-1); }
+  .reveal-note--photo { left: 55.5%; top: 21%; }
+  .reveal-note--button { left: 11%; top: 66.5%; flex-direction: column; align-items: flex-start; }
+  .reveal-note--button :global(svg) { transform: rotate(-100deg); margin-left: 1em; }
+  .reveal-note--stamp { left: 67%; top: 73%; }
+  .reveal-note--stamp :global(svg) { transform: rotate(-25deg); }
+
+  /* Regler: unsichtbares Range-Feld über der ganzen Fläche, sichtbar ist nur der Griff */
+  .reveal__range {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: ew-resize;
+    touch-action: pan-y;
+  }
+
+  .reveal__handle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--pos);
+    width: 2px;
+    margin-left: -1px;
+    background: var(--c-turf);
+    pointer-events: none;
+  }
+
+  .reveal__knob {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    background: var(--c-turf);
+    box-shadow: 0 4px 14px rgba(4, 114, 77, 0.35);
+    transform: translate(-50%, -50%);
+  }
+
+  .reveal__knob::before,
+  .reveal__knob::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    border: 0.32rem solid transparent;
+    transform: translateY(-50%);
+  }
+
+  .reveal__knob::before {
+    left: 0.45rem;
+    border-right-color: #fff;
+  }
+
+  .reveal__knob::after {
+    right: 0.45rem;
+    border-left-color: #fff;
+  }
+
+  .reveal__screen:has(.reveal__range:focus-visible) .reveal__knob {
+    outline: 3px solid var(--c-ink);
+    outline-offset: 3px;
+  }
+
+  .reveal__scan {
+    display: none;
+  }
+
+  .reveal__caption {
+    margin: 1rem 0 0;
+    font-size: 0.9rem;
+    color: var(--c-slate);
+  }
+
+  .reveal__caption a {
+    color: var(--c-turf);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .reveal__caption a:hover {
+    text-decoration: underline;
+  }
+
+  /* ── Handy: Hochformat-Screenshot, Notizen für die mobile Skizze ── */
+  @media (max-width: 767px) {
+    .reveal__frame {
+      width: min(360px, 86vw);
+    }
+
+    .reveal__screen {
+      aspect-ratio: 390 / 640;
+    }
+
+    .reveal-notes--desktop {
+      display: none;
+    }
+
+    .reveal-notes--mobile {
+      display: block;
+    }
+
+    .reveal-note {
+      font-size: 4.4cqi;
+    }
+
+    /* Positionen in Prozent des sichtbaren Ausschnitts (390 × 640) */
+    .reveal-note--m-title { left: 30%; top: 12.5%; }
+    .reveal-note--m-title :global(svg) { transform: rotate(60deg); }
+    .reveal-note--m-button { left: 66%; top: 55%; }
+    .reveal-note--m-button :global(svg) { transform: scaleX(-1); }
+    .reveal-note--m-photo { left: 9%; top: 81%; }
+  }
+
+  /* ── Desktop mit scroll-gesteuerten Animationen: Abschnitt bleibt stehen, die fertige
+     Seite legt sich beim Scrollen von oben nach unten über die Skizze ── */
+  @supports (animation-timeline: view()) {
+    @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+      .reveal {
+        height: 320vh;
+        padding: 0;
+        view-timeline: --reveal block;
+      }
+
+      .reveal__stage {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        height: 100svh;
+        justify-content: center;
+        padding: 4.5rem 1.5rem 1rem;
+        box-sizing: border-box;
+      }
+
+      .reveal__text-drag,
+      .reveal__range,
+      .reveal__handle {
+        display: none;
+      }
+
+      .reveal__text-scroll {
+        display: inline;
+      }
+
+      /* Platz für Kopfzeile, Überschrift, Text und Bildunterschrift abziehen,
+         damit Rahmen samt Skizze ganz auf den Bildschirm passt */
+      .reveal__frame {
+        flex: none;
+        width: min(1000px, 92vw, calc((100svh - 25rem) * 16 / 9));
+      }
+
+      @media (max-height: 800px) {
+        .reveal__stage .story-turn__lead {
+          display: none;
+        }
+
+        .reveal__frame {
+          width: min(1000px, 92vw, calc((100svh - 19rem) * 16 / 9));
+        }
+      }
+
+      .reveal__real,
+      .reveal__scan {
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: --reveal;
+        animation-range: contain 28% contain 88%;
+      }
+
+      .reveal__real {
+        animation-name: reveal-print;
+      }
+
+      .reveal__scan {
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 3px;
+        margin-top: -1.5px;
+        background: var(--c-turf);
+        box-shadow: 0 0 18px 4px rgba(4, 114, 77, 0.35);
+        pointer-events: none;
+        animation-name: reveal-scan;
+      }
+    }
+  }
+
+  @keyframes reveal-print {
+    from { clip-path: inset(0 0 100% 0); }
+    to { clip-path: inset(0 0 0 0); }
+  }
+
+  @keyframes reveal-scan {
+    0% { top: 0%; opacity: 0; }
+    4% { opacity: 1; }
+    96% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+  }
+</style>

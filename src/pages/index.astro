@@ -12,6 +12,7 @@ import { responsiveImage } from '../lib/images';
 import CtaBand from '../components/CtaBand.astro';
 import SketchHero from '../components/SketchHero.astro';
 import SketchFrame from '../components/SketchFrame.astro';
+import SketchReveal from '../components/SketchReveal.astro';
 import '../styles/home-world.css';
 import '../styles/home-story.css';
 import '../styles/faq.css';
@@ -102,7 +103,7 @@ const featuredProjects = featuredSlugs
     </svg>
     <div class="container">
       <header class="story-head story-head--center autoShow">
-        <p class="hand-note">Was ich für dich baue</p>
+        <p class="hand-note">Wobei ich dir helfe</p>
         <h2 class="story-title" id="services-title">Webseite, Relaunch &amp; Betreuung</h2>
         <p class="story-lead">
          Für Vereine, Events und lokale Unternehmen: neue Webseiten, frischer Wind für bestehende Seiten und jemand, der sich kümmert.
@@ -160,13 +161,7 @@ const featuredProjects = featuredSlugs
   </section>
 
   <!-- ═══ Übergang: aus der Skizze wird die Seite ═══ -->
-  <section class="story-turn" aria-labelledby="turn-title">
-    <h2 class="story-turn__title" id="turn-title">
-      <span class="story-turn__sketch">Aus der Skizze</span>
-      <span class="story-turn__final">wird die Seite.</span>
-    </h2>
-    <p class="story-turn__lead">Was als ein paar Striche auf Papier beginnt, ist heute online – zum Beispiel hier:</p>
-  </section>
+  <SketchReveal />
 
   <!-- ═══ Fertig: Ergebnis ═══ -->
   <div class="story-final">
