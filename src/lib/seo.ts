@@ -32,6 +32,8 @@ export const SITE = {
   profiles: {
     github: 'https://github.com/rocket703',
     linkedin: 'https://www.linkedin.com/in/dustin-rose-dev',
+    // Google-Unternehmensprofil (feste CID, nicht der Kurzlink)
+    googleBusiness: 'https://www.google.com/maps?cid=13181371669701362332',
   },
   certificate: {
     name: 'Responsive Web Design',
@@ -143,7 +145,7 @@ export function professionalServiceSchema(site: URL | string = SITE.url) {
       availableLanguage: ['de'],
       areaServed: 'DE',
     },
-    sameAs: [SITE.profiles.linkedin, SITE.profiles.github],
+    sameAs: [SITE.profiles.googleBusiness, SITE.profiles.linkedin, SITE.profiles.github],
     address: {
       '@type': 'PostalAddress',
       streetAddress: SITE.streetAddress,
