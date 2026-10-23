@@ -28,7 +28,7 @@ export const SITE = {
   portrait: '/images/dustin-rose.webp',
   defaultTitle: 'Webdesign Magdeburg & Webentwicklung | r³webdesign',
   defaultDescription:
-    'Webdesign und Webentwicklung in Magdeburg: schnelle Homepages, moderne Web-Apps und SEO-starke Umsetzung mit Astro, TypeScript und klarer UX.',
+    'Webdesign aus Magdeburg für Vereine, Events und lokale Unternehmen: schnelle, barrierefreie Webseiten zum Festpreis – vor Ort oder deutschlandweit remote.',
   profiles: {
     github: 'https://github.com/rocket703',
     linkedin: 'https://www.linkedin.com/in/dustin-rose-dev',
@@ -63,7 +63,7 @@ export function webSiteSchema(site: URL | string = SITE.url) {
     url: absoluteUrl('/', site),
     inLanguage: SITE.language,
     description: SITE.defaultDescription,
-    publisher: { '@id': `${absoluteUrl('/', site)}#person` },
+    publisher: { '@id': `${absoluteUrl('/', site)}#service` },
   };
 }
 
@@ -143,7 +143,7 @@ export function professionalServiceSchema(site: URL | string = SITE.url) {
       availableLanguage: ['de'],
       areaServed: 'DE',
     },
-    sameAs: [SITE.profiles.linkedin],
+    sameAs: [SITE.profiles.linkedin, SITE.profiles.github],
     address: {
       '@type': 'PostalAddress',
       streetAddress: SITE.streetAddress,

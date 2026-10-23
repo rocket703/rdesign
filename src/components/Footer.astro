@@ -1,6 +1,7 @@
 ---
 import fs from 'node:fs';
 import path from 'node:path';
+import { SITE } from '../lib/seo';
 
 const currentYear = new Date().getFullYear();
 // Wortmarke (r³ + webdesign) als Umriss fürs große Wasserzeichen unten
@@ -29,7 +30,9 @@ const wordmarkPath = fs
         <p class="f-slogan">Design. Entwicklung. Betreuung.</p>
       </div>
       <div class="item-right">
-        <nav class="f-nav" aria-label="Rechtliches">
+        <a class="f-mail" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        <nav class="f-nav" aria-label="Footer">
+          <a href="/kontakt/">Kontakt</a>
           <a href="/impressum/">Impressum</a>
           <a href="/datenschutz/">Datenschutz</a>
         </nav>
@@ -203,6 +206,21 @@ const wordmarkPath = fs
 
   .f-nav a:hover {
     color: var(--c-sky);
+  }
+
+  .f-mail {
+    color: var(--c-sky);
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .f-mail:hover {
+    color: #fff;
   }
 
   .f-copy {
