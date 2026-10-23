@@ -1,25 +1,13 @@
 export const STYLE_PRESETS = [
-  { id: 'modern', label: 'Modern', description: 'Glas, Farbverlauf, Leuchten' },
-  { id: 'clean', label: 'Schlicht', description: 'Viel Weißraum, Serifenschrift, feine Linien' },
-  { id: 'lando', label: 'Sportlich', description: 'Neon, schräg, voller Energie' },
-  { id: 'a11y', label: 'Barrierefrei', description: 'Hoher Kontrast, große Schrift, deutliche Fokus-Rahmen' },
+  { id: 'modern', label: 'Modern', url: 'werkhalle-coworking.de', description: 'Coworking-Space mit Glas, Farbverlauf und Leuchten' },
+  { id: 'clean', label: 'Schlicht', url: 'cafe-an-der-elbe.de', description: 'Café mit viel Weißraum, Serifenschrift und feinen Linien' },
+  { id: 'lando', label: 'Sportlich', url: 'elbufer-lauf.de', description: 'Stadtlauf in Neon, schräg und voller Energie' },
+  { id: 'a11y', label: 'Barrierefrei', url: 'praxis-sonnenhof.de', description: 'Arztpraxis mit hohem Kontrast, großer Schrift und deutlichen Fokus-Rahmen' },
 ] as const;
 
 export type StylePresetId = (typeof STYLE_PRESETS)[number]['id'];
 
 export const SHOWCASE_COPY = {
   title: 'Welcher Stil passt zu dir?',
-  text: 'Dieselbe Webseite, vier Stile: Schrift, Farben, Ecken und Schatten machen den Unterschied. Klick dich durch.',
-  site: {
-    name: 'Café an der Elbe',
-    eyebrow: 'Magdeburg · seit 1998',
-    title: 'Frühstück mit Elbblick',
-    text: 'Hausgemachter Kuchen, regionaler Kaffee und ein Platz an der Sonne.',
-    button: 'Tisch reservieren',
-    cards: [
-      { title: 'Frühstück', meta: 'ab 8 Uhr' },
-      { title: 'Kuchen', meta: 'täglich frisch' },
-      { title: 'Terrasse', meta: '40 Plätze' },
-    ],
-  },
+  text: 'Vier Branchen, vier eigene Auftritte: Jede Seite ist für ihr Publikum gebaut – nicht nur umgefärbt. Klick dich durch.',
 } as const;

@@ -1,8 +1,12 @@
 ---
 import { SHOWCASE_COPY, STYLE_PRESETS } from '../data/style-showcase';
 import { responsiveImage } from '../lib/images';
-import MiniSite from './MiniSite.astro';
+import DemoCowork from './showcase/DemoCowork.astro';
+import DemoCafe from './showcase/DemoCafe.astro';
+import DemoRun from './showcase/DemoRun.astro';
+import DemoPraxis from './showcase/DemoPraxis.astro';
 import '../styles/style-showcase.css';
+import '../styles/style-demos.css';
 
 const defaultStyle = STYLE_PRESETS[0];
 // Geräte-Fotos (freigestellt); die Beispielseite wird exakt auf das Display gelegt
@@ -50,9 +54,14 @@ const phone = responsiveImage('/images/phone-mockup.webp', 440);
           <div class="device-mock__screen">
             <div class="laptop__browser">
               <span class="laptop__dots"><i></i><i></i><i></i></span>
-              <span class="laptop__url">cafe-an-der-elbe.de</span>
+              <span class="laptop__url" data-style-url>{defaultStyle.url}</span>
             </div>
-            <MiniSite sizes="320px" />
+            <div class="demo-host">
+              <DemoCowork />
+              <DemoCafe sizes="330px" />
+              <DemoRun />
+              <DemoPraxis />
+            </div>
           </div>
         </div>
       </div>
@@ -74,7 +83,12 @@ const phone = responsiveImage('/images/phone-mockup.webp', 440);
               <span class="phone__camera"></span>
               <span class="phone__icons"><i></i><i></i><i></i></span>
             </div>
-            <MiniSite sizes="300px" />
+            <div class="demo-host">
+              <DemoCowork />
+              <DemoCafe sizes="220px" />
+              <DemoRun />
+              <DemoPraxis />
+            </div>
           </div>
         </div>
       </div>
@@ -86,6 +100,7 @@ const phone = responsiveImage('/images/phone-mockup.webp', 440);
   const root = document.querySelector('[data-style-showcase]');
   const stage = root?.querySelector('[data-style-stage]');
   const status = root?.querySelector('[data-style-status]');
+  const url = root?.querySelector('[data-style-url]');
   const options = root ? [...root.querySelectorAll('[data-style-option]')] : [];
 
   // Geräte-Bühnen auf die Containerbreite skalieren (Bildkoordinaten je Foto)
@@ -105,6 +120,7 @@ const phone = responsiveImage('/images/phone-mockup.webp', 440);
       stage.setAttribute('data-active-style', preset.id);
       options.forEach((other) => other.setAttribute('aria-pressed', String(other === option)));
       if (status) status.textContent = `${preset.label}: ${preset.description}`;
+      if (url) url.textContent = preset.url;
     });
   });
 </script>

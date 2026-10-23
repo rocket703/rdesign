@@ -1,0 +1,39 @@
+---
+// Beispielseite „Sportlich“: Stadtlauf – Neon, schräg, große Zahlen (rein dekorativ)
+const ticker = 'Anmeldung offen +++ 3.000 Startplätze +++ 14. Juni 2027 +++ Start am Domplatz +++ ';
+---
+
+<div class="demo demo--lando">
+  <div class="rn-ticker"><span>{ticker}{ticker}</span></div>
+
+  <div class="rn-nav">
+    <span class="rn-logo">Elbufer<i>/</i>Lauf</span>
+    <span class="rn-links"><span>Strecken</span><span>Ergebnisse</span><span>Teams</span></span>
+    <span class="rn-btn rn-btn--small"><span>Jetzt starten</span></span>
+  </div>
+
+  <svg class="rn-route" viewBox="0 0 600 300" aria-hidden="true">
+    <path d="M10 250 C 90 180, 160 260, 240 190 S 380 60, 460 130 S 560 120, 590 40" />
+    <circle cx="10" cy="250" r="9" />
+    <circle cx="590" cy="40" r="9" />
+  </svg>
+
+  <div class="rn-hero">
+    <p class="rn-title">Lauf<br />deine<br /><span>Stadt.</span></p>
+
+    <div class="rn-side">
+      <span class="rn-count">
+        <span><b>233</b>Tage</span>
+        <span><b>14</b>Std</span>
+        <span><b>52</b>Min</span>
+      </span>
+      <span class="rn-btn"><span>Startplatz sichern →</span></span>
+    </div>
+  </div>
+
+  <div class="rn-dist">
+    <span><b>5<small>km</small></b>Fun Run</span>
+    <span class="is-hot"><b>10<small>km</small></b>Stadtlauf</span>
+    <span><b>21,1<small>km</small></b>Halbmarathon</span>
+  </div>
+</div>

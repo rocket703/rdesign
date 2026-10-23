@@ -1,0 +1,47 @@
+---
+// Beispielseite „Schlicht“: Café – Serifenschrift, Weißraum, feine Linien (rein dekorativ)
+import { responsiveImage } from '../../lib/images';
+
+interface Props {
+  /** sizes-Attribut des Café-Fotos */
+  sizes?: string;
+}
+
+const { sizes = '240px' } = Astro.props;
+// Stockfoto: Drew Coffman via Unsplash, CC0 – https://commons.wikimedia.org/wiki/File:Two_Hands_Cafe_latte_art_(Unsplash).jpg
+const photo = responsiveImage('/images/cafe-latte.webp', 480);
+---
+
+<div class="demo demo--clean">
+  <div class="cf-nav">
+    <span class="cf-links"><span>Karte</span><span>Frühstück</span></span>
+    <span class="cf-logo">Café an der Elbe<small>seit 1998</small></span>
+    <span class="cf-links cf-links--right"><span class="cf-reserve">Reservieren</span></span>
+  </div>
+
+  <div class="cf-hero">
+    <span class="cf-side">Magdeburg — Am Elbufer</span>
+    <img
+      class="cf-photo"
+      src={photo.src}
+      srcset={photo.srcset}
+      sizes={sizes}
+      width={photo.width}
+      height={photo.height}
+      alt=""
+      loading="lazy"
+      decoding="async"
+    />
+    <div class="cf-copy">
+      <p class="cf-title">Frühstück <em>mit Elbblick</em></p>
+      <p class="cf-text">Hausgemachter Kuchen, Kaffee aus der Rösterei nebenan und ein Platz in der Morgensonne.</p>
+      <span class="cf-link">Tisch reservieren <span>—</span></span>
+    </div>
+  </div>
+
+  <div class="cf-menu">
+    <span><b>Elbfrühstück</b><i></i><em>8 – 12 Uhr</em></span>
+    <span><b>Kuchen vom Blech</b><i></i><em>täglich frisch</em></span>
+    <span><b>Terrasse</b><i></i><em>40 Plätze</em></span>
+  </div>
+</div>
