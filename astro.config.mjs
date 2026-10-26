@@ -21,7 +21,5 @@ export default defineConfig({
   build: { inlineStylesheets: 'always' },
   // Interne Links beim Hovern bzw. Antippen vorladen
   prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
-  redirects: {
-    '/projekte/gedankenrein-coaching': '/projekte/',
-  },
+  // Weiterleitung /projekte/gedankenrein-coaching(/) → /projekte/ (301) steht in Caddy auf dem Server
 });
