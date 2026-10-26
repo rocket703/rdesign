@@ -1,7 +1,7 @@
 ---
 title: "Radsportclub Magdeburg"
 subtitle: "Vereinswebseite für einen Magdeburger Rennrad- und Gravel-Verein – mit Terminkalender, Neuigkeiten und direktem Weg zur Mitgliedschaft."
-customerUrl: "https://www.radsportclub-magdeburg.de"
+customerUrl: "https://radsportclub-magdeburg.de/"
 image: "/images/radsportclub-magdeburg.webp"
 techStack: ["HTML5", "CSS3", "JavaScript", "GitHub Pages", "Web3Forms", "Mailtory"]
 seoTitle: "Radsportclub Magdeburg – Vereinswebseite | r³webdesign"

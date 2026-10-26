@@ -7,7 +7,7 @@ imageMobile: "/images/ohrelauf-mobile.webp"
 mobileNote: "Mobile First: Desktop und Handy haben zwei eigene Einstiege. Auf dem Smartphone startet die Seite mit einem Vorhang, den man nach oben wegwischt – ein Erlebnis, das es so nur mobil gibt."
 techStack: ["HTML5", "CSS3", "JavaScript", "GitHub Pages", "Static Site"]
 seoTitle: "Ohrelauf Wolmirstedt – Event-Website | r³webdesign"
-seoDesc: "Referenz: Neue Webseite für den Wolmirstedter Ohrelauf – Team-Anmeldung online, Strecken, Ergebnisse und ein Intro fürs Smartphone. Ersetzt die alte Google-Sites-Seite."
+seoDesc: "Referenz: Neue Webseite für den Wolmirstedter Ohrelauf mit Team-Anmeldung, Strecken und Ergebnissen statt Google Sites. Sieh dir an, wie sie entstanden ist."
 status: "online"
 category: "Event-Website"
 biome: "candy"

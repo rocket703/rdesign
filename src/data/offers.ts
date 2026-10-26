@@ -261,7 +261,7 @@ export const offers: Offer[] = [
     teaser: 'Apps für iOS und Android aus einer Codebasis – mit React Native und Expo, auf Wunsch mit gemeinsamer Datenbank und Anmeldung wie deine Web-App.',
     seoTitle: 'App-Entwicklung Magdeburg – iOS & Android Apps | r³webdesign',
     seoDesc:
-      'App-Entwicklung aus Magdeburg: native Apps für iOS und Android mit React Native und Expo – eine Codebasis, gemeinsame Datenbank mit deiner Web-App, Veröffentlichung im App Store und bei Google Play.',
+      'App-Entwicklung aus Magdeburg: native Apps für iOS und Android aus einer Codebasis, auf Wunsch verbunden mit deiner Web-App. Jetzt Erstgespräch anfragen.',
     lead: 'Du willst mit deinem Angebot auf das Smartphone? Ich entwickle native Apps für iOS und Android aus einer gemeinsamen Codebasis – auf Wunsch verbunden mit deiner bestehenden Web-App.',
     headings: {
       intro: 'App-Entwicklung für iOS und Android aus Magdeburg',
@@ -360,7 +360,7 @@ export const offers: Offer[] = [
     teaser: 'Hosting auf meinen eigenen Servern in Deutschland, dazu Wartung, Backups und kleine Änderungen – in drei Stufen buchbar.',
     seoTitle: 'Hosting & Wartung für Webseiten – Magdeburg | r³webdesign',
     seoDesc:
-      'Hosting auf eigenen Servern in Deutschland, Wartung, Backups, Updates und kleine Änderungen für deine Webseite – alle Daten bleiben in Deutschland, Betreuung aus Magdeburg in drei Stufen.',
+      'Hosting und Wartung für deine Webseite auf eigenen Servern in Deutschland: Updates, Backups und kleine Änderungen aus Magdeburg. Jetzt Betreuung anfragen.',
     lead: 'Deine Webseite ist online – und soll es auch bleiben. Ich kümmere mich um Hosting, Updates, Backups und kleine Änderungen, damit du dich um dein Tagesgeschäft kümmern kannst.',
     headings: {
       intro: 'Betrieb und Pflege deiner Webseite aus einer Hand',
@@ -797,7 +797,7 @@ export const offers: Offer[] = [
     teaser: 'Postfächer auf deiner Domain, zuverlässiger Formularversand und sauberes DNS – eingerichtet und betreut auf Servern in Deutschland.',
     seoTitle: 'Business E-Mail & DNS einrichten – Magdeburg | r³webdesign',
     seoDesc:
-      'Managed Business E-Mail aus Magdeburg: Postfächer auf deiner Domain, zuverlässiger Formularversand und DNS mit SPF, DKIM und DMARC – DSGVO-konform auf Servern in Deutschland.',
+      'Business-E-Mail aus Magdeburg: Postfächer auf deiner Domain, DNS mit SPF, DKIM und DMARC, DSGVO-konform auf Servern in Deutschland. Jetzt einrichten lassen.',
     lead: 'Zuverlässiger E-Mail-Versand, DSGVO-konforme Postfächer und professionelles DNS-Management aus deutschen Rechenzentren – eingerichtet und betreut aus einer Hand.',
     headings: {
       intro: 'E-Mail, die einfach funktioniert',

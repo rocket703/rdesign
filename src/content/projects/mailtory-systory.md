@@ -7,7 +7,7 @@ imageMobile: "/images/mailtory-mobile.webp"
 mobileNote: "Die Screenshots zeigen den aktuellen Stand vor dem Redesign. Nach dem Launch im 1. Quartal 2027 ergänze ich hier das neue Design."
 techStack: ["PHP", "PostgreSQL", "JavaScript", "React Native", "Expo", "nginx", "LiveKit", "Matrix", "WireGuard", "Forgejo"]
 seoTitle: "Mailtory & Systory – Plattform für Vereine | r³webdesign"
-seoDesc: "Referenz: r³webdesign gestaltet das Frontend von Mailtory & Systory komplett neu – Plattform für Vereine mit Vereinsverwaltung, E-Mail-Hosting und Messenger. Launch im 1. Quartal 2027."
+seoDesc: "Referenz: Neues Frontend für Mailtory & Systory, die Plattform für Vereine mit Verwaltung, E-Mail und Messenger. Launch Q1 2027 – sieh dir das Projekt an."
 status: "Redesign geplant (Q1 2027)"
 category: "Vereinsplattform"
 relatedOffer: "relaunch"

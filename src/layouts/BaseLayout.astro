@@ -69,7 +69,8 @@ const jsonLdString = jsonLd ? JSON.stringify(withModified(jsonLd)) : null;
   <meta name="geo.region" content="DE-ST" />
   <meta name="geo.placename" content="Magdeburg" />
 
-  <link rel="canonical" href={canonicalURL} />
+  {/* kein Canonical auf noindex-Seiten (404 zeigte sonst auf /404/, das selbst 404 liefert) */}
+  {!noindex && <link rel="canonical" href={canonicalURL} />}
   <link rel="preload" href={interFont} as="font" type="font/woff2" crossorigin />
 
   <meta property="og:type" content="website" />

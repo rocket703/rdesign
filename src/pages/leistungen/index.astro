@@ -4,7 +4,7 @@ import LegalPageShell from '../../components/LegalPageShell.astro';
 import OfferIcon from '../../components/OfferIcon.astro';
 import { offers, offerPath } from '../../data/offers';
 import { services, moreServices } from '../../data/services';
-import { breadcrumbSchema, schemaGraph, webPageSchema, absoluteUrl } from '../../lib/seo';
+import { breadcrumbSchema, offerListSchema, schemaGraph, webPageSchema, absoluteUrl } from '../../lib/seo';
 import '../../styles/offer.css';
 
 const pageTitle = 'Leistungen – Webdesign Magdeburg | r³webdesign';
@@ -31,6 +31,7 @@ const moreOffers = moreServices
       pathname: '/leistungen/',
       site: Astro.site,
       about: { '@id': `${absoluteUrl('/', Astro.site)}#service` },
+      mainEntity: { '@id': `${absoluteUrl('/leistungen/', Astro.site)}#list` },
     }),
     breadcrumbSchema(
       [
@@ -39,6 +40,7 @@ const moreOffers = moreServices
       ],
       Astro.site,
     ),
+    offerListSchema(Astro.site),
   ])}
 >
   <LegalPageShell

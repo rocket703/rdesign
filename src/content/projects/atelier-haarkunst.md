@@ -1,7 +1,7 @@
 ---
 title: "Atelier Haarkunst"
 subtitle: "WordPress-Webseite für einen Friseursalon in Magdeburg – mit Preisliste, die das Team selbst pflegt, und Galerie. Ein Redesign ist in Arbeit."
-customerUrl: "https://www.atelier-haarkunst.de"
+customerUrl: "https://atelier-haarkunst.de/"
 image: "/images/projekt-1.webp"
 techStack: ["HTML5", "CSS3", "JavaScript", "CMS‑Integration", "SEO"]
 seoTitle: "Atelier Haarkunst – Moderne Friseur-Website | r³webdesign"

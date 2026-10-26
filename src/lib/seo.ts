@@ -1,4 +1,5 @@
 import type { FaqItem } from '../data/faq';
+import { offers, offerPath } from '../data/offers';
 
 export type ProjectListItem = {
   title: string;
@@ -94,10 +95,6 @@ export function personSchema(site: URL | string = SITE.url) {
       addressRegion: SITE.region,
       addressCountry: SITE.country,
     },
-    areaServed: {
-      '@type': 'City',
-      name: SITE.city,
-    },
     knowsAbout: [
       'Webdesign Magdeburg',
       'Webentwicklung',
@@ -154,15 +151,35 @@ export function professionalServiceSchema(site: URL | string = SITE.url) {
       addressRegion: SITE.region,
       addressCountry: SITE.country,
     },
-    provider: { '@id': `${absoluteUrl('/', site)}#person` },
-    serviceType: [
-      'Webdesign',
-      'Webentwicklung',
-      'Homepage Erstellung',
-      'Landingpage',
-      'Web-App Entwicklung',
-      'Technisches SEO',
-    ],
+    // Leistungen als Katalog (serviceType gibt es nur bei Service, nicht bei ProfessionalService)
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: `Leistungen von ${SITE.name}`,
+      url: absoluteUrl('/leistungen/', site),
+      itemListElement: offers.map((offer) => ({
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          '@id': `${canonicalUrl(offerPath(offer), site)}#offer`,
+          name: offer.title,
+          url: canonicalUrl(offerPath(offer), site),
+        },
+      })),
+    },
+  };
+}
+
+export function offerListSchema(site: URL | string = SITE.url) {
+  return {
+    '@type': 'ItemList',
+    '@id': `${absoluteUrl('/leistungen/', site)}#list`,
+    name: `Leistungen von ${SITE.name}`,
+    itemListElement: offers.map((offer, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: offer.title,
+      url: canonicalUrl(offerPath(offer), site),
+    })),
   };
 }
 
@@ -331,7 +348,6 @@ export function offerServiceSchema({
       { '@type': 'City', name: SITE.city },
       { '@type': 'Country', name: 'Deutschland' },
     ],
-    inLanguage: SITE.language,
   };
 }
 
