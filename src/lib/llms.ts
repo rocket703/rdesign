@@ -20,6 +20,7 @@ const contact = [
   '',
   `- [Projektanfrage](${url('/kontakt/')}): Kontaktformular, kostenloses Erstgespräch (ca. 15 Minuten, Telefon, Video oder vor Ort)`,
   `- E-Mail: ${SITE.email}`,
+  `- Telefon und WhatsApp: ${SITE.phone}`,
   `- Adresse: ${SITE.streetAddress}, ${SITE.postalCode} ${SITE.city}, Deutschland`,
   `- [Über mich](${url('/ueber-mich/')}): Dustin Rose, Werdegang und Arbeitsweise`,
   `- [LinkedIn](${SITE.profiles.linkedin})`,

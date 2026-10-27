@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LegalPageShell from '../components/LegalPageShell.astro';
-import { schemaGraph, webPageSchema } from '../lib/seo';
+import { SITE, schemaGraph, webPageSchema } from '../lib/seo';
 
 const pageTitle = 'Impressum – r³webdesign';
 const pageDescription = 'Impressum von r³webdesign – Dustin Rose, Webdesign und Webentwicklung in Magdeburg. Angaben gemäß § 5 DDG.';
@@ -38,7 +38,7 @@ const pageDescription = 'Impressum von r³webdesign – Dustin Rose, Webdesign u
         </p>
         <p>
           <span class="label">Telefon</span><br />
-          Folgt
+          <a href={`tel:${SITE.phoneIntl}`} class="legal-link">{SITE.phone}</a>
         </p>
       </div>
     </article>

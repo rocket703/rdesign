@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LegalPageShell from '../components/LegalPageShell.astro';
-import { schemaGraph, webPageSchema } from '../lib/seo';
+import { SITE, schemaGraph, webPageSchema } from '../lib/seo';
 
 const pageTitle = 'Datenschutz – r³webdesign';
 const pageDescription = 'Datenschutzerklärung von r³webdesign: keine Tracking-Cookies, lokal gehostete Schriften und transparente Verarbeitung beim Kontaktformular.';
@@ -36,6 +36,10 @@ const pageDescription = 'Datenschutzerklärung von r³webdesign: keine Tracking-
         <p>
           <span class="label">E-Mail</span><br />
           <a href="mailto:info@r3webdesign.de" class="legal-link">info@r3webdesign.de</a>
+        </p>
+        <p>
+          <span class="label">Telefon</span><br />
+          <a href={`tel:${SITE.phoneIntl}`} class="legal-link">{SITE.phone}</a>
         </p>
       </div>
     </article>
@@ -124,7 +128,35 @@ const pageDescription = 'Datenschutzerklärung von r³webdesign: keine Tracking-
     </article>
 
     <article class="legal-block autoShow">
-      <h2 class="legal-block__title">6. Online-Annahme von Angeboten &amp; Kündigungsseite</h2>
+      <h2 class="legal-block__title">6. Kontakt per Telefon &amp; WhatsApp</h2>
+      <div class="legal-block__body">
+        <p>
+          Wenn Sie mich anrufen, verarbeite ich Ihre Rufnummer und die Angaben aus dem Gespräch, um Ihr Anliegen zu
+          bearbeiten.
+        </p>
+        <p>
+          Auf der Kontaktseite verlinke ich außerdem auf <strong>WhatsApp Business</strong>. Der Link ist ein einfacher
+          Verweis: Beim Besuch meiner Website werden dadurch keine Daten an WhatsApp übertragen. Erst wenn Sie den Link
+          anklicken und mir schreiben, verarbeitet WhatsApp (WhatsApp Ireland Limited, Merrion Road, Dublin 4, D04 X2K5,
+          Irland) Ihre Telefonnummer, Ihren Profilnamen, Nachrichteninhalte sowie Metadaten. Die Nachrichten sind
+          Ende-zu-Ende-verschlüsselt; Metadaten können jedoch auch an die Meta Platforms Inc. in den USA übermittelt
+          werden. Grundlage dafür ist der Angemessenheitsbeschluss der EU-Kommission (EU-US Data Privacy Framework).
+        </p>
+        <p>
+          Wenn Sie das nicht möchten, erreichen Sie mich genauso per E-Mail, Telefon oder über das Kontaktformular.
+          Weitere Informationen:
+          <a href="https://www.whatsapp.com/legal/privacy-policy-eea" target="_blank" rel="noopener" class="legal-link">Datenschutzrichtlinie von WhatsApp</a>.
+        </p>
+        <p>
+          Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Bearbeitung Ihrer Anfrage bzw. Anbahnung eines Vertrags).
+          Chatverläufe lösche ich, sobald sie für die Bearbeitung nicht mehr benötigt werden, sofern keine gesetzlichen
+          Aufbewahrungspflichten entgegenstehen.
+        </p>
+      </div>
+    </article>
+
+    <article class="legal-block autoShow">
+      <h2 class="legal-block__title">7. Online-Annahme von Angeboten &amp; Kündigungsseite</h2>
       <div class="legal-block__body">
         <p>
           Angebote und Betreuungsverträge können Sie online annehmen. Dafür erhalten Sie per E-Mail einen persönlichen Link
@@ -171,7 +203,7 @@ const pageDescription = 'Datenschutzerklärung von r³webdesign: keine Tracking-
     </article>
 
     <article class="legal-block autoShow">
-      <h2 class="legal-block__title">7. Ihre Rechte</h2>
+      <h2 class="legal-block__title">8. Ihre Rechte</h2>
       <div class="legal-block__body">
         <p>Sie haben gemäß DSGVO jederzeit das Recht auf:</p>
         <ul class="legal-list">
@@ -196,7 +228,7 @@ const pageDescription = 'Datenschutzerklärung von r³webdesign: keine Tracking-
     </article>
 
     <article class="legal-block autoShow">
-      <h2 class="legal-block__title">8. Datensicherheit</h2>
+      <h2 class="legal-block__title">9. Datensicherheit</h2>
       <div class="legal-block__body">
         <p>
           Diese Website wird ausschließlich verschlüsselt per TLS (Transport Layer Security) ausgeliefert – mit der jeweils höchsten Verschlüsselungsstufe, die Ihr Browser unterstützt. Sie erkennen eine verschlüsselte Verbindung an dem Schloss-Symbol in der Adresszeile Ihres Browsers.
@@ -205,7 +237,7 @@ const pageDescription = 'Datenschutzerklärung von r³webdesign: keine Tracking-
     </article>
 
     <article class="legal-block autoShow">
-      <h2 class="legal-block__title">9. Änderungen</h2>
+      <h2 class="legal-block__title">10. Änderungen</h2>
       <div class="legal-block__body">
         <p>
           Ich behalte mir vor, diese Datenschutzerklärung gelegentlich anzupassen, damit sie stets den aktuellen rechtlichen Anforderungen entspricht oder um Änderungen meiner Leistungen in der Datenschutzerklärung umzusetzen.
