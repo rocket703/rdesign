@@ -412,29 +412,43 @@
   color: var(--c-slate);
 }
 
+/* zweiter Button: Rahmen ohne Füllung, füllt sich beim Hover */
 .faq-list__contact {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  min-height: 44px;
-  margin-top: 0.5rem;
-  font-weight: 700;
+  gap: 0.45rem;
+  min-height: 46px;
+  margin-top: 0.75rem;
+  padding: 0 1.3rem;
+  border: 2px solid var(--c-turf);
+  border-radius: 10px;
+  font-weight: 800;
   color: var(--c-turf);
-  text-decoration: underline;
-  text-decoration-thickness: 1.5px;
-  text-underline-offset: 4px;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .faq-list__contact span {
   transition: translate 0.2s ease;
 }
 
+.faq-list__contact:hover {
+  color: #ffffff;
+  background: var(--c-turf);
+}
+
 .faq-list__contact:hover span {
   translate: 3px 0;
 }
 
+.faq-list__contact:focus-visible {
+  outline: 2px solid var(--c-turf);
+  outline-offset: 3px;
+}
+
 
 @media (prefers-reduced-motion: reduce) {
+  .faq-list__contact,
   .faq-list__contact span {
     transition: none;
   }
