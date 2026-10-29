@@ -9,6 +9,8 @@ const projects = defineCollection({
     image: z.string(),
     imageMobile: z.string().optional(),
     mobileNote: z.string().optional(),
+    /** Screenshots vor einem Redesign: zeigt auf der Projektseite einen Vorher/Nachher-Regler */
+    before: z.object({ desktop: z.string(), mobile: z.string().optional() }).optional(),
     techStack: z.array(z.string()).default([]),
     customerUrl: z.string().catch("#"),
     status: z.string().catch("online"),

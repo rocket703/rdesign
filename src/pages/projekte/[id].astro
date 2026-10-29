@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { render } from 'astro:content';
 import { getPublishedProjects, projectSlug } from '../../lib/projects';
 import DeviceShowcase from '../../components/DeviceShowcase.astro';
+import BeforeAfter from '../../components/BeforeAfter.astro';
 import LegalPageShell from '../../components/LegalPageShell.astro';
 import SketchFrame from '../../components/SketchFrame.astro';
 import TechIcons from '../../components/TechIcons.astro';
@@ -161,6 +162,22 @@ const liveHost = (() => {
       </aside>
     </div>
 
+    {project.data.before && (
+      <section class="legal-block project-compare autoShow" aria-labelledby="compare-title">
+        <h2 class="legal-block__title" id="compare-title">Vorher und nachher</h2>
+        <div class="legal-block__body">
+          <p class="project-compare__lead">Zieh den Regler zur Seite: links die alte Seite, rechts das neue Design.</p>
+          <BeforeAfter
+            before={project.data.before.desktop}
+            beforeMobile={project.data.before.mobile}
+            after={project.data.image}
+            afterMobile={project.data.imageMobile}
+            title={project.data.title}
+          />
+        </div>
+      </section>
+    )}
+
     <!-- Darunter: Beschreibung, Überschrift links und Text rechts wie auf den anderen Unterseiten -->
     <article class="legal-block project-about autoShow">
       <h2 class="legal-block__title">Über das Projekt</h2>
@@ -172,6 +189,10 @@ const liveHost = (() => {
 </BaseLayout>
 
 <style>
+
+  .project-compare__lead {
+    margin: 0 0 1rem;
+  }
 
   .project-wip-note {
     margin: 0;

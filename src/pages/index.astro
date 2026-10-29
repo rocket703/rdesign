@@ -204,19 +204,24 @@ const featuredProjects = featuredSlugs
     <section class="about-me" id="about" aria-labelledby="about-me-title">
       <div class="container about-me__inner">
         <figure class="about-me__photo autoShow">
-          <span class="about-me__circle" aria-hidden="true"></span>
-          <span class="about-me__print">
+          <!-- Porträt im Kreis, Schriftzug läuft langsam drumherum -->
+          <div class="about-me__orb">
+            <svg class="about-me__ring" viewBox="0 0 420 420" aria-hidden="true">
+              <defs><path id="about-me-ring" d="M210 210 m-196 0 a196 196 0 1 1 392 0 a196 196 0 1 1 -392 0" /></defs>
+              <text><textPath href="#about-me-ring">WEBDESIGN · WEBENTWICKLUNG · MAGDEBURG · OHNE BAUKASTEN ·</textPath></text>
+            </svg>
             <img
+              class="about-me__portrait"
               src={portrait.src}
               srcset={portrait.srcset}
-              sizes="(max-width: 899px) min(70vw, 300px), 300px"
+              sizes="(max-width: 899px) min(62vw, 260px), 260px"
               alt="Dustin Rose – Webentwickler in Magdeburg"
               width={portrait.width}
               height={portrait.height}
               loading="lazy"
               decoding="async"
             />
-          </span>
+          </div>
           <figcaption class="about-me__caption">
             <strong>Dustin Rose</strong>
             <span>Webentwicklung · Magdeburg</span>

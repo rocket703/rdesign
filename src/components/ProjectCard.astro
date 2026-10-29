@@ -1,6 +1,6 @@
 ---
 // src/components/ProjectCard.astro
-// Projektkarte „Plakat“: feste Maße (340 × 470 px), überall gleich – Startseite, Projekte-Seite, Handy.
+// Projektkarte „Plakat“: feste Maße (340 × 440 px), überall gleich – Startseite, Projekte-Seite, Handy.
 // Screenshot randlos oben, darunter großer Titel; Farben, Band und Button im Stil der Projektseite.
 // Die Werte kommen aus `theme` im Projekt (src/content/projects/*.md).
 import type { CollectionEntry } from 'astro:content';
@@ -90,14 +90,14 @@ const vars = [
 </a>
 
 <style>
-  /* feste Maße: Breite aus dem Raster bzw. der Wischleiste (höchstens 340 px), Höhe immer 470 px */
+  /* feste Maße: Breite aus dem Raster bzw. der Wischleiste (höchstens 340 px), Höhe immer 440 px */
   .project-card {
     position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
     max-width: 340px;
-    height: 470px;
+    height: 440px;
     border-radius: 8px;
     text-decoration: none;
     color: var(--pc-text);
@@ -120,11 +120,11 @@ const vars = [
     outline-offset: 6px;
   }
 
-  /* Screenshot randlos über die obere Hälfte, unten in die Kartenfarbe auslaufend */
+  /* Screenshot randlos in voller Breite (16:9, nichts abgeschnitten), unten in die Kartenfarbe auslaufend */
   .project-card__media {
     position: relative;
     flex: none;
-    height: 255px;
+    aspect-ratio: 16 / 9;
     overflow: hidden;
     border-radius: 8px 8px 0 0;
   }
@@ -142,7 +142,7 @@ const vars = [
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, transparent 55%, var(--pc-bg) 100%);
+    background: linear-gradient(180deg, transparent 70%, var(--pc-bg) 100%);
   }
 
   .project-card:hover .project-card__media img {
@@ -197,8 +197,8 @@ const vars = [
     margin: 10px 0 14px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
     overflow: hidden;
     font-size: 0.875rem;
     line-height: 1.55;

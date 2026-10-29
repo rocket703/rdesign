@@ -1,0 +1,183 @@
+---
+// Vorher/Nachher-Regler für Projektseiten: links die alte Seite, rechts die neue.
+// Ziehen auf der Fläche verschiebt die Trennlinie; das Range-Feld dient Tastatur und Screenreader.
+// Unter 768 px Breite werden die Handy-Screenshots gezeigt, sofern vorhanden.
+import { responsiveImage } from '../lib/images';
+
+interface Props {
+  before: string;
+  beforeMobile?: string;
+  after: string;
+  afterMobile?: string;
+  title: string;
+}
+
+const { before, beforeMobile, after, afterMobile, title } = Astro.props;
+const media = (desktop: string, mobile?: string) => ({
+  desktop: responsiveImage(desktop, 1600),
+  mobile: mobile ? responsiveImage(mobile, 800) : null,
+});
+const old = media(before, beforeMobile);
+const now = media(after, afterMobile);
+const hasMobile = Boolean(old.mobile && now.mobile);
+---
+
+<figure class:list={['before-after', hasMobile && 'before-after--mobile']} data-before-after>
+  <div class="before-after__screen">
+    {[
+      { m: old, cls: 'before-after__old', alt: `${title} vor dem Redesign` },
+      { m: now, cls: 'before-after__new', alt: `${title} im neuen Design` },
+    ].map(({ m, cls, alt }) => (
+      <div class={cls}>
+        <picture>
+          {hasMobile && m.mobile && (
+            <source media="(max-width: 767px)" srcset={m.mobile.srcset} sizes="calc(100vw - 2.5rem)" width={m.mobile.width} height={m.mobile.height} />
+          )}
+          <img src={m.desktop.src} srcset={m.desktop.srcset} sizes="(max-width: 1100px) calc(100vw - 2.5rem), 1040px" width={m.desktop.width} height={m.desktop.height} alt={alt} loading="lazy" decoding="async" />
+        </picture>
+      </div>
+    ))}
+    <span class="before-after__handle" aria-hidden="true"><span class="before-after__knob"></span></span>
+    <input class="before-after__range" type="range" min="0" max="100" value="50" aria-label="Alte und neue Seite vergleichen" data-before-after-range />
+  </div>
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-before-after]').forEach((root) => {
+    const range = root.querySelector<HTMLInputElement>('[data-before-after-range]');
+    const screen = root.querySelector<HTMLElement>('.before-after__screen');
+    if (!range || !screen) return;
+
+    let pos = 50;
+    const set = (value: number) => {
+      pos = Math.min(100, Math.max(0, value));
+      range.value = String(Math.round(pos));
+      root.style.setProperty('--pos', `${pos}%`);
+    };
+    range.addEventListener('input', () => set(Number(range.value)));
+
+    // Maus: Linie springt an die Klickstelle; Finger: nur relative Bewegung, senkrecht bleibt Scrollen
+    let drag: { x: number; pos: number; left: number; width: number; mouse: boolean } | null = null;
+    screen.addEventListener('pointerdown', (e) => {
+      const r = screen.getBoundingClientRect();
+      drag = { x: e.clientX, pos, left: r.left, width: r.width, mouse: e.pointerType === 'mouse' };
+      if (drag.mouse) {
+        e.preventDefault();
+        screen.setPointerCapture(e.pointerId);
+        set(((e.clientX - r.left) / r.width) * 100);
+      }
+    });
+    screen.addEventListener('pointermove', (e) => {
+      if (!drag) return;
+      set(drag.mouse
+        ? ((e.clientX - drag.left) / drag.width) * 100
+        : drag.pos + ((e.clientX - drag.x) / drag.width) * 100);
+    });
+    const end = () => { drag = null; };
+    screen.addEventListener('pointerup', end);
+    screen.addEventListener('pointercancel', end);
+  });
+</script>
+
+<style>
+  .before-after {
+    --pos: 50%;
+    margin: 0;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow:
+      0 1px 2px rgba(27, 38, 44, 0.08),
+      0 18px 50px -12px rgba(27, 38, 44, 0.28);
+  }
+
+  .before-after__screen {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    cursor: ew-resize;
+    touch-action: pan-y;
+    user-select: none;
+  }
+
+  @media (max-width: 767px) {
+    .before-after--mobile .before-after__screen {
+      aspect-ratio: 1170 / 2220;
+    }
+  }
+
+  .before-after__old,
+  .before-after__new {
+    position: absolute;
+    inset: 0;
+  }
+
+  .before-after__old img,
+  .before-after__new img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    pointer-events: none;
+  }
+
+  .before-after__new {
+    clip-path: inset(0 0 0 var(--pos));
+  }
+
+  .before-after__range {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    opacity: 0;
+    clip-path: inset(50%);
+  }
+
+  .before-after__handle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--pos);
+    width: 2px;
+    margin-left: -1px;
+    background: #fff;
+    box-shadow: 0 0 0 1px rgba(27, 38, 44, 0.15);
+    pointer-events: none;
+  }
+
+  .before-after__knob {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    background: var(--c-turf);
+    box-shadow: 0 4px 14px rgba(4, 114, 77, 0.35);
+    transform: translate(-50%, -50%);
+  }
+
+  .before-after__knob::before,
+  .before-after__knob::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    border: 0.32rem solid transparent;
+    transform: translateY(-50%);
+  }
+
+  .before-after__knob::before {
+    left: 0.45rem;
+    border-right-color: #fff;
+  }
+
+  .before-after__knob::after {
+    right: 0.45rem;
+    border-left-color: #fff;
+  }
+
+  .before-after__screen:has(.before-after__range:focus-visible) .before-after__knob {
+    outline: 3px solid var(--c-ink);
+    outline-offset: 3px;
+  }
+</style>
