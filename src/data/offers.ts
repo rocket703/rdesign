@@ -68,7 +68,7 @@ export const offers: Offer[] = [
     },
     intro: [
       'Eine gute Webseite ist für viele Betriebe und Vereine heute der erste Kontaktpunkt: Hier entscheiden Interessenten in wenigen Sekunden, ob sie anrufen, eine Anfrage schicken oder weitersuchen. Deshalb entwickle ich jede Webseite individuell – passend zu deinem Angebot, deiner Zielgruppe und deinen Zielen.',
-      'Du bekommst kein Theme von der Stange, sondern ein eigenes Design, sauberen Code und eine Seite, die dir gehört. Keine monatliche Baukasten-Miete, keine aufgeblähten Plugins – dafür kurze Ladezeiten, eine klare Struktur und eine Bedienung, die auf dem Smartphone genauso gut funktioniert wie am Desktop.',
+      'Du bekommst kein Theme von der Stange, sondern ein eigenes Design, sauberen Code und eine Seite, die dir gehört. Keine gemietete Vorlage, die mit dem Abo verschwindet, keine aufgeblähten Plugins – dafür kurze Ladezeiten, eine klare Struktur und eine Bedienung, die auf dem Smartphone genauso gut funktioniert wie am Desktop.',
     ],
     sections: [
       {

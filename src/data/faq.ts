@@ -7,7 +7,7 @@ export const faqItems: FaqItem[] = [
   {
     question: 'Was kostet eine professionelle Webseite in Magdeburg?',
     answer:
-      'Jedes Projekt wird individuell kalkuliert – nach Umfang, Funktionen und Zielen. Nach einem kostenlosen Erstgespräch bekommst du ein transparentes Festpreisangebot, ohne versteckte Kosten und ohne monatliche Baukasten-Gebühren.',
+      'Jedes Projekt wird individuell kalkuliert – nach Umfang, Funktionen und Zielen. Nach einem kostenlosen Erstgespräch bekommst du für die Erstellung ein transparentes Festpreisangebot ohne versteckte Kosten. Hosting und Betreuung sind davon getrennt: Auf Wunsch kümmere ich mich danach in einer von drei Wartungsstufen um deine Seite, und du weißt vorher genau, was das monatlich kostet.',
   },
   {
     question: 'Wie lange dauert die Umsetzung einer neuen Homepage?',
@@ -22,7 +22,7 @@ export const faqItems: FaqItem[] = [
   {
     question: 'Kann ich meine Webseite später selbst pflegen?',
     answer:
-      'Ja. Auf Wunsch bekommst du eine Lösung, mit der du Inhalte einfach selbst aktualisieren kannst. Außerdem gibt es eine kurze Einweisung oder laufende Betreuung, wenn du es abgeben willst.',
+      'Ja. Auf Wunsch binde ich ein Redaktionssystem ein, mit dem du Texte, Bilder oder Termine selbst änderst – mit einer kurzen Einweisung. Willst du dich nicht selbst darum kümmern, übernehme ich die Pflege im Rahmen der Betreuung.',
   },
   {
     question: 'Arbeitest du nur in Magdeburg oder auch remote?',
@@ -32,12 +32,12 @@ export const faqItems: FaqItem[] = [
   {
     question: 'Was unterscheidet deine Seiten von Baukasten-Anbietern?',
     answer:
-      'Keine Vorlage von der Stange: ein individuelles Layout, eine Webseite, die dir gehört, und Ladezeiten, die man messen kann. Keine monatliche Baukasten-Miete für etwas, das einmal sauber gebaut sein soll.',
+      'Keine Vorlage von der Stange: ein individuelles Layout und Ladezeiten, die man messen kann. Vor allem gehört die Seite dir. Beim Baukasten mietest du Vorlage und Seite – kündigst du, ist beides weg. Bei mir bleiben Webseite und Inhalte deine. Hosting und Wartung kannst du zusätzlich buchen; das ist laufender Service, keine Miete für die Seite selbst.',
   },
   {
     question: 'Welche Technik setzt du ein – und warum?',
     answer:
-      'Meist Astro – damit werden Seiten sehr schnell und sind für Google gut lesbar. Braucht dein Projekt Login, Datenbank oder Live-Daten, kommen passende Bausteine wie Supabase dazu. Immer passend zum Vorhaben, nicht zum Trend.',
+      'Meist Astro – damit werden Seiten sehr schnell und sind für Google gut lesbar. Braucht dein Projekt Login, Datenbank oder Live-Daten, kommen die passenden Bausteine dazu. Immer passend zum Vorhaben, nicht zum Trend.',
   },
   {
     question: 'Kann ich SEO-Check, Relaunch oder Barrierefreiheits-Check auch einzeln buchen?',

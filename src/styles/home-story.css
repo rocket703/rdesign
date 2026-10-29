@@ -371,7 +371,8 @@
   gap: 0.45rem;
 }
 
-/* ── FAQ: Einleitung links, ruhige Liste rechts ── */
+/* ── FAQ der Startseite: Überschrift und dunkle Kontakt-Karte links (fest, scrollt nicht mit),
+   rechts ruhige Liste mit großen Fragen und runder Plus-Taste ── */
 .faq-list {
   padding: clamp(4rem, 9vw, 6.5rem) 0;
   scroll-margin-top: var(--site-header-height);
@@ -385,71 +386,147 @@
 
 @media (min-width: 900px) {
   .faq-list__inner {
-    grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
-    gap: clamp(3rem, 6vw, 5rem);
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr);
+    gap: clamp(3rem, 6vw, 4.5rem);
   }
+}
 
-  .faq-list__head {
-    position: sticky;
-    top: calc(var(--site-header-height) + 2rem);
-  }
+.faq-list__kicker {
+  margin: 0 0 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-slate);
 }
 
 .faq-list__title {
   margin: 0;
-  font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+  font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 800;
-  line-height: 1.12;
-  letter-spacing: -0.03em;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
   color: var(--c-ink);
   text-wrap: balance;
 }
 
-.faq-list__lead {
-  margin: 1rem 0 0;
-  font-size: 1rem;
-  line-height: 1.65;
-  color: var(--c-slate);
+/* dunkle Karte im Stil des Namensschilds im Über-mich-Block */
+.faq-ask {
+  margin-top: clamp(1.5rem, 3vw, 1.9rem);
+  padding: 1.5rem;
+  border-radius: 18px;
+  color: #ffffff;
+  background: var(--c-deep);
+  box-shadow: 0 22px 40px -24px rgba(27, 38, 44, 0.7);
 }
 
-/* zweiter Button: Rahmen ohne Füllung, füllt sich beim Hover */
-.faq-list__contact {
+.faq-ask__title {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.faq-ask__text {
+  margin: 0 0 1.15rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: #c3d1d6;
+}
+
+.faq-ask__link {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  min-height: 46px;
-  margin-top: 0.75rem;
-  padding: 0 1.3rem;
-  border: 2px solid var(--c-turf);
+  min-height: 44px;
+  padding: 0 1.2rem;
   border-radius: 10px;
   font-weight: 800;
-  color: var(--c-turf);
   text-decoration: none;
+  color: var(--c-ink);
+  background: #ffffff;
   transition: background 0.2s ease, color 0.2s ease;
 }
 
-.faq-list__contact span {
+.faq-ask__link span {
   transition: translate 0.2s ease;
 }
 
-.faq-list__contact:hover {
+.faq-ask__link:hover {
   color: #ffffff;
   background: var(--c-turf);
 }
 
-.faq-list__contact:hover span {
+.faq-ask__link:hover span {
   translate: 3px 0;
 }
 
-.faq-list__contact:focus-visible {
-  outline: 2px solid var(--c-turf);
+.faq-ask__link:focus-visible {
+  outline: 2px solid #ffffff;
   outline-offset: 3px;
 }
 
+/* Liste: große Fragen ohne Nummer, Plus-Taste als gefüllter Kreis */
+.faq-list--home .faq-item summary {
+  grid-template-columns: 1fr 2.25rem;
+  gap: 1.5rem;
+  padding: 1.6rem 0;
+}
+
+.faq-list--home .faq-item__q {
+  font-size: clamp(1.15rem, 0.9rem + 0.9vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.faq-list--home .faq-item__toggle {
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 0;
+  background: rgba(34, 50, 58, 0.07);
+}
+
+.faq-list--home .faq-item summary:hover .faq-item__toggle {
+  background: rgba(4, 114, 77, 0.14);
+}
+
+.faq-list--home .faq-item__answer > p {
+  max-width: 60ch;
+  padding: 0 3.75rem 1.75rem 0;
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.1rem);
+  line-height: 1.7;
+  color: #3b4a52;
+}
+
+/* Handy: kleinere Fragen, damit lange Fragen nicht über vier Zeilen laufen */
+@media (max-width: 599px) {
+  .faq-list--home .faq-item summary {
+    grid-template-columns: 1fr 2rem;
+    gap: 1rem;
+    padding: 1.2rem 0;
+  }
+
+  .faq-list--home .faq-item__q {
+    font-size: 1.08rem;
+    line-height: 1.32;
+    letter-spacing: -0.01em;
+  }
+
+  .faq-list--home .faq-item__toggle {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .faq-list--home .faq-item__answer > p {
+    padding: 0 0 1.35rem;
+    font-size: 1rem;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .faq-list__contact,
-  .faq-list__contact span {
+  .faq-ask__link,
+  .faq-ask__link span {
     transition: none;
   }
 }

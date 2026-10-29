@@ -247,21 +247,21 @@ const featuredProjects = featuredSlugs
     <StyleShowcase />
 
     <!-- FAQ: ruhige Liste mit Einleitung links -->
-    <section id="faq" class="faq-list" aria-labelledby="faq-title">
+    <section id="faq" class="faq-list faq-list--home" aria-labelledby="faq-title">
       <div class="container faq-list__inner">
         <header class="faq-list__head autoShow">
-          <h2 class="faq-list__title" id="faq-title">Häufige Fragen zum Webdesign</h2>
-          <p class="faq-list__lead">
-            Die Antworten auf das, was Vereine und Unternehmen am häufigsten wissen wollen.
-            Deine Frage ist nicht dabei?
-          </p>
-          <a href="/kontakt/" class="faq-list__contact">Frag mich direkt <span aria-hidden="true">→</span></a>
+          <p class="faq-list__kicker">Häufige Fragen</p>
+          <h2 class="faq-list__title" id="faq-title">Häufige Fragen zum Webdesign.</h2>
+          <div class="faq-ask">
+            <strong class="faq-ask__title">Deine Frage ist nicht dabei?</strong>
+            <p class="faq-ask__text">Schreib mir kurz – ich antworte meist innerhalb von 24 Stunden.</p>
+            <a href="/kontakt/" class="faq-ask__link">Frag mich direkt <span aria-hidden="true">→</span></a>
+          </div>
         </header>
         <div class="faq-list__items">
-          {faqItems.map((item, i) => (
+          {faqItems.map((item) => (
             <details class="faq-item">
               <summary>
-                <span class="faq-item__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
                 <span class="faq-item__q">{item.question}</span>
                 <span class="faq-item__toggle" aria-hidden="true"></span>
               </summary>
