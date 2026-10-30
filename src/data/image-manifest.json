@@ -124,6 +124,28 @@
       1170
     ]
   },
+  "/images/ohrelauf-vorher-mobile.webp": {
+    "width": 1170,
+    "height": 2220,
+    "base": "/images/responsive/ohrelauf-vorher-mobile",
+    "variants": [
+      480,
+      800,
+      1170
+    ]
+  },
+  "/images/ohrelauf-vorher.webp": {
+    "width": 2880,
+    "height": 1620,
+    "base": "/images/responsive/ohrelauf-vorher",
+    "variants": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
   "/images/ohrelauf.webp": {
     "width": 2880,
     "height": 1620,
